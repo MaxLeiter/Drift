@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 
 const Link = (props: LinkProps) => {
     const { basePath } = useRouter();
-
-    return <GeistLink {...props} href={`/${basePath}/${props.href}`} />
+    const href = basePath ? `/${basePath}/${props.href}` : props.href;
+    return <GeistLink {...props} href={href} />
 }
 
 export default Link
