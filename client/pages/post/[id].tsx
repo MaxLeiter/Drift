@@ -62,7 +62,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                             initialTab={'preview'}
                         />
                     ))}
-                    ))</>
+                </>
                 }
             </Page.Content>
 
