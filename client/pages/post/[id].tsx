@@ -19,7 +19,7 @@ const Post = ({ post, theme, changeTheme }: Props) => {
             <Page.Header>
                 <Header theme={theme} changeTheme={changeTheme} />
             </Page.Header>
-            <Page.Content width={"var(--main-content-width)"} margin="0 auto">
+            <Page.Content width={"var(--main-content-width)"} margin="auto">
                 <Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
                 {
                     post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (

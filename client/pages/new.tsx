@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import HomeComponent from '../components/post'
-import { Button, ButtonGroup, Loading, Page } from '@geist-ui/core'
-import { Sun, Moon } from '@geist-ui/icons'
-import ShiftBy from '../components/shift-by'
+import { Loading, Page } from '@geist-ui/core'
 import useSignedIn from '../lib/hooks/use-signed-in'
-import Link from '../components/Link'
+import Header from '../components/header'
+import { ThemeProps } from './_app'
 
-const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: () => void }) => {
-  const { isLoading, isSignedIn } = useSignedIn({ redirectIfNotAuthed: true })
+const Home = ({ theme, changeTheme }: ThemeProps) => {
+  const { isSignedIn, isLoading } = useSignedIn({ redirectIfNotAuthed: true })
+
   return (
     <Page className={styles.container}>
       <Head>
@@ -17,27 +17,13 @@ const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: ()
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {isSignedIn && <Page.Header height={'40px'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"}>
-        <ButtonGroup>
-          <Button onClick={() => {
-            localStorage.clear();
-            window.location.reload();
-          }}>Sign out</Button>
-          <Button>
-            {/* TODO: Link outside Button, but seems to break ButtonGroup */}
-            <Link href="/mine">
-              Your Posts
-            </Link>
-          </Button>
-          <Button onClick={() => changeTheme()}>
-            <ShiftBy y={6}>{theme === 'light' ? <Moon /> : <Sun />}</ShiftBy>
-          </Button>
-        </ButtonGroup>
-      </Page.Header>}
+      <Page.Header>
+        <Header theme={theme} changeTheme={changeTheme} />
+      </Page.Header>
 
       <Page.Content width={"var(--main-content-width)"} margin="0 auto" className={styles.main}>
         {isLoading && <Loading />}
-        {!isLoading && isSignedIn && <HomeComponent />}
+        {isSignedIn && <HomeComponent />}
       </Page.Content>
     </Page >
   )
