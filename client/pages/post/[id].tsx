@@ -1,8 +1,9 @@
 import { Loading, Page, Text } from "@geist-ui/core";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Document from '../../components/document'
 import Header from "../../components/header";
+import UnauthenticatedHeader from "../../components/unauthenticated-header";
 import VisibilityBadge from "../../components/visibility-badge";
 import { ThemeProps } from "../_app";
 
@@ -42,12 +43,19 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
         }
         fetchPost()
     }, [router, router.query.id])
-    console.log(post, isLoading, error)
 
+    const token = useCallback(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("drift-token")
+        } else {
+            return ""
+        }
+    }, [])
     return (
         <Page>
             <Page.Header>
-                <Header theme={theme} changeTheme={changeTheme} />
+                {token() && <Header theme={theme} changeTheme={changeTheme} />}
+                {!token() && <UnauthenticatedHeader theme={theme} changeTheme={changeTheme} />}
             </Page.Header>
             <Page.Content width={"var(--main-content-width)"} margin="auto">
                 {error && <Text type="error">{error}</Text>}
