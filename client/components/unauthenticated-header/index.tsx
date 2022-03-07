@@ -1,7 +1,8 @@
-import { Page, ButtonGroup, Button, Link } from "@geist-ui/core";
+import { Page, ButtonGroup, Button } from "@geist-ui/core";
 import { Moon, Sun } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
 import ShiftBy from "../shift-by";
+import Link from '../Link'
 
 const UnauthenticatedHeader = ({ theme, changeTheme }: DriftProps) => {
     return (

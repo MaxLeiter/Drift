@@ -1,7 +1,8 @@
 import { FormEvent, useState } from 'react'
-import { Button, Card, Input, Link, Text } from '@geist-ui/core'
+import { Button, Card, Input, Text } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
+import Link from '../Link'
 
 const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const router = useRouter();

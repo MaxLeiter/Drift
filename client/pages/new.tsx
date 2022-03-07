@@ -1,13 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import HomeComponent from '../components/post'
-import Auth from '../components/auth'
-import { useEffect, useState } from 'react'
-import { Button, ButtonGroup, Link, Loading, Page } from '@geist-ui/core'
+import { Button, ButtonGroup, Loading, Page } from '@geist-ui/core'
 import { Sun, Moon } from '@geist-ui/icons'
 import ShiftBy from '../components/shift-by'
 import useSignedIn from '../lib/hooks/use-signed-in'
-import { useRouter } from 'next/router'
+import Link from '../components/Link'
 
 const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: () => void }) => {
   const { isLoading, isSignedIn } = useSignedIn({ redirectIfNotAuthed: true })

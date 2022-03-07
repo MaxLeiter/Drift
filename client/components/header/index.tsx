@@ -1,9 +1,8 @@
-import { Page, ButtonGroup, Button, Link } from "@geist-ui/core";
+import { Page, ButtonGroup, Button } from "@geist-ui/core";
 import { Moon, Sun } from "@geist-ui/icons";
-import { useRouter } from "next/router";
-import useSignedIn from "../../lib/hooks/use-signed-in";
 import { DriftProps } from "../../pages/_app";
 import ShiftBy from "../shift-by";
+import Link from '../Link'
 
 const Header = ({ theme, changeTheme }: DriftProps) => {
     return (

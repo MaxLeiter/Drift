@@ -1,7 +1,8 @@
-import { Loading, Card, Divider, Input, Text, Link } from "@geist-ui/core"
+import { Loading, Card, Divider, Input, Text } from "@geist-ui/core"
 import Preview from "../preview"
 import ShiftBy from "../shift-by"
 import VisibilityBadge from "../visibility-badge"
+import Link from '../Link'
 
 import styles from './post-list.module.css'
 
