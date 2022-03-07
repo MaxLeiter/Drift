@@ -2,7 +2,7 @@ import { Router } from 'express'
 // import { Movie } from '../models/Post'
 import { File } from '../../lib/models/File'
 import { Post } from '../../lib/models/Post';
-import jwt from '../../lib/middleware/jwt';
+import jwt, { UserJwtRequest } from '../../lib/middleware/jwt';
 import * as crypto from "crypto";
 import { User } from '../../lib/models/User';
 
@@ -61,7 +61,7 @@ posts.post('/create', jwt, async (req, res, next) => {
     }
 });
 
-posts.get("/:id", async (req, res, next) => {
+posts.get("/:id", async (req: UserJwtRequest, res, next) => {
     try {
         const post = await Post.findOne({
             where: {
@@ -80,7 +80,15 @@ posts.get("/:id", async (req, res, next) => {
                 },
             ]
         })
-        res.json(post);
+
+        console.log(post)
+        if (post?.visibility === 'public' || post?.visibility === 'unlisted') {
+            res.json(post);
+        } else {
+            jwt(req, res, () => {
+                res.json(post);
+            });
+        }
     }
     catch (e) {
         next(e);

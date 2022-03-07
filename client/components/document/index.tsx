@@ -10,9 +10,10 @@ type Props = {
     content?: string
     setTitle?: (title: string) => void
     setContent?: (content: string) => void
+    initialTab?: "edit" | "preview"
 }
 
-const Document = ({ remove, editable, title, content, setTitle, setContent }: Props) => {
+const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit' }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
 
     const removeFile = (remove?: () => void) => {
@@ -45,7 +46,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent }: Pr
                 {remove && editable && <Button type="error" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
             </div>
             <div className={styles.descriptionContainer}>
-                <Tabs initialValue="edit" hideDivider width={"100%"} >
+                <Tabs initialValue={initialTab} hideDivider width={"100%"} >
                     <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                         {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
                         <Textarea

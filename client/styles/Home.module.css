@@ -8,10 +8,19 @@
   width: var(--main-content-width);
 }
 
+.container {
+  width: 100% !important;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     width: 100%;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    padding: 0;
+  }
+
+  .container h1 {
+    font-size: 2rem;
   }
 
   .main {
