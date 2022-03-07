@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { Button, Card, Input, Text } from '@geist-ui/core'
+import { Button, Card, Input, Link, Text } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
 
@@ -85,8 +85,8 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                             <Button type="success" ghost htmlType="submit">{signingIn ? 'Sign In' : 'Sign Up'}</Button>
                         </div>
                         <div className={styles.formGroup}>
-                            {signingIn && <Text>Don&apos;t have an account? <a href="/signup" >Sign up</a></Text>}
-                            {!signingIn && <Text>Already have an account? <a href="/signin" >Sign in</a></Text>}
+                            {signingIn && <Text>Don&apos;t have an account? <Link color href="/signup" >Sign up</Link></Text>}
+                            {!signingIn && <Text>Already have an account? <Link color href="/signin" >Sign in</Link></Text>}
                         </div>
                         {error && <Text type='error'>{error}</Text>}
                     </Card>
