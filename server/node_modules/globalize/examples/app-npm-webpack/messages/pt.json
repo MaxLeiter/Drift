@@ -1,0 +1,21 @@
+{
+	"pt": {
+		"intro-1": "Use o Globalize para internacionalizar sua aplicação.",
+		"number-label": "Número",
+		"number-compact-label": "Número (forma compacta)",
+		"currency-label": "Moeda",
+		"date-label": "Data",
+		"date-time-zone-label": "Data (em um fuso horário IANA específico, por exemplo, America/Sao_Paulo)",
+		"date-to-parts-label": "Data (note o mês em negrito, a marcação HTML foi adicionada usando formatDateToParts)",
+		"relative-time-label": "Tempo relativo",
+		"unit-label": "Unit",
+		"message-1": "Um exemplo de mensagem com mistura de número \"{number}\", moeda \"{currency}\", data \"{date}\", tempo relativo \"{relativeTime}\", e unidade \"{unit}\".",
+		"message-2": [
+			"Um exemplo de message com suporte a pluralização:",
+			"{count, plural,",
+			"    one {Você tem uma tarefa restante}",
+			"  other {Você tem # tarefas restantes}",
+			"}."
+		]
+	}
+}

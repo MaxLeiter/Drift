@@ -1,0 +1,10 @@
+{
+  "name": "globalize-hello-world-node-npm",
+  "private": true,
+  "dependencies": {
+    "cldr-data": "latest",
+    "globalize": "^1.3.0",
+    "iana-tz-data": ">=2017.0.0"
+  },
+  "cldr-data-urls-filter": "(core|dates|numbers|units)"
+}

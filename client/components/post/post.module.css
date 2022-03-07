@@ -1,0 +1,21 @@
+.buttons {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--gap-double);
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title > div {
+  flex-grow: 1;
+}
+
+.mygist {
+  flex-grow: 0.4;
+}

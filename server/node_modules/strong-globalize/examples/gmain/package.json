@@ -1,0 +1,13 @@
+{
+  "name": "gmain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tetsuo Seto <setogit@gmail.com>",
+  "dependencies": {
+    "express": "^4.13.3",
+    "request": "^2.61.0",
+    "strong-globalize": "^2.4.0",
+    "gsub": "^1.0.0"
+  },
+  "license": "MIT"
+}

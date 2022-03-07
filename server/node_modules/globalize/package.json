@@ -1,0 +1,109 @@
+{
+  "name": "globalize",
+  "version": "1.7.0",
+  "description": "A JavaScript library for internationalization and localization that leverages the official Unicode CLDR JSON data.",
+  "keywords": [
+    "utility",
+    "globalization",
+    "internationalization",
+    "multilingualization",
+    "localization",
+    "g11n",
+    "i18n",
+    "m17n",
+    "L10n",
+    "localize",
+    "format",
+    "parse",
+    "translate",
+    "strings",
+    "numbers",
+    "dates",
+    "times",
+    "calendars",
+    "plural",
+    "plurals",
+    "pluralize",
+    "cultures",
+    "languages",
+    "locales",
+    "Unicode",
+    "CLDR",
+    "JSON"
+  ],
+  "homepage": "https://github.com/globalizejs/globalize",
+  "author": {
+    "name": "OpenJS Foundation and other contributors",
+    "url": "https://github.com/globalizejs/globalize/blob/master/AUTHORS.txt"
+  },
+  "maintainers": [
+    {
+      "name": "Jörn Zaefferer",
+      "email": "joern.zaefferer@gmail.com",
+      "url": "http://bassistance.de"
+    },
+    {
+      "name": "Rafael Xavier de Souza",
+      "email": "rxaviers@gmail.com",
+      "url": "http://rafael.xavier.blog.br"
+    }
+  ],
+  "main": "./dist/node-main.js",
+  "files": [
+    "CONTRIBUTING.md",
+    "dist/",
+    "!dist/.build",
+    "doc/",
+    "examples/",
+    "!examples/**/.tmp-globalize-webpack",
+    "!examples/**/bower_components",
+    "!examples/**/node_modules",
+    "!examples/plain-javascript/cldrjs",
+    "!examples/plain-javascript/globalize",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/globalizejs/globalize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/globalizejs/globalize/issues"
+  },
+  "dependencies": {
+    "cldrjs": "^0.5.4"
+  },
+  "devDependencies": {
+    "cldr-data-downloader": "^0.3.1",
+    "eslint-config-jquery": "3.0.0",
+    "glob": "^7.1.2",
+    "globalize-compiler": "^1.1.1",
+    "grunt": "1.2.0",
+    "grunt-check-dependencies": "1.0.0",
+    "grunt-commitplease": "0.0.6",
+    "grunt-compare-size": "0.4.2",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-connect": "0.8.0",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-qunit": "2.0.0",
+    "grunt-contrib-requirejs": "1.0.0",
+    "grunt-contrib-uglify": "3.0.1",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-eslint": "23.0.0",
+    "grunt-git-authors": "^3.2.0",
+    "grunt-mocha-test": "^0.13.2",
+    "gzip-js": "0.3.2",
+    "iana-tz-data": ">=2017.0.0",
+    "matchdep": "1.0.1",
+    "mocha": "^3.4.2",
+    "qunit": "2.12.0",
+    "semver": "^5.3.0",
+    "zoned-date-time": "1.1.0"
+  },
+  "commitplease": {
+    "nohook": true
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "grunt"
+  }
+}

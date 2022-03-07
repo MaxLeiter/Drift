@@ -1,0 +1,35 @@
+{
+  "name": "retry-as-promised",
+  "version": "5.0.0",
+  "description": "Retry a failed promise",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env DEBUG=retry-as-promised* ./node_modules/.bin/mocha --check-leaks --colors -t 10000 --reporter spec test/promise.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mickhansen/retry-as-promised.git"
+  },
+  "keywords": [
+    "retry",
+    "promise",
+    "bluebird"
+  ],
+  "author": "Mick Hansen <maker@mhansen.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mickhansen/retry-as-promised/issues"
+  },
+  "homepage": "https://github.com/mickhansen/retry-as-promised",
+  "dependencies": {},
+  "files": [],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "cross-env": "^5.2.0",
+    "mocha": "^9.1.3",
+    "moment": "^2.10.6",
+    "sinon": "^7.0.0",
+    "sinon-chai": "^3.2.0"
+  }
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Globalize App example using Webpack</title>
+</head>
+<body>
+
+<h1>Globalize App example using Webpack</h1>
+
+<div id="requirements">
+	<h2>Requirements</h2>
+	<ul>
+		<li>Read README.md for instructions on how to run the demo.
+		</li>
+	</ul>
+</div>
+
+<div id="demo" style="display: none">
+	<p id="intro-1">Use Globalize to internationalize your application.</p>
+	<table border="1" style="marginBottom: 1em;">
+		<tbody>
+			<tr>
+				<td><span id="number-label">Standalone Number</span></td>
+				<td>"<span id="number"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="number-compact-label">Standalone Number (compact form)</span></td>
+				<td>"<span id="number-compact"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="currency-label">Standalone Currency</span></td>
+				<td>"<span id="currency"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="date-label">Standalone Date</span></td>
+				<td>"<span id="date"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="date-time-zone-label">Standalone Date (in a specific IANA time zone, e.g., America/Sao_Paulo)</span></td>
+				<td>"<span id="date-time-zone"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="date-to-parts-label">Standalone Date (note the highlighted month, the markup was added using formatDateToParts)</span></td>
+				<td>"<span id="date-to-parts"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="relative-time-label">Standalone Relative Time</span></td>
+				<td>"<span id="relative-time"></span>"</td>
+			</tr>
+			<tr>
+				<td><span id="unit-label">Standalone Unit</span></td>
+				<td>"<span id="unit"></span>"</td>
+			</tr>
+		</tbody>
+	</table>
+	<p id="message-1">
+		An example of a message using mixed number "{number}", currency "{currency}", date "{date}", relative time "{relativeTime}", and unit "{unit}".
+	</p>
+	<p id="message-2">
+		An example of a message with pluralization support:
+		{count, plural,
+			one {You have one remaining task}
+			other {You have # remaining tasks}
+		}.
+	</p>
+</div>
+
+</body>
+</html>

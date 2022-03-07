@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title><%= data.name || data.message %></title>
+    <style><%- include('style.css') %></style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1><%= data.name %></h1>
+      <h2><em><%= data.statusCode %></em> <%= data.message %></h2>
+      <%
+        // display all the non-standard properties
+        var standardProps = ['name', 'statusCode', 'message', 'stack'];
+        for (var prop in data) {
+          if (standardProps.indexOf(prop) == -1 && data[prop]) { %>
+            <div><b><%= prop %></b>: <%= data[prop] %></div>
+          <% }
+        }
+        if (data.stack) { %>
+          <pre id="stacktrace"><%- data.stack %></pre>
+        <% }
+      %>
+    </div>
+  </body>
+</html>

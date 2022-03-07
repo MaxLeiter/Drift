@@ -1,0 +1,27 @@
+.input {
+  background: #efefef;
+}
+
+.descriptionContainer {
+  padding: var(--gap);
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+.fileNameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fileNameContainer {
+  display: flex;
+  align-content: center;
+}
+
+.fileNameContainer > div {
+  /* Override geist-ui styling */
+  margin: 0 !important;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "gsub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tetsuo Seto <setogit@gmail.com>",
+  "dependencies": {
+    "strong-globalize": "^2.4.0"
+  },
+  "license": "MIT"
+}

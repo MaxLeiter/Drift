@@ -1,0 +1,57 @@
+.markdownPreview {
+  position: relative;
+  padding: var(--gap);
+  padding-top: 0;
+  overflow-y: auto;
+}
+
+.markdownPreview h1,
+.markdownPreview h2,
+.markdownPreview h3,
+.markdownPreview h4,
+.markdownPreview h5,
+.markdownPreview h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.markdownPreview h1 {
+  font-size: 2rem;
+}
+
+.markdownPreview h2 {
+  font-size: 1.5rem;
+}
+
+.markdownPreview h3 {
+  font-size: 1.25rem;
+}
+
+.markdownPreview h4 {
+  font-size: 1rem;
+}
+
+.markdownPreview h5 {
+  font-size: 0.875rem;
+}
+
+.markdownPreview h6 {
+  font-size: 0.75rem;
+}
+
+.markdownPreview ul {
+  list-style: inside;
+}
+
+.markdownPreview ul li::before {
+  content: "";
+}
+
+/* circles for sublists */
+.markdownPreview ul ul {
+  list-style: circle;
+}
+
+.markdownPreview ul ul li {
+  margin-left: var(--gap);
+}

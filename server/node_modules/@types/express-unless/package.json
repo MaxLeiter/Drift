@@ -1,0 +1,37 @@
+{
+    "name": "@types/express-unless",
+    "version": "0.5.3",
+    "description": "TypeScript definitions for express-unless",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/express-unless",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Wonshik Kim",
+            "url": "https://github.com/wokim",
+            "githubUsername": "wokim"
+        },
+        {
+            "name": "Joao Vieira",
+            "url": "https://github.com/joaovieira",
+            "githubUsername": "joaovieira"
+        },
+        {
+            "name": "Michal Kaminski",
+            "url": "https://github.com/michal-b-kaminski",
+            "githubUsername": "michal-b-kaminski"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/express-unless"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/express": "*"
+    },
+    "typesPublisherContentHash": "c8808e470aa43b2eef498eb0a39e415f23dc5bc3e229135848f217afbac1e875",
+    "typeScriptVersion": "3.8"
+}
