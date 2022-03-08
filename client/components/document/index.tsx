@@ -1,8 +1,9 @@
-import { Button, Card, Input, Tabs, Textarea } from "@geist-ui/core"
+import { Button, ButtonGroup, Card, Input, Tabs, Textarea } from "@geist-ui/core"
 import { ChangeEvent, FormEvent, memo, useEffect, useRef, useState } from "react"
 import styles from './document.module.css'
 import MarkdownPreview from '../preview'
 import { Trash } from '@geist-ui/icons'
+import FormattingIcons from "../formatting-icons"
 type Props = {
     editable: boolean
     remove?: () => void
@@ -46,12 +47,13 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 {remove && editable && <Button type="error" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
             </div>
             <div className={styles.descriptionContainer}>
-                <Tabs initialValue={initialTab} hideDivider width={"100%"} >
+                <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />
+                <Tabs initialValue={initialTab} hideDivider leftSpace={0}>
                     <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                         {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
                         <Textarea
                             ref={codeEditorRef}
-                            placeholder="Type a description..."
+                            placeholder="Type some contents..."
                             value={content}
                             onChange={(event) => setContent ? setContent(event.target.value) : null}
                             width="100%"
@@ -65,8 +67,9 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         <MarkdownPreview height={500} content={content} />
                     </Tabs.Item>
                 </Tabs>
-            </div>
-        </Card>
+
+            </div >
+        </Card >
     )
 }
 

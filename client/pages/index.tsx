@@ -24,7 +24,7 @@ const Home = ({ theme, changeTheme }: ThemeProps) => {
 ### Drift is a self-hostable clone of GitHub Gist.
 #### It is a simple way to share code and text snippets with your friends, with support for the following:
 
-- Render GitHub Extended Markdown and LaTeX (including images)
+- Render GitHub Extended Markdown (including images)
 - User authentication
 - Private, public, and secret posts
 
@@ -56,7 +56,9 @@ Drift was inspired by [this tweet](https://twitter.com/emilyst/status/1499858264
 - [ ] Meta tags
 - [ ] User settings
 - [ ] Search
-- [ ] "Forking"`}
+- [ ] "Forking
+- [ ] LaTeX
+- [ ] Syntax highlighting based on filename ending"`}
           title={`TODO.md`}
           initialTab={`preview`}
         />
