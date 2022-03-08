@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, Card, Input, Tabs, Textarea } from "@geist-ui/core"
-import { ChangeEvent, FormEvent, memo, useEffect, useRef, useState } from "react"
+import { ChangeEvent, FormEvent, memo, useEffect, useReducer, useRef, useState } from "react"
 import styles from './document.module.css'
 import MarkdownPreview from '../preview'
 import { Trash } from '@geist-ui/icons'
@@ -16,6 +16,14 @@ type Props = {
 
 const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit' }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
+    const [tab, setTab] = useState(initialTab)
+
+    const handleTabChange = (newTab: string) => {
+        if (newTab === 'edit') {
+            codeEditorRef.current?.focus()
+        }
+        setTab(newTab as 'edit' | 'preview')
+    }
 
     const removeFile = (remove?: () => void) => {
         if (remove) {
@@ -47,8 +55,8 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 {remove && editable && <Button type="error" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
             </div>
             <div className={styles.descriptionContainer}>
-                <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />
-                <Tabs initialValue={initialTab} hideDivider leftSpace={0}>
+                {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
+                <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                     <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                         {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
                         <Textarea
