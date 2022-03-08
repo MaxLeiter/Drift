@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Page } from '@geist-ui/core'
+import { Page, Spacer } from '@geist-ui/core'
 
 import Header from '../components/header'
 import { ThemeProps } from './_app'
@@ -28,12 +28,34 @@ const Home = ({ theme, changeTheme }: ThemeProps) => {
 - User authentication
 - Private, public, and secret posts
 
-If you need to signup, you can join at [/signup](/signup). If you're already signed in, you can create a new post by clicking the "New" button in the header.
+If you want to signup, you can join at [/signup](/signup) as long as you have a passcode provided by the administrator. If you're already signed in, you can create a new post by clicking the "New" button in the header. This demo is on a memory-only database, so accounts and pastes can be deleted at any time.
+
+Drift was inspired by [this tweet](https://twitter.com/emilyst/status/1499858264346935297):
+> What is the absolute closest thing to GitHub Gist that can be self-hosted?
+  In terms of design and functionality. Hosts images and markdown, rendered. Creates links that can be private or public. Uses/requires registration.
+  I have looked at dozens of pastebin-like things.
 `}
-          title={`Welcome to Drift`}
+          title={`Welcome to Drift.md`}
           initialTab={`preview`}
         />
-
+        <Spacer height={1} />
+        <Document
+          editable={false}
+          content={
+            `#### In no particular order:
+  
+- [ ] Less JavaScript usage (it's currently required)
+  - [ ] A non-Node backend
+- [ ] Hosting images
+- [ ] Password-protected posts
+- [ ] Administrator panel
+- [ ] Meta tags
+- [ ] User settings
+- [ ] Search
+- [ ] "Forking"`}
+          title={`TODO.md`}
+          initialTab={`preview`}
+        />
       </Page.Content>
     </Page >
   )

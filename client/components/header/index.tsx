@@ -1,5 +1,5 @@
 import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, useTheme, Tabs, Loading, Spacer } from "@geist-ui/core";
-import { Moon, Sun, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon } from "@geist-ui/icons";
+import { Github as GitHubIcon, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
 import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
@@ -73,6 +73,12 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             href: "/signup",
             icon: <SignUpIcon />,
             condition: !isSignedIn
+        },
+        {
+            name: "",
+            href: "https://github.com/maxleiter/drift",
+            icon: <GitHubIcon />,
+            condition: true
         }
     ], [isSignedIn, router])
 
