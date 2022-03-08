@@ -14,7 +14,7 @@ const Home = ({ theme, changeTheme }: ThemeProps) => {
     router.push("/signin")
   }
   return (
-    <Page className={styles.container}>
+    <Page className={styles.container} width="100%">
       <Head>
         <title>Drift</title>
         <meta name="description" content="A self-hostable clone of GitHub Gist" />

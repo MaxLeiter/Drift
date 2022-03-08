@@ -30,7 +30,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
     }
 
     return (
-        <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'}>
+        <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
             <div className={styles.fileNameContainer}>
                 <Input
                     placeholder="MyFile.md"

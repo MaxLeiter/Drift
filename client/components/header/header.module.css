@@ -11,6 +11,11 @@
   display: none;
 }
 
+.mobile {
+  position: relative;
+  z-index: 1;
+}
+
 @media only screen and (max-width: 650px) {
   .tabs {
     display: none;

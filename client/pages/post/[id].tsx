@@ -1,4 +1,5 @@
-import { Loading, Page, Text } from "@geist-ui/core";
+import { Loading, Text } from "@geist-ui/core";
+import Page from '../../components/page/Page'
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import Document from '../../components/document'

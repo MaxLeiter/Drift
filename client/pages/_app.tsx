@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
     <GeistProvider themeType={themeType} >
       <CssBaseline />
       <Component {...pageProps} theme={themeType} changeTheme={changeTheme} />
-    </ GeistProvider>
+    </GeistProvider>
   )
 }
 

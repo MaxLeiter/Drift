@@ -1,4 +1,4 @@
-import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, useTheme, Tabs, Loading } from "@geist-ui/core";
+import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, useTheme, Tabs, Loading, Spacer } from "@geist-ui/core";
 import { Moon, Sun, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
 import { useEffect, useMemo, useState } from "react";
@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
 import Mobile from "./controls";
 import Controls from "./controls";
-
+import NextLink from 'next/link'
 
 const Header = ({ changeTheme, theme }: DriftProps) => {
     const router = useRouter();
@@ -91,8 +91,8 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
     }
 
     return (
-        <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"} >
-            <div className={styles.tabs}>
+        <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"}>
+            {!isMobile && <div className={styles.tabs}>
                 <Tabs
                     value={selectedTab}
                     leftSpace={0}
@@ -119,7 +119,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                         else return null
                     })}
                 </Tabs>
-            </div>
+            </div>}
             <div className="controls">
                 {isMobile && (
                     <Button
@@ -131,6 +131,28 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     </Button>
                 )}
             </div>
+            {isMobile && expanded && (<div className={styles.mobile}>
+                <ButtonGroup vertical>
+                    {pages.map((tab, index) => {
+                        if (tab.condition)
+                            return <Button
+                                key={`${tab.name}-${index}`}
+                                onClick={() => {
+                                    const nameMatch = pages.find(page => page.name === tab.name)
+                                    if (nameMatch?.action) {
+                                        nameMatch.action()
+                                    } else {
+                                        router.push(`${tab.href}`)
+                                    }
+                                }}
+                                icon={tab.icon}
+                            >
+                                {tab.name}
+                            </Button>
+                    })}
+                </ButtonGroup>
+            </div>)}
+
         </Page.Header >
     )
 }
