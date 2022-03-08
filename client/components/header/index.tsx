@@ -5,9 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
-import Mobile from "./controls";
-import Controls from "./controls";
-import NextLink from 'next/link'
 
 const Header = ({ changeTheme, theme }: DriftProps) => {
     const router = useRouter();
@@ -90,12 +87,6 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
         })?.href)
     }, [pages, router, router.pathname])
 
-    if (isLoading) {
-        return <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"} >
-
-        </Page.Header>
-    }
-
     return (
         <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"}>
             {!isMobile && <div className={styles.tabs}>
@@ -114,7 +105,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                             router.push(`${tab}`)
                         }
                     }}>
-                    {pages.map((tab, index) => {
+                    {!isLoading && pages.map((tab, index) => {
                         if (tab.condition)
                             return <Tabs.Item
                                 font="14px"
