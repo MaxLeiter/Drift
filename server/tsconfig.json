@@ -12,7 +12,8 @@
     "pretty": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "outDir": "dist"
   },
   "include": ["lib/**/*.ts", "index.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]

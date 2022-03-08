@@ -1,5 +1,5 @@
-import { Loading, Text } from "@geist-ui/core";
-import Page from '../../components/page/Page'
+import { Loading, Page, Text } from "@geist-ui/core";
+
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import Document from '../../components/document'
@@ -45,7 +45,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
     }, [router, router.query.id])
 
     return (
-        <Page>
+        <Page width={"100%"}>
             <Page.Header>
                 <Header theme={theme} changeTheme={changeTheme} />
             </Page.Header>
