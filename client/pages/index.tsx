@@ -28,12 +28,16 @@ const Home = ({ theme, changeTheme }: ThemeProps) => {
 - User authentication
 - Private, public, and secret posts
 
-If you want to signup, you can join at [/signup](/signup) as long as you have a passcode provided by the administrator (which you don't need for this demo). If you're already signed in, you can create a new post by clicking the "New" button in the header. This demo is on a memory-only database, so accounts and pastes can be deleted at any time.
+If you want to signup, you can join at [/signup](/signup) as long as you have a passcode provided by the administrator (which you don't need for this demo).
+**This demo is on a memory-only database, so accounts and pastes can be deleted at any time.**
+You can find the source code on [GitHub](https://github.com/MaxLeiter/drift).
 
 Drift was inspired by [this tweet](https://twitter.com/emilyst/status/1499858264346935297):
 > What is the absolute closest thing to GitHub Gist that can be self-hosted?
   In terms of design and functionality. Hosts images and markdown, rendered. Creates links that can be private or public. Uses/requires registration.
   I have looked at dozens of pastebin-like things.
+
+
 `}
           title={`Welcome to Drift.md`}
           initialTab={`preview`}
