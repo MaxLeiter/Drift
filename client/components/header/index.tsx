@@ -5,9 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
+import Mobile from "./controls";
+import Controls from "./controls";
 
 
-const Header = ({ changeTheme }: DriftProps) => {
+const Header = ({ changeTheme, theme }: DriftProps) => {
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState<string>();
     const [expanded, setExpanded] = useState<boolean>(false)
@@ -43,12 +45,12 @@ const Header = ({ changeTheme }: DriftProps) => {
             icon: <YourIcon />,
             condition: isSignedIn
         },
-        {
-            name: "Settings",
-            href: "/",
-            icon: <SettingsIcon />,
-            condition: isSignedIn
-        },
+        // {
+        //     name: "Settings",
+        //     href: "/settings",
+        //     icon: <SettingsIcon />,
+        //     condition: isSignedIn
+        // },
         {
             name: "Sign out",
             action: () => {
@@ -107,7 +109,6 @@ const Header = ({ changeTheme }: DriftProps) => {
                         }
                     }}>
                     {pages.map((tab, index) => {
-                        console.log(tab, tab.condition)
                         if (tab.condition)
                             return <Tabs.Item
                                 font="14px"
@@ -120,7 +121,7 @@ const Header = ({ changeTheme }: DriftProps) => {
                 </Tabs>
             </div>
             <div className="controls">
-                {isMobile ? (
+                {isMobile && (
                     <Button
                         className="menu-toggle"
                         auto
@@ -128,9 +129,6 @@ const Header = ({ changeTheme }: DriftProps) => {
                         onClick={() => setExpanded(!expanded)}>
                         <MenuIcon size="1.125rem" />
                     </Button>
-                ) : (
-                    // <Controls />
-                    <></>
                 )}
             </div>
         </Page.Header >

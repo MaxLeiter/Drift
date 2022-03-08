@@ -11,7 +11,7 @@
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 650px) {
   .tabs {
     display: none;
   }
@@ -30,4 +30,23 @@
   min-width: 40px;
   height: 40px;
   padding: 0;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: min-content;
+}
+
+.selectContent {
+  width: auto;
+  height: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectContent :global(svg) {
+  margin-right: 10px;
+  margin-left: 2px;
 }
