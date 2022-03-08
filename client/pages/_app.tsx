@@ -16,10 +16,11 @@ export type DriftProps = ThemeProps
 
 function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
   const [themeType, setThemeType] = useState<string>(typeof window !== 'undefined' ? localStorage.getItem('drift-theme') || 'light' : 'light')
+
   const changeTheme = () => {
     const newTheme = themeType === 'dark' ? 'light' : 'dark'
     localStorage.setItem('drift-theme', newTheme)
-    setThemeType(newTheme)
+    setThemeType(last => (last === 'dark' ? 'light' : 'dark'))
   }
 
   return (

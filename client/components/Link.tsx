@@ -5,7 +5,7 @@ const Link = (props: LinkProps) => {
     const { basePath } = useRouter();
     const propHrefWithoutLeadingSlash = props.href && props.href.startsWith("/") ? props.href.substr(1) : props.href;
     const href = basePath ? `${basePath}/${propHrefWithoutLeadingSlash}` : props.href;
-    console.log(href)
+    (href)
     return <GeistLink {...props} href={href} />
 }
 

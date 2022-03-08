@@ -66,7 +66,6 @@ users.post('/signup', async (req, res, next) => {
         }
 
         const created_user = await User.create(user);
-        console.log(user)
 
         const token = generateAccessToken(created_user.id);
 
@@ -86,7 +85,7 @@ users.post('/login', async (req, res, next) => {
         if (!user) {
             throw new Error("User does not exist");
         }
-        console.log(user)
+
         const password_valid = await compare(req.body.password, user.password);
         if (password_valid) {
             const token = generateAccessToken(user.id);

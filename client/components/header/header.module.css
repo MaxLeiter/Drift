@@ -1,0 +1,33 @@
+.tabs {
+  flex: 1 1;
+  padding: 0 var(--gap);
+}
+
+.tabs .current {
+  border-bottom: 2px solid initial;
+}
+
+.tabs :global(.content) {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .tabs {
+    display: none;
+  }
+}
+
+.controls {
+  flex: 1 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.controls :global(.menu-toggle) {
+  display: flex;
+  align-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+}

@@ -1,5 +1,6 @@
 :root {
   --main-content-width: 800px;
+  --page-nav-height: 60px;
   --gap: 8px;
   --gap-half: calc(var(--gap) / 2);
   --gap-double: calc(var(--gap) * 2);

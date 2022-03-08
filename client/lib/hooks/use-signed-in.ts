@@ -5,7 +5,6 @@ const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: bo
     const [isSignedIn, setSignedIn] = useState(false)
     const [isLoading, setLoading] = useState(true)
     const router = useRouter();
-    console.log(isSignedIn, isLoading, redirectIfNotAuthed)
     if (redirectIfNotAuthed && !isLoading && isSignedIn === false) {
         router.push('/signin')
     }

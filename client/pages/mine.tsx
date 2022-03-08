@@ -3,7 +3,6 @@ import styles from '../styles/Home.module.css'
 import { Page } from '@geist-ui/core'
 
 import Header from '../components/header'
-import PostList from '../components/post-list'
 import useSignedIn from '../lib/hooks/use-signed-in'
 import { Loader } from '@geist-ui/icons'
 import MyPosts from '../components/my-posts'

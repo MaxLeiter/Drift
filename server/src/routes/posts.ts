@@ -33,7 +33,6 @@ posts.post('/create', jwt, async (req, res, next) => {
         })
 
         await newPost.save()
-        console.log("UserId", req.body.userId)
         await newPost.$add('users', req.body.userId);
         const newFiles = await Promise.all(req.body.files.map(async (file) => {
             // Establish a "file" for each file in the request
@@ -50,7 +49,6 @@ posts.post('/create', jwt, async (req, res, next) => {
         }))
 
         await Promise.all(newFiles.map((file) => {
-            console.log("FileId", file.id)
             newPost.$add("files", file.id);
             newPost.save();
         }))
@@ -81,7 +79,6 @@ posts.get("/:id", async (req: UserJwtRequest, res, next) => {
             ]
         })
 
-        console.log(post)
         if (post?.visibility === 'public' || post?.visibility === 'unlisted') {
             res.json(post);
         } else {
