@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -8,7 +11,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:3000/:path*",
+        destination: `${process.env.API_URL}/:path*`,
       },
     ];
   },
