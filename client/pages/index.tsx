@@ -37,7 +37,7 @@ export function getStaticProps() {
 - Search
 - "Forking"
 - LaTeX
-- Syntax highlighting based on filename ending"`
+- Syntax highlighting based on filename ending`
 
   return {
     props: {
