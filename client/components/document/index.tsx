@@ -17,6 +17,7 @@ type Props = {
 const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit' }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
+    const height = editable ? "500px" : '100%'
 
     const handleTabChange = (newTab: string) => {
         if (newTab === 'edit') {
@@ -59,20 +60,23 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                     <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                         {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-                        <Textarea
-                            ref={codeEditorRef}
-                            placeholder="Type some contents..."
-                            value={content}
-                            onChange={(event) => setContent ? setContent(event.target.value) : null}
-                            width="100%"
-                            height="500px"
-                            disabled={!editable}
-                            resize="vertical"
-                            className={styles.textarea}
-                        />
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <Textarea
+                                ref={codeEditorRef}
+                                placeholder="Type some contents..."
+                                value={content}
+                                onChange={(event) => setContent ? setContent(event.target.value) : null}
+                                width="100%"
+                                disabled={!editable}
+                                // TODO: Textarea should grow to fill parent if height == 100%
+                                style={{ flex: 1, minHeight: 350 }}
+                                resize="vertical"
+                                className={styles.textarea}
+                            />
+                        </div>
                     </Tabs.Item>
                     <Tabs.Item label="Preview" value="preview">
-                        <MarkdownPreview height={500} content={content} />
+                        <MarkdownPreview height={height} content={content} />
                     </Tabs.Item>
                 </Tabs>
 

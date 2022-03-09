@@ -13,12 +13,20 @@
 
 .mobile {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.controls {
+  display: none !important;
 }
 
 @media only screen and (max-width: 650px) {
   .tabs {
     display: none;
+  }
+
+  .controls {
+    display: block !important;
   }
 }
 
@@ -26,15 +34,6 @@
   flex: 1 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-}
-
-.controls :global(.menu-toggle) {
-  display: flex;
-  align-items: center;
-  min-width: 40px;
-  height: 40px;
-  padding: 0;
 }
 
 .wrapper {

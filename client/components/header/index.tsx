@@ -72,12 +72,12 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             condition: !isSignedIn
         },
         {
-            name: "",
+            name: isMobile ? "GitHub" : "",
             href: "https://github.com/maxleiter/drift",
             icon: <GitHubIcon />,
             condition: true
         }
-    ], [isSignedIn, router])
+    ], [isMobile, isSignedIn, router])
 
     useEffect(() => {
         setSelectedTab(pages.find((page) => {
@@ -89,7 +89,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
 
     return (
         <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"}>
-            {!isMobile && <div className={styles.tabs}>
+            <div className={styles.tabs}>
                 <Tabs
                     value={selectedTab}
                     leftSpace={0}
@@ -116,17 +116,14 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                         else return null
                     })}
                 </Tabs>
-            </div>}
-            <div className="controls">
-                {isMobile && (
-                    <Button
-                        className="menu-toggle"
-                        auto
-                        type="abort"
-                        onClick={() => setExpanded(!expanded)}>
-                        <MenuIcon size="1.125rem" />
-                    </Button>
-                )}
+            </div>
+            <div className={styles.controls}>
+                <Button
+                    auto
+                    type="abort"
+                    onClick={() => setExpanded(!expanded)}>
+                    <MenuIcon size="1.125rem" />
+                </Button>
             </div>
             {isMobile && expanded && (<div className={styles.mobile}>
                 <ButtonGroup vertical>

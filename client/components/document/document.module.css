@@ -24,3 +24,7 @@
   /* Override geist-ui styling */
   margin: 0 !important;
 }
+
+.textarea {
+  height: 100%;
+}
