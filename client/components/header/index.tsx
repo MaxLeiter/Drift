@@ -121,8 +121,10 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 <Button
                     auto
                     type="abort"
-                    onClick={() => setExpanded(!expanded)}>
-                    <MenuIcon size="1.125rem" />
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    <Spacer height={5 / 6} width={0} />
+                    <MenuIcon size="1.5rem" />
                 </Button>
             </div>
             {isMobile && expanded && (<div className={styles.mobile}>

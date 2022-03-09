@@ -10,12 +10,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 
-.title > div {
-  flex-grow: 1;
-}
-
-.mygist {
-  flex-grow: 0.4;
+@media screen and (max-width: 650px) {
+  .title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

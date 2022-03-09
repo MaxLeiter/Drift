@@ -55,7 +55,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         disabled={!editable}
                         width={"100%"}
                     />
-                    {remove && editable && <Button type="error" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
+                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}

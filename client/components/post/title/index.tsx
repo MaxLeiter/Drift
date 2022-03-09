@@ -17,8 +17,8 @@ type props = {
 
 const Title = ({ setTitle, title }: props) => {
     return (<div className={styles.title}>
-        <Text h1 width={"150px"} className={styles.drift}>Drift &mdash;</Text>
-        <ShiftBy y={-6}>
+        <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
+        <ShiftBy y={-3}>
             <Input
                 placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
                 value={title || ""}

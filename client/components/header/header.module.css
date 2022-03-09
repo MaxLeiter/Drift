@@ -30,10 +30,10 @@
   }
 }
 
-.controls {
-  flex: 1 1;
-  display: flex;
-  align-items: center;
+.controls button:active,
+.controls button:focus,
+.controls button:hover {
+  outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .wrapper {
