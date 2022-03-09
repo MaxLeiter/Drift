@@ -93,7 +93,7 @@ const Post = () => {
                     style={{ flex: .5, lineHeight: '40px' }}
                     type="default"
                 >
-                    Add another document
+                    Add a File
                 </Button>
 
                 <ButtonDropdown loading={isSubmitting} type="success">

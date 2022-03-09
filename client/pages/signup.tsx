@@ -8,7 +8,7 @@ const SignUp = ({ theme, changeTheme }: ThemeProps) => (
         <Page.Header>
             <Header theme={theme} changeTheme={changeTheme} />
         </Page.Header>
-        <Page.Content width={"var(--main-content-width)"} margin="auto">
+        <Page.Content width={"var(--main-content-width)"} paddingTop={"var(--gap)"} margin="auto">
             <Auth page="signup" />
         </Page.Content>
     </Page>

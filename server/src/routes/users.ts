@@ -42,7 +42,7 @@ users.get("/mine", jwt, async (req: UserJwtRequest, res, next) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" })
         }
-        return res.json(user.posts)
+        return res.json(user.posts?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()))
     } catch (error) {
         next(error)
     }

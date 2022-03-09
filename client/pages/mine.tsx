@@ -20,7 +20,7 @@ const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: ()
       <Page.Header>
         <Header theme={theme} changeTheme={changeTheme} />
       </Page.Header>
-      <Page.Content width={"var(--main-content-width)"} margin="0 auto" className={styles.main}>
+      <Page.Content paddingTop={"var(--gap)"} width={"var(--main-content-width)"} margin="0 auto" className={styles.main}>
         {isLoading && <div style={{ margin: "0 auto" }}><Loader /></div>}
         {isSignedIn && <MyPosts />}
       </Page.Content>

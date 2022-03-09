@@ -8,7 +8,7 @@ const SignIn = ({ theme, changeTheme }: ThemeProps) => (
         <Page.Header>
             <Header theme={theme} changeTheme={changeTheme} />
         </Page.Header>
-        <Page.Content width={"var(--main-content-width)"} margin="auto">
+        <Page.Content paddingTop={"var(--gap)"} width={"var(--main-content-width)"} margin="auto">
             <Auth page="signin" />
         </Page.Content>
     </Page>
