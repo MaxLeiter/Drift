@@ -8,6 +8,9 @@ const titlePlaceholders = [
     "Status update for ...",
     "My new project",
     "My new idea",
+    "Let's talk about...",
+    "What's up with ...",
+    "I'm thinking about ...",
 ]
 
 type props = {
@@ -25,7 +28,7 @@ const Title = ({ setTitle, title }: props) => {
                 onChange={(event) => setTitle(event.target.value)}
                 height={"55px"}
                 font={1.5}
-                label="Your title"
+                label="Post title"
                 marginLeft={'var(--gap)'}
                 style={{ width: "100%" }}
             />

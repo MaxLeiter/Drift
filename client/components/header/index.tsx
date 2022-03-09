@@ -1,5 +1,5 @@
 import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, useTheme, Tabs, Loading, Spacer } from "@geist-ui/core";
-import { Github as GitHubIcon, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon } from "@geist-ui/icons";
+import { Github as GitHubIcon, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon, Moon, Sun } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
 import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
@@ -28,19 +28,22 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             name: "Home",
             href: "/",
             icon: <HomeIcon />,
-            condition: true
+            condition: true,
+            value: "home"
         },
         {
             name: "New",
             href: "/new",
             icon: <NewIcon />,
-            condition: isSignedIn
+            condition: isSignedIn,
+            value: "new"
         },
         {
             name: "Yours",
             href: "/mine",
             icon: <YourIcon />,
-            condition: isSignedIn
+            condition: isSignedIn,
+            value: "mine"
         },
         // {
         //     name: "Settings",
@@ -57,27 +60,42 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 }
             },
             icon: <SignoutIcon />,
-            condition: isSignedIn
+            condition: isSignedIn,
+            value: "signout"
         },
         {
             name: "Sign in",
             href: "/signin",
             icon: <SignInIcon />,
-            condition: !isSignedIn
+            condition: !isSignedIn,
+            value: "signin"
         },
         {
             name: "Sign up",
             href: "/signup",
             icon: <SignUpIcon />,
-            condition: !isSignedIn
+            condition: !isSignedIn,
+            value: "signup"
         },
         {
             name: isMobile ? "GitHub" : "",
             href: "https://github.com/maxleiter/drift",
             icon: <GitHubIcon />,
-            condition: true
+            condition: true,
+            value: "github"
+        },
+        {
+            name: isMobile ? "Change theme" : "",
+            action: function () {
+                if (typeof window !== 'undefined') {
+                    changeTheme();
+                }
+            },
+            icon: theme === 'light' ? <Moon /> : <Sun />,
+            condition: true,
+            value: "theme",
         }
-    ], [isMobile, isSignedIn, router])
+    ], [changeTheme, isMobile, isSignedIn, router, theme])
 
     useEffect(() => {
         setSelectedTab(pages.find((page) => {
@@ -98,20 +116,20 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     hideDivider
                     hideBorder
                     onChange={(tab) => {
-                        const nameMatch = pages.find(page => page.name === tab)
-                        if (nameMatch?.action) {
-                            nameMatch.action()
-                        } else {
-                            router.push(`${tab}`)
+                        const match = pages.find(page => page.value === tab)
+                        if (match?.action) {
+                            match.action()
+                        } else if (match?.href) {
+                            router.push(`${match.href}`)
                         }
                     }}>
-                    {!isLoading && pages.map((tab, index) => {
+                    {!isLoading && pages.map((tab) => {
                         if (tab.condition)
                             return <Tabs.Item
                                 font="14px"
                                 label={<>{tab.icon} {tab.name}</>}
-                                value={tab.href || tab.name}
-                                key={`${tab.name}-${index}`}
+                                value={tab.value}
+                                key={`${tab.value}`}
                             />
                         else return null
                     })}
@@ -124,7 +142,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     onClick={() => setExpanded(!expanded)}
                 >
                     <Spacer height={5 / 6} width={0} />
-                    <MenuIcon size="1.5rem" />
+                    <MenuIcon />
                 </Button>
             </div>
             {isMobile && expanded && (<div className={styles.mobile}>

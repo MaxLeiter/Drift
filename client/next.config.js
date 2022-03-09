@@ -1,8 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-console.log(`${process.env.API_URL}/:path*`);
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

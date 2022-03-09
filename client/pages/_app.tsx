@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { GeistProvider, CssBaseline } from '@geist-ui/core'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
 
 export type ThemeProps = {
@@ -15,7 +15,13 @@ type AppProps<P = any> = {
 export type DriftProps = ThemeProps
 
 function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
-  const [themeType, setThemeType] = useState<string>(typeof window !== 'undefined' ? localStorage.getItem('drift-theme') || 'light' : 'light')
+  const [themeType, setThemeType] = useState<string>('light')
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.localStorage) return
+    const storedTheme = window.localStorage.getItem('drift-theme')
+    if (storedTheme) setThemeType(storedTheme)
+  }, [])
 
   const changeTheme = () => {
     const newTheme = themeType === 'dark' ? 'light' : 'dark'
