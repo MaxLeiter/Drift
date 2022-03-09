@@ -70,7 +70,6 @@ const Home = ({ theme, changeTheme, introContent, todoContent }: Props) => {
           title={`Welcome to Drift.md`}
           initialTab={`preview`}
         />
-        <Spacer height={1} />
         <Document
           editable={false}
           content={todoContent}
