@@ -59,6 +59,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     router.push("/signin");
                 }
             },
+            href: "#signout",
             icon: <SignoutIcon />,
             condition: isSignedIn,
             value: "signout"
@@ -89,6 +90,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             action: function () {
                 if (typeof window !== 'undefined') {
                     changeTheme();
+                    setSelectedTab(undefined);
                 }
             },
             icon: theme === 'light' ? <Moon /> : <Sun />,

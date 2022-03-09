@@ -1,5 +1,5 @@
-import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
-import { ChangeEvent, FormEvent, memo, useEffect, useReducer, useRef, useState } from "react"
+import { Button, Card, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
+import { ChangeEvent, memo, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
 import MarkdownPreview from '../preview'
 import { Trash } from '@geist-ui/icons'
@@ -25,6 +25,14 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         }
         setTab(newTab as 'edit' | 'preview')
     }
+
+    const getType = useMemo(() => {
+        if (!title) return
+        const pathParts = title.split(".")
+        const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
+        console.log(language)
+        return language
+    }, [title])
 
     const removeFile = (remove?: () => void) => {
         if (remove) {
@@ -78,7 +86,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <MarkdownPreview height={height} content={content} />
+                            <MarkdownPreview height={height} content={content} type={getType} />
                         </Tabs.Item>
                     </Tabs>
 

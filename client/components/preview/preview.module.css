@@ -1,3 +1,14 @@
+.markdownPreview pre {
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1.42857143;
+  margin: 0;
+  padding: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .markdownPreview h1,
 .markdownPreview h2,
 .markdownPreview h3,

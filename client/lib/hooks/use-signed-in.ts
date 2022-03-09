@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
+import useSharedState from "./use-shared-state";
 
 const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: boolean }) => {
-    const [isSignedIn, setSignedIn] = useState(false)
-    const [isLoading, setLoading] = useState(true)
+    const [isSignedIn, setSignedIn] = useSharedState('isSignedIn', false)
+    const [isLoading, setLoading] = useSharedState('isLoading', true)
     const router = useRouter();
     if (redirectIfNotAuthed && !isLoading && isSignedIn === false) {
         router.push('/signin')
@@ -33,7 +34,7 @@ const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: bo
         }, 60 * 1000);
 
         return () => clearInterval(interval);
-    }, [])
+    }, [setLoading, setSignedIn])
 
     return { isSignedIn, isLoading }
 }

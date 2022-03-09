@@ -20,6 +20,8 @@
     "react-debounce-render": "^8.0.2",
     "react-dom": "17.0.2",
     "react-markdown": "^8.0.0",
+    "react-syntax-highlighter": "^15.4.5",
+    "react-syntax-highlighter-virtualized-renderer": "^1.1.0",
     "rehype-katex": "^6.0.2",
     "rehype-stringify": "^9.0.3",
     "remark-gfm": "^3.0.1",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@types/node": "17.0.21",
     "@types/react": "17.0.39",
+    "@types/react-syntax-highlighter": "^13.5.2",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
     "typescript": "4.6.2"
