@@ -4,17 +4,19 @@ import styles from './document.module.css'
 import MarkdownPreview from '../preview'
 import { Trash } from '@geist-ui/icons'
 import FormattingIcons from "../formatting-icons"
+import Skeleton from "react-loading-skeleton"
 type Props = {
-    editable: boolean
+    editable?: boolean
     remove?: () => void
     title?: string
     content?: string
     setTitle?: (title: string) => void
     setContent?: (content: string) => void
     initialTab?: "edit" | "preview"
+    skeleton?: boolean
 }
 
-const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit' }: Props) => {
+const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     const height = editable ? "500px" : '100%'
@@ -46,7 +48,21 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
             }
         }
     }
-
+    if (skeleton) {
+        return <>
+            <Spacer height={1} />
+            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
+                <div className={styles.fileNameContainer}>
+                    <Skeleton width={275} height={36} />
+                    {editable && <Skeleton width={36} height={36} />}
+                </div>
+                <div className={styles.descriptionContainer}>
+                    <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
+                    <Skeleton width={'100%'} height={350} />
+                </div >
+            </Card>
+        </>
+    }
     return (
         <>
             <Spacer height={1} />

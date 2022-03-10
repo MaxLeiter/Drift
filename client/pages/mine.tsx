@@ -3,13 +3,9 @@ import styles from '../styles/Home.module.css'
 import { Page } from '@geist-ui/core'
 
 import Header from '../components/header'
-import useSignedIn from '../lib/hooks/use-signed-in'
-import { Loader } from '@geist-ui/icons'
 import MyPosts from '../components/my-posts'
 
 const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: () => void }) => {
-  const { isLoading, isSignedIn } = useSignedIn({ redirectIfNotAuthed: true })
-
   return (
     <Page className={styles.container} width="100%">
       <Head>
@@ -21,8 +17,7 @@ const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: ()
         <Header theme={theme} changeTheme={changeTheme} />
       </Page.Header>
       <Page.Content paddingTop={"var(--gap)"} width={"var(--main-content-width)"} margin="0 auto" className={styles.main}>
-        {isLoading && <div style={{ margin: "0 auto" }}><Loader /></div>}
-        {isSignedIn && <MyPosts />}
+        <MyPosts />
       </Page.Content>
     </Page >
   )

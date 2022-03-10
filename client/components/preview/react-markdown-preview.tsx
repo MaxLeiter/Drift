@@ -23,7 +23,7 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
                     return !inline && match ? (
                         <SyntaxHighlighter
                             lineNumberStyle={{
-                                minWidth: "1.25rem"
+                                minWidth: "2.25rem"
                             }}
                             customStyle={{
                                 padding: 0,
