@@ -54,14 +54,16 @@ users.post('/signup', async (req, res, next) => {
             throw new Error("Please provide a username and password")
         }
 
-        const existingUser = await User.findOne({ where: { username: req.body.username } })
+        const username = req.body.username.toLowerCase();
+
+        const existingUser = await User.findOne({ where: { username: username } })
         if (existingUser) {
             throw new Error("Username already exists")
         }
 
         const salt = await genSalt(10)
         const user = {
-            username: req.body.username as string,
+            username: username as string,
             password: await hash(req.body.password, salt)
         }
 
@@ -81,7 +83,8 @@ users.post('/login', async (req, res, next) => {
             throw new Error("Missing username or password")
         }
 
-        const user = await User.findOne({ where: { username: req.body.username } });
+        const username = req.body.username.toLowerCase();
+        const user = await User.findOne({ where: { username: username } });
         if (!user) {
             throw new Error("User does not exist");
         }
