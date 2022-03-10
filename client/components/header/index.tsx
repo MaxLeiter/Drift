@@ -6,13 +6,24 @@ import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
 
+type Tab = {
+    name: string
+    icon: JSX.Element
+    condition?: boolean
+    value: string
+    onClick?: () => void
+    href?: string
+}
+
+
 const Header = ({ changeTheme, theme }: DriftProps) => {
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState<string>();
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
-    const { isLoading, isSignedIn } = useSignedIn({ redirectIfNotAuthed: false })
+    const { isLoading, isSignedIn, signout } = useSignedIn({ redirectIfNotAuthed: false })
+    const [pages, setPages] = useState<Tab[]>([])
 
     useEffect(() => {
         setBodyHidden(expanded)
@@ -23,89 +34,120 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             setExpanded(false)
         }
     }, [isMobile])
-    const pages = useMemo(() => [
-        {
-            name: "Home",
-            href: "/",
-            icon: <HomeIcon />,
-            condition: true,
-            value: "home"
-        },
-        {
-            name: "New",
-            href: "/new",
-            icon: <NewIcon />,
-            condition: isSignedIn,
-            value: "new"
-        },
-        {
-            name: "Yours",
-            href: "/mine",
-            icon: <YourIcon />,
-            condition: isSignedIn,
-            value: "mine"
-        },
-        // {
-        //     name: "Settings",
-        //     href: "/settings",
-        //     icon: <SettingsIcon />,
-        //     condition: isSignedIn
-        // },
-        {
-            name: "Sign out",
-            action: () => {
-                if (typeof window !== 'undefined') {
-                    localStorage.clear();
-                    router.push("/signin");
-                }
-            },
-            href: "#signout",
-            icon: <SignoutIcon />,
-            condition: isSignedIn,
-            value: "signout"
-        },
-        {
-            name: "Sign in",
-            href: "/signin",
-            icon: <SignInIcon />,
-            condition: !isSignedIn,
-            value: "signin"
-        },
-        {
-            name: "Sign up",
-            href: "/signup",
-            icon: <SignUpIcon />,
-            condition: !isSignedIn,
-            value: "signup"
-        },
-        {
-            name: isMobile ? "GitHub" : "",
-            href: "https://github.com/maxleiter/drift",
-            icon: <GitHubIcon />,
-            condition: true,
-            value: "github"
-        },
-        {
-            name: isMobile ? "Change theme" : "",
-            action: function () {
-                if (typeof window !== 'undefined') {
-                    changeTheme();
-                    setSelectedTab(undefined);
-                }
-            },
-            icon: theme === 'light' ? <Moon /> : <Sun />,
-            condition: true,
-            value: "theme",
-        }
-    ], [changeTheme, isMobile, isSignedIn, router, theme])
 
     useEffect(() => {
-        setSelectedTab(pages.find((page) => {
-            if (page.href && page.href === router.asPath) {
-                return true
+        const pageList: Tab[] = [
+            {
+                name: "Home",
+                href: "/",
+                icon: <HomeIcon />,
+                condition: true,
+                value: "home"
+            },
+            {
+                name: "New",
+                href: "/new",
+                icon: <NewIcon />,
+                condition: isSignedIn,
+                value: "new"
+            },
+            {
+                name: "Yours",
+                href: "/mine",
+                icon: <YourIcon />,
+                condition: isSignedIn,
+                value: "mine"
+            },
+            // {
+            //     name: "Settings",
+            //     href: "/settings",
+            //     icon: <SettingsIcon />,
+            //     condition: isSignedIn
+            // },
+            {
+                name: "Sign out",
+                onClick: () => {
+                    if (typeof window !== 'undefined') {
+                        localStorage.clear();
+
+                        // // send token to API blacklist
+                        // fetch('/api/auth/signout', {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json'
+                        //     },
+                        //     body: JSON.stringify({
+                        //         token: localStorage.getItem("drift-token")
+                        //     })
+                        // })
+
+                        signout();
+                        router.push("/signin");
+                    }
+                },
+                href: "#signout",
+                icon: <SignoutIcon />,
+                condition: isSignedIn,
+                value: "signout"
+            },
+            {
+                name: "Sign in",
+                href: "/signin",
+                icon: <SignInIcon />,
+                condition: !isSignedIn,
+                value: "signin"
+            },
+            {
+                name: "Sign up",
+                href: "/signup",
+                icon: <SignUpIcon />,
+                condition: !isSignedIn,
+                value: "signup"
+            },
+            {
+                name: isMobile ? "GitHub" : "",
+                href: "https://github.com/maxleiter/drift",
+                icon: <GitHubIcon />,
+                condition: true,
+                value: "github"
+            },
+            {
+                name: isMobile ? "Change theme" : "",
+                onClick: function () {
+                    if (typeof window !== 'undefined') {
+                        changeTheme();
+                        setSelectedTab(undefined);
+                    }
+                },
+                icon: theme === 'light' ? <Moon /> : <Sun />,
+                condition: true,
+                value: "theme",
             }
-        })?.href)
-    }, [pages, router, router.pathname])
+        ]
+
+        if (isLoading) {
+            return setPages([])
+        }
+
+        setPages(pageList.filter(page => page.condition))
+    }, [changeTheme, isLoading, isMobile, isSignedIn, router, signout, theme])
+
+    // useEffect(() => {
+    //     setSelectedTab(pages.find((page) => {
+    //         if (page.href && page.href === router.asPath) {
+    //             return true
+    //         }
+    //     })?.href)
+    // }, [pages, router, router.pathname])
+
+    const onTabChange = (tab: string) => {
+        const match = pages.find(page => page.value === tab)
+        if (match?.onClick) {
+            match.onClick()
+        } else if (match?.href) {
+            router.push(`${match.href}`)
+        }
+    }
 
     return (
         <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={0} paddingTop={"var(--gap)"}>
@@ -117,23 +159,14 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     align="center"
                     hideDivider
                     hideBorder
-                    onChange={(tab) => {
-                        const match = pages.find(page => page.value === tab)
-                        if (match?.action) {
-                            match.action()
-                        } else if (match?.href) {
-                            router.push(`${match.href}`)
-                        }
-                    }}>
+                    onChange={onTabChange}>
                     {!isLoading && pages.map((tab) => {
-                        if (tab.condition)
-                            return <Tabs.Item
-                                font="14px"
-                                label={<>{tab.icon} {tab.name}</>}
-                                value={tab.value}
-                                key={`${tab.value}`}
-                            />
-                        else return null
+                        return <Tabs.Item
+                            font="14px"
+                            label={<>{tab.icon} {tab.name}</>}
+                            value={tab.value}
+                            key={`${tab.value}`}
+                        />
                     })}
                 </Tabs>
             </div>
@@ -150,21 +183,13 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             {isMobile && expanded && (<div className={styles.mobile}>
                 <ButtonGroup vertical>
                     {pages.map((tab, index) => {
-                        if (tab.condition)
-                            return <Button
-                                key={`${tab.name}-${index}`}
-                                onClick={() => {
-                                    const nameMatch = pages.find(page => page.name === tab.name)
-                                    if (nameMatch?.action) {
-                                        nameMatch.action()
-                                    } else {
-                                        router.push(`${tab.href}`)
-                                    }
-                                }}
-                                icon={tab.icon}
-                            >
-                                {tab.name}
-                            </Button>
+                        return <Button
+                            key={`${tab.name}-${index}`}
+                            onClick={() => onTabChange(tab.value)}
+                            icon={tab.icon}
+                        >
+                            {tab.name}
+                        </Button>
                     })}
                 </ButtonGroup>
             </div>)}

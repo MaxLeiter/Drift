@@ -2,9 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as errorhandler from 'strong-error-handler';
 import * as cors from 'cors';
-
-import { users } from './routes/users'
-import { posts } from './routes/posts'
+import { posts, users, auth } from './routes';
 
 export const app = express();
 
@@ -16,8 +14,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use("/users", users)
+app.use("/auth", auth)
 app.use("/posts", posts)
+app.use("/users", users)
 
 app.use(errorhandler({
     debug: process.env.ENV !== 'production',

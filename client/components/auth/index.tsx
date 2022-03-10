@@ -35,7 +35,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
         e.preventDefault()
         if (signingIn) {
             try {
-                const resp = await fetch('/api/users/login', reqOpts)
+                const resp = await fetch('/api/auth/signin', reqOpts)
                 const json = await resp.json()
                 handleJson(json)
             } catch (err: any) {
@@ -43,7 +43,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
             }
         } else {
             try {
-                const resp = await fetch('/api/users/signup', reqOpts)
+                const resp = await fetch('/api/auth/signup', reqOpts)
                 const json = await resp.json()
                 handleJson(json)
             } catch (err: any) {

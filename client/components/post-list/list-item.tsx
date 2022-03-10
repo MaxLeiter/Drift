@@ -1,4 +1,5 @@
-import { Card, Spacer, Grid, Divider, Link, Text, Input } from "@geist-ui/core"
+import { Card, Spacer, Grid, Divider, Link, Text, Input, Tooltip } from "@geist-ui/core"
+import { useEffect, useMemo, useState } from "react"
 import timeAgo from "../../lib/time-ago"
 import ShiftBy from "../shift-by"
 import VisibilityBadge from "../visibility-badge"
@@ -14,6 +15,17 @@ const FilenameInput = ({ title }: { title: string }) => <Input
 />
 
 const ListItem = ({ post }: { post: any }) => {
+    const createdDate = useMemo(() => new Date(post.createdAt), [post.createdAt])
+    const [time, setTimeAgo] = useState(timeAgo(createdDate))
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeAgo(timeAgo(createdDate))
+        }, 10000)
+        return () => clearInterval(interval)
+    }, [createdDate])
+
+    const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
     return (<li key={post.id}>
         <Card style={{ overflowY: 'scroll' }}>
             <Spacer height={1 / 2} />
@@ -24,7 +36,7 @@ const ListItem = ({ post }: { post: any }) => {
                             <ShiftBy y={-1}><VisibilityBadge visibility={post.visibility} /></ShiftBy>
                         </Link>
                     </Text></Grid>
-                <Grid xs={7}><Text type="secondary" h5>{timeAgo(new Date(post.createdAt))}</Text></Grid>
+                <Grid xs={7}><Text type="secondary" h5><Tooltip text={formattedTime}>{time}</Tooltip></Text></Grid>
                 <Grid xs={4}><Text type="secondary" h5>{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Text></Grid>
             </Grid.Container>
 
