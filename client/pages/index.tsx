@@ -25,35 +25,18 @@ export function getStaticProps() {
     In terms of design and functionality. Hosts images and markdown, rendered. Creates links that can be private or public. Uses/requires registration.
     I have looked at dozens of pastebin-like things.
   `
-  const todoDoc =
-    `#### In no particular order:
-
-- Less JavaScript usage (it's currently required)
-- A non-Node backend
-- Hosting images
-- Password-protected posts
-- Administrator panel
-- Meta tags
-- User settings
-- Search
-- "Forking"
-- LaTeX
-- Syntax highlighting based on filename ending`
-
   return {
     props: {
       introContent: introDoc,
-      todoContent: todoDoc,
     }
   }
 }
 
 type Props = ThemeProps & {
   introContent: string
-  todoContent: string
 }
 
-const Home = ({ theme, changeTheme, introContent, todoContent }: Props) => {
+const Home = ({ theme, changeTheme, introContent }: Props) => {
   return (
     <Page className={styles.container} width="100%">
       <Head>
@@ -73,12 +56,6 @@ const Home = ({ theme, changeTheme, introContent, todoContent }: Props) => {
           editable={false}
           content={introContent}
           title={`Welcome to Drift.md`}
-          initialTab={`preview`}
-        />
-        <Document
-          editable={false}
-          content={todoContent}
-          title={`TODO.md`}
           initialTab={`preview`}
         />
       </Page.Content>
