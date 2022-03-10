@@ -1,4 +1,5 @@
 import { Text } from "@geist-ui/core"
+import NextLink from "next/link"
 import Link from '../Link'
 
 import styles from './post-list.module.css'
@@ -22,7 +23,7 @@ const PostList = ({ posts, error }: Props) => {
                     <ListItemSkeleton />
                 </li>
             </ul>}
-            {posts?.length === 0 && <Text>You have no posts. Create one <Link href="/new">here</Link>.</Text>}
+            {posts?.length === 0 && <Text>You have no posts. Create one <NextLink passHref={true} href="/new"><Link color>here</Link></NextLink>.</Text>}
             {
                 posts?.length > 0 && <div>
                     <ul>
