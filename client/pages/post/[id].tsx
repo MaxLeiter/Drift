@@ -1,7 +1,8 @@
-import { Loading, Page, Text } from "@geist-ui/core";
+import { Page, Text } from "@geist-ui/core";
+import Skeleton from 'react-loading-skeleton';
 
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Document from '../../components/document'
 import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
@@ -51,7 +52,10 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
             </Page.Header>
             <Page.Content width={"var(--main-content-width)"} margin="auto">
                 {error && <Text type="error">{error}</Text>}
-                {!error && (isLoading || !post?.files) && <Loading />}
+                {/* {!error && (isLoading || !post?.files) && <Loading />} */}
+                {!error && isLoading && <><Text h2><Skeleton width={400} /></Text>
+                    <Document skeleton={true} />
+                </>}
                 {!isLoading && post && <><Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
                     {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
                         <Document
@@ -62,8 +66,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                             initialTab={'preview'}
                         />
                     ))}
-                </>
-                }
+                </>}
             </Page.Content>
 
         </Page >

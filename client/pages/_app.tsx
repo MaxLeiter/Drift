@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
 import useSharedState from '../lib/hooks/use-shared-state';
 
+import 'react-loading-skeleton/dist/skeleton.css'
+
 export type ThemeProps = {
   theme: "light" | "dark" | string,
   changeTheme: () => void
