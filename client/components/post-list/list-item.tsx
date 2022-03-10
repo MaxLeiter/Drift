@@ -1,5 +1,5 @@
 import { Card, Spacer, Grid, Divider, Link, Text, Input } from "@geist-ui/core"
-import post from "../post"
+import timeAgo from "../../lib/time-ago"
 import ShiftBy from "../shift-by"
 import VisibilityBadge from "../visibility-badge"
 
@@ -24,7 +24,7 @@ const ListItem = ({ post }: { post: any }) => {
                             <ShiftBy y={-1}><VisibilityBadge visibility={post.visibility} /></ShiftBy>
                         </Link>
                     </Text></Grid>
-                <Grid xs={7}><Text type="secondary" h5>{new Date(post.createdAt).toLocaleDateString()} </Text></Grid>
+                <Grid xs={7}><Text type="secondary" h5>{timeAgo(new Date(post.createdAt))}</Text></Grid>
                 <Grid xs={4}><Text type="secondary" h5>{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Text></Grid>
             </Grid.Container>
 
