@@ -32,7 +32,6 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         if (!title) return
         const pathParts = title.split(".")
         const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
-        console.log(language)
         return language
     }, [title])
 

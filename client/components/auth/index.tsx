@@ -20,7 +20,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
             } else {
                 localStorage.setItem('drift-token', json.token)
                 localStorage.setItem('drift-userid', json.userId)
-                router.push('/new')
+                router.push('/')
             }
         }
 

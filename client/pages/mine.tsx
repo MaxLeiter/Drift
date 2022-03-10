@@ -11,7 +11,6 @@ const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: ()
       <Head>
         <title>Drift</title>
         <meta name="description" content="A self-hostable clone of GitHub Gist" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Page.Header>
         <Header theme={theme} changeTheme={changeTheme} />

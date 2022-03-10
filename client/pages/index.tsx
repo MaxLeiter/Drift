@@ -1,14 +1,15 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Page, Spacer } from '@geist-ui/core'
+import { Page, Spacer, Text } from '@geist-ui/core'
 
 import Header from '../components/header'
 import { ThemeProps } from './_app'
 import Document from '../components/document'
+import Image from 'next/image'
+import ShiftBy from '../components/shift-by'
 
 export function getStaticProps() {
-  const introDoc = `# Welcome to Drift
-### Drift is a self-hostable clone of GitHub Gist.
+  const introDoc = `### Drift is a self-hostable clone of GitHub Gist.
 #### It is a simple way to share code and text snippets with your friends, with support for the following:
   
   - Render GitHub Extended Markdown (including images)
@@ -58,12 +59,16 @@ const Home = ({ theme, changeTheme, introContent, todoContent }: Props) => {
       <Head>
         <title>Drift</title>
         <meta name="description" content="A self-hostable clone of GitHub Gist" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Page.Header>
         <Header theme={theme} changeTheme={changeTheme} />
       </Page.Header>
       <Page.Content width={"var(--main-content-width)"} margin="auto" paddingTop={"var(--gap)"}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <ShiftBy y={-2}><Image src={'/assets/logo-optimized.svg'} width={'48px'} height={'48px'} alt="" /></ShiftBy>
+          <Spacer />
+          <Text style={{ display: 'inline' }} h1> Welcome to Drift</Text>
+        </div>
         <Document
           editable={false}
           content={introContent}
