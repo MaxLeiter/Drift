@@ -1,4 +1,5 @@
 import { Card, Spacer, Grid, Divider, Link, Text, Input, Tooltip } from "@geist-ui/core"
+import NextLink from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import timeAgo from "../../lib/time-ago"
 import ShiftBy from "../shift-by"
@@ -32,9 +33,11 @@ const ListItem = ({ post }: { post: any }) => {
             <Grid.Container justify={'space-between'}>
                 <Grid xs={8}>
                     <Text h3 paddingLeft={1 / 2}>
-                        <Link color href={`/post/${post.id}`}>{post.title}
-                            <ShiftBy y={-1}><VisibilityBadge visibility={post.visibility} /></ShiftBy>
-                        </Link>
+                        <NextLink passHref={true} href={`/post/${post.id}`}>
+                            <Link color>{post.title}
+                                <ShiftBy y={-1}><VisibilityBadge visibility={post.visibility} /></ShiftBy>
+                            </Link>
+                        </NextLink>
                     </Text></Grid>
                 <Grid xs={7}><Text type="secondary" h5><Tooltip text={formattedTime}>{time}</Tooltip></Text></Grid>
                 <Grid xs={4}><Text type="secondary" h5>{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Text></Grid>
