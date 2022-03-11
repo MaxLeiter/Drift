@@ -29,7 +29,6 @@ const Title = ({ setTitle, title }: props) => {
                 height={"55px"}
                 font={1.5}
                 label="Post title"
-                marginLeft={'var(--gap)'}
                 style={{ width: "100%" }}
             />
         </ShiftBy>
