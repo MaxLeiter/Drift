@@ -3,11 +3,11 @@
   padding: 0 var(--gap);
 }
 
-.tabs .current {
-  border-bottom: 2px solid initial;
+.current {
+  padding-top: 100px !important;
 }
 
-.tabs :global(.content) {
+.tabs .content {
   display: none;
 }
 

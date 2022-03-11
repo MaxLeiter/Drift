@@ -1,4 +1,4 @@
-import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, useTheme, Tabs, Loading, Spacer } from "@geist-ui/core";
+import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, Tabs, Spacer } from "@geist-ui/core";
 import { Github as GitHubIcon, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon, Moon, Sun } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
 import { useEffect, useMemo, useState } from "react";
@@ -134,6 +134,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
 
     // useEffect(() => {
     //     setSelectedTab(pages.find((page) => {
+    //         console.log(page.href, router.asPath)
     //         if (page.href && page.href === router.asPath) {
     //             return true
     //         }
@@ -155,7 +156,6 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 <Tabs
                     value={selectedTab}
                     leftSpace={0}
-                    activeClassName={styles.current}
                     align="center"
                     hideDivider
                     hideBorder
@@ -193,7 +193,6 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     })}
                 </ButtonGroup>
             </div>)}
-
         </Page.Header >
     )
 }
