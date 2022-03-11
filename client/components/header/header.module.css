@@ -3,14 +3,6 @@
   padding: 0 var(--gap);
 }
 
-.current {
-  padding-top: 100px !important;
-}
-
-.tabs .content {
-  display: none;
-}
-
 .mobile {
   position: relative;
   z-index: 2;
@@ -48,9 +40,4 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.selectContent :global(svg) {
-  margin-right: 10px;
-  margin-left: 2px;
 }
