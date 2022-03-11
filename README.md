@@ -1,4 +1,5 @@
-# Drift
+# <img src="client/public/assets/logo.png" height="32px" alt="" /> Drift
+
 
 Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is (almost, no database yet) completely functional. 
 
@@ -12,7 +13,7 @@ Drit is a major work in progress. Below is a (rough) list of completed and envis
 - [x] creating and sharing private, public, unlisted posts
   - [x] syntax highlighting (detected by file extension)
   - [x] multiple files per post
-  - [ ] uploading files via drag-and-drop
+  - [x] uploading files via drag-and-drop
 - [x] responsive UI
 - [x] user auth
   - [ ] SSO via HTTP header (Issue: [#11](https://github.com/MaxLeiter/Drift/issues/11))
