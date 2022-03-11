@@ -5,7 +5,7 @@ import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 // @ts-ignore because of no types in remark-a11y-emoji
 import a11yEmoji from '@fec/remark-a11y-emoji';
 import styles from './preview.module.css'
-import { duotoneDark, duotoneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { vscDarkPlus as dark, vs as light } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import useSharedState from "../../lib/hooks/use-shared-state";
 
 type Props = {
@@ -33,7 +33,7 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
                             codeTagProps={{
                                 style: { background: 'transparent' }
                             }}
-                            style={themeType === 'dark' ? duotoneDark : duotoneLight}
+                            style={themeType === 'dark' ? dark : light}
                             showLineNumbers={true}
                             language={match[1]}
                             PreTag="div"
