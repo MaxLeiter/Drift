@@ -3,9 +3,11 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
 import generateUUID from '../../lib/generate-uuid';
 import Document from '../document';
+import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
-type Document = {
+
+export type Document = {
     title: string
     content: string
     id: string
@@ -63,6 +65,7 @@ const Post = () => {
     return (
         <div>
             <Title title={title} setTitle={setTitle} />
+            <FileDropzone docs={docs} setDocs={setDocs} />
             {
                 docs.map(({ id }) => {
                     const doc = docs.find((doc) => doc.id === id)
