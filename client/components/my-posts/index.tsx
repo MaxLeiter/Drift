@@ -9,7 +9,7 @@ const fetcher = (url: string) => fetch(url, {
 }).then(r => r.json())
 
 const MyPosts = () => {
-    const { data, error } = useSWR('/api/users/mine', fetcher)
+    const { data, error } = useSWR('/server-api/users/mine', fetcher)
     return <PostList posts={data} error={error} />
 }
 

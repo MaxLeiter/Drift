@@ -16,7 +16,7 @@ const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: bo
         async function checkToken() {
             const token = localStorage.getItem('drift-token')
             if (token) {
-                const response = await fetch('/api/auth/verify-token', {
+                const response = await fetch('/server-api/auth/verify-token', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`

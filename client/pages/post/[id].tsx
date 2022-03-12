@@ -1,4 +1,4 @@
-import { Page, Text } from "@geist-ui/core";
+import { Button, Page, Text } from "@geist-ui/core";
 import Skeleton from 'react-loading-skeleton';
 
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
         async function fetchPost() {
             setIsLoading(true);
             if (router.query.id) {
-                const post = await fetch(`/api/posts/${router.query.id}`, {
+                const post = await fetch(`/server-api/posts/${router.query.id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -46,6 +46,23 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
         fetchPost()
     }, [router, router.query.id])
 
+    const download = async () => {
+        const clientZip = require("client-zip")
+
+        const blob = await clientZip.downloadZip(post.files.map((file: any) => {
+            return {
+                name: file.title,
+                input: file.content,
+                lastModified: new Date(file.updatedAt)
+            }
+        })).blob()
+        const link = document.createElement("a")
+        link.href = URL.createObjectURL(blob)
+        link.download = `${post.title}.zip`
+        link.click()
+        link.remove()
+    }
+
     return (
         <Page width={"100%"}>
             <Head>
@@ -62,10 +79,17 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                 {!error && isLoading && <><Text h2><Skeleton width={400} /></Text>
                     <Document skeleton={true} />
                 </>}
-                {!isLoading && post && <><Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
+                {!isLoading && post && <>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
+                        <Button auto onClick={download}>
+                            Download as Zip
+                        </Button>
+                    </div>
                     {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
                         <Document
                             key={id}
+                            id={id}
                             content={content}
                             title={title}
                             editable={false}

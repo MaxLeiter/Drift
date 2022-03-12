@@ -94,35 +94,37 @@ const allowedFileExtensions = [
     'webmanifest',
 ]
 
-// TODO: this shouldn't need to know about docs
-function FileDropzone({ setDocs, docs }: { setDocs: (docs: Document[]) => void, docs: Document[] }) {
+function FileDropzone({ setDocs, docs }: { setDocs: React.Dispatch<React.SetStateAction<Document[]>>, docs: Document[] }) {
     const { palette } = useTheme()
-    const onDrop = useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file: File) => {
-            const reader = new FileReader()
+    const { setToast } = useToasts()
+    const onDrop = useCallback(async (acceptedFiles) => {
+        const newDocs = await Promise.all(acceptedFiles.map((file: File) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader()
 
-            reader.onabort = () => console.log('file reading was aborted')
-            reader.onerror = () => console.log('file reading has failed')
-            reader.onload = () => {
-                const content = reader.result as string
-                if (docs.length === 1 && docs[0].content === '') {
-                    setDocs([{
+                reader.onabort = () => setToast({ text: 'File reading was aborted', type: 'error' })
+                reader.onerror = () => setToast({ text: 'File reading failed', type: 'error' })
+                reader.onload = () => {
+                    const content = reader.result as string
+                    resolve({
                         title: file.name,
                         content,
                         id: generateUUID()
-                    }])
-                } else {
-                    setDocs([...docs, {
-                        title: file.name,
-                        content,
-                        id: generateUUID()
-                    }])
+                    })
                 }
-            }
-            reader.readAsText(file)
-        })
+                reader.readAsText(file)
+            })
+        }))
 
-    }, [docs, setDocs])
+        if (docs.length === 1) {
+            if (docs[0].content === '') {
+                setDocs(newDocs)
+                return
+            }
+        }
+
+        setDocs((oldDocs) => [...oldDocs, ...newDocs])
+    }, [setDocs, setToast, docs])
 
     const validator = (file: File) => {
         // TODO: make this configurable

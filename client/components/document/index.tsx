@@ -15,19 +15,21 @@ type Props = {
     setContent?: (content: string) => void
     initialTab?: "edit" | "preview"
     skeleton?: boolean
+    id?: string
 }
 
-const DownloadButton = ({ rawLink, download }: { rawLink?: string, download: () => void }) => {
+const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
     return (<div className={styles.actionWrapper}>
         <ButtonGroup className={styles.actions}>
             <Tooltip text="Download">
-                <Button
-                    scale={2 / 3} px={0.6}
-                    icon={<Download />}
-                    auto
-                    aria-label="Download"
-                    onClick={download}
-                />
+                <a href={`${rawLink}?download=true`} target="_blank" rel="noopener noreferrer">
+                    <Button
+                        scale={2 / 3} px={0.6}
+                        icon={<Download />}
+                        auto
+                        aria-label="Download"
+                    />
+                </a>
             </Tooltip>
             <Tooltip text="Open raw in new tab">
                 <a href={rawLink} target="_blank" rel="noopener noreferrer">
@@ -44,7 +46,7 @@ const DownloadButton = ({ rawLink, download }: { rawLink?: string, download: () 
 }
 
 
-const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton }: Props) => {
+const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     const height = editable ? "500px" : '100%'
@@ -76,25 +78,11 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         }
     }
 
-    const download = useCallback(() => {
-        if (title) {
-            console.log("downloading")
-            const blob = new Blob([content || ''], { type: "text/plain;charset=utf-8" })
-            const url = URL.createObjectURL(blob)
-            const a = document.createElement("a")
-            a.href = url
-            a.download = title
-            document.body.appendChild(a)
-            a.click()
-            document.body.removeChild(a)
-        }
-    }, [title, content])
-
     const rawLink = useMemo(() => {
-        if (title) {
-            return `/raw/${title}`
+        if (id) {
+            return `/file/raw/${id}`
         }
-    }, [title])
+    }, [id])
 
     if (skeleton) {
         return <>
@@ -131,7 +119,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
-                    {!editable && <DownloadButton download={download} rawLink={rawLink} />}
+                    {rawLink && <DownloadButton rawLink={rawLink} />}
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}

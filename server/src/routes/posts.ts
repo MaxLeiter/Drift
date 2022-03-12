@@ -69,7 +69,7 @@ posts.get("/:id", async (req: UserJwtRequest, res, next) => {
                 {
                     model: File,
                     as: "files",
-                    attributes: ["id", "title", "content", "sha"],
+                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt"],
                 },
                 {
                     model: User,
@@ -80,8 +80,11 @@ posts.get("/:id", async (req: UserJwtRequest, res, next) => {
         })
 
         if (post?.visibility === 'public' || post?.visibility === 'unlisted') {
+            res.setHeader("Cache-Control", "public, max-age=86400");
             res.json(post);
         } else {
+            // TODO: should this be `private, `?
+            res.setHeader("Cache-Control", "max-age=86400");
             jwt(req, res, () => {
                 res.json(post);
             });
