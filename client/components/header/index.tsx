@@ -175,6 +175,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     auto
                     type="abort"
                     onClick={() => setExpanded(!expanded)}
+                    aria-label="Menu"
                 >
                     <Spacer height={5 / 6} width={0} />
                     <MenuIcon />

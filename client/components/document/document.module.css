@@ -29,3 +29,13 @@
 .textarea {
   height: 100%;
 }
+
+.actionWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.actionWrapper .actions {
+  position: absolute;
+  right: 0;
+}

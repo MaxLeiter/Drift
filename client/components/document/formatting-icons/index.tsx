@@ -1,6 +1,7 @@
 import { ButtonGroup, Button } from "@geist-ui/core"
 import { Bold, Italic, Link, Image as ImageIcon } from '@geist-ui/icons'
 import { RefObject, useCallback, useMemo } from "react"
+import styles from '../document.module.css'
 
 // TODO: clean up
 
@@ -122,11 +123,8 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
     ], [handleBoldClick, handleImageClick, handleItalicClick, handleLinkClick])
 
     return (
-        <div style={{ position: 'relative', zIndex: 1 }}>
-            <ButtonGroup style={{
-                position: 'absolute',
-                right: 0,
-            }}>
+        <div className={styles.actionWrapper}>
+            <ButtonGroup className={styles.actions}>
                 {formattingActions.map(({ icon, name, action }) => (
                     <Button auto scale={2 / 3} px={0.6} aria-label={name} key={name} icon={icon} onMouseDown={(e) => e.preventDefault()} onClick={action} />
                 ))}
