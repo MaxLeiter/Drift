@@ -1,10 +1,11 @@
-import { Button, Card, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
-import { ChangeEvent, memo, useMemo, useRef, useState } from "react"
+import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
+import { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
 import MarkdownPreview from '../preview'
-import { Trash } from '@geist-ui/icons'
-import FormattingIcons from "../formatting-icons"
+import { Trash, Download, ExternalLink } from '@geist-ui/icons'
+import FormattingIcons from "./formatting-icons"
 import Skeleton from "react-loading-skeleton"
+// import Link from "next/link"
 type Props = {
     editable?: boolean
     remove?: () => void
@@ -14,9 +15,38 @@ type Props = {
     setContent?: (content: string) => void
     initialTab?: "edit" | "preview"
     skeleton?: boolean
+    id?: string
 }
 
-const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton }: Props) => {
+const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
+    return (<div className={styles.actionWrapper}>
+        <ButtonGroup className={styles.actions}>
+            <Tooltip text="Download">
+                <a href={`${rawLink}?download=true`} target="_blank" rel="noopener noreferrer">
+                    <Button
+                        scale={2 / 3} px={0.6}
+                        icon={<Download />}
+                        auto
+                        aria-label="Download"
+                    />
+                </a>
+            </Tooltip>
+            <Tooltip text="Open raw in new tab">
+                <a href={rawLink} target="_blank" rel="noopener noreferrer">
+                    <Button
+                        scale={2 / 3} px={0.6}
+                        icon={<ExternalLink />}
+                        auto
+                        aria-label="Open raw file in new tab"
+                    />
+                </a>
+            </Tooltip>
+        </ButtonGroup>
+    </div>)
+}
+
+
+const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     const height = editable ? "500px" : '100%'
@@ -47,6 +77,13 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
             }
         }
     }
+
+    const rawLink = useMemo(() => {
+        if (id) {
+            return `/file/raw/${id}`
+        }
+    }, [id])
+
     if (skeleton) {
         return <>
             <Spacer height={1} />
@@ -82,6 +119,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
+                    {rawLink && <DownloadButton rawLink={rawLink} />}
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}

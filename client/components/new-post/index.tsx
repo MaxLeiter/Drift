@@ -31,7 +31,7 @@ const Post = () => {
 
     const onSubmit = async (visibility: string) => {
         setSubmitting(true)
-        const response = await fetch('/api/posts/create', {
+        const response = await fetch('/server-api/posts/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

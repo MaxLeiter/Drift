@@ -480,6 +480,11 @@ character-reference-invalid@^1.0.0:
   resolved "https://registry.yarnpkg.com/character-reference-invalid/-/character-reference-invalid-1.1.4.tgz#083329cda0eae272ab3dbbf37e9a382c13af1560"
   integrity sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg==
 
+client-zip@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/client-zip/-/client-zip-2.0.0.tgz#c93676c92ddb40c858da83517c27297a53874f8d"
+  integrity sha512-JFd4zdhxk5F01NmNnBq3+iMgJkkh0ku9NsI1wZlUjZ52inPJX92vR5TlSkjxRhmHJBPI7YqanD71wDEiKhdWtw==
+
 clsx@^1.0.4:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
