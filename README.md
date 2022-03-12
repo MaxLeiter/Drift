@@ -42,4 +42,4 @@ Drit is a major work in progress. Below is a (rough) list of completed and envis
 - [ ] user settings
 - [ ] works enough with JavaScript disabled
 - [ ] documentation
-- [ ] customizable homepage, so the demo can exist as-is but other instances can be built from the same source. Environment variable for the file contents?
+- [x] customizable homepage, so the demo can exist as-is but other instances can be built from the same source. Environment variable for the file contents?
