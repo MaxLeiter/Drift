@@ -7,7 +7,7 @@ import Document from '../../components/document'
 import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
 import { ThemeProps } from "../_app";
-import Head from "next/head";
+import PageSeo from "components/page-seo";
 
 const Post = ({ theme, changeTheme }: ThemeProps) => {
     const [post, setPost] = useState<any>()
@@ -65,11 +65,14 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
 
     return (
         <Page width={"100%"}>
-            <Head>
-                {isLoading && <title>loading - Drift</title>}
-                {!isLoading && <title>{post.title} - Drift</title>}
-                {!isLoading && post.visibility !== 'private' && <meta name="description" content={post.description} />}
-            </Head>
+            {!isLoading && (
+                <PageSeo
+                    title={`${post.title} - Drift`}
+                    description={post.description}
+                    isPrivate={post.visibility === 'private'}
+                />
+            )}
+
             <Page.Header>
                 <Header theme={theme} changeTheme={changeTheme} />
             </Page.Header>

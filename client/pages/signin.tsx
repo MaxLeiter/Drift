@@ -1,15 +1,13 @@
 import { Page } from "@geist-ui/core";
-import Head from 'next/head'
+import PageSeo from "components/page-seo";
 import Auth from "../components/auth";
 import Header from "../components/header";
 import { ThemeProps } from "./_app";
 
 const SignIn = ({ theme, changeTheme }: ThemeProps) => (
     <Page width={"100%"}>
-        <Head>
-            <title>Drift - Sign In</title>
-            <meta name="description" content="A self-hostable clone of GitHub Gist" />
-        </Head>
+        <PageSeo title="Drift - Sign In" />
+
         <Page.Header>
             <Header theme={theme} changeTheme={changeTheme} />
         </Page.Header>

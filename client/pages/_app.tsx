@@ -58,6 +58,7 @@ function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
         <meta name="application-name" content="Drift" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <title>Drift</title>
       </Head>
       <GeistProvider themeType={themeType} >
         <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>

@@ -6,23 +6,32 @@ import Link from '../Link'
 
 const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const router = useRouter();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const signingIn = page === 'signin'
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const NO_EMPTY_SPACE_REGEX = /^\S*$/;
 
-        const handleJson = (json: any) => {
-            if (json.error) {
-                setError(json.error.message)
-            } else {
-                localStorage.setItem('drift-token', json.token)
-                localStorage.setItem('drift-userid', json.userId)
-                router.push('/')
-            }
-        }
+    const handleJson = (json: any) => {
+        if (json.error) return setError(json.error.message)
+
+        localStorage.setItem('drift-token', json.token)
+        localStorage.setItem('drift-userid', json.userId)
+        router.push('/')
+    }
+
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        if (!username.match(NO_EMPTY_SPACE_REGEX))
+            return setError("Username can't be empty")
+
+        if (!password.match(NO_EMPTY_SPACE_REGEX))
+            return setError("Password can't be empty")
 
         const reqOpts = {
             method: 'POST',
@@ -32,23 +41,16 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
             body: JSON.stringify({ username, password })
         }
 
-        e.preventDefault()
-        if (signingIn) {
-            try {
-                const resp = await fetch('/server-api/auth/signin', reqOpts)
-                const json = await resp.json()
-                handleJson(json)
-            } catch (err: any) {
-                setError(err.message || "Something went wrong")
-            }
-        } else {
-            try {
-                const resp = await fetch('/server-api/auth/signup', reqOpts)
-                const json = await resp.json()
-                handleJson(json)
-            } catch (err: any) {
-                setError(err.message || "Something went wrong")
-            }
+        try {
+            const signUrl = signingIn ? '/server-api/auth/signin' : '/server-api/auth/signup';
+            const resp = await fetch(signUrl, reqOpts);
+            const json = await resp.json();
+
+            if (!resp.ok) throw new Error();
+
+            handleJson(json)
+        } catch (err: any) {
+            setError(err.message || "Something went wrong")
         }
     }
 
@@ -86,8 +88,17 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                             <Button type="success" ghost htmlType="submit">{signingIn ? 'Sign In' : 'Sign Up'}</Button>
                         </div>
                         <div className={styles.formGroup}>
-                            {signingIn && <Text>Don&apos;t have an account? <Link color href="/signup" >Sign up</Link></Text>}
-                            {!signingIn && <Text>Already have an account? <Link color href="/signin" >Sign in</Link></Text>}
+                            {signingIn ? (
+                                <Text>
+                                    Don&apos;t have an account?{" "}
+                                    <Link color href="/signup">Sign up</Link>
+                                </Text>
+                            ) : (
+                                <Text>
+                                    Already have an account?{" "}
+                                    <Link color href="/signin">Sign in</Link>
+                                </Text>
+                            )}
                         </div>
                         {error && <Text type='error'>{error}</Text>}
                     </Card>
