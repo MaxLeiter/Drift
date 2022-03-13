@@ -17,9 +17,69 @@ You can run `yarn dev` in either / both folders to start the server and client w
 
 **Note: Drift is not yet ready for production usage and should not be used seriously until the database has been setup, which I'll get to when the server API is semi stable.**
 
-`yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. The client and server each also have Dockerfiles which you can use with a docker-compose (an example compose will be provided in the near future).
+`yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. The client and server each also have Dockerfiles which you can use with a docker-compose (see the next section).
 
 If you're deploying the front-end to something like Vercel, you'll need to set the root folder to `client/`.
+
+### Docker Compose
+
+Here's an example `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - "JWT_SECRET=change_me!" # use `openssl rand -hex 32` to generate a strong secret
+    expose:
+      - 3000
+
+  client:
+    build: ./client
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - "API_URL=" # not working
+    expose:
+      - 3001
+```
+
+The important thing to note is that the client and server both need to be accessible to the outside for a public instance to work. In a simple single-purpose stack adding an Nginx reverse proxy should be sufficient:
+
+```yaml
+  proxy:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - server
+      - client
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
+```
+
+`nginx.conf`:  
+```nginx
+events {}
+http {
+  server {
+    listen 80;
+
+    location / {
+      proxy_pass http://client:3001/;
+    }
+
+    location /api/ {
+      proxy_pass http://server:3000/;
+    }
+  }
+}
+```
 
 ## Current status
 
