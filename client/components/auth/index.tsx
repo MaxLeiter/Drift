@@ -1,14 +1,19 @@
 import { FormEvent, useState } from 'react'
-import { Button, Input, Text, useToasts } from '@geist-ui/core'
+import { Button, Input, Text, useToasts, Note } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
 import Link from '../Link'
+
+const NO_EMPTY_SPACE_REGEX = /^\S*$/;
+const ERROR_MESSAGE = "Provide a non empty username and a password with at least 6 characters";
 
 const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const router = useRouter();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
     const { setToast } = useToasts();
 
     const signingIn = page === 'signin'
@@ -22,6 +27,9 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6) return setErrorMsg(ERROR_MESSAGE)
+        else setErrorMsg('');
 
         const reqOpts = {
             method: 'POST',
@@ -85,6 +93,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                             </Text>
                         )}
                     </div>
+                    {errorMsg && <Note scale={0.75} type='error'>{errorMsg}</Note>}
                 </form>
             </div>
         </div >

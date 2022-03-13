@@ -1,18 +1,23 @@
 import { Router } from 'express'
-// import { Movie } from '../models/Post'
 import { genSalt, hash, compare } from "bcrypt"
 import { User } from '../../lib/models/User'
 import { sign } from 'jsonwebtoken'
 import config from '../../lib/config'
 import jwt from '../../lib/middleware/jwt'
 
+const NO_EMPTY_SPACE_REGEX = /^\S*$/
+
 export const auth = Router()
+
+const validateAuthPayload = (username: string, password: string): void => {
+    if (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6) {
+        throw new Error("Authentication data does not fulfill requirements")
+    }
+}
 
 auth.post('/signup', async (req, res, next) => {
     try {
-        if (!req.body.username || !req.body.password) {
-            throw new Error("Please provide a username and password")
-        }
+        validateAuthPayload(req.body.username, req.body.password)
 
         const username = req.body.username.toLowerCase();
 
@@ -39,9 +44,7 @@ auth.post('/signup', async (req, res, next) => {
 
 auth.post('/signin', async (req, res, next) => {
     try {
-        if (!req.body.username || !req.body.password) {
-            throw new Error("Missing username or password")
-        }
+        validateAuthPayload(req.body.username, req.body.password)
 
         const username = req.body.username.toLowerCase();
         const user = await User.findOne({ where: { username: username } });
