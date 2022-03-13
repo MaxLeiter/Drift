@@ -1,6 +1,6 @@
 import { Text, Input } from '@geist-ui/core'
 import { memo } from 'react'
-import ShiftBy from '../../shift-by'
+import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'
 
 const titlePlaceholders = [

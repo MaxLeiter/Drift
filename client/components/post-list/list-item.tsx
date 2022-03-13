@@ -1,7 +1,7 @@
 import { Card, Spacer, Grid, Divider, Link, Text, Input, Tooltip } from "@geist-ui/core"
 import NextLink from "next/link"
 import { useEffect, useMemo, useState } from "react"
-import timeAgo from "../../lib/time-ago"
+import timeAgo from "@lib/time-ago"
 import ShiftBy from "../shift-by"
 import VisibilityBadge from "../visibility-badge"
 

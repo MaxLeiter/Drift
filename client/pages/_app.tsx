@@ -1,8 +1,8 @@
-import '../styles/globals.css'
+import '@styles/globals.css'
 import { GeistProvider, CssBaseline, useTheme } from '@geist-ui/core'
 import { useEffect, useMemo, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
-import useSharedState from '../lib/hooks/use-shared-state';
+import useSharedState from '@lib/hooks/use-shared-state';
 
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
@@ -58,6 +58,7 @@ function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
         <meta name="application-name" content="Drift" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <title>Drift</title>
       </Head>
       <GeistProvider themeType={themeType} >
         <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>

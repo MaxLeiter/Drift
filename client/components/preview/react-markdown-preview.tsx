@@ -6,7 +6,7 @@ import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import a11yEmoji from '@fec/remark-a11y-emoji';
 import styles from './preview.module.css'
 import { vscDarkPlus as dark, vs as light } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-import useSharedState from "../../lib/hooks/use-shared-state";
+import useSharedState from "@lib/hooks/use-shared-state";
 
 type Props = {
     content: string | undefined

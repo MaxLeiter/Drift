@@ -1,7 +1,7 @@
 import { Button, ButtonDropdown, useToasts } from '@geist-ui/core'
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
-import generateUUID from '../../lib/generate-uuid';
+import generateUUID from '@lib/generate-uuid';
 import Document from '../document';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
