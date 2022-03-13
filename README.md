@@ -23,7 +23,7 @@ If you're deploying the front-end to something like Vercel, you'll need to set t
 
 ## Current status
 
-Drit is a major work in progress. Below is a (rough) list of completed and envisioned features. If you want to help address any of them, please let me know regardless of your experience and I'll be happy to assist.
+Drift is a major work in progress. Below is a (rough) list of completed and envisioned features. If you want to help address any of them, please let me know regardless of your experience and I'll be happy to assist.
 
 - [x] creating and sharing private, public, unlisted posts
   - [x] syntax highlighting (detected by file extension)
