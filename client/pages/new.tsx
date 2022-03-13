@@ -1,11 +1,11 @@
-import styles from '../styles/Home.module.css'
-import NewPost from '../components/new-post'
+import styles from '@styles/Home.module.css'
+import NewPost from '@components/new-post'
 import { Page } from '@geist-ui/core'
-import useSignedIn from '../lib/hooks/use-signed-in'
-import Header from '../components/header'
+import useSignedIn from '@lib/hooks/use-signed-in'
+import Header from '@components/header'
 import { ThemeProps } from './_app'
 import { useRouter } from 'next/router'
-import PageSeo from 'components/page-seo'
+import PageSeo from '@components/page-seo'
 
 const Home = ({ theme, changeTheme }: ThemeProps) => {
   const router = useRouter()

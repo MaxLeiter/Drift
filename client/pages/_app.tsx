@@ -1,8 +1,8 @@
-import '../styles/globals.css'
+import '@styles/globals.css'
 import { GeistProvider, CssBaseline, useTheme } from '@geist-ui/core'
 import { useEffect, useMemo, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
-import useSharedState from '../lib/hooks/use-shared-state';
+import useSharedState from '@lib/hooks/use-shared-state';
 
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';

@@ -1,7 +1,7 @@
 import { Page } from "@geist-ui/core";
-import PageSeo from "components/page-seo";
-import Auth from "../components/auth";
-import Header from "../components/header";
+import PageSeo from "@components/page-seo";
+import Auth from "@components/auth";
+import Header from "@components/header";
 import { ThemeProps } from "./_app";
 
 const SignIn = ({ theme, changeTheme }: ThemeProps) => (

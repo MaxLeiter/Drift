@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './drag-and-drop.module.css'
 import { Document } from '../'
-import generateUUID from '../../../lib/generate-uuid'
+import generateUUID from '@lib/generate-uuid'
 import { XCircle } from '@geist-ui/icons'
 const allowedFileTypes = [
     'application/json',

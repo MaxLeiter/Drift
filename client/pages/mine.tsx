@@ -1,8 +1,8 @@
-import styles from '../styles/Home.module.css'
+import styles from '@styles/Home.module.css'
 import { Page } from '@geist-ui/core'
 
-import Header from '../components/header'
-import MyPosts from '../components/my-posts'
+import Header from '@components/header'
+import MyPosts from '@components/my-posts'
 
 const Home = ({ theme, changeTheme }: { theme: "light" | "dark", changeTheme: () => void }) => {
   return (
