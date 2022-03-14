@@ -5,17 +5,18 @@
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .formGroup {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 10px;
 }
 
-.formHeader {
+.formContentSpace {
   margin-bottom: 1rem;
+  text-align: center;
 }
