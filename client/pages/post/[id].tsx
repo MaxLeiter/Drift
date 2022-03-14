@@ -8,6 +8,8 @@ import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
 import { ThemeProps } from "../_app";
 import PageSeo from "components/page-seo";
+import Head from "next/head";
+import styles from './styles.module.css';
 
 const Post = ({ theme, changeTheme }: ThemeProps) => {
     const [post, setPost] = useState<any>()
@@ -83,10 +85,10 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                     <Document skeleton={true} />
                 </>}
                 {!isLoading && post && <>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className={styles.header}>
                         <Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
                         <Button auto onClick={download}>
-                            Download as Zip
+                            Download as ZIP archive
                         </Button>
                     </div>
                     {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
@@ -106,4 +108,3 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
 }
 
 export default Post
-
