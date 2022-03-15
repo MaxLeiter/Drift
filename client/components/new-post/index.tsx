@@ -6,6 +6,7 @@ import Document from '../document';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
+import Cookies from 'js-cookie'
 
 export type Document = {
     title: string
@@ -35,13 +36,13 @@ const Post = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("drift-token")}`
+                'Authorization': `Bearer ${Cookies.get("drift-token")}`
             },
             body: JSON.stringify({
                 title,
                 files: docs,
                 visibility,
-                userId: localStorage.getItem("drift-userid"),
+                userId: Cookies.get("drift-userid"),
             })
         })
 

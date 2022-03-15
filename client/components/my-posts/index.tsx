@@ -1,10 +1,11 @@
 import useSWR from "swr"
 import PostList from "../post-list"
+import Cookies from "js-cookie"
 
 const fetcher = (url: string) => fetch(url, {
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("drift-token")}`
+        'Authorization': `Bearer ${Cookies.get("drift-token")}`
     },
 }).then(r => r.json())
 
