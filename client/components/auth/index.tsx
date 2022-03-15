@@ -3,6 +3,7 @@ import { Button, Card, Input, Text } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
 import Link from '../Link'
+import Cookies from "js-cookie";
 
 const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const router = useRouter();
@@ -18,8 +19,9 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const handleJson = (json: any) => {
         if (json.error) return setError(json.error.message)
 
-        localStorage.setItem('drift-token', json.token)
-        localStorage.setItem('drift-userid', json.userId)
+        Cookies.set('drift-token', json.token);
+        Cookies.set('drift-userid', json.userId);
+
         router.push('/')
     }
 
