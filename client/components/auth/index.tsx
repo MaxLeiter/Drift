@@ -3,6 +3,7 @@ import { Button, Input, Text, useToasts, Note } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
 import Link from '../Link'
+import Cookies from "js-cookie";
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/;
 const ERROR_MESSAGE = "Provide a non empty username and a password with at least 6 characters";
@@ -19,8 +20,9 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const signingIn = page === 'signin'
 
     const handleJson = (json: any) => {
-        localStorage.setItem('drift-token', json.token)
-        localStorage.setItem('drift-userid', json.userId)
+        Cookies.set('drift-token', json.token);
+        Cookies.set('drift-userid', json.userId);
+
         router.push('/')
     }
 

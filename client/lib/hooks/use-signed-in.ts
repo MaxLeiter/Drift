@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react"
 import useSharedState from "./use-shared-state";
+import Cookies from 'js-cookie'
 
 const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: boolean }) => {
     const [isSignedIn, setSignedIn] = useSharedState('isSignedIn', false)
@@ -14,7 +15,7 @@ const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: bo
 
     useEffect(() => {
         async function checkToken() {
-            const token = localStorage.getItem('drift-token')
+            const token = Cookies.get('drift-token')
             if (token) {
                 const response = await fetch('/server-api/auth/verify-token', {
                     method: 'GET',

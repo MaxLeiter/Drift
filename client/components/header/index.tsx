@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
+import Cookies from 'js-cookie'
 
 type Tab = {
     name: string
@@ -77,7 +78,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                         //         'Content-Type': 'application/json'
                         //     },
                         //     body: JSON.stringify({
-                        //         token: localStorage.getItem("drift-token")
+                        //         token: Cookies.get("drift-token")
                         //     })
                         // })
 

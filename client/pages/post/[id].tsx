@@ -10,6 +10,7 @@ import { ThemeProps } from "../_app";
 import PageSeo from "components/page-seo";
 import Head from "next/head";
 import styles from './styles.module.css';
+import Cookies from "js-cookie";
 
 const Post = ({ theme, changeTheme }: ThemeProps) => {
     const [post, setPost] = useState<any>()
@@ -25,7 +26,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("drift-token")}`
+                        "Authorization": `Bearer ${Cookies.get("drift-token")}`
                     }
                 })
 
