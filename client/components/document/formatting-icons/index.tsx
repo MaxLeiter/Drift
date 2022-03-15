@@ -2,7 +2,7 @@ import { ButtonGroup, Button } from "@geist-ui/core";
 import { Bold, Italic, Link, Image as ImageIcon } from "@geist-ui/icons";
 import { RefObject, useCallback, useMemo } from "react";
 import styles from "../document.module.css";
-import useFormattingClick from "../hooks/use-formatting-click";
+import useFormattingClick from "../../../lib/hooks/use-formatting-click";
 
 const FormattingIcons = ({
   textareaRef,
