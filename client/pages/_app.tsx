@@ -13,6 +13,12 @@ export type ThemeProps = {
   changeTheme: () => void
 }
 
+export type PostProps = {
+  renderedPost: any | null, // Still don't have an official data type for posts
+  theme: "light" | "dark" | string,
+  changeTheme: () => void
+}
+
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
