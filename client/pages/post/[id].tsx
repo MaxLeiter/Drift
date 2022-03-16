@@ -26,35 +26,16 @@ const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
             setIsLoading(true);
 
             if (renderedPost) {
-                console.log('Using Server Side Post');
                 setPost(renderedPost)
                 setIsLoading(false)
+                
                 return;
             }
 
-            if (router.query.id) {
-                const post = await fetch(`/server-api/posts/${router.query.id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${Cookies.get("drift-token")}`
-                    }
-                })
-
-                if (post.ok) {
-                    const res = await post.json()
-                    if (res)
-                        setPost(res)
-                    else
-                        setError("Post not found")
-                } else {
-                    if (post.status.toString().startsWith("4")) {
-                        router.push("/signin")
-                    } else {
-                        setError(post.statusText)
-                    }
-                }
-                setIsLoading(false)
+            if (post.status.toString().startsWith("4")) {
+                router.push("/signin")
+            } else {
+                setError(post.statusText)
             }
         }
         fetchPost()
