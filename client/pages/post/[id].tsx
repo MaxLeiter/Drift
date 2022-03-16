@@ -116,8 +116,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 "Authorization": `Bearer ${driftToken}`
             }
         }).then(res => res.json());
-
-        console.log(post);
     }
 
     return {
