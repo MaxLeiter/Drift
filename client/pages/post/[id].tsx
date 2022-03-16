@@ -25,17 +25,17 @@ const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
         async function fetchPost() {
             setIsLoading(true);
 
-            if (renderedPost) {
+            if (renderedPost.ok) {
                 setPost(renderedPost)
                 setIsLoading(false)
                 
                 return;
             }
 
-            if (post.status.toString().startsWith("4")) {
+            if (renderedPost.status.toString().startsWith("4")) {
                 router.push("/signin")
             } else {
-                setError(post.statusText)
+                setError(renderedPost.statusText)
             }
         }
         fetchPost()
