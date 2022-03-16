@@ -25,17 +25,17 @@ const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
         async function fetchPost() {
             setIsLoading(true);
 
-            if (renderedPost.ok) {
+            if (renderedPost) {
                 setPost(renderedPost)
                 setIsLoading(false)
                 
                 return;
             }
 
-            if (renderedPost.status.toString().startsWith("4")) {
-                router.push("/signin")
+            if (!Cookies.get('drift-token')) {
+                router.push('/signin');
             } else {
-                setError(renderedPost.statusText)
+                setError('Post Error');
             }
         }
         fetchPost()
