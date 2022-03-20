@@ -16,7 +16,7 @@ import { GetServerSideProps } from "next";
 
 
 const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
-    const [post, setPost] = useState<any>()
+    const [post, setPost] = useState(renderedPost);
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string>()
     const router = useRouter();
@@ -35,7 +35,7 @@ const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
             if (!Cookies.get('drift-token')) {
                 router.push('/signin');
             } else {
-                setError('Post Error');
+                setError('Something went wrong fetching the post');
             }
         }
         fetchPost()
@@ -115,7 +115,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${driftToken}`
             }
-        }).then(res => res.json());
+        });
+
+        try {
+            post = await post.json();
+        } catch (e) {
+            console.log(e);
+            post = null;
+        }
     }
 
     return {
