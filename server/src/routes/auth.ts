@@ -43,13 +43,17 @@ auth.post('/signup', async (req, res, next) => {
 });
 
 auth.post('/signin', async (req, res, next) => {
+    const error = "User does not exist or password is incorrect"
+    const errorToThrow = new Error(error);
     try {
-        validateAuthPayload(req.body.username, req.body.password)
+        if (!req.body.username || !req.body.password) {
+            throw errorToThrow
+        }
 
         const username = req.body.username.toLowerCase();
         const user = await User.findOne({ where: { username: username } });
         if (!user) {
-            throw new Error("User does not exist");
+            throw errorToThrow
         }
 
         const password_valid = await compare(req.body.password, user.password);
@@ -57,7 +61,7 @@ auth.post('/signin', async (req, res, next) => {
             const token = generateAccessToken(user.id);
             res.status(200).json({ token: token, userId: user.id });
         } else {
-            throw new Error("Password Incorrect");
+            throw errorToThrow
         }
 
     } catch (e) {

@@ -19,6 +19,30 @@
   margin-bottom: 0.5rem;
 }
 
+/* Auto-linked headers */
+.markdownPreview h1 a,
+.markdownPreview h2 a,
+.markdownPreview h3 a,
+.markdownPreview h4 a,
+.markdownPreview h5 a,
+.markdownPreview h6 a {
+  color: inherit;
+}
+
+/* Auto-linked headers */
+.markdownPreview h1 a:hover::after,
+.markdownPreview h2 a:hover::after,
+.markdownPreview h3 a:hover::after,
+.markdownPreview h4 a:hover::after,
+.markdownPreview h5 a:hover::after,
+.markdownPreview h6 a:hover::after {
+  content: " " attr(href);
+  filter: opacity(0.5);
+  font-size: 0.8em;
+  font-weight: normal;
+  text-decoration: none;
+}
+
 .markdownPreview h1 {
   font-size: 2rem;
 }

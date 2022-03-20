@@ -1,9 +1,12 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // @ts-ignore because of no types in remark-a11y-emoji
 import a11yEmoji from '@fec/remark-a11y-emoji';
+
 import styles from './preview.module.css'
 import { vscDarkPlus as dark, vs as light } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import useSharedState from "@lib/hooks/use-shared-state";
@@ -16,7 +19,9 @@ type Props = {
 const ReactMarkdownPreview = ({ content, height }: Props) => {
     const [themeType] = useSharedState<string>('theme')
     return (<div style={{ height }}>
-        <ReactMarkdown className={styles.markdownPreview} remarkPlugins={[remarkGfm, a11yEmoji]}
+        <ReactMarkdown className={styles.markdownPreview}
+            remarkPlugins={[remarkGfm, a11yEmoji]}
+            rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]}
             components={{
                 code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '')
@@ -49,5 +54,6 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
             {content || ""}
         </ReactMarkdown></div>)
 }
+
 
 export default ReactMarkdownPreview
