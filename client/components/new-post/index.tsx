@@ -80,7 +80,6 @@ const Post = () => {
         else setDocs([...docs, ...files])
     }, [docs, title])
 
-
     return (
         <div>
             <Title title={title} setTitle={setTitle} />

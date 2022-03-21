@@ -6,7 +6,10 @@ import Cookies from 'js-cookie'
 const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: boolean }) => {
     const [isSignedIn, setSignedIn] = useSharedState('isSignedIn', false)
     const [isLoading, setLoading] = useSharedState('isLoading', true)
-    const signout = useCallback(() => setSignedIn(false), [setSignedIn])
+    const signout = useCallback(() => {
+        Cookies.remove('drift-token')
+        setSignedIn(false)
+    }, [setSignedIn])
 
     const router = useRouter();
     if (redirectIfNotAuthed && !isLoading && isSignedIn === false) {
