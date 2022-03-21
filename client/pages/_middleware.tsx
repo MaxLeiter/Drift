@@ -18,6 +18,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
         if (signedIn) {
             const resp = NextResponse.redirect(getURL(''));
             resp.clearCookie('drift-token');
+            resp.clearCookie('drift-userid');
+
             return resp
         }
     } else if (pathname === '/') {
@@ -30,8 +32,12 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
             return NextResponse.redirect(getURL(''))
         }
         // If you're signed in we redirect the sign in page to the home page (which is the new page)
-    } else if (pathname === '/signin') {
+    } else if (pathname === '/signin' || pathname === '/signup') {
         if (signedIn) {
+            return NextResponse.redirect(getURL(''))
+        }
+    } else if (pathname === '/new') {
+        if (!signedIn) {
             return NextResponse.redirect(getURL(''))
         }
     }

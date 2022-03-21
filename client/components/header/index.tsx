@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
-import Cookies from 'js-cookie'
 
 type Tab = {
     name: string
@@ -23,7 +22,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
-    const { isLoading, isSignedIn, signout } = useSignedIn({ redirectIfNotAuthed: false })
+    const isSignedIn = useSignedIn()
     const [pages, setPages] = useState<Tab[]>([])
 
     useEffect(() => {
@@ -42,7 +41,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 name: "Home",
                 href: "/",
                 icon: <HomeIcon />,
-                condition: true,
+                condition: !isSignedIn,
                 value: "home"
             },
             {
@@ -59,34 +58,9 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 condition: isSignedIn,
                 value: "mine"
             },
-            // {
-            //     name: "Settings",
-            //     href: "/settings",
-            //     icon: <SettingsIcon />,
-            //     condition: isSignedIn
-            // },
             {
                 name: "Sign out",
-                onClick: () => {
-                    if (typeof window !== 'undefined') {
-                        localStorage.clear();
-
-                        // // send token to API blacklist
-                        // fetch('/api/auth/signout', {
-                        //     method: 'POST',
-                        //     headers: {
-                        //         'Content-Type': 'application/json'
-                        //     },
-                        //     body: JSON.stringify({
-                        //         token: Cookies.get("drift-token")
-                        //     })
-                        // })
-
-                        signout();
-                        router.push("/signin");
-                    }
-                },
-                href: "#signout",
+                href: "/signout",
                 icon: <SignoutIcon />,
                 condition: isSignedIn,
                 value: "signout"
@@ -126,12 +100,8 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             }
         ]
 
-        if (isLoading) {
-            return setPages([])
-        }
-
         setPages(pageList.filter(page => page.condition))
-    }, [changeTheme, isLoading, isMobile, isSignedIn, router, signout, theme])
+    }, [changeTheme, isMobile, isSignedIn, theme])
 
     // useEffect(() => {
     //     setSelectedTab(pages.find((page) => {
@@ -161,7 +131,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                     hideDivider
                     hideBorder
                     onChange={onTabChange}>
-                    {!isLoading && pages.map((tab) => {
+                    {pages.map((tab) => {
                         return <Tabs.Item
                             font="14px"
                             label={<>{tab.icon} {tab.name}</>}

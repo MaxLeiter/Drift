@@ -7,12 +7,10 @@ import { ThemeProps } from './_app'
 import { useRouter } from 'next/router'
 import PageSeo from '@components/page-seo'
 
-const Home = ({ theme, changeTheme }: ThemeProps) => {
+const New = ({ theme, changeTheme }: ThemeProps) => {
   const router = useRouter()
-  const { isSignedIn, isLoading } = useSignedIn({ redirectIfNotAuthed: true })
-  if (!isSignedIn && !isLoading) {
-    router.push("/signin")
-  }
+  const isSignedIn = useSignedIn()
+
   return (
     <Page className={styles.container} width="100%">
       <PageSeo title="Drift - New" />
@@ -28,4 +26,4 @@ const Home = ({ theme, changeTheme }: ThemeProps) => {
   )
 }
 
-export default Home
+export default New

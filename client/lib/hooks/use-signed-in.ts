@@ -1,48 +1,18 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect } from "react"
-import useSharedState from "./use-shared-state";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
-const useSignedIn = ({ redirectIfNotAuthed = false }: { redirectIfNotAuthed?: boolean }) => {
-    const [isSignedIn, setSignedIn] = useSharedState('isSignedIn', false)
-    const [isLoading, setLoading] = useSharedState('isLoading', true)
-    const signout = useCallback(() => {
-        Cookies.remove('drift-token')
-        setSignedIn(false)
-    }, [setSignedIn])
-
-    const router = useRouter();
-    if (redirectIfNotAuthed && !isLoading && isSignedIn === false) {
-        router.push('/signin')
-    }
+const useSignedIn = () => {
+    const [signedIn, setSignedIn] = useState(typeof window === 'undefined' ? false : !!Cookies.get("drift-token"));
 
     useEffect(() => {
-        async function checkToken() {
-            const token = Cookies.get('drift-token')
-            if (token) {
-                const response = await fetch('/server-api/auth/verify-token', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                if (response.ok) {
-                    setSignedIn(true)
-                }
-            }
-            setLoading(false)
+        if (Cookies.get("drift-token")) {
+            setSignedIn(true);
+        } else {
+            setSignedIn(false);
         }
-        setLoading(true)
-        checkToken()
+    }, []);
 
-        const interval = setInterval(() => {
-            checkToken()
-        }, 10000);
-
-        return () => clearInterval(interval);
-    }, [setLoading, setSignedIn])
-
-    return { isSignedIn, isLoading, signout }
+    return signedIn;
 }
 
-export default useSignedIn
+export default useSignedIn;
