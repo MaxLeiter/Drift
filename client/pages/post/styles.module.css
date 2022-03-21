@@ -1,11 +1,23 @@
 .header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .titleAndBadge {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media screen and (max-width: 650px) {
-    .header {
-        flex-direction: column;
-    }
+  .header {
+    flex-direction: column;
+  }
+
+  .header .titleAndBadge {
+    flex-direction: column;
+    padding-bottom: var(--gap-double);
+  }
 }

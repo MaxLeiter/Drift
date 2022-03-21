@@ -114,6 +114,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         label="Filename"
                         disabled={!editable}
                         width={"100%"}
+                        id={title}
                     />
                     {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
                 </div>

@@ -8,7 +8,6 @@ import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
 import { ThemeProps } from "../_app";
 import PageSeo from "components/page-seo";
-import Head from "next/head";
 import styles from './styles.module.css';
 import Cookies from "js-cookie";
 
@@ -80,14 +79,18 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
                 <Header theme={theme} changeTheme={changeTheme} />
             </Page.Header>
             <Page.Content width={"var(--main-content-width)"} margin="auto">
+                {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
+
                 {error && <Text type="error">{error}</Text>}
-                {/* {!error && (isLoading || !post?.files) && <Loading />} */}
                 {!error && isLoading && <><Text h2><Skeleton width={400} /></Text>
                     <Document skeleton={true} />
                 </>}
                 {!isLoading && post && <>
                     <div className={styles.header}>
-                        <Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
+                        <div className={styles.titleAndBadge}>
+                            <Text h2>{post.title}</Text>
+                            <span><VisibilityBadge visibility={post.visibility} /></span>
+                        </div>
                         <Button auto onClick={download}>
                             Download as ZIP archive
                         </Button>

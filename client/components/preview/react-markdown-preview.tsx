@@ -36,7 +36,7 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
                                 background: 'transparent'
                             }}
                             codeTagProps={{
-                                style: { background: 'transparent' }
+                                style: { background: 'transparent', color: 'inherit' }
                             }}
                             style={themeType === 'dark' ? dark : light}
                             showLineNumbers={true}
