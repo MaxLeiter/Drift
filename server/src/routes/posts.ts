@@ -17,11 +17,9 @@ posts.post(
       title: Joi.string().required(),
       files: Joi.any().required(),
       visibility: Joi.string().required(),
-      userId: Joi.string().required(),
     },
   }),
   async (req, res, next) => {
-    console.log(req.body);
     try {
       // Create the "post" object
       const newPost = new Post({
