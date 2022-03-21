@@ -8,11 +8,31 @@ import { celebrate, Joi } from "celebrate";
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/;
 
+export const requiresServerPassword =
+  (process.env.MEMORY_DB || process.env.ENV === "production") &&
+  !!process.env.REGISTRATION_PASSWORD;
+console.log(`Registration password required: ${requiresServerPassword}`);
+
 export const auth = Router();
 
-const validateAuthPayload = (username: string, password: string): void => {
+const validateAuthPayload = (
+  username: string,
+  password: string,
+  serverPassword?: string
+): void => {
   if (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6) {
     throw new Error("Authentication data does not fulfill requirements");
+  }
+
+  if (requiresServerPassword) {
+    if (
+      !serverPassword ||
+      process.env.REGISTRATION_PASSWORD !== serverPassword
+    ) {
+      throw new Error(
+        "Server password is incorrect. Please contact the server administrator."
+      );
+    }
   }
 };
 
@@ -26,7 +46,11 @@ auth.post(
   }),
   async (req, res, next) => {
     try {
-      validateAuthPayload(req.body.username, req.body.password);
+      validateAuthPayload(
+        req.body.username,
+        req.body.password,
+        req.body.serverPassword
+      );
 
       const username = req.body.username.toLowerCase();
 
@@ -88,6 +112,14 @@ auth.post(
     }
   }
 );
+
+auth.get("/requires-passcode", async (req, res, next) => {
+  if (requiresServerPassword) {
+    res.status(200).json({ requiresPasscode: true });
+  } else {
+    res.status(200).json({ requiresPasscode: false });
+  }
+});
 
 function generateAccessToken(id: string) {
   return sign({ id: id }, config.jwt_secret, { expiresIn: "2d" });
