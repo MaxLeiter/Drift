@@ -29,8 +29,6 @@ export type PostProps = ThemeProps & {
 }
 
 const Post = ({ post, theme, changeTheme }: PostProps) => {
-    const router = useRouter();
-
     const download = async () => {
         const clientZip = require("client-zip")
 
@@ -117,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             const maxAge = 60 * 60 * 24 * 365;
             context.res.setHeader(
                 'Cache-Control',
-                `${json.visibility === "public" ? "public" : "private"}, s-maxage=${maxAge}, max-age=${maxAge}`
+                `${json.visibility === "public" ? "public" : "private"}, s-maxage=${maxAge}`
             )
             return {
                 props: {
