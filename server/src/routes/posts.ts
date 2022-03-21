@@ -20,7 +20,6 @@ posts.post(
       userId: Joi.string().required(),
     },
   }),
-
   async (req, res, next) => {
     console.log(req.body);
     try {
