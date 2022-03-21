@@ -24,6 +24,7 @@ const Post = () => {
         content: '',
         id: generateUUID()
     }])
+
     const [isSubmitting, setSubmitting] = useState(false)
 
     const remove = (id: string) => {
@@ -63,11 +64,10 @@ const Post = () => {
         setDocs(docs.map((doc) => doc.id === id ? { ...doc, content } : doc))
     }, [docs])
 
-    const uploadDocs = (files: Document[]) => {
+    const uploadDocs = useCallback((files: Document[]) => {
         // if no title is set and the only document is empty,
         const isFirstDocEmpty = docs.length === 1 && docs[0].title === '' && docs[0].content === ''
         const shouldSetTitle = !title && isFirstDocEmpty
-        console.log(shouldSetTitle, title, isFirstDocEmpty)
         if (shouldSetTitle) {
             if (files.length === 1) {
                 setTitle(files[0].title)
@@ -78,15 +78,15 @@ const Post = () => {
 
         if (isFirstDocEmpty) setDocs(files)
         else setDocs([...docs, ...files])
-    }
+    }, [docs, title])
+
 
     return (
         <div>
-            <Title title={title} handleChange={(e) => setTitle(e.target.value)} />
+            <Title title={title} setTitle={setTitle} />
             <FileDropzone setDocs={uploadDocs} />
             {
-                docs.map(({ id }) => {
-                    const doc = docs.find((doc) => doc.id === id)
+                docs.map(({ content, id, title }) => {
                     return (
                         <Document
                             remove={() => remove(id)}
@@ -94,8 +94,8 @@ const Post = () => {
                             editable={true}
                             setContent={(content) => updateContent(content, id)}
                             setTitle={(title) => updateTitle(title, id)}
-                            content={doc?.content}
-                            title={doc?.title}
+                            content={content}
+                            title={title}
                         />
                     )
                 })

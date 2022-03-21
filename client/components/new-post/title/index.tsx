@@ -14,11 +14,11 @@ const titlePlaceholders = [
 ]
 
 type props = {
-    handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
+    setTitle: (title: string) => void
     title?: string
 }
 
-const Title = ({ handleChange, title }: props) => {
+const Title = ({ setTitle, title }: props) => {
 
     return (<div className={styles.title}>
         <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
@@ -26,7 +26,7 @@ const Title = ({ handleChange, title }: props) => {
             <Input
                 placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
                 value={title || ""}
-                onChange={handleChange}
+                onChange={(event) => setTitle(event.target.value)}
                 height={"55px"}
                 font={1.5}
                 label="Post title"
@@ -36,4 +36,4 @@ const Title = ({ handleChange, title }: props) => {
     </div>)
 }
 
-export default Title
+export default memo(Title)

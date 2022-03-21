@@ -1,5 +1,5 @@
 import { Button, Text, useTheme, useToasts } from '@geist-ui/core'
-import { useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './drag-and-drop.module.css'
 import { Document } from '../'
@@ -170,4 +170,4 @@ function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {
     )
 }
 
-export default FileDropzone
+export default memo(FileDropzone)
