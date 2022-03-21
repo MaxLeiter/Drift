@@ -7,7 +7,7 @@ import VisibilityBadge from "../../components/visibility-badge";
 import PageSeo from "components/page-seo";
 import styles from './styles.module.css';
 import cookie from "cookie";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { PostVisibility, ThemeProps } from "@lib/types";
 
 type File = {
@@ -92,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         driftTheme = "light"
     }
 
-
     if (context.query.id) {
         const post = await fetch('http://' + host + `/server-api/posts/${context.query.id}`, {
             method: "GET",
@@ -135,3 +134,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 export default Post
+

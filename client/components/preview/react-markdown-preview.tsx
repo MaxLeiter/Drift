@@ -5,10 +5,11 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // @ts-ignore because of no types in remark-a11y-emoji
-import a11yEmoji from '@fec/remark-a11y-emoji';
+// import a11yEmoji from '@fec/remark-a11y-emoji';
 
 import styles from './preview.module.css'
-import { vscDarkPlus as dark, vs as light } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import dark from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus'
+import light from 'react-syntax-highlighter/dist/cjs/styles/prism/vs'
 import useSharedState from "@lib/hooks/use-shared-state";
 
 type Props = {
@@ -20,7 +21,7 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
     const [themeType] = useSharedState<string>('theme')
     return (<div style={{ height }}>
         <ReactMarkdown className={styles.markdownPreview}
-            remarkPlugins={[remarkGfm, a11yEmoji]}
+            remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]}
             components={{
                 code({ node, inline, className, children, ...props }) {

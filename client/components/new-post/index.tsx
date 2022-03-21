@@ -49,7 +49,6 @@ const Post = () => {
 
     const closePasswordModel = () => {
         setPasswordModalVisible(false)
-        setSubmitting(false)
     }
 
     const [isSubmitting, setSubmitting] = useState(false)
@@ -89,7 +88,7 @@ const Post = () => {
 
     const uploadDocs = useCallback((files: DocumentType[]) => {
         // if no title is set and the only document is empty,
-        const isFirstDocEmpty = docs.length === 1 && docs[0].title === '' && docs[0].content === ''
+        const isFirstDocEmpty = docs.length <= 1 && docs[0].title === '' && docs[0].content === ''
         const shouldSetTitle = !title && isFirstDocEmpty
         if (shouldSetTitle) {
             if (files.length === 1) {
@@ -147,7 +146,7 @@ const Post = () => {
                 </ButtonDropdown>
                 <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={(password) => onSubmit('protected', password)} />
             </div>
-        </div >
+        </div>
     )
 }
 

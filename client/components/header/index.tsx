@@ -1,10 +1,20 @@
 import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, Tabs, Spacer } from "@geist-ui/core";
-import { Github as GitHubIcon, UserPlus as SignUpIcon, User as SignInIcon, Home as HomeIcon, Menu as MenuIcon, Tool as SettingsIcon, UserX as SignoutIcon, PlusCircle as NewIcon, List as YourIcon, Moon, Sun } from "@geist-ui/icons";
 import { DriftProps } from "../../pages/_app";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
 import useSignedIn from "../../lib/hooks/use-signed-in";
+
+import HomeIcon from '@geist-ui/icons/home';
+import MenuIcon from '@geist-ui/icons/menu';
+import GitHubIcon from '@geist-ui/icons/github';
+import SignOutIcon from '@geist-ui/icons/userX';
+import SignInIcon from '@geist-ui/icons/user';
+import SignUpIcon from '@geist-ui/icons/userPlus';
+import NewIcon from '@geist-ui/icons/plusCircle';
+import YourIcon from '@geist-ui/icons/list'
+import MoonIcon from '@geist-ui/icons/moon';
+import SunIcon from '@geist-ui/icons/sun';
 
 type Tab = {
     name: string
@@ -61,7 +71,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
             {
                 name: "Sign out",
                 href: "/signout",
-                icon: <SignoutIcon />,
+                icon: <SignOutIcon />,
                 condition: isSignedIn,
                 value: "signout"
             },
@@ -94,7 +104,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                         setSelectedTab('');
                     }
                 },
-                icon: theme === 'light' ? <Moon /> : <Sun />,
+                icon: theme === 'light' ? <MoonIcon /> : <SunIcon />,
                 condition: true,
                 value: "theme",
             }

@@ -1,5 +1,8 @@
 import { ButtonGroup, Button } from "@geist-ui/core"
-import { Bold, Italic, Link, Image as ImageIcon } from '@geist-ui/icons'
+import Bold from '@geist-ui/icons/bold'
+import Italic from '@geist-ui/icons/italic'
+import Link from '@geist-ui/icons/link'
+import ImageIcon from '@geist-ui/icons/image'
 import { RefObject, useCallback, useMemo } from "react"
 import styles from '../document.module.css'
 
