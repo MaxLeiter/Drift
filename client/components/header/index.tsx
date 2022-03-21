@@ -18,7 +18,7 @@ type Tab = {
 
 const Header = ({ changeTheme, theme }: DriftProps) => {
     const router = useRouter();
-    const [selectedTab, setSelectedTab] = useState<string>();
+    const [selectedTab, setSelectedTab] = useState<string>(router.pathname === '/' ? 'home' : router.pathname.split('/')[1]);
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
@@ -91,7 +91,7 @@ const Header = ({ changeTheme, theme }: DriftProps) => {
                 onClick: function () {
                     if (typeof window !== 'undefined') {
                         changeTheme();
-                        setSelectedTab(undefined);
+                        setSelectedTab('');
                     }
                 },
                 icon: theme === 'light' ? <Moon /> : <Sun />,
