@@ -9,6 +9,12 @@ import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
 import { ThemeProps } from '@lib/types';
 
+export type PostProps = {
+  renderedPost: any | null, // Still don't have an official data type for posts
+  theme: "light" | "dark" | string,
+  changeTheme: () => void
+}
+
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;

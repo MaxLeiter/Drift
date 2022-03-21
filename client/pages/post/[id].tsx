@@ -6,13 +6,16 @@ import { useEffect, useState } from "react";
 import Document from '../../components/document'
 import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
-import { ThemeProps } from "../_app";
+import { PostProps } from "../_app";
 import PageSeo from "components/page-seo";
 import styles from './styles.module.css';
 import Cookies from "js-cookie";
+import cookie from "cookie";
+import { GetServerSideProps } from "next";
 
-const Post = ({ theme, changeTheme }: ThemeProps) => {
-    const [post, setPost] = useState<any>()
+
+const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
+    const [post, setPost] = useState(renderedPost);
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string>()
     const router = useRouter();
@@ -20,29 +23,18 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
     useEffect(() => {
         async function fetchPost() {
             setIsLoading(true);
-            if (router.query.id) {
-                const post = await fetch(`/server-api/posts/${router.query.id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${Cookies.get("drift-token")}`
-                    }
-                })
 
-                if (post.ok) {
-                    const res = await post.json()
-                    if (res)
-                        setPost(res)
-                    else
-                        setError("Post not found")
-                } else {
-                    if (post.status.toString().startsWith("4")) {
-                        router.push("/signin")
-                    } else {
-                        setError(post.statusText)
-                    }
-                }
+            if (renderedPost) {
+                setPost(renderedPost)
                 setIsLoading(false)
+                
+                return;
+            }
+
+            if (!Cookies.get('drift-token')) {
+                router.push('/signin');
+            } else {
+                setError('Something went wrong fetching the post');
             }
         }
         fetchPost()
@@ -109,6 +101,38 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
             </Page.Content>
         </Page >
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+    const headers = context.req.headers;
+    const host = headers.host;
+    const driftToken = cookie.parse(headers.cookie || '')[`drift-token`];
+    
+    let post;
+    
+    if (context.query.id) {
+        post = await fetch('http://' + host + `/server-api/posts/${context.query.id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${driftToken}`
+            }
+        });
+
+        try {
+            post = await post.json();
+        } catch (e) {
+            console.log(e);
+            post = null;
+        }
+    }
+
+    return {
+        props: {
+            renderedPost: post
+        }
+    }
 }
 
 export default Post
