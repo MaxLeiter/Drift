@@ -73,15 +73,10 @@ const Post = () => {
             password,
             userId: Cookies.get('drift-userid') || ''
         })
-
-
-
-        setSubmitting(false)
     }
 
     const onClosePasswordModal = () => {
         setPasswordModalVisible(false)
-        setSubmitting(false)
     }
 
     const updateTitle = useCallback((title: string, id: string) => {
