@@ -63,10 +63,27 @@ const Post = () => {
         setDocs(docs.map((doc) => doc.id === id ? { ...doc, content } : doc))
     }, [docs])
 
+    const uploadDocs = (files: Document[]) => {
+        // if no title is set and the only document is empty,
+        const isFirstDocEmpty = docs.length === 1 && docs[0].title === '' && docs[0].content === ''
+        const shouldSetTitle = !title && isFirstDocEmpty
+        console.log(shouldSetTitle, title, isFirstDocEmpty)
+        if (shouldSetTitle) {
+            if (files.length === 1) {
+                setTitle(files[0].title)
+            } else if (files.length > 1) {
+                setTitle('Uploaded files')
+            }
+        }
+
+        if (isFirstDocEmpty) setDocs(files)
+        else setDocs([...docs, ...files])
+    }
+
     return (
         <div>
-            <Title title={title} setTitle={setTitle} />
-            <FileDropzone docs={docs} setDocs={setDocs} />
+            <Title title={title} handleChange={(e) => setTitle(e.target.value)} />
+            <FileDropzone setDocs={uploadDocs} />
             {
                 docs.map(({ id }) => {
                     const doc = docs.find((doc) => doc.id === id)

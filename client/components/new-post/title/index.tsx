@@ -1,5 +1,5 @@
+import { ChangeEvent, memo } from 'react'
 import { Text, Input } from '@geist-ui/core'
-import { memo } from 'react'
 import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'
 
@@ -14,18 +14,19 @@ const titlePlaceholders = [
 ]
 
 type props = {
-    setTitle: (title: string) => void
+    handleChange?: (event: ChangeEvent<HTMLInputElement>) => void
     title?: string
 }
 
-const Title = ({ setTitle, title }: props) => {
+const Title = ({ handleChange, title }: props) => {
+
     return (<div className={styles.title}>
         <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
         <ShiftBy y={-3}>
             <Input
                 placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
                 value={title || ""}
-                onChange={(event) => setTitle(event.target.value)}
+                onChange={handleChange}
                 height={"55px"}
                 font={1.5}
                 label="Post title"
@@ -35,4 +36,4 @@ const Title = ({ setTitle, title }: props) => {
     </div>)
 }
 
-export default memo(Title)
+export default Title
