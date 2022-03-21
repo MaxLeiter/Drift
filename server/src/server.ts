@@ -4,7 +4,7 @@ import config from '../lib/config';
 import { sequelize } from '../lib/sequelize';
 
 (async () => {
-  await sequelize.sync();
+  await sequelize.sync({ force: true });
   createServer(app)
     .listen(
       config.port,

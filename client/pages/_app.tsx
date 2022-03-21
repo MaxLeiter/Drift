@@ -7,11 +7,7 @@ import useSharedState from '@lib/hooks/use-shared-state';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
-
-export type ThemeProps = {
-  theme: "light" | "dark" | string,
-  changeTheme: () => void
-}
+import { ThemeProps } from '@lib/types';
 
 type AppProps<P = any> = {
   pageProps: P;

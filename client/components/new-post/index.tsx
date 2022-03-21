@@ -1,29 +1,56 @@
-import { Button, ButtonDropdown, useToasts } from '@geist-ui/core'
+import { Button, ButtonDropdown, Input, Modal, Note, useModal, useToasts } from '@geist-ui/core'
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';
-import Document from '../document';
+import DocumentComponent from '../document';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
 import Cookies from 'js-cookie'
-
-export type Document = {
-    title: string
-    content: string
-    id: string
-}
+import type { PostVisibility, Document as DocumentType } from '@lib/types';
+import PasswordModal from './password';
 
 const Post = () => {
     const { setToast } = useToasts()
-
     const router = useRouter();
     const [title, setTitle] = useState<string>()
-    const [docs, setDocs] = useState<Document[]>([{
+    const [docs, setDocs] = useState<DocumentType[]>([{
         title: '',
         content: '',
         id: generateUUID()
     }])
+    const [passwordModalVisible, setPasswordModalVisible] = useState(false)
+    const sendRequest = useCallback(async (url: string, data: { visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Cookies.get('drift-token')}`
+            },
+            body: JSON.stringify({
+                title,
+                files: docs,
+                ...data,
+            })
+        })
+
+        if (res.ok) {
+            const json = await res.json()
+            router.push(`/post/${json.id}`)
+        } else {
+            const json = await res.json()
+            setToast({
+                text: json.message,
+                type: 'error'
+            })
+        }
+
+    }, [docs, router, setToast, title])
+
+    const closePasswordModel = () => {
+        setPasswordModalVisible(false)
+        setSubmitting(false)
+    }
 
     const [isSubmitting, setSubmitting] = useState(false)
 
@@ -31,29 +58,30 @@ const Post = () => {
         setDocs(docs.filter((doc) => doc.id !== id))
     }
 
-    const onSubmit = async (visibility: string) => {
+    const onSubmit = async (visibility: PostVisibility, password?: string) => {
         setSubmitting(true)
-        const response = await fetch('/server-api/posts/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get("drift-token")}`
-            },
-            body: JSON.stringify({
-                title,
-                files: docs,
-                visibility,
-                userId: Cookies.get("drift-userid"),
-            })
+
+        if (visibility === 'protected' && !password) {
+            setPasswordModalVisible(true)
+            return
+        }
+
+        await sendRequest('/server-api/posts/create', {
+            title,
+            files: docs,
+            visibility,
+            password,
+            userId: Cookies.get('drift-userid') || ''
         })
 
-        const json = await response.json()
+
+
         setSubmitting(false)
-        if (json.id)
-            router.push(`/post/${json.id}`)
-        else {
-            setToast({ text: json.error.message, type: "error" })
-        }
+    }
+
+    const onClosePasswordModal = () => {
+        setPasswordModalVisible(false)
+        setSubmitting(false)
     }
 
     const updateTitle = useCallback((title: string, id: string) => {
@@ -64,7 +92,7 @@ const Post = () => {
         setDocs(docs.map((doc) => doc.id === id ? { ...doc, content } : doc))
     }, [docs])
 
-    const uploadDocs = useCallback((files: Document[]) => {
+    const uploadDocs = useCallback((files: DocumentType[]) => {
         // if no title is set and the only document is empty,
         const isFirstDocEmpty = docs.length === 1 && docs[0].title === '' && docs[0].content === ''
         const shouldSetTitle = !title && isFirstDocEmpty
@@ -87,7 +115,7 @@ const Post = () => {
             {
                 docs.map(({ content, id, title }) => {
                     return (
-                        <Document
+                        <DocumentComponent
                             remove={() => remove(id)}
                             key={id}
                             editable={true}
@@ -120,7 +148,9 @@ const Post = () => {
                     <ButtonDropdown.Item main onClick={() => onSubmit('private')}>Create Private</ButtonDropdown.Item>
                     <ButtonDropdown.Item onClick={() => onSubmit('public')} >Create Public</ButtonDropdown.Item>
                     <ButtonDropdown.Item onClick={() => onSubmit('unlisted')} >Create Unlisted</ButtonDropdown.Item>
+                    <ButtonDropdown.Item onClick={() => onSubmit('protected')} >Create with Password</ButtonDropdown.Item>
                 </ButtonDropdown>
+                <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={(password) => onSubmit('protected', password)} />
             </div>
         </div >
     )

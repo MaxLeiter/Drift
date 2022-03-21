@@ -2,11 +2,11 @@ import styles from '@styles/Home.module.css'
 import { Page, Spacer, Text } from '@geist-ui/core'
 
 import Header from '@components/header'
-import { ThemeProps } from './_app'
 import Document from '@components/document'
 import Image from 'next/image'
 import ShiftBy from '@components/shift-by'
 import PageSeo from '@components/page-seo'
+import { ThemeProps } from '@lib/types'
 
 export function getStaticProps() {
   const introDoc = process.env.WELCOME_CONTENT

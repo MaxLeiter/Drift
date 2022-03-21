@@ -26,7 +26,6 @@ posts.post('/create', jwt, async (req, res, next) => {
             throw new Error("Please provide a visibility.")
         }
 
-        // Create the "post" object 
         const newPost = new Post({
             title: req.body.title,
             visibility: req.body.visibility,
@@ -35,7 +34,6 @@ posts.post('/create', jwt, async (req, res, next) => {
         await newPost.save()
         await newPost.$add('users', req.body.userId);
         const newFiles = await Promise.all(req.body.files.map(async (file) => {
-            // Establish a "file" for each file in the request
             const newFile = new File({
                 title: file.title,
                 content: file.content,

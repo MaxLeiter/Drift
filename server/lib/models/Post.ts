@@ -48,6 +48,9 @@ export class Post extends Model {
   @Column
   visibility!: string;
 
+  @Column
+  password?: string;
+
   @UpdatedAt
   @Column
   updatedAt!: Date;
