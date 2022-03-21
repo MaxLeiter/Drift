@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Button, Input, Text, Note } from '@geist-ui/core'
 import styles from './auth.module.css'
 import { useRouter } from 'next/router'
@@ -13,9 +13,28 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [serverPassword, setServerPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-
+    const [requiresServerPassword, setRequiresServerPassword] = useState(false);
     const signingIn = page === 'signin'
+
+    useEffect(() => {
+        async function fetchRequiresPass() {
+            if (!signingIn) {
+                const resp = await fetch("/server-api/auth/requires-passcode", {
+                    method: "GET",
+                })
+                if (resp.ok) {
+                    const res = await resp.json()
+                    setRequiresServerPassword(res)
+                } else {
+                    setErrorMsg("Something went wrong.")
+                }
+            }
+        }
+        fetchRequiresPass()
+    }, [page, signingIn])
+
 
     const handleJson = (json: any) => {
         Cookies.set('drift-token', json.token);
@@ -24,10 +43,10 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
         router.push('/')
     }
 
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (page === "signup" && (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6)) return setErrorMsg(ERROR_MESSAGE)
+        if (!signingIn && (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6)) return setErrorMsg(ERROR_MESSAGE)
+        if (!signingIn && requiresServerPassword && !NO_EMPTY_SPACE_REGEX.test(serverPassword)) return setErrorMsg(ERROR_MESSAGE)
         else setErrorMsg('');
 
         const reqOpts = {
@@ -35,14 +54,13 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, serverPassword })
         }
 
         try {
             const signUrl = signingIn ? '/server-api/auth/signin' : '/server-api/auth/signup';
             const resp = await fetch(signUrl, reqOpts);
             const json = await resp.json();
-            console.log(json)
             if (!resp.ok) throw new Error(json.error.message);
 
             handleJson(json)
@@ -78,6 +96,16 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                             required
                             scale={4 / 3}
                         />
+                        {requiresServerPassword && <Input
+                            htmlType='password'
+                            id="server-password"
+                            value={serverPassword}
+                            onChange={(event) => setServerPassword(event.target.value)}
+                            placeholder="Server Password"
+                            required
+                            scale={4 / 3}
+                        />}
+
                         <Button type="success" htmlType="submit">{signingIn ? 'Sign In' : 'Sign Up'}</Button>
                     </div>
                     <div className={styles.formContentSpace}>
