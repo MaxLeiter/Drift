@@ -19,7 +19,7 @@ const validateAuthPayload = (username: string, password: string): void => {
 auth.post(
   "/signup",
   celebrate({
-    params: {
+    body: {
       username: Joi.string().required(),
       password: Joi.string().required(),
     },
@@ -57,7 +57,7 @@ auth.post(
 auth.post(
   "/signin",
   celebrate({
-    params: {
+    body: {
       username: Joi.string().required(),
       password: Joi.string().required(),
     },
