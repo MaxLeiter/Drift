@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import Document from '../../components/document'
 import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
+import { ThemeProps } from "../_app";
 import PageSeo from "components/page-seo";
 import styles from './styles.module.css';
 import Cookies from "js-cookie";
-import { ThemeProps } from "@lib/types";
 
 const Post = ({ theme, changeTheme }: ThemeProps) => {
     const [post, setPost] = useState<any>()
