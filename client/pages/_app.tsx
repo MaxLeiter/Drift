@@ -8,12 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
 import { ThemeProps } from '@lib/types';
-
-export type PostProps = {
-  renderedPost: any | null, // Still don't have an official data type for posts
-  theme: "light" | "dark" | string,
-  changeTheme: () => void
-}
+import Cookies from 'js-cookie';
 
 type AppProps<P = any> = {
   pageProps: P;
@@ -22,11 +17,10 @@ type AppProps<P = any> = {
 export type DriftProps = ThemeProps
 
 function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
-  const [themeType, setThemeType] = useSharedState<string>('theme', 'light')
-  const theme = useTheme();
+  const [themeType, setThemeType] = useSharedState<string>('theme', Cookies.get('drift-theme') || 'light')
+
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.localStorage) return
-    const storedTheme = window.localStorage.getItem('drift-theme')
+    const storedTheme = Cookies.get('drift-theme')
     if (storedTheme) setThemeType(storedTheme)
     // TODO: useReducer?
   }, [setThemeType, themeType])

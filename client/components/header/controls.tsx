@@ -5,12 +5,12 @@ import { Select } from '@geist-ui/core'
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from './header.module.css'
 import { ThemeProps } from '@lib/types'
+import Cookies from 'js-cookie'
 
 const Controls = ({ changeTheme, theme }: ThemeProps) => {
     const switchThemes = (type: string | string[]) => {
         changeTheme()
-        if (typeof window === 'undefined' || !window.localStorage) return
-        window.localStorage.setItem('drift-theme', Array.isArray(type) ? type[0] : type)
+        Cookies.set('drift-theme', Array.isArray(type) ? type[0] : type)
     }
 
 

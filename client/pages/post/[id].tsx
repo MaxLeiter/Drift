@@ -1,44 +1,35 @@
 import { Button, Page, Text } from "@geist-ui/core";
-import Skeleton from 'react-loading-skeleton';
 
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import Document from '../../components/document'
 import Header from "../../components/header";
 import VisibilityBadge from "../../components/visibility-badge";
-import { PostProps } from "../_app";
 import PageSeo from "components/page-seo";
 import styles from './styles.module.css';
-import Cookies from "js-cookie";
 import cookie from "cookie";
 import { GetServerSideProps } from "next";
+import { PostVisibility, ThemeProps } from "@lib/types";
 
+type File = {
+    id: string
+    title: string
+    content: string
+}
 
-const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
-    const [post, setPost] = useState(renderedPost);
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string>()
+type Files = File[]
+
+export type PostProps = ThemeProps & {
+    post: {
+        id: string
+        title: string
+        description: string
+        visibility: PostVisibility
+        files: Files
+    }
+}
+
+const Post = ({ post, theme, changeTheme }: PostProps) => {
     const router = useRouter();
-
-    useEffect(() => {
-        async function fetchPost() {
-            setIsLoading(true);
-
-            if (renderedPost) {
-                setPost(renderedPost)
-                setIsLoading(false)
-                
-                return;
-            }
-
-            if (!Cookies.get('drift-token')) {
-                router.push('/signin');
-            } else {
-                setError('Something went wrong fetching the post');
-            }
-        }
-        fetchPost()
-    }, [router, router.query.id])
 
     const download = async () => {
         const clientZip = require("client-zip")
@@ -59,78 +50,88 @@ const Post = ({renderedPost, theme, changeTheme}: PostProps) => {
 
     return (
         <Page width={"100%"}>
-            {!isLoading && (
-                <PageSeo
-                    title={`${post.title} - Drift`}
-                    description={post.description}
-                    isPrivate={post.visibility === 'private'}
-                />
-            )}
+            <PageSeo
+                title={`${post.title} - Drift`}
+                description={post.description}
+                isPrivate={post.visibility !== 'public'}
+            />
 
             <Page.Header>
                 <Header theme={theme} changeTheme={changeTheme} />
             </Page.Header>
             <Page.Content width={"var(--main-content-width)"} margin="auto">
                 {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
-
-                {error && <Text type="error">{error}</Text>}
-                {!error && isLoading && <><Text h2><Skeleton width={400} /></Text>
-                    <Document skeleton={true} />
-                </>}
-                {!isLoading && post && <>
-                    <div className={styles.header}>
-                        <div className={styles.titleAndBadge}>
-                            <Text h2>{post.title}</Text>
-                            <span><VisibilityBadge visibility={post.visibility} /></span>
-                        </div>
-                        <Button auto onClick={download}>
-                            Download as ZIP archive
-                        </Button>
+                <div className={styles.header}>
+                    <div className={styles.titleAndBadge}>
+                        <Text h2>{post.title}</Text>
+                        <span><VisibilityBadge visibility={post.visibility} /></span>
                     </div>
-                    {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
-                        <Document
-                            key={id}
-                            id={id}
-                            content={content}
-                            title={title}
-                            editable={false}
-                            initialTab={'preview'}
-                        />
-                    ))}
-                </>}
+                    <Button auto onClick={download}>
+                        Download as ZIP archive
+                    </Button>
+                </div>
+                {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
+                    <Document
+                        key={id}
+                        id={id}
+                        content={content}
+                        title={title}
+                        editable={false}
+                        initialTab={'preview'}
+                    />
+                ))}
             </Page.Content>
         </Page >
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const headers = context.req.headers
+    const host = headers.host
+    const driftToken = cookie.parse(headers.cookie || '')[`drift-token`]
+    let driftTheme = cookie.parse(headers.cookie || '')[`drift-theme`]
+    if (driftTheme !== "light" && driftTheme !== "dark") {
+        driftTheme = "light"
+    }
 
-    const headers = context.req.headers;
-    const host = headers.host;
-    const driftToken = cookie.parse(headers.cookie || '')[`drift-token`];
-    
-    let post;
-    
+
     if (context.query.id) {
-        post = await fetch('http://' + host + `/server-api/posts/${context.query.id}`, {
+        const post = await fetch('http://' + host + `/server-api/posts/${context.query.id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${driftToken}`
             }
-        });
+        })
 
+        if (!post.ok || post.status !== 200) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            }
+        }
         try {
-            post = await post.json();
+            const json = await post.json();
+            const maxAge = 60 * 60 * 24 * 365;
+            context.res.setHeader(
+                'Cache-Control',
+                `${json.visibility === "public" ? "public" : "private"}, s-maxage=${maxAge}, max-age=${maxAge}`
+            )
+            return {
+                props: {
+                    post: json
+                }
+            }
         } catch (e) {
-            console.log(e);
-            post = null;
+            console.log(e)
         }
     }
 
     return {
         props: {
-            renderedPost: post
+            post: null
         }
     }
 }

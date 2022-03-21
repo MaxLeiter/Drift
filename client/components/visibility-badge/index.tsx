@@ -1,8 +1,8 @@
 import { Badge } from "@geist-ui/core"
-import { Visibility } from "@lib/types"
+import { PostVisibility } from "@lib/types"
 
 type Props = {
-    visibility: Visibility
+    visibility: PostVisibility
 }
 
 const VisibilityBadge = ({ visibility }: Props) => {

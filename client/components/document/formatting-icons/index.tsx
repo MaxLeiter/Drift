@@ -20,7 +20,7 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
     //     return { textBefore: '', textAfter: '' }
     // }, [textareaRef,])
 
-    const handleBoldClick = useCallback((e) => {
+    const handleBoldClick = useCallback(() => {
         if (textareaRef?.current && setText) {
             const selectionStart = textareaRef.current.selectionStart
             const selectionEnd = textareaRef.current.selectionEnd
@@ -37,7 +37,7 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
         }
     }, [setText, textareaRef])
 
-    const handleItalicClick = useCallback((e) => {
+    const handleItalicClick = useCallback(() => {
         if (textareaRef?.current && setText) {
             const selectionStart = textareaRef.current.selectionStart
             const selectionEnd = textareaRef.current.selectionEnd
@@ -52,7 +52,7 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
         }
     }, [setText, textareaRef])
 
-    const handleLinkClick = useCallback((e) => {
+    const handleLinkClick = useCallback(() => {
         if (textareaRef?.current && setText) {
             const selectionStart = textareaRef.current.selectionStart
             const selectionEnd = textareaRef.current.selectionEnd
@@ -73,7 +73,7 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
         }
     }, [setText, textareaRef])
 
-    const handleImageClick = useCallback((e) => {
+    const handleImageClick = useCallback(() => {
         if (textareaRef?.current && setText) {
             const selectionStart = textareaRef.current.selectionStart
             const selectionEnd = textareaRef.current.selectionEnd

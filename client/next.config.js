@@ -6,7 +6,6 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     outputStandalone: true,
-    optimizeCss: true,
   },
   async rewrites() {
     return [
