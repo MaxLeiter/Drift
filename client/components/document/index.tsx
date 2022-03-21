@@ -49,7 +49,8 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
-    const height = editable ? "500px" : '100%'
+    // const height = editable ? "500px" : '100%'
+    const height = "100%";
 
     const handleTabChange = (newTab: string) => {
         if (newTab === 'edit') {

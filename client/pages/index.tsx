@@ -27,7 +27,6 @@ const Home = ({ theme, changeTheme, introContent }: Props) => {
     <Page className={styles.container} width="100%">
       <PageSeo />
 
-
       <Page.Header>
         <Header theme={theme} changeTheme={changeTheme} />
       </Page.Header>
