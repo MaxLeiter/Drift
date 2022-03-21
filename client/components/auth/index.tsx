@@ -26,7 +26,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                 })
                 if (resp.ok) {
                     const res = await resp.json()
-                    setRequiresServerPassword(res)
+                    setRequiresServerPassword(res.requiresPasscode)
                 } else {
                     setErrorMsg("Something went wrong.")
                 }
