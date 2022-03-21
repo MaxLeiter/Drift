@@ -17,6 +17,7 @@ posts.post(
       title: Joi.string().required(),
       files: Joi.any().required(),
       visibility: Joi.string().required(),
+      userId: Joi.string().required(),
     },
   }),
   async (req, res, next) => {
