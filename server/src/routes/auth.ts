@@ -42,6 +42,7 @@ auth.post(
     body: {
       username: Joi.string().required(),
       password: Joi.string().required(),
+      serverPassword: Joi.string(),
     },
   }),
   async (req, res, next) => {
