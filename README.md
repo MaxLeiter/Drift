@@ -21,6 +21,23 @@ You can run `yarn dev` in either / both folders to start the server and client w
 
 If you're deploying the front-end to something like Vercel, you'll need to set the root folder to `client/`.
 
+### Environment Variables
+
+You can change these to your liking.
+
+`client/.env`:
+
+- `API_URL`: defaults to localhost:3001, but allows you to host the front-end separately from the backend on a service like Vercel or Netlify
+- `WELCOME_CONTENT`: a markdown string (with \n newlines) that's rendered on the home page
+- `WELCOME_TITLE`: the file title for the post on the homepage.
+
+`server/.env`:
+
+- `PORT`: the default port to start the server on (3000 by default)
+- `ENV`: can be `production` or `debug`, toggles logging
+- `JWT_SECRET`: a secure token for JWT tokens. You can generate one [here](https://www.grc.com/passwords.htm).
+- `MEMORY_DB`: if "true", a sqlite database will not be created and changes will only exist in memory. Mainly for the demo.
+
 ## Current status
 
 Drift is a major work in progress. Below is a (rough) list of completed and envisioned features. If you want to help address any of them, please let me know regardless of your experience and I'll be happy to assist.
@@ -34,7 +51,7 @@ Drift is a major work in progress. Below is a (rough) list of completed and envi
   - [ ] SSO via HTTP header (Issue: [#11](https://github.com/MaxLeiter/Drift/issues/11))
 - [x] downloading files (individually and entire posts)
 - [ ] password protected posts
-- [ ] sqlite database (should be very easy to set-up; the ORM is just currently set to memory for ease of development)
+- [x] sqlite database
 - [ ] non-node backend
 - [ ] administrator account / settings
 - [ ] docker-compose (PR: [#13](https://github.com/MaxLeiter/Drift/pull/13))
