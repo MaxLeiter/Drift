@@ -4,26 +4,35 @@ const PUBLIC_FILE = /.(.*)$/
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
     const pathname = req.nextUrl.pathname
+    const signedIn = req.cookies['drift-token']
+    const getURL = (pageName: string) => new URL(`/${pageName}`, req.url).href
     // const isPageRequest =
     //     !PUBLIC_FILE.test(req.nextUrl.pathname) &&
     //     !req.nextUrl.pathname.startsWith('/api') &&
     //     // header added when next/link pre-fetches a route
     //     !req.headers.get('x-middleware-preflight')
 
-    // If you're signed in we replace the home page with the new post page
-    if (pathname === '/') {
-        if (req.cookies['drift-token']) {
-            return NextResponse.rewrite(new URL(`/new`, req.url).href)
+    if (pathname === '/signout') {
+        // If you're signed in we remove the cookie and redirect to the home page
+        // If you're not signed in we redirect to the home page
+        if (signedIn) {
+            const resp = NextResponse.redirect(getURL(''));
+            resp.clearCookie('drift-token');
+            return resp
+        }
+    } else if (pathname === '/') {
+        if (signedIn) {
+            return NextResponse.rewrite(getURL('new'))
         }
         // If you're not signed in we redirect the new post page to the home page
     } else if (pathname === '/new') {
-        if (!req.cookies['drift-token']) {
-            return NextResponse.redirect(new URL(`/`, req.url).href)
+        if (!signedIn) {
+            return NextResponse.redirect(getURL(''))
         }
         // If you're signed in we redirect the sign in page to the home page (which is the new page)
     } else if (pathname === '/signin') {
-        if (req.cookies['drift-token']) {
-            return NextResponse.redirect(new URL(`/`, req.url).href)
+        if (signedIn) {
+            return NextResponse.redirect(getURL(''))
         }
     }
 
