@@ -5,7 +5,6 @@ import Page from "@geist-ui/core/dist/page"
 import Button from "@geist-ui/core/dist/button"
 import Text from "@geist-ui/core/dist/text"
 import DocumentComponent from '@components/document'
-import { downloadZip } from 'client-zip'
 import styles from './post-page.module.css'
 
 import type { Post, ThemeProps } from "@lib/types"
@@ -16,7 +15,7 @@ type Props = ThemeProps & {
 
 const PostPage = ({ post, changeTheme, theme }: Props) => {
     const download = async () => {
-
+        const downloadZip = (await import("client-zip")).downloadZip
         const blob = await downloadZip(post.files.map((file: any) => {
             return {
                 name: file.title,

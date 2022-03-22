@@ -91,6 +91,8 @@ const allowedFileExtensions = [
     'sql',
     'xml',
     'webmanifest',
+    'vue',
+    'vuex',
 ]
 
 function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {

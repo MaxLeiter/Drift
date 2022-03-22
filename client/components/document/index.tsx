@@ -9,12 +9,16 @@ import Tooltip from "@geist-ui/core/dist/tooltip"
 
 import { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
-import MarkdownPreview from '../preview'
 import Trash from '@geist-ui/icons/trash'
 import Download from '@geist-ui/icons/download'
 import ExternalLink from '@geist-ui/icons/externalLink'
 import FormattingIcons from "./formatting-icons"
 import Skeleton from "react-loading-skeleton"
+
+import dynamic from "next/dynamic";
+
+const MarkdownPreview = dynamic(() => import("../preview"))
+
 // import Link from "next/link"
 type Props = {
     editable?: boolean

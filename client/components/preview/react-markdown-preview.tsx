@@ -1,4 +1,3 @@
-import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-async-light';
 import rehypeSlug from 'rehype-slug'
@@ -11,6 +10,8 @@ import styles from './preview.module.css'
 import dark from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus'
 import light from 'react-syntax-highlighter/dist/cjs/styles/prism/vs'
 import useSharedState from "@lib/hooks/use-shared-state";
+import ReactMarkdown from "react-markdown";
+
 
 type Props = {
     content: string | undefined
@@ -19,6 +20,7 @@ type Props = {
 
 const ReactMarkdownPreview = ({ content, height }: Props) => {
     const [themeType] = useSharedState<string>('theme')
+
     return (<div style={{ height }}>
         <ReactMarkdown className={styles.markdownPreview}
             remarkPlugins={[remarkGfm]}
