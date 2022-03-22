@@ -1,9 +1,9 @@
 import { Router } from 'express'
 // import { Movie } from '../models/Post'
-import { User } from '../../lib/models/User'
-import { File } from '../../lib/models/File'
-import jwt, { UserJwtRequest } from '../../lib/middleware/jwt'
-import { Post } from '../../lib/models/Post'
+import { User } from '../lib/models/User'
+import { File } from '../lib/models/File'
+import jwt, { UserJwtRequest } from '../lib/middleware/jwt'
+import { Post } from '../lib/models/Post'
 
 export const users = Router()
 

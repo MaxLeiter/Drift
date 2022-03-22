@@ -15,6 +15,6 @@
     "strictPropertyInitialization": true,
     "outDir": "dist"
   },
-  "include": ["lib/**/*.ts", "index.ts", "src/**/*.ts"],
+  "include": ["index.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

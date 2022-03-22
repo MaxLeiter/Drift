@@ -1,10 +1,11 @@
 import { Router } from 'express'
 // import { Movie } from '../models/Post'
-import { File } from '../../lib/models/File'
-import { Post } from '../../lib/models/Post';
-import jwt, { UserJwtRequest } from '../../lib/middleware/jwt';
+import { File } from '../lib/models/File'
+import { Post } from '../lib/models/Post';
+import jwt, { UserJwtRequest } from '../lib/middleware/jwt';
 import * as crypto from "crypto";
-import { User } from '../../lib/models/User';
+import { User } from '../lib/models/User';
+import secretKey from '../lib/middleware/secret-key';
 
 export const posts = Router()
 
@@ -57,7 +58,18 @@ posts.post('/create', jwt, async (req, res, next) => {
     }
 });
 
-posts.get("/:id", async (req: UserJwtRequest, res, next) => {
+posts.get("/", secretKey, async (req, res, next) => {
+    try {
+        const posts = await Post.findAll({
+            attributes: ["id", "title", "visibility", "createdAt"],
+        })
+        res.json(posts);
+    } catch (e) {
+        next(e);
+    }
+});
+
+posts.get("/:id", secretKey, async (req, res, next) => {
     try {
         const post = await Post.findOne({
             where: {
@@ -76,16 +88,19 @@ posts.get("/:id", async (req: UserJwtRequest, res, next) => {
                 },
             ]
         })
+        if (!post) {
+            throw new Error("Post not found.")
+        }
 
-        if (post?.visibility === 'public' || post?.visibility === 'unlisted') {
-            res.setHeader("Cache-Control", "public, max-age=86400");
+        if (post.visibility === 'public' || post?.visibility === 'unlisted') {
             res.json(post);
-        } else {
-            // TODO: should this be `private, `?
-            res.setHeader("Cache-Control", "max-age=86400");
-            jwt(req, res, () => {
+        } else if (post.visibility === 'private') {
+            console.log("here")
+            jwt(req as UserJwtRequest, res, () => {
                 res.json(post);
-            });
+            })
+        } else if (post.visibility === 'protected') {
+
         }
     }
     catch (e) {

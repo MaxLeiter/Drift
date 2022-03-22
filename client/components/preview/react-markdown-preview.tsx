@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-async-light';
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 

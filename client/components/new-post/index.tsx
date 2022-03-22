@@ -9,6 +9,7 @@ import Title from './title';
 import Cookies from 'js-cookie'
 import type { PostVisibility, Document as DocumentType } from '@lib/types';
 import PasswordModal from './password';
+import getPostPath from '@lib/get-post-path';
 
 const Post = () => {
     const { setToast } = useToasts()
@@ -36,7 +37,7 @@ const Post = () => {
 
         if (res.ok) {
             const json = await res.json()
-            router.push(`/post/${json.id}`)
+            router.push(getPostPath(json.visibility, json.id))
         } else {
             const json = await res.json()
             setToast({

@@ -2,13 +2,20 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id, download } = req.query
-    const file = await fetch(`${process.env.API_URL}/files/raw/${id}`)
+    const file = await fetch(`${process.env.API_URL}/files/raw/${id}`, {
+        headers: {
+            'Accept': 'text/plain',
+            'x-secret-key': process.env.SECRET_KEY || ''
+        }
+    })
+    res.setHeader("Content-Type", "text/plain")
+    res.setHeader('Cache-Control', 's-maxage=86400');
+
     if (file.ok) {
         const data = await file.json()
         const { title, content } = data
         // serve the file raw as plain text
-        res.setHeader("Content-Type", "text/plain")
-        res.setHeader('Cache-Control', 's-maxage=86400');
+
         if (download) {
             res.setHeader("Content-Disposition", `attachment; filename="${title}"`)
         } else {
