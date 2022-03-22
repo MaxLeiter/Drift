@@ -1,10 +1,11 @@
 import { Router } from 'express'
 // import { Movie } from '../models/Post'
-import { File } from '../../lib/models/File'
-import { Post } from '../../lib/models/Post';
-import jwt, { UserJwtRequest } from '../../lib/middleware/jwt';
+import { File } from '../lib/models/File'
+import { Post } from '../lib/models/Post';
+import jwt, { UserJwtRequest } from '../lib/middleware/jwt';
 import * as crypto from "crypto";
-import { User } from '../../lib/models/User';
+import { User } from '../lib/models/User';
+import secretKey from '../lib/middleware/secret-key';
 
 export const posts = Router()
 
@@ -26,7 +27,6 @@ posts.post('/create', jwt, async (req, res, next) => {
             throw new Error("Please provide a visibility.")
         }
 
-        // Create the "post" object 
         const newPost = new Post({
             title: req.body.title,
             visibility: req.body.visibility,
@@ -35,7 +35,6 @@ posts.post('/create', jwt, async (req, res, next) => {
         await newPost.save()
         await newPost.$add('users', req.body.userId);
         const newFiles = await Promise.all(req.body.files.map(async (file) => {
-            // Establish a "file" for each file in the request
             const newFile = new File({
                 title: file.title,
                 content: file.content,
@@ -59,7 +58,47 @@ posts.post('/create', jwt, async (req, res, next) => {
     }
 });
 
-posts.get("/:id", async (req: UserJwtRequest, res, next) => {
+posts.get("/", secretKey, async (req, res, next) => {
+    try {
+        const posts = await Post.findAll({
+            attributes: ["id", "title", "visibility", "createdAt"],
+        })
+        res.json(posts);
+    } catch (e) {
+        next(e);
+    }
+});
+
+posts.get("/mine", jwt, secretKey, async (req: UserJwtRequest, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({ error: "Unauthorized" })
+    }
+
+    try {
+        const user = await User.findByPk(req.user.id, {
+            include: [
+                {
+                    model: Post,
+                    as: "posts",
+                    include: [
+                        {
+                            model: File,
+                            as: "files"
+                        }
+                    ]
+                },
+            ],
+        })
+        if (!user) {
+            return res.status(404).json({ error: "User not found" })
+        }
+        return res.json(user.posts?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()))
+    } catch (error) {
+        next(error)
+    }
+})
+
+posts.get("/:id", secretKey, async (req, res, next) => {
     try {
         const post = await Post.findOne({
             where: {
@@ -78,20 +117,21 @@ posts.get("/:id", async (req: UserJwtRequest, res, next) => {
                 },
             ]
         })
+        if (!post) {
+            throw new Error("Post not found.")
+        }
 
-        if (post?.visibility === 'public' || post?.visibility === 'unlisted') {
-            res.setHeader("Cache-Control", "public, max-age=86400");
+        if (post.visibility === 'public' || post?.visibility === 'unlisted') {
             res.json(post);
-        } else {
-            // TODO: should this be `private, `?
-            res.setHeader("Cache-Control", "max-age=86400");
-            jwt(req, res, () => {
+        } else if (post.visibility === 'private') {
+            jwt(req as UserJwtRequest, res, () => {
                 res.json(post);
-            });
+            })
+        } else if (post.visibility === 'protected') {
+
         }
     }
     catch (e) {
         next(e);
     }
 });
-

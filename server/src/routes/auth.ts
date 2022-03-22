@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import { genSalt, hash, compare } from "bcrypt"
-import { User } from '../../lib/models/User'
+import { User } from '../lib/models/User'
 import { sign } from 'jsonwebtoken'
-import config from '../../lib/config'
-import jwt from '../../lib/middleware/jwt'
+import config from '../lib/config'
+import jwt from '../lib/middleware/jwt'
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 

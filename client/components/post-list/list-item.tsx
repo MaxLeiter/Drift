@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import ShiftBy from "../shift-by"
 import VisibilityBadge from "../visibility-badge"
+import getPostPath from "@lib/get-post-path"
 
 const FilenameInput = ({ title }: { title: string }) => <Input
     value={title}
@@ -33,7 +34,7 @@ const ListItem = ({ post }: { post: any }) => {
             <Grid.Container>
                 <Grid md={14} xs={14}>
                     <Text h3 paddingLeft={1 / 2} >
-                        <NextLink passHref={true} href={`/post/${post.id}`}>
+                        <NextLink passHref={true} href={getPostPath(post.visibility, post.id)}>
                             <Link color>{post.title}
                                 <ShiftBy y={-1}><VisibilityBadge visibility={post.visibility} /></ShiftBy>
                             </Link>

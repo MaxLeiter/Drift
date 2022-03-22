@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from 'react'
+import { memo } from 'react'
 import { Text, Input } from '@geist-ui/core'
 import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'

@@ -2,7 +2,7 @@ import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
 
 const PUBLIC_FILE = /.(.*)$/
 
-export function middleware(req: NextRequest, ev: NextFetchEvent) {
+export function middleware(req: NextRequest) {
     const pathname = req.nextUrl.pathname
     const signedIn = req.cookies['drift-token']
     const getURL = (pageName: string) => new URL(`/${pageName}`, req.url).href

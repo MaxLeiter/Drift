@@ -38,7 +38,7 @@ export class Post extends Model {
   @BelongsToMany(() => User, () => PostAuthor)
   users?: User[];
 
-  @HasMany(() => File)
+  @HasMany(() => File, { constraints: false })
   files?: File[];
 
   @CreatedAt
@@ -47,6 +47,9 @@ export class Post extends Model {
 
   @Column
   visibility!: string;
+
+  @Column
+  password?: string;
 
   @UpdatedAt
   @Column

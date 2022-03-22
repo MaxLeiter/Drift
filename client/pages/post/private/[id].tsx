@@ -4,8 +4,9 @@ import Document from '@components/document'
 import Header from "@components/header";
 import VisibilityBadge from "@components/visibility-badge";
 import PageSeo from "components/page-seo";
-import styles from './styles.module.css';
-import type { GetStaticPaths, GetStaticProps } from "next";
+import styles from '../styles.module.css';
+import cookie from "cookie";
+import type { GetServerSideProps } from "next";
 import { PostVisibility, ThemeProps } from "@lib/types";
 
 type File = {
@@ -49,7 +50,7 @@ const Post = ({ post, theme, changeTheme }: PostProps) => {
             <PageSeo
                 title={`${post.title} - Drift`}
                 description={post.description}
-                isPrivate={false}
+                isPrivate={true}
             />
 
             <Page.Header>
@@ -81,37 +82,46 @@ const Post = ({ post, theme, changeTheme }: PostProps) => {
     )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const posts = await fetch(process.env.API_URL + `/posts/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "x-secret-key": process.env.SECRET_KEY || "",
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const headers = context.req.headers
+    const host = headers.host
+    const driftToken = cookie.parse(headers.cookie || '')[`drift-token`]
+
+    if (context.query.id) {
+        const post = await fetch('http://' + host + `/server-api/posts/${context.query.id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${driftToken}`,
+                "x-secret-key": process.env.SECRET_KEY || "",
+            }
+        })
+
+        if (!post.ok || post.status !== 200) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            }
         }
-    })
+        try {
+            const json = await post.json();
 
-    const json = await posts.json()
-    const filtered = json.filter((post: any) => post.visibility === "public" || post.visibility === "unlisted")
-    const paths = filtered.map((post: any) => ({
-        params: { id: post.id }
-    }))
-
-    return { paths, fallback: 'blocking' }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const post = await fetch(process.env.API_URL + `/posts/${params?.id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "x-secret-key": process.env.SECRET_KEY || "",
+            return {
+                props: {
+                    post: json
+                }
+            }
+        } catch (e) {
+            console.log(e)
         }
-    })
+    }
 
     return {
         props: {
-            post: await post.json()
-        },
+            post: null
+        }
     }
 }
 

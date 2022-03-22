@@ -1,17 +1,7 @@
-import useSWR from "swr"
 import PostList from "../post-list"
-import Cookies from "js-cookie"
 
-const fetcher = (url: string) => fetch(url, {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get("drift-token")}`
-    },
-}).then(r => r.json())
-
-const MyPosts = () => {
-    const { data, error } = useSWR('/server-api/users/mine', fetcher)
-    return <PostList posts={data} error={error} />
+const MyPosts = ({ posts, error }: { posts: any, error: any }) => {
+    return <PostList posts={posts} error={error} />
 }
 
 export default MyPosts

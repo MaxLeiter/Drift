@@ -1,10 +1,9 @@
-import { Button, Text, useTheme, useToasts } from '@geist-ui/core'
-import { memo, useCallback, useEffect } from 'react'
+import { Text, useTheme, useToasts } from '@geist-ui/core'
+import { memo } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './drag-and-drop.module.css'
-import { Document } from '../'
+import type { Document } from '@lib/types'
 import generateUUID from '@lib/generate-uuid'
-import { XCircle } from '@geist-ui/icons'
 const allowedFileTypes = [
     'application/json',
     'application/x-javascript',
@@ -99,7 +98,7 @@ function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {
     const { setToast } = useToasts()
     const onDrop = async (acceptedFiles: File[]) => {
         const newDocs = await Promise.all(acceptedFiles.map((file) => {
-            return new Promise<Document>((resolve, reject) => {
+            return new Promise<Document>((resolve) => {
                 const reader = new FileReader()
 
                 reader.onabort = () => setToast({ text: 'File reading was aborted', type: 'error' })

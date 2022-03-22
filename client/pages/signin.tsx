@@ -2,7 +2,7 @@ import { Page } from "@geist-ui/core";
 import PageSeo from "@components/page-seo";
 import Auth from "@components/auth";
 import Header from "@components/header";
-import { ThemeProps } from "./_app";
+import { ThemeProps } from "@lib/types";
 
 const SignIn = ({ theme, changeTheme }: ThemeProps) => (
     <Page width={"100%"}>
