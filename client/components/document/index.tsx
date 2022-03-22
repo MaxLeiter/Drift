@@ -27,6 +27,7 @@ type Props = {
     content?: string
     setTitle?: (title: string) => void
     setContent?: (content: string) => void
+    handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
     initialTab?: "edit" | "preview"
     skeleton?: boolean
     id?: string
@@ -60,7 +61,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 }
 
 
-const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id }: Props) => {
+const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id, handleOnContentChange }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     // const height = editable ? "500px" : '100%'
@@ -73,14 +74,16 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         setTab(newTab as 'edit' | 'preview')
     }
 
-    const getType = useMemo(() => {
+    const getType = useCallback(() => {
         if (!title) return
         const pathParts = title.split(".")
         const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
         return language
     }, [title])
 
-    const removeFile = (remove?: () => void) => {
+    const onTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null, [setTitle])
+
+    const removeFile = useCallback(() => (remove?: () => void) => {
         if (remove) {
             if (content && content.trim().length > 0) {
                 const confirmed = window.confirm("Are you sure you want to remove this file?")
@@ -91,13 +94,13 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 remove()
             }
         }
-    }
+    }, [content])
 
-    const rawLink = useMemo(() => {
+    const rawLink = () => {
         if (id) {
             return `/file/raw/${id}`
         }
-    }, [id])
+    }
 
     if (skeleton) {
         return <>
@@ -114,6 +117,8 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
             </Card>
         </>
     }
+
+
     return (
         <>
             <Spacer height={1} />
@@ -122,7 +127,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                     <Input
                         placeholder="MyFile.md"
                         value={title}
-                        onChange={(event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null}
+                        onChange={onTitleChange}
                         marginTop="var(--gap-double)"
                         size={1.2}
                         font={1.2}
@@ -131,11 +136,11 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         width={"100%"}
                         id={title}
                     />
-                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
+                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={removeFile} />}
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
-                    {rawLink && <DownloadButton rawLink={rawLink} />}
+                    {rawLink && <DownloadButton rawLink={rawLink()} />}
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
@@ -144,7 +149,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                                     ref={codeEditorRef}
                                     placeholder="Type some contents..."
                                     value={content}
-                                    onChange={(event) => setContent ? setContent(event.target.value) : null}
+                                    onChange={handleOnContentChange}
                                     width="100%"
                                     disabled={!editable}
                                     // TODO: Textarea should grow to fill parent if height == 100%
@@ -155,7 +160,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <MarkdownPreview height={height} content={content} type={getType} />
+                            <MarkdownPreview height={height} content={content} type={getType()} />
                         </Tabs.Item>
                     </Tabs>
 

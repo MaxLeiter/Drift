@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { ChangeEvent, memo, useCallback } from 'react'
 import Text from '@geist-ui/core/dist/text'
 import Input from '@geist-ui/core/dist/input'
 
@@ -16,19 +16,18 @@ const titlePlaceholders = [
 ]
 
 type props = {
-    setTitle: (title: string) => void
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
     title?: string
 }
 
-const Title = ({ setTitle, title }: props) => {
-
+const Title = ({ onChange, title }: props) => {
     return (<div className={styles.title}>
         <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
         <ShiftBy y={-3}>
             <Input
                 placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
                 value={title || ""}
-                onChange={(event) => setTitle(event.target.value)}
+                onChange={onChange}
                 height={"55px"}
                 font={1.5}
                 label="Post title"

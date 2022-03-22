@@ -35,10 +35,6 @@
   padding: 20px;
 }
 
-.error > li:before {
-  content: "";
-}
-
 .error ul {
   margin: 0;
   padding-left: var(--gap-double);

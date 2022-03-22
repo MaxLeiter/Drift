@@ -13,6 +13,8 @@ import Cookies from 'js-cookie'
 import type { PostVisibility, Document as DocumentType } from '@lib/types';
 import PasswordModal from './password';
 import getPostPath from '@lib/get-post-path';
+import DocumentList from '@components/document-list';
+import { ChangeEvent } from 'react';
 
 const Post = () => {
     const { setToast } = useToasts()
@@ -23,6 +25,7 @@ const Post = () => {
         content: '',
         id: generateUUID()
     }])
+
     const [passwordModalVisible, setPasswordModalVisible] = useState(false)
     const sendRequest = useCallback(async (url: string, data: { visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
         const res = await fetch(url, {
@@ -55,12 +58,7 @@ const Post = () => {
 
     const [isSubmitting, setSubmitting] = useState(false)
 
-    const remove = (id: string) => {
-        setDocs(docs.filter((doc) => doc.id !== id))
-    }
-
     const onSubmit = async (visibility: PostVisibility, password?: string) => {
-        console.log(visibility, password, passwordModalVisible)
         if (visibility === 'protected' && !password) {
             setPasswordModalVisible(true)
             return
@@ -81,13 +79,23 @@ const Post = () => {
         setSubmitting(false)
     }
 
-    const updateTitle = useCallback((title: string, id: string) => {
-        setDocs(docs.map((doc) => doc.id === id ? { ...doc, title } : doc))
-    }, [docs])
+    const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value)
+    }, [setTitle])
 
-    const updateContent = useCallback((content: string, id: string) => {
-        setDocs(docs.map((doc) => doc.id === id ? { ...doc, content } : doc))
-    }, [docs])
+
+    const updateDocTitle = useCallback((i: number) => (title: string) => {
+        setDocs((docs) => docs.map((doc, index) => i === index ? { ...doc, title } : doc))
+    }, [setDocs])
+
+    const updateDocContent = useCallback((i: number) => (content: string) => {
+        setDocs((docs) => docs.map((doc, index) => i === index ? { ...doc, content } : doc))
+    }, [setDocs])
+
+    const removeDoc = useCallback((i: number) => () => {
+        setDocs((docs) => docs.filter((_, index) => i !== index))
+    }, [setDocs])
+
 
     const uploadDocs = useCallback((files: DocumentType[]) => {
         // if no title is set and the only document is empty,
@@ -102,29 +110,14 @@ const Post = () => {
         }
 
         if (isFirstDocEmpty) setDocs(files)
-        else setDocs([...docs, ...files])
+        else setDocs((docs) => [...docs, ...files])
     }, [docs, title])
 
     return (
         <div>
-            <Title title={title} setTitle={setTitle} />
+            <Title title={title} onChange={onChangeTitle} />
             <FileDropzone setDocs={uploadDocs} />
-            {
-                docs.map(({ content, id, title }) => {
-                    return (
-                        <DocumentComponent
-                            remove={() => remove(id)}
-                            key={id}
-                            editable={true}
-                            setContent={(content) => updateContent(content, id)}
-                            setTitle={(title) => updateTitle(title, id)}
-                            content={content}
-                            title={title}
-                        />
-                    )
-                })
-            }
-
+            <DocumentList docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />
             <div className={styles.buttons}>
                 <Button
                     className={styles.button}

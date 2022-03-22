@@ -2,6 +2,7 @@ import remarkGfm from "remark-gfm"
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-async-light';
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeRaw from 'rehype-raw'
 
 // @ts-ignore because of no types in remark-a11y-emoji
 // import a11yEmoji from '@fec/remark-a11y-emoji';
@@ -11,7 +12,6 @@ import dark from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus'
 import light from 'react-syntax-highlighter/dist/cjs/styles/prism/vs'
 import useSharedState from "@lib/hooks/use-shared-state";
 import ReactMarkdown from "react-markdown";
-
 
 type Props = {
     content: string | undefined
@@ -24,7 +24,7 @@ const ReactMarkdownPreview = ({ content, height }: Props) => {
     return (<div style={{ height }}>
         <ReactMarkdown className={styles.markdownPreview}
             remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]}
+            rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }], rehypeRaw]}
             components={{
                 code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '')

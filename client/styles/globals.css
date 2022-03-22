@@ -30,3 +30,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+li:before {
+  content: "" !important;
+}
