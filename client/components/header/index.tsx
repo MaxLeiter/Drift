@@ -1,4 +1,11 @@
-import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, Tabs, Spacer } from "@geist-ui/core";
+import Page from "@geist-ui/core/dist/page";
+import ButtonGroup from "@geist-ui/core/dist/button-group";
+import Button from "@geist-ui/core/dist/button";
+import useBodyScroll from "@geist-ui/core/dist/use-body-scroll";
+import useMediaQuery from "@geist-ui/core/dist/use-media-query";
+import Tabs from "@geist-ui/core/dist/tabs";
+import Spacer from "@geist-ui/core/dist/spacer";
+
 import { useEffect, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";

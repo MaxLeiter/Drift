@@ -1,4 +1,7 @@
-import { Input, Modal, Note, Spacer } from "@geist-ui/core"
+import Input from "@geist-ui/core/dist/input"
+import Modal from "@geist-ui/core/dist/modal"
+import Note from "@geist-ui/core/dist/note"
+import Spacer from "@geist-ui/core/dist/spacer"
 import { useState } from "react"
 
 type Props = {

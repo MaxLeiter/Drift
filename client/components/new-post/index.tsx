@@ -1,4 +1,7 @@
-import { Button, ButtonDropdown, useToasts } from '@geist-ui/core'
+import Button from '@geist-ui/core/dist/button'
+import useToasts from '@geist-ui/core/dist/use-toasts'
+import ButtonDropdown from '@geist-ui/core/dist/button-dropdown'
+
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';

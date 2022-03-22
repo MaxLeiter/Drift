@@ -1,4 +1,12 @@
-import { Card, Spacer, Grid, Divider, Link, Text, Input, Tooltip } from "@geist-ui/core"
+import Card from "@geist-ui/core/dist/card"
+import Spacer from "@geist-ui/core/dist/spacer"
+import Grid from "@geist-ui/core/dist/grid"
+import Divider from "@geist-ui/core/dist/divider"
+import Link from "@geist-ui/core/dist/link"
+import Text from "@geist-ui/core/dist/text"
+import Input from "@geist-ui/core/dist/input"
+import Tooltip from "@geist-ui/core/dist/tooltip"
+
 import NextLink from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"

@@ -1,5 +1,8 @@
 import '@styles/globals.css'
-import { GeistProvider, CssBaseline, useTheme } from '@geist-ui/core'
+import GeistProvider from '@geist-ui/core/dist/geist-provider'
+import CssBaseline from '@geist-ui/core/dist/css-baseline'
+import useTheme from '@geist-ui/core/dist/use-theme'
+
 import { useEffect, useMemo, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
 import useSharedState from '@lib/hooks/use-shared-state';
@@ -7,7 +10,7 @@ import useSharedState from '@lib/hooks/use-shared-state';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
-import { ThemeProps } from '@lib/types';
+import type { ThemeProps } from '@lib/types';
 import Cookies from 'js-cookie';
 
 type AppProps<P = any> = {

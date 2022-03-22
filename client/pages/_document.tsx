@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
-import { CssBaseline } from '@geist-ui/core'
+import CssBaseline from '@geist-ui/core/dist/css-baseline'
 
 class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {

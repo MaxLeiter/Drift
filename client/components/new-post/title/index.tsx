@@ -1,5 +1,7 @@
 import { memo } from 'react'
-import { Text, Input } from '@geist-ui/core'
+import Text from '@geist-ui/core/dist/text'
+import Input from '@geist-ui/core/dist/input'
+
 import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'
 

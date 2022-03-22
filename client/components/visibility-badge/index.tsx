@@ -1,5 +1,5 @@
-import { Badge } from "@geist-ui/core"
-import { PostVisibility } from "@lib/types"
+import Badge from "@geist-ui/core/dist/badge";
+import type { PostVisibility } from "@lib/types"
 
 type Props = {
     visibility: PostVisibility

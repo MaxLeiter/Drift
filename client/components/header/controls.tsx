@@ -1,7 +1,7 @@
 import React from 'react'
 import MoonIcon from '@geist-ui/icons/moon'
 import SunIcon from '@geist-ui/icons/sun'
-import { Select } from '@geist-ui/core'
+import Select from '@geist-ui/core/dist/select'
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from './header.module.css'
 import { ThemeProps } from '@lib/types'

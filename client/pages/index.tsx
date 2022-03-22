@@ -1,6 +1,7 @@
 import styles from '@styles/Home.module.css'
-import { Page, Spacer, Text } from '@geist-ui/core'
-
+import Page from '@geist-ui/core/dist/page'
+import Spacer from '@geist-ui/core/dist/spacer'
+import Text from '@geist-ui/core/dist/text'
 import Header from '@components/header'
 import Document from '@components/document'
 import Image from 'next/image'

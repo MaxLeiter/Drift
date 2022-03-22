@@ -1,4 +1,12 @@
-import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
+import Button from "@geist-ui/core/dist/button"
+import Card from "@geist-ui/core/dist/card"
+import ButtonGroup from "@geist-ui/core/dist/button-group"
+import Input from "@geist-ui/core/dist/input"
+import Spacer from "@geist-ui/core/dist/spacer"
+import Tabs from "@geist-ui/core/dist/tabs"
+import Textarea from "@geist-ui/core/dist/textarea"
+import Tooltip from "@geist-ui/core/dist/tooltip"
+
 import { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
 import MarkdownPreview from '../preview'

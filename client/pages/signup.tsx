@@ -1,8 +1,8 @@
-import { Page } from "@geist-ui/core";
+import Page from "@geist-ui/core/dist/page";
 import Auth from "@components/auth";
 import Header from "@components/header";
 import PageSeo from '@components/page-seo';
-import { ThemeProps } from "@lib/types";
+import type { ThemeProps } from "@lib/types";
 
 const SignUp = ({ theme, changeTheme }: ThemeProps) => (
     <Page width="100%">

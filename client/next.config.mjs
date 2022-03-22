@@ -1,15 +1,14 @@
-const dotenv = require("dotenv");
-dotenv.config();
+import dotenv from "dotenv";
+import bundleAnalyzer from "@next/bundle-analyzer";
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+dotenv.config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
     outputStandalone: true,
+    esmExternals: true,
   },
   async rewrites() {
     return [
@@ -25,4 +24,6 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+export default bundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(
+  nextConfig
+);

@@ -1,11 +1,11 @@
 import styles from '@styles/Home.module.css'
-import { Page } from '@geist-ui/core'
+import Page from '@geist-ui/core/dist/page'
 
 import Header from '@components/header'
 import MyPosts from '@components/my-posts'
 import cookie from "cookie";
-import { GetServerSideProps } from 'next';
-import { ThemeProps } from '@lib/types';
+import type { GetServerSideProps } from 'next';
+import type { ThemeProps } from '@lib/types';
 
 const Home = ({ posts, error, theme, changeTheme }: ThemeProps & { posts: any; error: any; }) => {
   return (

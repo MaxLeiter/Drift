@@ -1,13 +1,7 @@
-import { Button, Page, Text } from "@geist-ui/core";
-
-import Document from '@components/document'
-import Header from "@components/header";
-import VisibilityBadge from "@components/visibility-badge";
-import PageSeo from "components/page-seo";
-import styles from '../styles.module.css';
 import cookie from "cookie";
 import type { GetServerSideProps } from "next";
 import { PostVisibility, ThemeProps } from "@lib/types";
+import PostPage from "@components/post-page";
 
 type File = {
     id: string
@@ -28,58 +22,7 @@ export type PostProps = ThemeProps & {
 }
 
 const Post = ({ post, theme, changeTheme }: PostProps) => {
-    const download = async () => {
-        const clientZip = require("client-zip")
-
-        const blob = await clientZip.downloadZip(post.files.map((file: any) => {
-            return {
-                name: file.title,
-                input: file.content,
-                lastModified: new Date(file.updatedAt)
-            }
-        })).blob()
-        const link = document.createElement("a")
-        link.href = URL.createObjectURL(blob)
-        link.download = `${post.title}.zip`
-        link.click()
-        link.remove()
-    }
-
-    return (
-        <Page width={"100%"}>
-            <PageSeo
-                title={`${post.title} - Drift`}
-                description={post.description}
-                isPrivate={true}
-            />
-
-            <Page.Header>
-                <Header theme={theme} changeTheme={changeTheme} />
-            </Page.Header>
-            <Page.Content width={"var(--main-content-width)"} margin="auto">
-                {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
-                <div className={styles.header}>
-                    <div className={styles.titleAndBadge}>
-                        <Text h2>{post.title}</Text>
-                        <span><VisibilityBadge visibility={post.visibility} /></span>
-                    </div>
-                    <Button auto onClick={download}>
-                        Download as ZIP archive
-                    </Button>
-                </div>
-                {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
-                    <Document
-                        key={id}
-                        id={id}
-                        content={content}
-                        title={title}
-                        editable={false}
-                        initialTab={'preview'}
-                    />
-                ))}
-            </Page.Content>
-        </Page >
-    )
+    return (<PostPage post={post} changeTheme={changeTheme} theme={theme} />)
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

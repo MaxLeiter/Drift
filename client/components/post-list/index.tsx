@@ -1,4 +1,4 @@
-import { Text } from "@geist-ui/core"
+import Text from "@geist-ui/core/dist/text"
 import NextLink from "next/link"
 import Link from '../Link'
 
