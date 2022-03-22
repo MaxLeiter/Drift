@@ -41,16 +41,14 @@ const Post = () => {
         } else {
             const json = await res.json()
             setToast({
-                text: json.message,
+                text: json.error.message,
                 type: 'error'
             })
+            setPasswordModalVisible(false)
+            setSubmitting(false)
         }
 
     }, [docs, router, setToast, title])
-
-    const closePasswordModel = () => {
-        setPasswordModalVisible(false)
-    }
 
     const [isSubmitting, setSubmitting] = useState(false)
 
@@ -59,12 +57,12 @@ const Post = () => {
     }
 
     const onSubmit = async (visibility: PostVisibility, password?: string) => {
-        setSubmitting(true)
-
+        console.log(visibility, password, passwordModalVisible)
         if (visibility === 'protected' && !password) {
             setPasswordModalVisible(true)
             return
         }
+        setSubmitting(true)
 
         await sendRequest('/server-api/posts/create', {
             title,
@@ -77,6 +75,7 @@ const Post = () => {
 
     const onClosePasswordModal = () => {
         setPasswordModalVisible(false)
+        setSubmitting(false)
     }
 
     const updateTitle = useCallback((title: string, id: string) => {

@@ -6,24 +6,10 @@ import VisibilityBadge from "@components/visibility-badge";
 import PageSeo from "components/page-seo";
 import styles from './styles.module.css';
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { PostVisibility, ThemeProps } from "@lib/types";
-
-type File = {
-    id: string
-    title: string
-    content: string
-}
-
-type Files = File[]
+import { Post, ThemeProps } from "@lib/types";
 
 export type PostProps = ThemeProps & {
-    post: {
-        id: string
-        title: string
-        description: string
-        visibility: PostVisibility
-        files: Files
-    }
+    post: Post
 }
 
 const Post = ({ post, theme, changeTheme }: PostProps) => {

@@ -1,5 +1,4 @@
 import { Page, ButtonGroup, Button, useBodyScroll, useMediaQuery, Tabs, Spacer } from "@geist-ui/core";
-import { DriftProps } from "../../pages/_app";
 import { useEffect, useState } from "react";
 import styles from './header.module.css';
 import { useRouter } from "next/router";
@@ -15,6 +14,7 @@ import NewIcon from '@geist-ui/icons/plusCircle';
 import YourIcon from '@geist-ui/icons/list'
 import MoonIcon from '@geist-ui/icons/moon';
 import SunIcon from '@geist-ui/icons/sun';
+import type { ThemeProps } from "@lib/types";
 
 type Tab = {
     name: string
@@ -26,13 +26,13 @@ type Tab = {
 }
 
 
-const Header = ({ changeTheme, theme }: DriftProps) => {
+const Header = ({ changeTheme, theme }: ThemeProps) => {
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState<string>(router.pathname === '/' ? 'home' : router.pathname.split('/')[1]);
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
-    const isSignedIn = useSignedIn()
+    const { signedIn: isSignedIn } = useSignedIn()
     const [pages, setPages] = useState<Tab[]>([])
 
     useEffect(() => {

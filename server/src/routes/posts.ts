@@ -27,9 +27,19 @@ posts.post('/create', jwt, async (req, res, next) => {
             throw new Error("Please provide a visibility.")
         }
 
+        if (req.body.visibility === 'protected' && !req.body.password) {
+            throw new Error("Please provide a password.")
+        }
+
+        let hashedPassword: string = ''
+        if (req.body.visibility === 'protected') {
+            hashedPassword = crypto.createHash('sha256').update(req.body.password).digest('hex');
+        }
+
         const newPost = new Post({
             title: req.body.title,
             visibility: req.body.visibility,
+            password: hashedPassword,
         })
 
         await newPost.save()
@@ -98,7 +108,7 @@ posts.get("/mine", jwt, secretKey, async (req: UserJwtRequest, res, next) => {
     }
 })
 
-posts.get("/:id", secretKey, async (req, res, next) => {
+posts.get("/:id", async (req, res, next) => {
     try {
         const post = await Post.findOne({
             where: {
@@ -117,18 +127,33 @@ posts.get("/:id", secretKey, async (req, res, next) => {
                 },
             ]
         })
+
         if (!post) {
             throw new Error("Post not found.")
         }
 
+
         if (post.visibility === 'public' || post?.visibility === 'unlisted') {
-            res.json(post);
+            secretKey(req, res, () => {
+                res.json(post);
+            })
         } else if (post.visibility === 'private') {
             jwt(req as UserJwtRequest, res, () => {
                 res.json(post);
             })
         } else if (post.visibility === 'protected') {
+            const { password } = req.query
+            if (!password || typeof password !== 'string') {
+                return jwt(req as UserJwtRequest, res, () => {
+                    res.json(post);
+                })
+            }
+            const hash = crypto.createHash('sha256').update(password).digest('hex').toString()
+            if (hash !== post.password) {
+                return res.status(400).json({ error: "Incorrect password." })
+            }
 
+            res.json(post);
         }
     }
     catch (e) {

@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 
 const useSignedIn = () => {
     const [signedIn, setSignedIn] = useState(typeof window === 'undefined' ? false : !!Cookies.get("drift-token"));
+    const token = Cookies.get("drift-token")
 
     useEffect(() => {
-        if (Cookies.get("drift-token")) {
+        if (token) {
             setSignedIn(true);
         } else {
             setSignedIn(false);
         }
-    }, []);
+    }, [token]);
 
-    return signedIn;
+    return { signedIn, token };
 }
 
 export default useSignedIn;

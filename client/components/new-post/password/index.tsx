@@ -2,12 +2,13 @@ import { Input, Modal, Note, Spacer } from "@geist-ui/core"
 import { useState } from "react"
 
 type Props = {
+    warning?: boolean
     isOpen: boolean
     onClose: () => void
     onSubmit: (password: string) => void
 }
 
-const PasswordModal = ({ isOpen, onClose, onSubmit: onSubmitAfterVerify }: Props) => {
+const PasswordModal = ({ isOpen, onClose, onSubmit: onSubmitAfterVerify, warning }: Props) => {
     const [password, setPassword] = useState<string>()
     const [confirmPassword, setConfirmPassword] = useState<string>()
     const [error, setError] = useState<string>()
@@ -30,7 +31,7 @@ const PasswordModal = ({ isOpen, onClose, onSubmit: onSubmitAfterVerify }: Props
         {<Modal visible={isOpen} >
             <Modal.Title>Enter a password</Modal.Title>
             <Modal.Content>
-                {!error && <Note type="warning" label='Warning'>
+                {!error && warning && <Note type="warning" label='Warning'>
                     This doesn&apos;t protect your post from the server administrator.
                 </Note>}
                 {error && <Note type="error" label='Error'>

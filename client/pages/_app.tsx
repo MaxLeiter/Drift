@@ -14,7 +14,6 @@ type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
 
-export type DriftProps = ThemeProps
 
 function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
   const [themeType, setThemeType] = useSharedState<string>('theme', Cookies.get('drift-theme') || 'light')
