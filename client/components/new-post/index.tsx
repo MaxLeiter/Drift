@@ -88,7 +88,7 @@ const Post = () => {
 
     const uploadDocs = useCallback((files: DocumentType[]) => {
         // if no title is set and the only document is empty,
-        const isFirstDocEmpty = docs.length <= 1 && docs[0].title === '' && docs[0].content === ''
+        const isFirstDocEmpty = docs.length <= 1 && (docs.length ? docs[0].title === '' : true)
         const shouldSetTitle = !title && isFirstDocEmpty
         if (shouldSetTitle) {
             if (files.length === 1) {
