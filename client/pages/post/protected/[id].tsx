@@ -91,7 +91,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
     }
 
     if (!post) {
-        return <Page><PasswordModal warning={false} onClose={onClose} onSubmit={onSubmit} isOpen={isPasswordModalOpen} /></Page>
+        return <Page><PasswordModal creating={false} onClose={onClose} onSubmit={onSubmit} isOpen={isPasswordModalOpen} /></Page>
     }
 
     return (
