@@ -69,6 +69,35 @@ posts.get("/", secretKey, async (req, res, next) => {
     }
 });
 
+posts.get("/mine", jwt, secretKey, async (req: UserJwtRequest, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({ error: "Unauthorized" })
+    }
+
+    try {
+        const user = await User.findByPk(req.user.id, {
+            include: [
+                {
+                    model: Post,
+                    as: "posts",
+                    include: [
+                        {
+                            model: File,
+                            as: "files"
+                        }
+                    ]
+                },
+            ],
+        })
+        if (!user) {
+            return res.status(404).json({ error: "User not found" })
+        }
+        return res.json(user.posts?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()))
+    } catch (error) {
+        next(error)
+    }
+})
+
 posts.get("/:id", secretKey, async (req, res, next) => {
     try {
         const post = await Post.findOne({
@@ -95,7 +124,6 @@ posts.get("/:id", secretKey, async (req, res, next) => {
         if (post.visibility === 'public' || post?.visibility === 'unlisted') {
             res.json(post);
         } else if (post.visibility === 'private') {
-            console.log("here")
             jwt(req as UserJwtRequest, res, () => {
                 res.json(post);
             })
@@ -107,4 +135,3 @@ posts.get("/:id", secretKey, async (req, res, next) => {
         next(e);
     }
 });
-

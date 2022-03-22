@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import secretKey from '../lib/middleware/secret-key';
-// import { Movie } from '../models/Post'
 import { File } from '../lib/models/File'
 
 export const files = Router()
@@ -13,7 +12,16 @@ files.get("/raw/:id", secretKey, async (req, res, next) => {
             },
             attributes: ["title", "content"],
         })
-        res.json(file);
+
+        // TODO: JWT-checkraw files
+        if (file?.post?.visibility === "private") {
+            // jwt(req as UserJwtRequest, res, () => {
+            //     res.json(file);
+            // })
+            res.json(file);
+        } else {
+            res.json(file);
+        }
     }
     catch (e) {
         next(e);

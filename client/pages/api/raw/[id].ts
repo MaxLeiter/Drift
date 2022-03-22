@@ -5,9 +5,11 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
     const file = await fetch(`${process.env.API_URL}/files/raw/${id}`, {
         headers: {
             'Accept': 'text/plain',
-            'x-secret-key': process.env.SECRET_KEY || ''
+            'x-secret-key': process.env.SECRET_KEY || '',
+            'Authorization': `Bearer ${req.cookies['drift-token']}`,
         }
     })
+
     res.setHeader("Content-Type", "text/plain")
     res.setHeader('Cache-Control', 's-maxage=86400');
 

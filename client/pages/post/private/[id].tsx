@@ -92,7 +92,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${driftToken}`
+                "Authorization": `Bearer ${driftToken}`,
+                "x-secret-key": process.env.SECRET_KEY || "",
             }
         })
 

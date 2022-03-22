@@ -31,13 +31,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
-  const posts = await fetch('http://localhost:3000/server-api/users/mine', {
+  const posts = await fetch(process.env.API_URL + `/posts/mine`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${driftToken}`
+      "Authorization": `Bearer ${driftToken}`,
+      "x-secret-key": process.env.SECRET_KEY || ''
     }
   })
+
+  if (!posts.ok || posts.status !== 200) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
 
   return {
     props: {

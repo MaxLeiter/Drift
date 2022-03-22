@@ -38,7 +38,7 @@ export class Post extends Model {
   @BelongsToMany(() => User, () => PostAuthor)
   users?: User[];
 
-  @HasMany(() => File)
+  @HasMany(() => File, { constraints: false })
   files?: File[];
 
   @CreatedAt
