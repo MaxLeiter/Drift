@@ -36,11 +36,11 @@
 .markdownPreview h4 a:hover::after,
 .markdownPreview h5 a:hover::after,
 .markdownPreview h6 a:hover::after {
-  content: "🔗";
-  filter: grayscale(100%);
+  content: "#";
   font-size: 0.7em;
   margin-left: 0.25em;
   font-weight: normal;
+  filter: opacity(0.5);
 }
 
 .markdownPreview h1 {
