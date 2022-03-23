@@ -15,8 +15,8 @@
 .markdownPreview h4,
 .markdownPreview h5,
 .markdownPreview h6 {
-	margin-top: 0;
-	margin-bottom: 0.5rem;
+	margin-top: var(--gap-half);
+	margin-bottom: var(--gap-half);
 }
 
 /* Auto-linked headers */
