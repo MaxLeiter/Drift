@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, memo, useEffect, useState } from 'react'
 import { Text } from '@geist-ui/core'
 
 import ShiftBy from '@components/shift-by'
