@@ -138,7 +138,7 @@ posts.get("/:id", async (req, res, next) => {
                 {
                     model: File,
                     as: "files",
-                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt", "html"],
+                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt"],
                 },
                 {
                     model: User,

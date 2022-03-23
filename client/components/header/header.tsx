@@ -16,7 +16,6 @@ import NewIcon from '@geist-ui/icons/plusCircle';
 import YourIcon from '@geist-ui/icons/list'
 import MoonIcon from '@geist-ui/icons/moon';
 import SunIcon from '@geist-ui/icons/sun';
-import type { ThemeProps } from "@lib/types";
 import useTheme from "@lib/hooks/use-theme";
 import { Button } from "@geist-ui/core";
 
@@ -36,7 +35,7 @@ const Header = () => {
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
-    const { signedIn: isSignedIn } = useSignedIn()
+    const { signedIn: isSignedIn, signout } = useSignedIn()
     const [pages, setPages] = useState<Tab[]>([])
     const { changeTheme, theme } = useTheme()
     useEffect(() => {
@@ -50,49 +49,7 @@ const Header = () => {
     }, [isMobile])
 
     useEffect(() => {
-        const pageList: Tab[] = [
-            {
-                name: "Home",
-                href: "/",
-                icon: <HomeIcon />,
-                condition: !isSignedIn,
-                value: "home"
-            },
-            {
-                name: "New",
-                href: "/new",
-                icon: <NewIcon />,
-                condition: isSignedIn,
-                value: "new"
-            },
-            {
-                name: "Yours",
-                href: "/mine",
-                icon: <YourIcon />,
-                condition: isSignedIn,
-                value: "mine"
-            },
-            {
-                name: "Sign out",
-                href: "/signout",
-                icon: <SignOutIcon />,
-                condition: isSignedIn,
-                value: "signout"
-            },
-            {
-                name: "Sign in",
-                href: "/signin",
-                icon: <SignInIcon />,
-                condition: !isSignedIn,
-                value: "signin"
-            },
-            {
-                name: "Sign up",
-                href: "/signup",
-                icon: <SignUpIcon />,
-                condition: !isSignedIn,
-                value: "signup"
-            },
+        const defaultPages: Tab[] = [
             {
                 name: isMobile ? "GitHub" : "",
                 href: "https://github.com/maxleiter/drift",
@@ -113,8 +70,103 @@ const Header = () => {
             }
         ]
 
-        setPages(pageList.filter(page => page.condition))
+        if (isSignedIn)
+            setPages([
+                {
+                    name: 'home',
+                    icon: <HomeIcon />,
+                    value: 'home',
+                    href: '/'
+                },
+                {
+                    name: 'yours',
+                    icon: <YourIcon />,
+                    value: 'yours',
+                    href: '/mine'
+                },
+                {
+                    name: 'sign out',
+                    icon: <SignOutIcon />,
+                    value: 'signout',
+                    onClick: signout
+                },
+                ...defaultPages
+            ])
+        else
+            setPages([
+                {
+                    name: 'home',
+                    icon: <HomeIcon />,
+                    value: 'home',
+                    href: '/'
+                },
+                {
+                    name: 'Sign in',
+                    icon: <SignInIcon />,
+                    value: 'signin',
+                    href: '/signin'
+                },
+                {
+                    name: 'Sign up',
+                    icon: <SignUpIcon />,
+                    value: 'signup',
+                    href: '/signup'
+                },
+                ...defaultPages
+            ])
+        // TODO: investigate deps causing infinite loop 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [changeTheme, isMobile, isSignedIn, theme])
+
+    // useEffect(() => {
+    //     const pageList: Tab[] = [
+    //         {
+    //             name: "Home",
+    //             href: "/",
+    //             icon: <HomeIcon />,
+    //             condition: !isSignedIn,
+    //             value: "home"
+    //         },
+    //         {
+    //             name: "New",
+    //             href: "/new",
+    //             icon: <NewIcon />,
+    //             condition: isSignedIn,
+    //             value: "new"
+    //         },
+    //         {
+    //             name: "Yours",
+    //             href: "/mine",
+    //             icon: <YourIcon />,
+    //             condition: isSignedIn,
+    //             value: "mine"
+    //         },
+    //         {
+    //             name: "Sign out",
+    //             href: "/signout",
+    //             icon: <SignOutIcon />,
+    //             condition: isSignedIn,
+    //             value: "signout"
+    //         },
+    //         {
+    //             name: "Sign in",
+    //             href: "/signin",
+    //             icon: <SignInIcon />,
+    //             condition: !isSignedIn,
+    //             value: "signin"
+    //         },
+    //         {
+    //             name: "Sign up",
+    //             href: "/signup",
+    //             icon: <SignUpIcon />,
+    //             condition: !isSignedIn,
+    //             value: "signup"
+    //         },
+
+    //     ]
+
+    //     setPages(pageList.filter(page => page.condition))
+    // }, [changeTheme, isMobile, isSignedIn, theme])
 
 
     const onTabChange = useCallback((tab: string) => {

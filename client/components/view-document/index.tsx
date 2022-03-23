@@ -7,13 +7,11 @@ import ExternalLink from '@geist-ui/icons/externalLink'
 import Skeleton from "react-loading-skeleton"
 
 import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
-import Preview from "@components/preview"
-import HtmlPreview from "@components/preview/html"
+import HtmlPreview from "@components/preview"
 
 // import Link from "next/link"
 type Props = {
     title: string
-    html: string
     initialTab?: "edit" | "preview"
     skeleton?: boolean
     id: string
@@ -48,7 +46,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 }
 
 
-const Document = ({ content, title, html, initialTab = 'edit', skeleton, id }: Props) => {
+const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     // const height = editable ? "500px" : '100%'
@@ -118,7 +116,7 @@ const Document = ({ content, title, html, initialTab = 'edit', skeleton, id }: P
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <HtmlPreview height={height} html={html} />
+                            <HtmlPreview height={height} fileId={id} />
                         </Tabs.Item>
                     </Tabs>
 

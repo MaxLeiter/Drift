@@ -9,12 +9,11 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
             'Authorization': `Bearer ${req.cookies['drift-token']}`,
         }
     })
-
-    res.setHeader("Content-Type", "text/plain")
+    const json = await file.json()
+    res.setHeader("Content-Type", "text/plain; charset=utf-8")
     res.setHeader('Cache-Control', 's-maxage=86400');
-
     if (file.ok) {
-        const data = await file.json()
+        const data = json
         const { title, content } = data
         // serve the file raw as plain text
 
@@ -24,7 +23,8 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
             res.setHeader("Content-Disposition", `inline; filename="${title}"`)
         }
 
-        res.status(200).send(content)
+        res.status(200).write(content, 'utf-8')
+        res.end()
     } else {
         res.status(404).send("File not found")
     }

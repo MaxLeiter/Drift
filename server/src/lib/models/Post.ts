@@ -1,4 +1,4 @@
-import { BelongsToMany, Column, CreatedAt, DataType, HasMany, IsUUID, Model, PrimaryKey, Scopes, Table, UpdatedAt } from 'sequelize-typescript';
+import { BelongsToMany, Column, CreatedAt, DataType, HasMany, IsUUID, Model, PrimaryKey, Scopes, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 import { PostAuthor } from './PostAuthor';
 import { User } from './User';
 import { File } from './File';
@@ -26,6 +26,7 @@ import { File } from './File';
 export class Post extends Model {
   @IsUUID(4)
   @PrimaryKey
+  @Unique
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,

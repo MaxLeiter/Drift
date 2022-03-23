@@ -7,5 +7,5 @@
 .main {
   max-width: var(--main-content) !important;
   margin: 0 auto !important;
-  padding: 0 var(--gap) !important;
+  padding: 0 0 !important;
 }

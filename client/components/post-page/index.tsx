@@ -51,13 +51,12 @@ const PostPage = ({ post }: Props) => {
                         Download as ZIP archive
                     </Button>
                 </div>
-                {post.files.map(({ id, content, html, title }: File) => (
+                {post.files.map(({ id, content, title }: File) => (
                     <DocumentComponent
                         key={id}
                         title={title}
                         initialTab={'preview'}
                         id={id}
-                        html={html}
                         content={content}
                     />
                 ))}
