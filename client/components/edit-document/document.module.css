@@ -1,8 +1,8 @@
 .card {
-	max-width: var(--main-content);
 	margin: var(--gap) auto;
-	padding: 2;
+	padding: var(--gap);
 	border: 1px solid var(--light-gray);
+	border-radius: var(--radius);
 }
 
 .input {

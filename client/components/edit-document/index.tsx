@@ -21,9 +21,10 @@ type Props = {
     initialTab?: "edit" | "preview"
     skeleton?: boolean
     remove?: () => void
+    onPaste?: (e: any) => void
 }
 
-const Document = ({ remove, title, content, setTitle, setContent, initialTab = 'edit', skeleton, handleOnContentChange }: Props) => {
+const Document = ({ onPaste, remove, title, content, setTitle, setContent, initialTab = 'edit', skeleton, handleOnContentChange }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     // const height = editable ? "500px" : '100%'
@@ -54,7 +55,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
     if (skeleton) {
         return <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 'var(--main-content)', margin: "0 auto" }}>
+            <div className={styles.card}>
                 <div className={styles.fileNameContainer}>
                     <Skeleton width={275} height={36} />
                     {remove && <Skeleton width={36} height={36} />}
@@ -63,7 +64,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
                     <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
                     <Skeleton width={'100%'} height={350} />
                 </div >
-            </Card>
+            </div>
         </>
     }
 
@@ -90,8 +91,9 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={"Edit"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-                            <div style={{ marginTop: 'var(--gap)', display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ marginTop: 'var(--gap-half)', display: 'flex', flexDirection: 'column' }}>
                                 <Textarea
+                                    onPaste={onPaste ? onPaste : undefined}
                                     ref={codeEditorRef}
                                     placeholder=""
                                     value={content}
@@ -105,7 +107,9 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <Preview height={height} title={title} content={content} />
+                            <div style={{ marginTop: 'var(--gap-half)', }}>
+                                <Preview height={height} title={title} content={content} />
+                            </div>
                         </Tabs.Item>
                     </Tabs>
 

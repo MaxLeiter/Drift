@@ -9,7 +9,7 @@ import Cookies from 'js-cookie'
 import type { PostVisibility, Document as DocumentType } from '@lib/types';
 import PasswordModal from './password';
 import getPostPath from '@lib/get-post-path';
-import DocumentList from '@components/edit-document-list';
+import EditDocumentList from '@components/edit-document-list';
 import { ChangeEvent } from 'react';
 
 const Post = () => {
@@ -109,11 +109,31 @@ const Post = () => {
         else setDocs((docs) => [...docs, ...files])
     }, [docs, title])
 
+    // pasted files
+    // const files = e.clipboardData.files as File[]
+    // if (files.length) {
+    //     const docs = Array.from(files).map((file) => ({
+    //         title: file.name,
+    //         content: '',
+    //         id: generateUUID()
+    //     }))
+    // }
+
+    const onPaste = useCallback((e: any) => {
+        const pastedText = (e.clipboardData).getData('text')
+
+        if (pastedText) {
+            if (!title) {
+                setTitle("Pasted text")
+            }
+        }
+    }, [title])
+
     return (
         <div style={{ marginBottom: 150 }}>
             <Title title={title} onChange={onChangeTitle} />
             <FileDropzone setDocs={uploadDocs} />
-            <DocumentList docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />
+            <EditDocumentList onPaste={onPaste} docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />
             <div className={styles.buttons}>
                 <Button
                     className={styles.button}

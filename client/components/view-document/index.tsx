@@ -68,7 +68,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
     if (skeleton) {
         return <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
+            <div className={styles.card}>
                 <div className={styles.fileNameContainer}>
                     <Skeleton width={275} height={36} />
                 </div>
@@ -76,7 +76,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                     <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
                     <Skeleton width={'100%'} height={350} />
                 </div >
-            </Card>
+            </div>
         </>
     }
 
@@ -102,7 +102,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={"Raw"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-                            <div style={{ marginTop: 'var(--gap)', display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ marginTop: 'var(--gap-half)', display: 'flex', flexDirection: 'column' }}>
                                 <Textarea
                                     readOnly
                                     ref={codeEditorRef}
@@ -116,7 +116,10 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <HtmlPreview height={height} fileId={id} />
+                            <div style={{ marginTop: 'var(--gap-half)', }}>
+
+                                <HtmlPreview height={height} fileId={id} />
+                            </div>
                         </Tabs.Item>
                     </Tabs>
 

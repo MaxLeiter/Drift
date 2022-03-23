@@ -2,6 +2,15 @@ import { marked } from 'marked'
 import Highlight, { defaultProps, Language, } from 'prism-react-renderer'
 import { renderToStaticMarkup } from 'react-dom/server'
 
+// // image sizes. DDoS Safe?
+// const imageSizeLink = /^!?\[((?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|[^\[\]\\])*?)\]\(\s*(<(?:\\[<>]?|[^\s<>\\])*>|(?:\\[()]?|\([^\s\x00-\x1f()\\]*\)|[^\s\x00-\x1f()\\])*?(?:\s+=(?:[\w%]+)?x(?:[\w%]+)?)?)(?:\s+("(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)))?\s*\)/;
+// //@ts-ignore
+// Lexer.rules.inline.normal.link = imageSizeLink;
+// //@ts-ignore
+// Lexer.rules.inline.gfm.link = imageSizeLink;
+// //@ts-ignore
+// Lexer.rules.inline.breaks.link = imageSizeLink;
+
 //@ts-ignore
 delete defaultProps.theme
 // import linkStyles from '../components/link/link.module.css'
@@ -11,8 +20,6 @@ const renderer = new marked.Renderer()
 renderer.heading = (text, level, _, slugger) => {
     const id = slugger.slug(text)
     const Component = `h${level}`
-
-
 
     return renderToStaticMarkup(
         //@ts-ignore

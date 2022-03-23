@@ -1,6 +1,6 @@
 import type { Document } from "@lib/types"
 import DocumentComponent from "@components/edit-document"
-import { ChangeEvent, memo, useCallback } from "react"
+import { memo, } from "react"
 
 const DocumentList = ({ docs }: {
     docs: Document[],
