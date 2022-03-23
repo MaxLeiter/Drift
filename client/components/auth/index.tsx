@@ -4,6 +4,7 @@ import styles from './auth.module.css'
 import { useRouter } from 'next/router'
 import Link from '../Link'
 import Cookies from "js-cookie";
+import useSignedIn from '@lib/hooks/use-signed-in'
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/;
 const ERROR_MESSAGE = "Provide a non empty username and a password with at least 6 characters";
@@ -17,7 +18,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
     const [errorMsg, setErrorMsg] = useState('');
     const [requiresServerPassword, setRequiresServerPassword] = useState(false);
     const signingIn = page === 'signin'
-
+    const { signin } = useSignedIn();
     useEffect(() => {
         async function fetchRequiresPass() {
             if (!signingIn) {
@@ -37,7 +38,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 
 
     const handleJson = (json: any) => {
-        Cookies.set('drift-token', json.token);
+        signin(json.token)
         Cookies.set('drift-userid', json.userId);
 
         router.push('/')
@@ -65,7 +66,6 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 
             handleJson(json)
         } catch (err: any) {
-            console.log(err)
             setErrorMsg(err.message ?? "Something went wrong")
         }
     }

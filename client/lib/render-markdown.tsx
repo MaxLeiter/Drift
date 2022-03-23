@@ -1,4 +1,3 @@
-import Link from '@components/Link'
 import { marked } from 'marked'
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
 import { renderToStaticMarkup } from 'react-dom/server'

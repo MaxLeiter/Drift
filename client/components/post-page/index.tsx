@@ -1,19 +1,18 @@
-import Header from "@components/header"
+import Header from "@components/header/header"
 import PageSeo from "@components/page-seo"
 import VisibilityBadge from "@components/visibility-badge"
-import Page from "@geist-ui/core/dist/page"
-import Button from "@geist-ui/core/dist/button"
-import Text from "@geist-ui/core/dist/text"
 import DocumentComponent from '@components/document'
 import styles from './post-page.module.css'
+import homeStyles from '@styles/Home.module.css'
 
-import type { Post, ThemeProps } from "@lib/types"
+import type { Post } from "@lib/types"
+import { Page, Button, Text } from "@geist-ui/core"
 
-type Props = ThemeProps & {
+type Props = {
     post: Post
 }
 
-const PostPage = ({ post, changeTheme, theme }: Props) => {
+const PostPage = ({ post }: Props) => {
     const download = async () => {
         const downloadZip = (await import("client-zip")).downloadZip
         const blob = await downloadZip(post.files.map((file: any) => {
@@ -39,9 +38,9 @@ const PostPage = ({ post, changeTheme, theme }: Props) => {
             />
 
             <Page.Header>
-                <Header theme={theme} changeTheme={changeTheme} />
+                <Header />
             </Page.Header>
-            <Page.Content width={"var(--main-content-width)"} margin="auto">
+            <Page.Content className={homeStyles.main}>
                 {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
                 <div className={styles.header}>
                     <div className={styles.titleAndBadge}>

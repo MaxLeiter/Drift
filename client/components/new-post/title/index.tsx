@@ -1,9 +1,9 @@
 import { ChangeEvent, memo, useCallback } from 'react'
-import Text from '@geist-ui/core/dist/text'
-import Input from '@geist-ui/core/dist/input'
+import { Text } from '@geist-ui/core'
 
 import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'
+import { Input } from '@geist-ui/core'
 
 const titlePlaceholders = [
     "How to...",

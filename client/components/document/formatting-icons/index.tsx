@@ -1,11 +1,10 @@
-import ButtonGroup from "@geist-ui/core/dist/button-group"
-import Button from "@geist-ui/core/dist/button"
 import Bold from '@geist-ui/icons/bold'
 import Italic from '@geist-ui/icons/italic'
 import Link from '@geist-ui/icons/link'
 import ImageIcon from '@geist-ui/icons/image'
 import { RefObject, useCallback, useMemo } from "react"
 import styles from '../document.module.css'
+import { Button, ButtonGroup } from "@geist-ui/core"
 
 // TODO: clean up
 

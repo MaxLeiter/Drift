@@ -1,0 +1,62 @@
+.button {
+  user-select: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+  color: var(--input-fg);
+  font-weight: 400;
+  font-size: 1.1rem;
+  background: var(--input-bg);
+  border: var(--input-border);
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  padding: var(--gap-quarter) var(--gap-half);
+  transition: background-color var(--transition), color var(--transition);
+  width: 100%;
+  height: var(--input-height);
+}
+
+/* 
+--input-height: 2.5rem;
+--input-border: 1px solid var(--light-gray);
+--input-border-focus: 1px solid var(--gray);
+--input-border-error: 1px solid var(--red);
+--input-bg: var(--bg);
+--input-fg: var(--fg);
+--input-placeholder-fg: var(--light-gray); */
+
+.button:hover,
+.button:focus {
+  outline: none;
+  background: var(--input-bg-hover);
+  border: var(--input-border-focus);
+}
+
+.button[disabled] {
+  cursor: not-allowed;
+  background: var(--lighter-gray);
+  color: var(--gray);
+}
+
+.secondary {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/*   
+--bg: #131415;
+  --fg: #fafbfc;
+  --gray: #666;
+  --light-gray: #444;
+  --lighter-gray: #222;
+  --lightest-gray: #1a1a1a;
+  --article-color: #eaeaea;
+  --header-bg: rgba(19, 20, 21, 0.45);
+  --gray-alpha: rgba(255, 255, 255, 0.5);
+  --selection: rgba(255, 255, 255, 0.99);
+ */
+
+.primary {
+  background: var(--fg);
+  color: var(--bg);
+}

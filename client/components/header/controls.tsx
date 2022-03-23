@@ -1,18 +1,15 @@
 import React from 'react'
 import MoonIcon from '@geist-ui/icons/moon'
 import SunIcon from '@geist-ui/icons/sun'
-import Select from '@geist-ui/core/dist/select'
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from './header.module.css'
 import { ThemeProps } from '@lib/types'
-import Cookies from 'js-cookie'
+import { Select } from '@geist-ui/core'
 
 const Controls = ({ changeTheme, theme }: ThemeProps) => {
-    const switchThemes = (type: string | string[]) => {
+    const switchThemes = () => {
         changeTheme()
-        Cookies.set('drift-theme', Array.isArray(type) ? type[0] : type)
     }
-
 
     return (
         <div className={styles.wrapper}>

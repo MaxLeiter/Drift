@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+}
+
+.input {
+  height: 2.5rem;
+  border-radius: var(--inline-radius);
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--light-gray);
+  padding: 0 var(--gap-half);
+  outline: none;
+  transition: border-color var(--transition);
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+}
+
+.input::placeholder {
+  font-size: 1.5rem;
+}
+
+.input:focus {
+  border-color: var(--input-border-focus);
+}
+
+.label {
+  display: inline-flex;
+  width: initial;
+  height: 100%;
+  align-items: center;
+  pointer-events: none;
+  margin: 0;
+  padding: 0 var(--gap-half);
+  color: var(--fg);
+  background-color: var(--light-gray);
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  border-top: 1px solid var(--input-border);
+  border-left: 1px solid var(--input-border);
+  border-bottom: 1px solid var(--input-border);
+  font-size: inherit;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    margin-bottom: var(--gap);
+  }
+}

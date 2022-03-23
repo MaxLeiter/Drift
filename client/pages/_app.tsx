@@ -1,46 +1,21 @@
 import '@styles/globals.css'
-import GeistProvider from '@geist-ui/core/dist/geist-provider'
-import CssBaseline from '@geist-ui/core/dist/css-baseline'
-import useTheme from '@geist-ui/core/dist/use-theme'
-
-import { useEffect, useMemo, useState } from 'react'
 import type { AppProps as NextAppProps } from "next/app";
-import useSharedState from '@lib/hooks/use-shared-state';
 
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
-import type { ThemeProps } from '@lib/types';
-import Cookies from 'js-cookie';
+import useTheme from '@lib/hooks/use-theme';
+import { CssBaseline, GeistProvider } from '@geist-ui/core';
 
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
 
 
-function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
-  const [themeType, setThemeType] = useSharedState<string>('theme', Cookies.get('drift-theme') || 'light')
-
-  useEffect(() => {
-    const storedTheme = Cookies.get('drift-theme')
-    if (storedTheme) setThemeType(storedTheme)
-    // TODO: useReducer?
-  }, [setThemeType, themeType])
-
-  const changeTheme = () => {
-    const newTheme = themeType === 'dark' ? 'light' : 'dark'
-    localStorage.setItem('drift-theme', newTheme)
-    setThemeType(last => (last === 'dark' ? 'light' : 'dark'))
-  }
-
-  const skeletonBaseColor = useMemo(() => {
-    if (themeType === 'dark') return '#333'
-    return '#eee'
-  }, [themeType])
-  const skeletonHighlightColor = useMemo(() => {
-    if (themeType === 'dark') return '#555'
-    return '#ddd'
-  }, [themeType])
+function MyApp({ Component, pageProps }: AppProps) {
+  const { theme } = useTheme()
+  const skeletonBaseColor = 'var(--light-gray)'
+  const skeletonHighlightColor = 'var(--lighter-gray)'
 
   return (
     <>
@@ -58,10 +33,10 @@ function MyApp({ Component, pageProps }: AppProps<ThemeProps>) {
         <meta name="theme-color" content="#ffffff" />
         <title>Drift</title>
       </Head>
-      <GeistProvider themeType={themeType} >
+      <GeistProvider themeType={theme} >
         <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>
           <CssBaseline />
-          <Component {...pageProps} theme={themeType || 'light'} changeTheme={changeTheme} />
+          <Component {...pageProps} />
         </SkeletonTheme>
       </GeistProvider>
     </>

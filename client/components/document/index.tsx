@@ -1,11 +1,4 @@
-import Button from "@geist-ui/core/dist/button"
-import Card from "@geist-ui/core/dist/card"
-import ButtonGroup from "@geist-ui/core/dist/button-group"
-import Input from "@geist-ui/core/dist/input"
-import Spacer from "@geist-ui/core/dist/spacer"
-import Tabs from "@geist-ui/core/dist/tabs"
-import Textarea from "@geist-ui/core/dist/textarea"
-import Tooltip from "@geist-ui/core/dist/tooltip"
+
 
 import { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
@@ -15,9 +8,8 @@ import ExternalLink from '@geist-ui/icons/externalLink'
 import FormattingIcons from "./formatting-icons"
 import Skeleton from "react-loading-skeleton"
 
-import dynamic from "next/dynamic";
-
-const MarkdownPreview = dynamic(() => import("../preview"))
+import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
+import Preview from "@components/preview"
 
 // import Link from "next/link"
 type Props = {
@@ -73,13 +65,6 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         }
         setTab(newTab as 'edit' | 'preview')
     }
-
-    const getType = useCallback(() => {
-        if (!title) return
-        const pathParts = title.split(".")
-        const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
-        return language
-    }, [title])
 
     const onTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null, [setTitle])
 
@@ -140,14 +125,14 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
-                    {rawLink && <DownloadButton rawLink={rawLink()} />}
+                    {rawLink && id && <DownloadButton rawLink={rawLink()} />}
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
                         <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ marginTop: 'var(--gap)', display: 'flex', flexDirection: 'column' }}>
                                 <Textarea
                                     ref={codeEditorRef}
-                                    placeholder="Type some contents..."
+                                    placeholder=""
                                     value={content}
                                     onChange={handleOnContentChange}
                                     width="100%"
@@ -160,7 +145,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <MarkdownPreview height={height} content={content} type={getType()} />
+                            <Preview height={height} fileId={id} title={title} content={content} />
                         </Tabs.Item>
                     </Tabs>
 

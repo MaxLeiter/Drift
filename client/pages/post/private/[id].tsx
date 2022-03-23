@@ -1,28 +1,14 @@
 import cookie from "cookie";
 import type { GetServerSideProps } from "next";
-import { PostVisibility, ThemeProps } from "@lib/types";
+import { Post } from "@lib/types";
 import PostPage from "@components/post-page";
 
-type File = {
-    id: string
-    title: string
-    content: string
+export type PostProps = {
+    post: Post
 }
 
-type Files = File[]
-
-export type PostProps = ThemeProps & {
-    post: {
-        id: string
-        title: string
-        description: string
-        visibility: PostVisibility
-        files: Files
-    }
-}
-
-const Post = ({ post, theme, changeTheme }: PostProps) => {
-    return (<PostPage post={post} changeTheme={changeTheme} theme={theme} />)
+const Post = ({ post, }: PostProps) => {
+    return (<PostPage post={post} />)
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

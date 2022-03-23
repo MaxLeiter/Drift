@@ -1,14 +1,13 @@
-import useToasts from "@geist-ui/core/dist/use-toasts";
-import Page from "@geist-ui/core/dist/page";
+import { Page, useToasts } from '@geist-ui/core';
 
-import type { Post, ThemeProps } from "@lib/types";
+import type { Post } from "@lib/types";
 import PasswordModal from "@components/new-post/password";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import PostPage from "@components/post-page";
 
-const Post = ({ theme, changeTheme }: ThemeProps) => {
+const Post = () => {
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(true);
     const [post, setPost] = useState<Post>()
     const router = useRouter()
@@ -74,7 +73,7 @@ const Post = ({ theme, changeTheme }: ThemeProps) => {
         return <Page><PasswordModal creating={false} onClose={onClose} onSubmit={onSubmit} isOpen={isPasswordModalOpen} /></Page>
     }
 
-    return (<PostPage post={post} changeTheme={changeTheme} theme={theme} />)
+    return (<PostPage post={post} />)
 }
 
 export default Post

@@ -1,14 +1,14 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
 
-import type { Post, ThemeProps } from "@lib/types";
+import type { Post } from "@lib/types";
 import PostPage from "@components/post-page";
 
-export type PostProps = ThemeProps & {
+export type PostProps = {
     post: Post
 }
 
-const PostView = ({ post, theme, changeTheme }: PostProps) => {
-    return <PostPage post={post} theme={theme} changeTheme={changeTheme} />
+const PostView = ({ post }: PostProps) => {
+    return <PostPage post={post} />
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

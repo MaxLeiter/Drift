@@ -1,17 +1,17 @@
-import Page from "@geist-ui/core/dist/page";
+import { Page } from '@geist-ui/core';
 import Auth from "@components/auth";
-import Header from "@components/header";
+import Header from "@components/header/header";
 import PageSeo from '@components/page-seo';
-import type { ThemeProps } from "@lib/types";
+import styles from '@styles/Home.module.css'
 
-const SignUp = ({ theme, changeTheme }: ThemeProps) => (
+const SignUp = () => (
     <Page width="100%">
         <PageSeo title="Drift - Sign Up" />
 
         <Page.Header>
-            <Header theme={theme} changeTheme={changeTheme} />
+            <Header />
         </Page.Header>
-        <Page.Content width={"var(--main-content-width)"} paddingTop={"var(--gap)"} margin="auto">
+        <Page.Content className={styles.main}>
             <Auth page="signup" />
         </Page.Content>
     </Page>

@@ -1,28 +1,55 @@
+import useTheme from "@lib/hooks/use-theme"
 import { memo, useEffect, useState } from "react"
-import ReactMarkdownPreview from "./react-markdown-preview"
 
 type Props = {
-    content?: string
     height?: number | string
+    fileId?: string
+    content?: string
+    title?: string
     //  file extensions we can highlight 
-    type?: string
 }
 
-const MarkdownPreview = ({ content = '', height = 500, type = 'markdown' }: Props) => {
-    const [contentToRender, setContent] = useState(content)
+const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
+    const [preview, setPreview] = useState<string>(content || "")
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const { theme } = useTheme()
     useEffect(() => {
-        // 'm' so it doesn't flash code when you change the type to md
-        const renderAsMarkdown = ['m', 'markdown', 'md', 'mdown', 'mkdn', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text', '']
-        if (!renderAsMarkdown.includes(type)) {
-            setContent(`~~~${type}
-${content}
-~~~
-`)
-        } else {
-            setContent(content)
+        async function fetchPost() {
+            if (fileId) {
+                const resp = await fetch(`/api/markdown/${fileId}`, {
+                    method: "GET",
+                })
+                if (resp.ok) {
+                    const res = await resp.text()
+                    setPreview(res)
+                    setIsLoading(false)
+                }
+            } else {
+                const resp = await fetch(`/api/render-markdown`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        title,
+                        content,
+                    }),
+                })
+                if (resp.ok) {
+                    const res = await resp.text()
+                    setPreview(res)
+                    setIsLoading(false)
+                }
+            }
         }
-    }, [type, content])
-    return (<ReactMarkdownPreview height={height} content={contentToRender} />)
+        fetchPost()
+    }, [content, fileId, title])
+    return (<>
+        {isLoading ? <div>Loading...</div> : <div data-theme={theme} dangerouslySetInnerHTML={{ __html: preview }} style={{
+            height
+        }} />}
+    </>)
+
 }
 
 export default memo(MarkdownPreview)

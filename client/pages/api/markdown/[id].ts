@@ -12,17 +12,16 @@ const renderMarkdown: NextApiHandler = async (req, res) => {
         }
     })
 
-
     const json = await file.json()
     const { content, title } = json
-    const renderAsMarkdown = ['m', 'markdown', 'md', 'mdown', 'mkdn', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text', '']
+    const renderAsMarkdown = ['markdown', 'md', 'mdown', 'mkdn', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text', '']
     const fileType = () => {
         const pathParts = title.split(".")
         const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
         return language
     }
     const type = fileType()
-    let contentToRender: string = content;
+    let contentToRender: string = '\n' + content;
 
     if (!renderAsMarkdown.includes(type)) {
         contentToRender = `~~~${type}
