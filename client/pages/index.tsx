@@ -35,7 +35,6 @@ const Home = ({ introContent }: Props) => {
           <Text style={{ display: 'inline' }} h1> Welcome to Drift</Text>
         </div>
         <Document
-          editable={false}
           content={introContent}
           title={`Welcome to Drift.md`}
           initialTab={`preview`}
