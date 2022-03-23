@@ -82,7 +82,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
     if (skeleton) {
         return <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
+            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 'var(--main-content)', margin: "0 auto" }}>
                 <div className={styles.fileNameContainer}>
                     <Skeleton width={275} height={36} />
                     {remove && <Skeleton width={36} height={36} />}
@@ -98,7 +98,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
     return (
         <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
+            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 'var(--main-content)', margin: "0 auto" }}>
                 <div className={styles.fileNameContainer}>
                     <Input
                         placeholder="MyFile.md"

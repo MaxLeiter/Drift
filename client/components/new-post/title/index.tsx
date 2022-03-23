@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback } from 'react'
+import { ChangeEvent, memo, useCallback, useEffect, useState } from 'react'
 import { Text } from '@geist-ui/core'
 
 import ShiftBy from '@components/shift-by'
@@ -21,11 +21,16 @@ type props = {
 }
 
 const Title = ({ onChange, title }: props) => {
+    const [placeholder, setPlaceholder] = useState(titlePlaceholders[0])
+    useEffect(() => {
+        // set random placeholder on load
+        setPlaceholder(titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)])
+    }, [])
     return (<div className={styles.title}>
         <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
         <ShiftBy y={-3}>
             <Input
-                placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
+                placeholder={placeholder}
                 value={title || ""}
                 onChange={onChange}
                 height={"55px"}
