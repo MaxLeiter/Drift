@@ -8,21 +8,56 @@ delete defaultProps.theme
 
 const renderer = new marked.Renderer()
 
-// renderer.heading = (text, level, _, slugger) => {
-//     const id = slugger.slug(text)
-//     const Component = `h${level}`
+const convertHtmlEntities = (str: string) => {
+    const quot = '&quot;'
+    const apos = '&#39;'
+    const amp = '&amp;'
+    const nbsp = '&nbsp;'
+    const lt = '&lt;'
+    const gt = '&gt;'
+    const code = '<code>'
+    const endCode = '</code>'
+    const combinedRegex = new RegExp(`${code}|${endCode}|${quot}|${apos}|${amp}|${nbsp}|${lt}|${gt}`, 'g')
 
-//     return renderToStaticMarkup(
-//         //@ts-ignore
-//         <Component>
-//             <a href={`#${id}`} id={id} style={{ color: "inherit" }} >
-//                 {text}
-//             </a>
-//         </Component>
-//     )
-// }
+    return str.replace(combinedRegex, (match) => {
+        switch (match) {
+            case quot:
+                return '"'
+            case apos:
+                return "'"
+            case amp:
+                return '&'
+            case nbsp:
+                return ' '
+            case lt:
+                return '<'
+            case gt:
+                return '>'
+            case code:
+            case endCode:
+                return '`'
+            default:
+                return match
+        }
+    })
+}
 
-// TODO: support elements inside link
+renderer.heading = (text, level, _, slugger) => {
+    const id = slugger.slug(text)
+    const Component = `h${level}`
+
+
+
+    return renderToStaticMarkup(
+        //@ts-ignore
+        <Component>
+            <a href={`#${id}`} id={id} style={{ color: "inherit" }} >
+                {convertHtmlEntities(text)}
+            </a>
+        </Component>
+    )
+}
+
 // renderer.link = (href, _, text) => {
 //     const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
 //     if (isHrefLocal) {
@@ -32,8 +67,12 @@ const renderer = new marked.Renderer()
 //             </a>
 //         )
 //     }
-//     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`
+
+//     // dirty hack
+//     // if text contains elements, render as html
+//     return `<a href='${href}' target="_blank" rel="noopener noreferrer">${convertHtmlEntities(text)}</a>`
 // }
+
 
 renderer.image = function (href, _, text) {
     return `<Image loading="lazy" src="${href}" alt="${text}" layout="fill" />`
