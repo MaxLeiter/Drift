@@ -1,5 +1,5 @@
 import type { Document } from "@lib/types"
-import DocumentComponent from "@components/document"
+import DocumentComponent from "@components/edit-document"
 import { ChangeEvent, memo, useCallback } from "react"
 
 const DocumentList = ({ docs, removeDoc, updateDocContent, updateDocTitle }: {
@@ -18,7 +18,6 @@ const DocumentList = ({ docs, removeDoc, updateDocContent, updateDocTitle }: {
                 <DocumentComponent
                     key={id}
                     remove={removeDoc(i)}
-                    editable={true}
                     setContent={updateDocContent(i)}
                     setTitle={updateDocTitle(i)}
                     handleOnContentChange={handleOnChange(i)}

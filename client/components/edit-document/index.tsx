@@ -13,8 +13,6 @@ import Preview from "@components/preview"
 
 // import Link from "next/link"
 type Props = {
-    editable?: boolean
-    remove?: () => void
     title?: string
     content?: string
     setTitle?: (title: string) => void
@@ -22,7 +20,7 @@ type Props = {
     handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
     initialTab?: "edit" | "preview"
     skeleton?: boolean
-    id?: string
+    remove?: () => void
 }
 
 const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
@@ -53,7 +51,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 }
 
 
-const Document = ({ remove, editable, title, content, setTitle, setContent, initialTab = 'edit', skeleton, id, handleOnContentChange }: Props) => {
+const Document = ({ remove, title, content, setTitle, setContent, initialTab = 'edit', skeleton, handleOnContentChange }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     // const height = editable ? "500px" : '100%'
@@ -68,8 +66,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
 
     const onTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null, [setTitle])
 
-    const removeFile = useCallback((remove?: () => void) => {
-        console.log(remove)
+    const removeFile = useCallback((remove?: () => void) => () => {
         if (remove) {
             if (content && content.trim().length > 0) {
                 const confirmed = window.confirm("Are you sure you want to remove this file?")
@@ -82,19 +79,13 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
         }
     }, [content])
 
-    const rawLink = () => {
-        if (id) {
-            return `/file/raw/${id}`
-        }
-    }
-
     if (skeleton) {
         return <>
             <Spacer height={1} />
             <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
                 <div className={styles.fileNameContainer}>
                     <Skeleton width={275} height={36} />
-                    {editable && <Skeleton width={36} height={36} />}
+                    {remove && <Skeleton width={36} height={36} />}
                 </div>
                 <div className={styles.descriptionContainer}>
                     <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
@@ -118,17 +109,15 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         size={1.2}
                         font={1.2}
                         label="Filename"
-                        disabled={!editable}
                         width={"100%"}
                         id={title}
                     />
-                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
+                    {remove && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
                 </div>
                 <div className={styles.descriptionContainer}>
-                    {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
-                    {rawLink && id && <DownloadButton rawLink={rawLink()} />}
+                    {tab === 'edit' && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>
-                        <Tabs.Item label={editable ? "Edit" : "Raw"} value="edit">
+                        <Tabs.Item label={"Edit"} value="edit">
                             {/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
                             <div style={{ marginTop: 'var(--gap)', display: 'flex', flexDirection: 'column' }}>
                                 <Textarea
@@ -137,7 +126,6 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                                     value={content}
                                     onChange={handleOnContentChange}
                                     width="100%"
-                                    disabled={!editable}
                                     // TODO: Textarea should grow to fill parent if height == 100%
                                     style={{ flex: 1, minHeight: 350 }}
                                     resize="vertical"
@@ -146,7 +134,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                             </div>
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
-                            <Preview height={height} fileId={id} title={title} content={content} />
+                            <Preview height={height} title={title} content={content} />
                         </Tabs.Item>
                     </Tabs>
 

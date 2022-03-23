@@ -1,0 +1,41 @@
+.input {
+  background: #efefef;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  overflow: auto;
+}
+
+.fileNameContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+}
+
+.fileNameContainer {
+  display: flex;
+  align-content: center;
+}
+
+.fileNameContainer > div {
+  /* Override geist-ui styling */
+  margin: 0 !important;
+}
+
+.textarea {
+  height: 100%;
+}
+
+.actionWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.actionWrapper .actions {
+  position: absolute;
+  right: 0;
+}

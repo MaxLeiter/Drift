@@ -2,7 +2,6 @@ import { Button, useToasts, ButtonDropdown } from '@geist-ui/core'
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';
-import DocumentComponent from '../document';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
@@ -10,7 +9,7 @@ import Cookies from 'js-cookie'
 import type { PostVisibility, Document as DocumentType } from '@lib/types';
 import PasswordModal from './password';
 import getPostPath from '@lib/get-post-path';
-import DocumentList from '@components/document-list';
+import DocumentList from '@components/edit-document-list';
 import { ChangeEvent } from 'react';
 
 const Post = () => {

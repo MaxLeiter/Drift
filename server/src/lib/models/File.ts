@@ -35,6 +35,9 @@ export class File extends Model {
   @Column
   sha!: string;
 
+  @Column
+  html!: string;
+
   @ForeignKey(() => User)
   @BelongsTo(() => User, 'userId')
   user!: User;

@@ -6,6 +6,7 @@ import jwt, { UserJwtRequest } from '../lib/middleware/jwt';
 import * as crypto from "crypto";
 import { User } from '../lib/models/User';
 import secretKey from '../lib/middleware/secret-key';
+import markdown from '../lib/render-markdown';
 
 export const posts = Router()
 
@@ -45,10 +46,29 @@ posts.post('/create', jwt, async (req, res, next) => {
         await newPost.save()
         await newPost.$add('users', req.body.userId);
         const newFiles = await Promise.all(req.body.files.map(async (file) => {
+            const renderAsMarkdown = ['markdown', 'md', 'mdown', 'mkdn', 'mkd', 'mdwn', 'mdtxt', 'mdtext', 'text', '']
+            const fileType = () => {
+                const pathParts = file.title.split(".")
+                const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
+                return language
+            }
+            const type = fileType()
+            let contentToRender: string = (file.content || '');
+
+            if (!renderAsMarkdown.includes(type)) {
+                contentToRender =
+                    `~~~${type}
+${file.content}
+~~~`
+            } else {
+                contentToRender = '\n' + file.content;
+            }
+            const html = markdown(contentToRender)
             const newFile = new File({
                 title: file.title,
                 content: file.content,
                 sha: crypto.createHash('sha256').update(file.content).digest('hex').toString(),
+                html
             })
 
             await newFile.$set("user", req.body.userId);
@@ -118,7 +138,7 @@ posts.get("/:id", async (req, res, next) => {
                 {
                     model: File,
                     as: "files",
-                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt"],
+                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt", "html"],
                 },
                 {
                     model: User,

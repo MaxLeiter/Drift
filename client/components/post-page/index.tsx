@@ -1,11 +1,11 @@
 import Header from "@components/header/header"
 import PageSeo from "@components/page-seo"
 import VisibilityBadge from "@components/visibility-badge"
-import DocumentComponent from '@components/document'
+import DocumentComponent from '@components/view-document'
 import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
-import type { Post } from "@lib/types"
+import type { File, Post } from "@lib/types"
 import { Page, Button, Text } from "@geist-ui/core"
 
 type Props = {
@@ -51,14 +51,14 @@ const PostPage = ({ post }: Props) => {
                         Download as ZIP archive
                     </Button>
                 </div>
-                {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
+                {post.files.map(({ id, content, html, title }: File) => (
                     <DocumentComponent
                         key={id}
-                        id={id}
-                        content={content}
                         title={title}
-                        editable={false}
                         initialTab={'preview'}
+                        id={id}
+                        html={html}
+                        content={content}
                     />
                 ))}
             </Page.Content>

@@ -9,7 +9,7 @@ import { Input, Link, Text, Card, Spacer, Grid, Tooltip, Divider } from "@geist-
 
 const FilenameInput = ({ title }: { title: string }) => <Input
     value={title}
-    marginTop="var(--gap-double)"
+    marginTop="var(--gap)"
     size={1.2}
     font={1.2}
     label="Filename"

@@ -11,10 +11,11 @@ export type Document = {
     id: string
 }
 
-type File = {
+export type File = {
     id: string
     title: string
     content: string
+    html: string
 }
 
 type Files = File[]

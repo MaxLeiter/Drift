@@ -1,6 +1,6 @@
 import styles from '@styles/Home.module.css'
 import Header from '@components/header'
-import Document from '@components/document'
+import Document from '@components/edit-document'
 import Image from 'next/image'
 import ShiftBy from '@components/shift-by'
 import PageSeo from '@components/page-seo'
