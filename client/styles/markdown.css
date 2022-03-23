@@ -84,7 +84,6 @@ html[data-theme="light"] input[type="checkbox"]:checked {
 
 input[type="checkbox"]:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--gray);
   border-color: var(--fg);
 }
 
@@ -106,7 +105,6 @@ article li > p {
 
 article pre {
   overflow-x: auto;
-  background: var(--lightest-gray);
   border-radius: var(--inline-radius);
   line-height: 1.8;
   padding: 1rem;

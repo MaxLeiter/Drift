@@ -12,8 +12,6 @@ renderer.heading = (text, level, _, slugger) => {
     const id = slugger.slug(text)
     const Component = `h${level}`
 
-
-
     return renderToStaticMarkup(
         //@ts-ignore
         <Component>

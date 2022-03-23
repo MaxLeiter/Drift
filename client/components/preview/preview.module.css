@@ -79,6 +79,7 @@
   border-radius: 3px;
   white-space: pre-wrap;
   word-wrap: break-word;
+  color: inherit !important;
 }
 
 .markdownPreview code::before,
