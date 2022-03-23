@@ -100,6 +100,11 @@ article *:not(pre) > code {
   font-size: 1rem;
 }
 
+article li > p {
+  font-family: var(--font-mono);
+  display: inline-block;
+}
+
 article pre {
   overflow-x: auto;
   background: var(--lightest-gray);
@@ -120,7 +125,6 @@ article pre {
   opacity: 0;
   content: "#";
   margin-left: var(--gap-half);
-  color: var(--gray);
 }
 
 .header-link:hover::after {

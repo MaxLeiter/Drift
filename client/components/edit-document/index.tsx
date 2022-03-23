@@ -66,7 +66,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
 
     const onTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null, [setTitle])
 
-    const removeFile = useCallback((remove?: () => void) => () => {
+    const removeFile = useCallback((remove?: () => void) => {
         if (remove) {
             if (content && content.trim().length > 0) {
                 const confirmed = window.confirm("Are you sure you want to remove this file?")
@@ -94,7 +94,6 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
             </Card>
         </>
     }
-
 
     return (
         <>

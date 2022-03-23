@@ -7,6 +7,23 @@ import Head from 'next/head';
 import useTheme from '@lib/hooks/use-theme';
 import { CssBaseline, GeistProvider } from '@geist-ui/core';
 
+import nprogress from 'nprogress'
+import debounce from 'lodash.debounce'
+import Router from 'next/router';
+
+// Only show nprogress after 500ms (slow loading)
+const start = debounce(nprogress.start, 500)
+Router.events.on('routeChangeStart', start)
+Router.events.on('routeChangeComplete', () => {
+  start.cancel()
+  nprogress.done()
+  window.scrollTo(0, 0)
+})
+Router.events.on('routeChangeError', () => {
+  start.cancel()
+  nprogress.done()
+})
+
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, "pageProps">;
