@@ -95,8 +95,13 @@ article *:not(pre) > code {
 }
 
 article li > p {
-	font-family: var(--font-mono);
 	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+
+article code > * {
+	font-family: var(--font-mono);
 }
 
 article pre {
