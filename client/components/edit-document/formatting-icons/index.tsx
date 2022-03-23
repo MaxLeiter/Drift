@@ -34,9 +34,6 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
 
             const newText = `${before}**${selectedText}**${after}`
             setText(newText)
-
-            // TODO; fails because settext async
-            textareaRef.current.setSelectionRange(before.length + 2, before.length + 2 + selectedText.length)
         }
     }, [setText, textareaRef])
 
@@ -50,8 +47,6 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
             const selectedText = text.substring(selectionStart, selectionEnd)
             const newText = `${before}*${selectedText}*${after}`
             setText(newText)
-            textareaRef.current.focus()
-            textareaRef.current.setSelectionRange(before.length + 1, before.length + 1 + selectedText.length)
         }
     }, [setText, textareaRef])
 
@@ -71,8 +66,6 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
             }
             const newText = `${before}${formattedText}${after}`
             setText(newText)
-            textareaRef.current.focus()
-            textareaRef.current.setSelectionRange(before.length + 1, before.length + 1 + selectedText.length)
         }
     }, [setText, textareaRef])
 
@@ -92,8 +85,6 @@ const FormattingIcons = ({ textareaRef, setText }: { textareaRef?: RefObject<HTM
             }
             const newText = `${before}${formattedText}${after}`
             setText(newText)
-            textareaRef.current.focus()
-            textareaRef.current.setSelectionRange(before.length + 1, before.length + 1 + selectedText.length)
         }
     }, [setText, textareaRef])
 

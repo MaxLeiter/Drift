@@ -1,12 +1,12 @@
 .markdownPreview pre {
-  border-radius: 3px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  line-height: 1.42857143;
-  margin: 0;
-  padding: 10px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+	border-radius: 3px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 14px;
+	line-height: 1.42857143;
+	margin: 0;
+	padding: 10px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 .markdownPreview h1,
@@ -15,8 +15,8 @@
 .markdownPreview h4,
 .markdownPreview h5,
 .markdownPreview h6 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+	margin-top: 0;
+	margin-bottom: 0.5rem;
 }
 
 /* Auto-linked headers */
@@ -26,7 +26,7 @@
 .markdownPreview h4 a,
 .markdownPreview h5 a,
 .markdownPreview h6 a {
-  color: inherit;
+	color: inherit;
 }
 
 /* Auto-linked headers */
@@ -36,53 +36,58 @@
 .markdownPreview h4 a:hover::after,
 .markdownPreview h5 a:hover::after,
 .markdownPreview h6 a:hover::after {
-  content: "#";
-  font-size: 0.7em;
-  margin-left: 0.25em;
-  font-weight: normal;
-  filter: opacity(0.5);
+	content: "#";
+	font-size: 0.7em;
+	margin-left: 0.25em;
+	font-weight: normal;
+	filter: opacity(0.5);
 }
 
 .markdownPreview h1 {
-  font-size: 2rem;
+	font-size: 2rem;
 }
 
 .markdownPreview h2 {
-  font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 .markdownPreview h3 {
-  font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 .markdownPreview h4 {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 .markdownPreview h5 {
-  font-size: 0.875rem;
+	font-size: 0.875rem;
 }
 
 .markdownPreview h6 {
-  font-size: 0.75rem;
+	font-size: 0.75rem;
 }
 
 .markdownPreview ul {
-  list-style: inside;
+	list-style: inside;
 }
 
 .markdownPreview ul li::before {
-  content: "";
+	content: "";
 }
 
 .markdownPreview code {
-  border-radius: 3px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: inherit !important;
+	border-radius: 3px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	color: inherit !important;
 }
 
 .markdownPreview code::before,
 .markdownPreview code::after {
-  content: "";
+	content: "";
+}
+
+.markdownPreview img {
+	max-width: 100%;
+	max-height: 350px;
 }

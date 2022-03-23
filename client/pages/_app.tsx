@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const skeletonHighlightColor = 'var(--lighter-gray)'
 
   return (
-    <>
+    <div data-theme={theme}>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -33,13 +33,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
         <title>Drift</title>
       </Head>
-      <GeistProvider themeType={theme} >
+      <GeistProvider themeType={theme}>
         <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>
           <CssBaseline />
           <Component {...pageProps} />
         </SkeletonTheme>
       </GeistProvider>
-    </>
+    </div>
   )
 }
 

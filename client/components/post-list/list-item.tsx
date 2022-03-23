@@ -47,7 +47,7 @@ const ListItem = ({ post }: { post: any }) => {
 
             <Divider h="1px" my={0} />
 
-            <Card.Content >
+            <Card.Content>
                 {post.files.map((file: any) => {
                     return <FilenameInput key={file.id} title={file.title} />
                 })}

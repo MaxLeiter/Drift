@@ -84,7 +84,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
     return (
         <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 980, margin: "0 auto" }}>
+            <div className={styles.card}>
                 <div className={styles.fileNameContainer}>
                     <Input
                         value={title}
@@ -121,8 +121,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                     </Tabs>
 
                 </div >
-            </Card >
-            <Spacer height={1} />
+            </div >
         </>
     )
 }

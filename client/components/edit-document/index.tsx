@@ -23,34 +23,6 @@ type Props = {
     remove?: () => void
 }
 
-const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
-    return (<div className={styles.actionWrapper}>
-        <ButtonGroup className={styles.actions}>
-            <Tooltip text="Download">
-                <a href={`${rawLink}?download=true`} target="_blank" rel="noopener noreferrer">
-                    <Button
-                        scale={2 / 3} px={0.6}
-                        icon={<Download />}
-                        auto
-                        aria-label="Download"
-                    />
-                </a>
-            </Tooltip>
-            <Tooltip text="Open raw in new tab">
-                <a href={rawLink} target="_blank" rel="noopener noreferrer">
-                    <Button
-                        scale={2 / 3} px={0.6}
-                        icon={<ExternalLink />}
-                        auto
-                        aria-label="Open raw file in new tab"
-                    />
-                </a>
-            </Tooltip>
-        </ButtonGroup>
-    </div>)
-}
-
-
 const Document = ({ remove, title, content, setTitle, setContent, initialTab = 'edit', skeleton, handleOnContentChange }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
@@ -98,7 +70,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
     return (
         <>
             <Spacer height={1} />
-            <Card marginBottom={'var(--gap)'} marginTop={'var(--gap)'} style={{ maxWidth: 'var(--main-content)', margin: "0 auto" }}>
+            <div className={styles.card}>
                 <div className={styles.fileNameContainer}>
                     <Input
                         placeholder="MyFile.md"
@@ -138,8 +110,7 @@ const Document = ({ remove, title, content, setTitle, setContent, initialTab = '
                     </Tabs>
 
                 </div >
-            </Card >
-            <Spacer height={1} />
+            </div >
         </>
     )
 }
