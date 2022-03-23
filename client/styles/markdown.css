@@ -97,7 +97,6 @@ input[type="checkbox"]:focus {
 article *:not(pre) > code {
   font-weight: 500;
   font-family: var(--font-sans);
-  font-size: 1rem;
 }
 
 article li > p {

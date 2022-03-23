@@ -8,31 +8,32 @@ delete defaultProps.theme
 
 const renderer = new marked.Renderer()
 
-renderer.heading = (text, level, _, slugger) => {
-    const id = slugger.slug(text)
-    const Component = `h${level}`
+// renderer.heading = (text, level, _, slugger) => {
+//     const id = slugger.slug(text)
+//     const Component = `h${level}`
 
-    return renderToStaticMarkup(
-        //@ts-ignore
-        <Component>
-            <a href={`#${id}`} id={id} style={{ color: "inherit" }} >
-                {text}
-            </a>
-        </Component>
-    )
-}
+//     return renderToStaticMarkup(
+//         //@ts-ignore
+//         <Component>
+//             <a href={`#${id}`} id={id} style={{ color: "inherit" }} >
+//                 {text}
+//             </a>
+//         </Component>
+//     )
+// }
 
-renderer.link = (href, _, text) => {
-    const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
-    if (isHrefLocal) {
-        return renderToStaticMarkup(
-            <a href={href || ''}>
-                {text}
-            </a>
-        )
-    }
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`
-}
+// TODO: support elements inside link
+// renderer.link = (href, _, text) => {
+//     const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
+//     if (isHrefLocal) {
+//         return renderToStaticMarkup(
+//             <a href={href || ''}>
+//                 {text}
+//             </a>
+//         )
+//     }
+//     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`
+// }
 
 renderer.image = function (href, _, text) {
     return `<Image loading="lazy" src="${href}" alt="${text}" layout="fill" />`
