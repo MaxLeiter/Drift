@@ -111,7 +111,7 @@ const Post = () => {
     }, [docs, title])
 
     return (
-        <div>
+        <div style={{ marginBottom: 150 }}>
             <Title title={title} onChange={onChangeTitle} />
             <FileDropzone setDocs={uploadDocs} />
             <DocumentList docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />

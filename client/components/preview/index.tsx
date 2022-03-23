@@ -1,5 +1,6 @@
 import useTheme from "@lib/hooks/use-theme"
 import { memo, useEffect, useState } from "react"
+import styles from './preview.module.css'
 
 type Props = {
     height?: number | string
@@ -24,7 +25,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
                     setPreview(res)
                     setIsLoading(false)
                 }
-            } else {
+            } else if (content) {
                 const resp = await fetch(`/api/render-markdown`, {
                     method: "POST",
                     headers: {
@@ -41,11 +42,12 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
                     setIsLoading(false)
                 }
             }
+            setIsLoading(false)
         }
         fetchPost()
     }, [content, fileId, title])
     return (<>
-        {isLoading ? <div>Loading...</div> : <div data-theme={theme} dangerouslySetInnerHTML={{ __html: preview }} style={{
+        {isLoading ? <div>Loading...</div> : <div data-theme={theme} className={styles.markdownPreview} dangerouslySetInnerHTML={{ __html: preview }} style={{
             height
         }} />}
     </>)

@@ -11,12 +11,14 @@ const renderMarkdown: NextApiHandler = async (req, res) => {
         return language
     }
     const type = fileType()
-    let contentToRender: string = '\n' + (content || '');
+    let contentToRender: string = (content || '');
 
     if (!renderAsMarkdown.includes(type)) {
         contentToRender = `~~~${type}
 ${content}
 ~~~`
+    } else {
+        contentToRender = '\n' + content;
     }
 
     if (typeof contentToRender !== 'string') {

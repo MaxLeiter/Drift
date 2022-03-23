@@ -68,7 +68,8 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
 
     const onTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setTitle ? setTitle(event.target.value) : null, [setTitle])
 
-    const removeFile = useCallback(() => (remove?: () => void) => {
+    const removeFile = useCallback((remove?: () => void) => {
+        console.log(remove)
         if (remove) {
             if (content && content.trim().length > 0) {
                 const confirmed = window.confirm("Are you sure you want to remove this file?")
@@ -121,7 +122,7 @@ const Document = ({ remove, editable, title, content, setTitle, setContent, init
                         width={"100%"}
                         id={title}
                     />
-                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={removeFile} />}
+                    {remove && editable && <Button type="abort" ghost icon={<Trash />} auto height={'36px'} width={'36px'} onClick={() => removeFile(remove)} />}
                 </div>
                 <div className={styles.descriptionContainer}>
                     {tab === 'edit' && editable && <FormattingIcons setText={setContent} textareaRef={codeEditorRef} />}
