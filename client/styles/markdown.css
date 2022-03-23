@@ -8,10 +8,6 @@ article > * + * {
   margin-top: 2em;
 }
 
-article p {
-  color: var(--article-color);
-}
-
 article img {
   max-width: 100%;
   /* width: var(--main-content); */

@@ -1,6 +1,7 @@
 import { marked } from 'marked'
-import Highlight, { defaultProps, Language } from 'prism-react-renderer'
+import Highlight, { defaultProps, Language, } from 'prism-react-renderer'
 import { renderToStaticMarkup } from 'react-dom/server'
+
 //@ts-ignore
 delete defaultProps.theme
 // import linkStyles from '../components/link/link.module.css'

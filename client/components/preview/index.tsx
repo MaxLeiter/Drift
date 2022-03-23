@@ -47,7 +47,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
         fetchPost()
     }, [content, fileId, title])
     return (<>
-        {isLoading ? <div>Loading...</div> : <div data-theme={theme} className={styles.markdownPreview} dangerouslySetInnerHTML={{ __html: preview }} style={{
+        {isLoading ? <div>Loading...</div> : <article data-theme={theme} className={styles.markdownPreview} dangerouslySetInnerHTML={{ __html: preview }} style={{
             height
         }} />}
     </>)

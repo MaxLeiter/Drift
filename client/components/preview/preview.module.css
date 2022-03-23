@@ -75,19 +75,10 @@
   content: "";
 }
 
-.markdownPreview ul ul {
-  list-style: circle;
-}
-
-.markdownPreview ul ul li {
-  margin-left: var(--gap);
-}
-
 .markdownPreview code {
   border-radius: 3px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding: 2px 4px;
 }
 
 .markdownPreview code::before,
