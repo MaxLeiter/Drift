@@ -1,4 +1,4 @@
-import { marked } from 'marked'
+import { marked, Lexer } from 'marked'
 import Highlight, { defaultProps, Language, } from 'prism-react-renderer'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -95,8 +95,7 @@ const Code = ({ code, language, highlight, title, ...props }: {
     if (!language)
         return (
             <>
-                <code {...props} dangerouslySetInnerHTML={{ __html: code }
-                } />
+                <code {...props} dangerouslySetInnerHTML={{ __html: code }} />
             </>
         )
 
