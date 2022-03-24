@@ -26,7 +26,7 @@ const App = ({
                 accents_6: 'var(--darker-gray)',
                 accents_7: 'var(--darkest-gray)',
                 accents_8: 'var(--darkest-gray)',
-                border: 'var(--gray)',
+                border: 'var(--light-gray)',
             },
             font: {
                 mono: 'var(--font-mono)',
