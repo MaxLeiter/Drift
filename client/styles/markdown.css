@@ -16,8 +16,8 @@ article img {
 article [id]::before {
 	content: "";
 	display: block;
-	height: 70px;
-	margin-top: -70px;
+	height: var(--gap-half);
+	margin-top: calc(var(--gap-half) * -1);
 	visibility: hidden;
 }
 

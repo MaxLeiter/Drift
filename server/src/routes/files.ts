@@ -13,6 +13,11 @@ files.get("/raw/:id", secretKey, async (req, res, next) => {
             attributes: ["title", "content"],
         })
 
+
+        if (!file) {
+            return res.status(404).json({ error: "File not found" })
+        }
+
         // TODO: JWT-checkraw files
         if (file?.post?.visibility === "private") {
             // jwt(req as UserJwtRequest, res, () => {

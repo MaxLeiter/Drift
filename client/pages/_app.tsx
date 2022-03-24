@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
         <title>Drift</title>
       </Head>
-      <ThemeProvider defaultTheme="system">
+      <ThemeProvider defaultTheme="system" disableTransitionOnChange>
         <App Component={Component} pageProps={pageProps} />
       </ThemeProvider>
     </div>

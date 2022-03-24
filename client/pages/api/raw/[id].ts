@@ -9,10 +9,12 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
 			Authorization: `Bearer ${req.cookies["drift-token"]}`
 		}
 	})
-	const json = await file.json()
+
 	res.setHeader("Content-Type", "text/plain; charset=utf-8")
 	res.setHeader("Cache-Control", "s-maxage=86400")
 	if (file.ok) {
+		const json = await file.json()
+		console.log(json)
 		const data = json
 		const { title, content } = data
 		// serve the file raw as plain text
