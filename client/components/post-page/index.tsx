@@ -7,6 +7,7 @@ import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
 import { Page, Button, Text } from "@geist-ui/core"
+import ShiftBy from "@components/shift-by"
 
 type Props = {
     post: Post
@@ -45,7 +46,9 @@ const PostPage = ({ post }: Props) => {
                 <div className={styles.header}>
                     <div className={styles.titleAndBadge}>
                         <Text h2>{post.title}</Text>
-                        <span><VisibilityBadge visibility={post.visibility} /></span>
+                        <ShiftBy y={-5}>
+                            <VisibilityBadge visibility={post.visibility} />
+                        </ShiftBy>
                     </div>
                     <Button auto onClick={download}>
                         Download as ZIP archive
