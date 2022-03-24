@@ -15,7 +15,7 @@
 .markdownPreview h4,
 .markdownPreview h5,
 .markdownPreview h6 {
-	margin-top: var(--gap-half);
+	margin-top: var(--gap);
 	margin-bottom: var(--gap-half);
 }
 
