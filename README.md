@@ -53,13 +53,12 @@ Drift is a major work in progress. Below is a (rough) list of completed and envi
 - [x] user auth
   - [ ] SSO via HTTP header (Issue: [#11](https://github.com/MaxLeiter/Drift/issues/11))
 - [x] downloading files (individually and entire posts)
-- [ ] password protected posts
+- [x] password protected posts
 - [x] sqlite database
-- [ ] non-node backend
 - [ ] administrator account / settings
 - [ ] docker-compose (PR: [#13](https://github.com/MaxLeiter/Drift/pull/13))
   - [ ] publish docker builds
 - [ ] user settings
 - [ ] works enough with JavaScript disabled
-- [ ] documentation
+- [x] documentation
 - [x] customizable homepage, so the demo can exist as-is but other instances can be built from the same source. Environment variable for the file contents?
