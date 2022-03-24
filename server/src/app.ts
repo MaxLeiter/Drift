@@ -2,7 +2,8 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as errorhandler from 'strong-error-handler';
 import * as cors from 'cors';
-import { posts, users, auth, files } from './routes';
+import { posts, users, auth, files } from '@routes/index';
+import { errors } from 'celebrate'
 
 export const app = express();
 
@@ -19,7 +20,10 @@ app.use("/posts", posts)
 app.use("/users", users)
 app.use("/files", files)
 
+app.use(errors());
+
 app.use(errorhandler({
     debug: process.env.ENV !== 'production',
     log: true,
 }));
+

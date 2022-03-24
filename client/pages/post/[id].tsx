@@ -21,8 +21,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     })
 
     const json = await posts.json()
-    const filtered = json.filter((post: any) => post.visibility === "public" || post.visibility === "unlisted")
-    const paths = filtered.map((post: any) => ({
+    const filtered = json.filter((post: Post) => post.visibility === "public" || post.visibility === "unlisted")
+    const paths = filtered.map((post: Post) => ({
         params: { id: post.id }
     }))
 
