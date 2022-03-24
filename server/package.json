@@ -7,7 +7,8 @@
     "start": "ts-node index.ts",
     "dev": "nodemon index.ts",
     "build": "tsc -p .",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize db:migrate",
+    "lint": "prettier --config .prettierrc 'src/**/*.ts' 'index.ts' --write"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +41,7 @@
     "@types/marked": "^4.0.3",
     "@types/node": "^17.0.21",
     "@types/react-dom": "^17.0.14",
+    "prettier": "^2.6.0",
     "ts-node": "^10.6.0",
     "tsconfig-paths": "^3.14.1",
     "tslint": "^6.1.3",
