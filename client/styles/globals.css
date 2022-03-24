@@ -106,24 +106,6 @@ select {
 	font-size: 1rem;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
-	display: block;
-	max-width: 100%;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-	display: block;
-	max-width: 100%;
-}
-
 blockquote {
 	font-style: italic;
 	margin: 0;

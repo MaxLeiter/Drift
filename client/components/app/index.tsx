@@ -31,7 +31,6 @@ const App = ({
             font: {
                 mono: 'var(--font-mono)',
                 sans: 'var(--font-sans)',
-
             }
         }
     )
