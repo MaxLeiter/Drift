@@ -18,13 +18,13 @@ export function getStaticProps() {
 
 type Props = {
   introContent: string
+  introTitle: string
 }
 
-const Home = ({ introContent }: Props) => {
+const Home = ({ introContent, introTitle }: Props) => {
   return (
     <Page className={styles.container}>
       <PageSeo />
-
       <Page.Header>
         <Header />
       </Page.Header>
@@ -36,7 +36,7 @@ const Home = ({ introContent }: Props) => {
         </div>
         <Document
           content={introContent}
-          title={`Welcome to Drift.md`}
+          title={introTitle}
           initialTab={`preview`}
         />
       </Page.Content>
