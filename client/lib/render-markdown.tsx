@@ -60,20 +60,20 @@ renderer.listitem = (text, task, checked) => {
     return `<li>${text}</li>`
 }
 
-renderer.code = (code: string, language: string) => {
-    return renderToStaticMarkup(
-        <pre>
-            {/* {title && <code>{title} </code>} */}
-            {/* {language && title && <code style={{}}> {language} </code>} */}
-            <Code
-                language={language}
-                // title={title}
-                code={code}
-            // highlight={highlight}
-            />
-        </pre>
-    )
-}
+// renderer.code = (code: string, language: string) => {
+//     return renderToStaticMarkup(
+//         <pre>
+//             {/* {title && <code>{title} </code>} */}
+//             {/* {language && title && <code style={{}}> {language} </code>} */}
+//             <Code
+//                 language={language}
+//                 // title={title}
+//                 code={code}
+//             // highlight={highlight}
+//             />
+//         </pre>
+//     )
+// }
 
 marked.setOptions({
     gfm: true,
@@ -95,8 +95,7 @@ const Code = ({ code, language, highlight, title, ...props }: {
     if (!language)
         return (
             <>
-                <code {...props} dangerouslySetInnerHTML={{ __html: code }
-                } />
+                <code {...props} dangerouslySetInnerHTML={{ __html: code }} />
             </>
         )
 

@@ -22,6 +22,7 @@
     "lodash.debounce": "^4.0.8",
     "marked": "^4.0.12",
     "next": "^12.1.1-canary.15",
+    "next-themes": "^0.1.1",
     "postcss": "^8.4.12",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-hover-media-feature": "^1.0.2",

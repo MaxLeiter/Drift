@@ -42,7 +42,6 @@ files.get("/html/:id", async (req, res, next) => {
             return res.status(404).json({ error: "File not found" })
         }
 
-        console.log(file.html)
         res.setHeader('Content-Type', 'text/plain')
         res.setHeader('Cache-Control', 'public, max-age=4800')
         res.status(200).write(file.html)

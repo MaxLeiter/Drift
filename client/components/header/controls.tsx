@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MoonIcon from '@geist-ui/icons/moon'
 import SunIcon from '@geist-ui/icons/sun'
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from './header.module.css'
-import { ThemeProps } from '@lib/types'
 import { Select } from '@geist-ui/core'
+import { useTheme } from 'next-themes'
 
-const Controls = ({ changeTheme, theme }: ThemeProps) => {
+const Controls = () => {
+    const [mounted, setMounted] = useState(false)
+    const { theme, setTheme } = useTheme()
+    useEffect(() => setMounted(true), [])
+    if (!mounted) return null
     const switchThemes = () => {
-        changeTheme()
+        if (theme === 'dark') {
+            setTheme('light')
+        } else {
+            setTheme('dark')
+        }
     }
 
     return (

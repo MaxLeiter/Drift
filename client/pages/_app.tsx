@@ -4,8 +4,10 @@ import type { AppProps as NextAppProps } from "next/app";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
-import useTheme from '@lib/hooks/use-theme';
-import { CssBaseline, GeistProvider } from '@geist-ui/core';
+import { CssBaseline, GeistProvider, Themes } from '@geist-ui/core';
+import { useTheme, ThemeProvider } from 'next-themes'
+import { useEffect } from 'react';
+import App from '@components/app';
 
 type AppProps<P = any> = {
   pageProps: P;
@@ -13,12 +15,8 @@ type AppProps<P = any> = {
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { theme } = useTheme()
-  const skeletonBaseColor = 'var(--light-gray)'
-  const skeletonHighlightColor = 'var(--lighter-gray)'
-
   return (
-    <div data-theme={theme}>
+    <div>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -33,12 +31,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
         <title>Drift</title>
       </Head>
-      <GeistProvider themeType={theme}>
-        <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </SkeletonTheme>
-      </GeistProvider>
+      <ThemeProvider defaultTheme="system">
+        <App Component={Component} pageProps={pageProps} />
+      </ThemeProvider>
     </div>
   )
 }

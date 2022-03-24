@@ -23,7 +23,6 @@ const renderMarkdown: NextApiHandler = async (req, res) => {
 	}
 	const type = fileType()
 	let contentToRender: string = content || ""
-
 	if (!renderAsMarkdown.includes(type)) {
 		contentToRender = `~~~${type}
 ${content}

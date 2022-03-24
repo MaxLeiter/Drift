@@ -1,4 +1,3 @@
-import useTheme from "@lib/hooks/use-theme"
 import { memo, useEffect, useState } from "react"
 import styles from './preview.module.css'
 
@@ -13,17 +12,14 @@ type Props = {
 const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
     const [preview, setPreview] = useState<string>(content || "")
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const { theme } = useTheme()
     useEffect(() => {
         async function fetchPost() {
             if (fileId) {
                 const resp = await fetch(`/server-api/files/html/${fileId}`, {
                     method: "GET",
                 })
-                console.log(resp)
                 if (resp.ok) {
                     const res = await resp.text()
-                    console.log(res)
                     setPreview(res)
                     setIsLoading(false)
                 }

@@ -16,7 +16,7 @@ import NewIcon from '@geist-ui/icons/plusCircle';
 import YourIcon from '@geist-ui/icons/list'
 import MoonIcon from '@geist-ui/icons/moon';
 import SunIcon from '@geist-ui/icons/sun';
-import useTheme from "@lib/hooks/use-theme";
+import { useTheme } from "next-themes"
 import { Button } from "@geist-ui/core";
 
 type Tab = {
@@ -37,7 +37,7 @@ const Header = () => {
     const isMobile = useMediaQuery('xs', { match: 'down' })
     const { signedIn: isSignedIn, signout } = useSignedIn()
     const [pages, setPages] = useState<Tab[]>([])
-    const { changeTheme, theme } = useTheme()
+    const { setTheme, theme } = useTheme()
     useEffect(() => {
         setBodyHidden(expanded)
     }, [expanded, setBodyHidden])
@@ -60,9 +60,8 @@ const Header = () => {
             {
                 name: isMobile ? "Change theme" : "",
                 onClick: function () {
-                    if (typeof window !== 'undefined') {
-                        changeTheme();
-                    }
+                    if (typeof window !== 'undefined')
+                        setTheme(theme === 'light' ? 'dark' : 'light');
                 },
                 icon: theme === 'light' ? <MoonIcon /> : <SunIcon />,
                 condition: true,
@@ -73,9 +72,9 @@ const Header = () => {
         if (isSignedIn)
             setPages([
                 {
-                    name: 'home',
-                    icon: <HomeIcon />,
-                    value: 'home',
+                    name: 'new',
+                    icon: <NewIcon />,
+                    value: 'new',
                     href: '/'
                 },
                 {
@@ -116,58 +115,7 @@ const Header = () => {
             ])
         // TODO: investigate deps causing infinite loop 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [changeTheme, isMobile, isSignedIn, theme])
-
-    // useEffect(() => {
-    //     const pageList: Tab[] = [
-    //         {
-    //             name: "Home",
-    //             href: "/",
-    //             icon: <HomeIcon />,
-    //             condition: !isSignedIn,
-    //             value: "home"
-    //         },
-    //         {
-    //             name: "New",
-    //             href: "/new",
-    //             icon: <NewIcon />,
-    //             condition: isSignedIn,
-    //             value: "new"
-    //         },
-    //         {
-    //             name: "Yours",
-    //             href: "/mine",
-    //             icon: <YourIcon />,
-    //             condition: isSignedIn,
-    //             value: "mine"
-    //         },
-    //         {
-    //             name: "Sign out",
-    //             href: "/signout",
-    //             icon: <SignOutIcon />,
-    //             condition: isSignedIn,
-    //             value: "signout"
-    //         },
-    //         {
-    //             name: "Sign in",
-    //             href: "/signin",
-    //             icon: <SignInIcon />,
-    //             condition: !isSignedIn,
-    //             value: "signin"
-    //         },
-    //         {
-    //             name: "Sign up",
-    //             href: "/signup",
-    //             icon: <SignUpIcon />,
-    //             condition: !isSignedIn,
-    //             value: "signup"
-    //         },
-
-    //     ]
-
-    //     setPages(pageList.filter(page => page.condition))
-    // }, [changeTheme, isMobile, isSignedIn, theme])
-
+    }, [isMobile, isSignedIn, theme])
 
     const onTabChange = useCallback((tab: string) => {
         if (typeof window === 'undefined') return
