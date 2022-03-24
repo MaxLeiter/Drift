@@ -19,6 +19,21 @@
 	margin-bottom: var(--gap-half);
 }
 
+.markdownPreview h1 {
+	color: var(--fg);
+}
+
+.markdownPreview h2 {
+	color: var(--darkest-gray);
+}
+
+.markdownPreview h3,
+.markdownPreview h4,
+.markdownPreview h5,
+.markdownPreview h6 {
+	color: var(--darker-gray);
+}
+
 /* Auto-linked headers */
 .markdownPreview h1 a,
 .markdownPreview h2 a,

@@ -38,6 +38,8 @@
 	--light-gray: #444;
 	--lighter-gray: #222;
 	--lightest-gray: #1a1a1a;
+	--darker-gray: #b4b4b4;
+	--darkest-gray: #efefef;
 	--article-color: #eaeaea;
 	--header-bg: rgba(19, 20, 21, 0.45);
 	--gray-alpha: rgba(255, 255, 255, 0.5);
@@ -54,9 +56,12 @@
 	--bg: #fff;
 	--fg: #000;
 	--gray: #888;
+
 	--light-gray: #dedede;
 	--lighter-gray: #f5f5f5;
 	--lightest-gray: #fafafa;
+	--darker-gray: #555;
+	--darkest-gray: #222;
 	--article-color: #212121;
 	--header-bg: rgba(255, 255, 255, 0.8);
 	--gray-alpha: rgba(19, 20, 21, 0.5);
