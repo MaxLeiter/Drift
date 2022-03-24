@@ -8,14 +8,16 @@
 	--gap-half: 0.5rem;
 	--gap: 1rem;
 	--gap-double: 2rem;
-	--gap-negative: calc(-1 * var(--gap));
-	--gap-half-negative: calc(-1 * var(--gap-half));
-	--gap-quarter-negative: calc(-1 * var(--gap-quarter));
+
 	--small-gap: 4rem;
 	--big-gap: 4rem;
 	--main-content: 55rem;
 	--radius: 8px;
 	--inline-radius: 5px;
+
+	--gap-negative: calc(-1 * var(--gap));
+	--gap-half-negative: calc(-1 * var(--gap-half));
+	--gap-quarter-negative: calc(-1 * var(--gap-quarter));
 
 	/* Typography */
 	--font-sans: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,

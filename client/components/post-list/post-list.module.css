@@ -1,26 +1,35 @@
 .container ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .container ul li {
-  padding: 0.5rem 0;
+	padding: 0.5rem 0;
 }
 
 .container ul li::before {
-  content: "";
-  padding: 0;
-  margin: 0;
+	content: "";
+	padding: 0;
+	margin: 0;
 }
 
 .postHeader {
-  display: flex;
-  justify-content: space-between;
-  padding: var(--gap);
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: inherit;
+	display: flex;
+	justify-content: space-between;
+	padding: var(--gap);
+	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background: inherit;
+}
+
+.searchContainer {
+	display: flex;
+	align-items: center;
+	flex-direction: column-reverse;
+	justify-content: center;
+	margin-top: var(--gap);
+	margin-bottom: var(--gap-double);
 }

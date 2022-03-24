@@ -8,13 +8,14 @@ import getPostPath from "@lib/get-post-path"
 import { Input, Link, Text, Card, Spacer, Grid, Tooltip, Divider } from "@geist-ui/core"
 
 const FilenameInput = ({ title }: { title: string }) => <Input
-    value={title}
+    value={title || 'No title'}
     marginTop="var(--gap)"
     size={1.2}
     font={1.2}
     label="Filename"
     readOnly
     width={"100%"}
+    style={{ color: !!title ? 'var(--fg)' : 'var(--gray)' }}
 />
 
 const ListItem = ({ post }: { post: any }) => {
