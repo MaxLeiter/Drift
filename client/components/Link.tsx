@@ -1,4 +1,5 @@
-import { Link as GeistLink, LinkProps } from "@geist-ui/core"
+import type { LinkProps } from "@geist-ui/core"
+import { Link as GeistLink } from "@geist-ui/core"
 import { useRouter } from "next/router";
 
 const Link = (props: LinkProps) => {

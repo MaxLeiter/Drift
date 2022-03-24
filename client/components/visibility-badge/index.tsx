@@ -1,9 +1,8 @@
 import { Badge } from "@geist-ui/core"
-
-type Visibility = "unlisted" | "private" | "public"
+import type { PostVisibility } from "@lib/types"
 
 type Props = {
-    visibility: Visibility
+    visibility: PostVisibility
 }
 
 const VisibilityBadge = ({ visibility }: Props) => {

@@ -4,6 +4,7 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
+    "jsx": "react-jsxdev",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
@@ -13,8 +14,17 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@routes/*": ["./src/routes/*"],
+      "@lib/*": ["./src/lib/*"]
+    }
   },
-  "include": ["lib/**/*.ts", "index.ts", "src/**/*.ts"],
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["index.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

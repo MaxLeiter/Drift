@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MoonIcon from '@geist-ui/icons/moon'
 import SunIcon from '@geist-ui/icons/sun'
-import { Select } from '@geist-ui/core'
-import { ThemeProps } from '../../pages/_app'
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from './header.module.css'
+import { Select } from '@geist-ui/core'
+import { useTheme } from 'next-themes'
 
-const Controls = ({ changeTheme, theme }: ThemeProps) => {
-    const switchThemes = (type: string | string[]) => {
-        changeTheme()
-        if (typeof window === 'undefined' || !window.localStorage) return
-        window.localStorage.setItem('drift-theme', Array.isArray(type) ? type[0] : type)
+const Controls = () => {
+    const [mounted, setMounted] = useState(false)
+    const { theme, setTheme } = useTheme()
+    useEffect(() => setMounted(true), [])
+    if (!mounted) return null
+    const switchThemes = () => {
+        if (theme === 'dark') {
+            setTheme('light')
+        } else {
+            setTheme('dark')
+        }
     }
-
 
     return (
         <div className={styles.wrapper}>

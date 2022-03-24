@@ -1,89 +1,139 @@
-import { Button, ButtonDropdown, useToasts } from '@geist-ui/core'
+import { Button, useToasts, ButtonDropdown } from '@geist-ui/core'
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';
-import Document from '../document';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
 import Cookies from 'js-cookie'
-
-export type Document = {
-    title: string
-    content: string
-    id: string
-}
+import type { PostVisibility, Document as DocumentType } from '@lib/types';
+import PasswordModal from './password';
+import getPostPath from '@lib/get-post-path';
+import EditDocumentList from '@components/edit-document-list';
+import { ChangeEvent } from 'react';
 
 const Post = () => {
     const { setToast } = useToasts()
-
     const router = useRouter();
     const [title, setTitle] = useState<string>()
-    const [docs, setDocs] = useState<Document[]>([{
+    const [docs, setDocs] = useState<DocumentType[]>([{
         title: '',
         content: '',
         id: generateUUID()
     }])
-    const [isSubmitting, setSubmitting] = useState(false)
 
-    const remove = (id: string) => {
-        setDocs(docs.filter((doc) => doc.id !== id))
-    }
-
-    const onSubmit = async (visibility: string) => {
-        setSubmitting(true)
-        const response = await fetch('/server-api/posts/create', {
-            method: 'POST',
+    const [passwordModalVisible, setPasswordModalVisible] = useState(false)
+    const sendRequest = useCallback(async (url: string, data: { visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
+        const res = await fetch(url, {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get("drift-token")}`
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Cookies.get('drift-token')}`
             },
             body: JSON.stringify({
                 title,
                 files: docs,
-                visibility,
-                userId: Cookies.get("drift-userid"),
+                ...data,
             })
         })
 
-        const json = await response.json()
-        setSubmitting(false)
-        if (json.id)
-            router.push(`/post/${json.id}`)
-        else {
-            setToast({ text: json.error.message, type: "error" })
+        if (res.ok) {
+            const json = await res.json()
+            router.push(getPostPath(json.visibility, json.id))
+        } else {
+            const json = await res.json()
+            setToast({
+                text: json.error.message,
+                type: 'error'
+            })
+            setPasswordModalVisible(false)
+            setSubmitting(false)
         }
+
+    }, [docs, router, setToast, title])
+
+    const [isSubmitting, setSubmitting] = useState(false)
+
+    const onSubmit = async (visibility: PostVisibility, password?: string) => {
+        if (visibility === 'protected' && !password) {
+            setPasswordModalVisible(true)
+            return
+        }
+        setSubmitting(true)
+
+        await sendRequest('/server-api/posts/create', {
+            title,
+            files: docs,
+            visibility,
+            password,
+            userId: Cookies.get('drift-userid') || ''
+        })
     }
 
-    const updateTitle = useCallback((title: string, id: string) => {
-        setDocs(docs.map((doc) => doc.id === id ? { ...doc, title } : doc))
-    }, [docs])
+    const onClosePasswordModal = () => {
+        setPasswordModalVisible(false)
+        setSubmitting(false)
+    }
 
-    const updateContent = useCallback((content: string, id: string) => {
-        setDocs(docs.map((doc) => doc.id === id ? { ...doc, content } : doc))
-    }, [docs])
+    const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value)
+    }, [setTitle])
+
+
+    const updateDocTitle = useCallback((i: number) => (title: string) => {
+        setDocs((docs) => docs.map((doc, index) => i === index ? { ...doc, title } : doc))
+    }, [setDocs])
+
+    const updateDocContent = useCallback((i: number) => (content: string) => {
+        setDocs((docs) => docs.map((doc, index) => i === index ? { ...doc, content } : doc))
+    }, [setDocs])
+
+    const removeDoc = useCallback((i: number) => () => {
+        setDocs((docs) => docs.filter((_, index) => i !== index))
+    }, [setDocs])
+
+
+    const uploadDocs = useCallback((files: DocumentType[]) => {
+        // if no title is set and the only document is empty,
+        const isFirstDocEmpty = docs.length <= 1 && (docs.length ? docs[0].title === '' : true)
+        const shouldSetTitle = !title && isFirstDocEmpty
+        if (shouldSetTitle) {
+            if (files.length === 1) {
+                setTitle(files[0].title)
+            } else if (files.length > 1) {
+                setTitle('Uploaded files')
+            }
+        }
+
+        if (isFirstDocEmpty) setDocs(files)
+        else setDocs((docs) => [...docs, ...files])
+    }, [docs, title])
+
+    // pasted files
+    // const files = e.clipboardData.files as File[]
+    // if (files.length) {
+    //     const docs = Array.from(files).map((file) => ({
+    //         title: file.name,
+    //         content: '',
+    //         id: generateUUID()
+    //     }))
+    // }
+
+    const onPaste = useCallback((e: any) => {
+        const pastedText = (e.clipboardData).getData('text')
+
+        if (pastedText) {
+            if (!title) {
+                setTitle("Pasted text")
+            }
+        }
+    }, [title])
 
     return (
-        <div>
-            <Title title={title} setTitle={setTitle} />
-            <FileDropzone docs={docs} setDocs={setDocs} />
-            {
-                docs.map(({ id }) => {
-                    const doc = docs.find((doc) => doc.id === id)
-                    return (
-                        <Document
-                            remove={() => remove(id)}
-                            key={id}
-                            editable={true}
-                            setContent={(content) => updateContent(content, id)}
-                            setTitle={(title) => updateTitle(title, id)}
-                            content={doc?.content}
-                            title={doc?.title}
-                        />
-                    )
-                })
-            }
-
+        <div style={{ marginBottom: 150 }}>
+            <Title title={title} onChange={onChangeTitle} />
+            <FileDropzone setDocs={uploadDocs} />
+            <EditDocumentList onPaste={onPaste} docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />
             <div className={styles.buttons}>
                 <Button
                     className={styles.button}
@@ -104,9 +154,11 @@ const Post = () => {
                     <ButtonDropdown.Item main onClick={() => onSubmit('private')}>Create Private</ButtonDropdown.Item>
                     <ButtonDropdown.Item onClick={() => onSubmit('public')} >Create Public</ButtonDropdown.Item>
                     <ButtonDropdown.Item onClick={() => onSubmit('unlisted')} >Create Unlisted</ButtonDropdown.Item>
+                    <ButtonDropdown.Item onClick={() => onSubmit('protected')} >Create with Password</ButtonDropdown.Item>
                 </ButtonDropdown>
+                <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={(password) => onSubmit('protected', password)} />
             </div>
-        </div >
+        </div>
     )
 }
 

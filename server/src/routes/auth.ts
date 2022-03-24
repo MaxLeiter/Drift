@@ -1,58 +1,41 @@
-import { Router } from "express";
-import { genSalt, hash, compare } from "bcrypt";
-import { User } from "../../lib/models/User";
-import { sign } from "jsonwebtoken";
-import config from "../../lib/config";
-import jwt from "../../lib/middleware/jwt";
-import { celebrate, Joi } from "celebrate";
+import { Router } from 'express'
+import { genSalt, hash, compare } from "bcrypt"
+import { User } from '@lib/models/User'
+import { sign } from 'jsonwebtoken'
+import config from '@lib/config'
+import jwt from '@lib/middleware/jwt'
+import { celebrate, Joi } from 'celebrate'
 
-const NO_EMPTY_SPACE_REGEX = /^\S*$/;
+const NO_EMPTY_SPACE_REGEX = /^\S*$/
 
-export const requiresServerPassword =
-  (process.env.MEMORY_DB || process.env.ENV === "production") &&
-  !!process.env.REGISTRATION_PASSWORD;
-console.log(`Registration password required: ${requiresServerPassword}`);
+export const requiresServerPassword = (process.env.MEMORY_DB || process.env.ENV === 'production') && !!process.env.REGISTRATION_PASSWORD
+console.log(`Registration password required: ${requiresServerPassword}`)
 
-export const auth = Router();
+export const auth = Router()
 
-const validateAuthPayload = (
-  username: string,
-  password: string,
-  serverPassword?: string
-): void => {
+const validateAuthPayload = (username: string, password: string, serverPassword?: string): void => {
   if (!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6) {
-    throw new Error("Authentication data does not fulfill requirements");
+    throw new Error("Authentication data does not fulfill requirements")
   }
 
   if (requiresServerPassword) {
-    if (
-      !serverPassword ||
-      process.env.REGISTRATION_PASSWORD !== serverPassword
-    ) {
-      throw new Error(
-        "Server password is incorrect. Please contact the server administrator."
-      );
+    if (!serverPassword || process.env.REGISTRATION_PASSWORD !== serverPassword) {
+      throw new Error("Server password is incorrect. Please contact the server administrator.")
     }
   }
-};
+}
 
-auth.post(
-  "/signup",
+auth.post('/signup',
   celebrate({
     body: {
       username: Joi.string().required(),
       password: Joi.string().required(),
-      serverPassword: Joi.string(),
-    },
+      serverPassword: Joi.string().required().allow('', null),
+    }
   }),
   async (req, res, next) => {
     try {
-      validateAuthPayload(
-        req.body.username,
-        req.body.password,
-        req.body.serverPassword
-      );
-
+      validateAuthPayload(req.body.username, req.body.password, req.body.serverPassword)
       const username = req.body.username.toLowerCase();
 
       const existingUser = await User.findOne({
@@ -85,6 +68,7 @@ auth.post(
     body: {
       username: Joi.string().required(),
       password: Joi.string().required(),
+      serverPassword: Joi.string().required().allow('', null),
     },
   }),
   async (req, res, next) => {

@@ -1,5 +1,7 @@
-import { Card, Spacer, Grid, Divider } from "@geist-ui/core";
+
+
 import Skeleton from "react-loading-skeleton";
+import { Card, Divider, Grid, Spacer } from "@geist-ui/core";
 
 const ListItemSkeleton = () => (<Card>
     <Spacer height={1 / 2} />

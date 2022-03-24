@@ -1,10 +1,9 @@
-import { Button, Text, useTheme, useToasts } from '@geist-ui/core'
-import { useCallback, useEffect } from 'react'
+import { Text, useTheme, useToasts } from '@geist-ui/core'
+import { memo } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './drag-and-drop.module.css'
-import { Document } from '../'
+import type { Document } from '@lib/types'
 import generateUUID from '@lib/generate-uuid'
-import { XCircle } from '@geist-ui/icons'
 const allowedFileTypes = [
     'application/json',
     'application/x-javascript',
@@ -92,14 +91,16 @@ const allowedFileExtensions = [
     'sql',
     'xml',
     'webmanifest',
+    'vue',
+    'vuex',
 ]
 
-function FileDropzone({ setDocs, docs }: { setDocs: React.Dispatch<React.SetStateAction<Document[]>>, docs: Document[] }) {
+function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {
     const { palette } = useTheme()
     const { setToast } = useToasts()
-    const onDrop = useCallback(async (acceptedFiles) => {
-        const newDocs = await Promise.all(acceptedFiles.map((file: File) => {
-            return new Promise((resolve, reject) => {
+    const onDrop = async (acceptedFiles: File[]) => {
+        const newDocs = await Promise.all(acceptedFiles.map((file) => {
+            return new Promise<Document>((resolve) => {
                 const reader = new FileReader()
 
                 reader.onabort = () => setToast({ text: 'File reading was aborted', type: 'error' })
@@ -116,15 +117,8 @@ function FileDropzone({ setDocs, docs }: { setDocs: React.Dispatch<React.SetStat
             })
         }))
 
-        if (docs.length === 1) {
-            if (docs[0].content === '') {
-                setDocs(newDocs)
-                return
-            }
-        }
-
-        setDocs((oldDocs) => [...oldDocs, ...newDocs])
-    }, [setDocs, setToast, docs])
+        setDocs(newDocs)
+    }
 
     const validator = (file: File) => {
         // TODO: make this configurable
@@ -170,11 +164,11 @@ function FileDropzone({ setDocs, docs }: { setDocs: React.Dispatch<React.SetStat
             </div>
             {fileRejections.length > 0 && <ul className={styles.error}>
                 {/* <Button style={{ float: 'right' }} type="abort" onClick={() => fileRejections.splice(0, fileRejections.length)} auto iconRight={<XCircle />}></Button> */}
-                <Text h5>There was a problem with some of your files.</Text>
+                <Text h5>There was a problem with one or more of your files.</Text>
                 {fileRejectionItems}
             </ul>}
         </div>
     )
 }
 
-export default FileDropzone
+export default memo(FileDropzone)

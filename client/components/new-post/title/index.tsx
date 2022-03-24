@@ -1,7 +1,9 @@
-import { Text, Input } from '@geist-ui/core'
-import { memo } from 'react'
+import { ChangeEvent, memo, useEffect, useState } from 'react'
+import { Text } from '@geist-ui/core'
+
 import ShiftBy from '@components/shift-by'
 import styles from '../post.module.css'
+import { Input } from '@geist-ui/core'
 
 const titlePlaceholders = [
     "How to...",
@@ -14,18 +16,23 @@ const titlePlaceholders = [
 ]
 
 type props = {
-    setTitle: (title: string) => void
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
     title?: string
 }
 
-const Title = ({ setTitle, title }: props) => {
+const Title = ({ onChange, title }: props) => {
+    const [placeholder, setPlaceholder] = useState(titlePlaceholders[0])
+    useEffect(() => {
+        // set random placeholder on load
+        setPlaceholder(titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)])
+    }, [])
     return (<div className={styles.title}>
         <Text h1 width={"150px"} className={styles.drift}>Drift</Text>
         <ShiftBy y={-3}>
             <Input
-                placeholder={titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]}
+                placeholder={placeholder}
                 value={title || ""}
-                onChange={(event) => setTitle(event.target.value)}
+                onChange={onChange}
                 height={"55px"}
                 font={1.5}
                 label="Post title"

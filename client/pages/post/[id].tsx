@@ -1,111 +1,49 @@
-import { Button, Page, Text } from "@geist-ui/core";
-import Skeleton from 'react-loading-skeleton';
+import type { GetStaticPaths, GetStaticProps } from "next";
 
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Document from '../../components/document'
-import Header from "../../components/header";
-import VisibilityBadge from "../../components/visibility-badge";
-import { ThemeProps } from "../_app";
-import PageSeo from "components/page-seo";
-import Head from "next/head";
-import styles from './styles.module.css';
-import Cookies from "js-cookie";
+import type { Post } from "@lib/types";
+import PostPage from "@components/post-page";
 
-const Post = ({ theme, changeTheme }: ThemeProps) => {
-    const [post, setPost] = useState<any>()
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string>()
-    const router = useRouter();
-
-    useEffect(() => {
-        async function fetchPost() {
-            setIsLoading(true);
-            if (router.query.id) {
-                const post = await fetch(`/server-api/posts/${router.query.id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${Cookies.get("drift-token")}`
-                    }
-                })
-
-                if (post.ok) {
-                    const res = await post.json()
-                    if (res)
-                        setPost(res)
-                    else
-                        setError("Post not found")
-                } else {
-                    if (post.status.toString().startsWith("4")) {
-                        router.push("/signin")
-                    } else {
-                        setError(post.statusText)
-                    }
-                }
-                setIsLoading(false)
-            }
-        }
-        fetchPost()
-    }, [router, router.query.id])
-
-    const download = async () => {
-        const clientZip = require("client-zip")
-
-        const blob = await clientZip.downloadZip(post.files.map((file: any) => {
-            return {
-                name: file.title,
-                input: file.content,
-                lastModified: new Date(file.updatedAt)
-            }
-        })).blob()
-        const link = document.createElement("a")
-        link.href = URL.createObjectURL(blob)
-        link.download = `${post.title}.zip`
-        link.click()
-        link.remove()
-    }
-
-    return (
-        <Page width={"100%"}>
-            {!isLoading && (
-                <PageSeo
-                    title={`${post.title} - Drift`}
-                    description={post.description}
-                    isPrivate={post.visibility === 'private'}
-                />
-            )}
-
-            <Page.Header>
-                <Header theme={theme} changeTheme={changeTheme} />
-            </Page.Header>
-            <Page.Content width={"var(--main-content-width)"} margin="auto">
-                {error && <Text type="error">{error}</Text>}
-                {/* {!error && (isLoading || !post?.files) && <Loading />} */}
-                {!error && isLoading && <><Text h2><Skeleton width={400} /></Text>
-                    <Document skeleton={true} />
-                </>}
-                {!isLoading && post && <>
-                    <div className={styles.header}>
-                        <Text h2>{post.title} <VisibilityBadge visibility={post.visibility} /></Text>
-                        <Button auto onClick={download}>
-                            Download as ZIP archive
-                        </Button>
-                    </div>
-                    {post.files.map(({ id, content, title }: { id: any, content: string, title: string }) => (
-                        <Document
-                            key={id}
-                            id={id}
-                            content={content}
-                            title={title}
-                            editable={false}
-                            initialTab={'preview'}
-                        />
-                    ))}
-                </>}
-            </Page.Content>
-        </Page >
-    )
+export type PostProps = {
+    post: Post
 }
 
-export default Post
+const PostView = ({ post }: PostProps) => {
+    return <PostPage post={post} />
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const posts = await fetch(process.env.API_URL + `/posts/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "x-secret-key": process.env.SECRET_KEY || "",
+        }
+    })
+
+    const json = await posts.json()
+    const filtered = json.filter((post: Post) => post.visibility === "public" || post.visibility === "unlisted")
+    const paths = filtered.map((post: Post) => ({
+        params: { id: post.id }
+    }))
+
+    return { paths, fallback: 'blocking' }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const post = await fetch(process.env.API_URL + `/posts/${params?.id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "x-secret-key": process.env.SECRET_KEY || "",
+        }
+    })
+
+    return {
+        props: {
+            post: await post.json()
+        },
+    }
+}
+
+export default PostView
+

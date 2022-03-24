@@ -1,28 +1,11 @@
-.main {
-  min-height: 100vh;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: var(--main-content-width);
-}
-
-.container {
+.wrapper {
+  height: 100% !important;
+  padding-bottom: var(--small-gap) !important;
   width: 100% !important;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
-    width: 100%;
-    margin: 0 auto !important;
-    padding: 0;
-  }
-
-  .container h1 {
-    font-size: 2rem;
-  }
-
-  .main {
-    width: 100%;
-  }
+.main {
+  max-width: var(--main-content) !important;
+  margin: 0 auto !important;
+  padding: 0 0 !important;
 }
