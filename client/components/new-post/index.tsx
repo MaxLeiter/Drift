@@ -130,7 +130,7 @@ const Post = () => {
     }, [title])
 
     return (
-        <div style={{ marginBottom: 150 }}>
+        <div style={{ paddingBottom: 150 }}>
             <Title title={title} onChange={onChangeTitle} />
             <FileDropzone setDocs={uploadDocs} />
             <EditDocumentList onPaste={onPaste} docs={docs} updateDocTitle={updateDocTitle} updateDocContent={updateDocContent} removeDoc={removeDoc} />

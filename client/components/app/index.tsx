@@ -28,6 +28,21 @@ const App = ({
                 accents_8: 'var(--darkest-gray)',
                 border: 'var(--light-gray)',
             },
+            expressiveness: {
+                dropdownBoxShadow: '0 0 0 1px var(--light-gray)',
+                shadowSmall: '0 0 0 1px var(--light-gray)',
+                shadowLarge: '0 0 0 1px var(--light-gray)',
+                shadowMedium: '0 0 0 1px var(--light-gray)',
+            },
+            layout: {
+                gap: 'var(--gap)',
+                gapHalf: 'var(--gap-half)',
+                gapQuarter: 'var(--gap-quarter)',
+                gapNegative: 'var(--gap-negative)',
+                gapHalfNegative: 'var(--gap-half-negative)',
+                gapQuarterNegative: 'var(--gap-quarter-negative)',
+                radius: 'var(--radius)',
+            },
             font: {
                 mono: 'var(--font-mono)',
                 sans: 'var(--font-sans)',
