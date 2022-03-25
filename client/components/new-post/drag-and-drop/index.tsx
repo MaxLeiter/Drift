@@ -35,8 +35,6 @@ const allowedFileTypes = [
     'text/markdown',
 ]
 
-// Files with no extension can't be easily detected as plain-text,
-// so instead of allowing all of them we'll just allow common ones
 const allowedFileNames = [
     'Makefile',
     'README',
@@ -53,6 +51,15 @@ const allowedFileNames = [
     '.env.staging',
     '.env.development.local',
     'yarn.lock',
+    '.bash',
+    '.bashrc',
+    '.bash_profile',
+    '.bash_logout',
+    '.profile',
+    '.fish_prompt',
+    '.zshrc',
+    '.zsh',
+    '.zprofile',
 ]
 
 const allowedFileExtensions = [

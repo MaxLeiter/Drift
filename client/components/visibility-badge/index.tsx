@@ -17,7 +17,7 @@ const VisibilityBadge = ({ visibility }: Props) => {
         }
     }
 
-    return (<Badge marginLeft={'var(--gap)'} type={getBadgeType()}>{visibility}</Badge>)
+    return (<Badge type={getBadgeType()}>{visibility}</Badge>)
 }
 
 export default VisibilityBadge

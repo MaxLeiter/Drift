@@ -31,5 +31,4 @@
 	flex-direction: column-reverse;
 	justify-content: center;
 	margin-bottom: var(--gap-double);
-	margin-top: var(--gap-double);
 }

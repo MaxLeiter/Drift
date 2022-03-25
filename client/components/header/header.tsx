@@ -129,7 +129,7 @@ const Header = () => {
 
 
     return (
-        <Page.Header height={'var(--page-nav-height)'} margin={0} paddingBottom={'var(--gap-double)'} paddingTop={"var(--gap)"}>
+        <Page.Header height={'var(--page-nav-height)'} marginBottom={2}>
             <div className={styles.tabs}>
                 <Tabs
                     value={selectedTab}

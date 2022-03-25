@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   })
 
-  if (!posts.ok || posts.status !== 200) {
+  if (!posts.ok) {
     return {
       redirect: {
         destination: '/',
