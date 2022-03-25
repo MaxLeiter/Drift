@@ -30,6 +30,5 @@
 	align-items: center;
 	flex-direction: column-reverse;
 	justify-content: center;
-	margin-top: var(--gap);
 	margin-bottom: var(--gap-double);
 }

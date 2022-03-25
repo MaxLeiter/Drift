@@ -28,8 +28,6 @@ You can change these to your liking.
 `client/.env`:
 
 - `API_URL`: defaults to localhost:3001, but allows you to host the front-end separately from the backend on a service like Vercel or Netlify
-- `WELCOME_CONTENT`: a markdown string (with \n newlines) that's rendered on the home page
-- `WELCOME_TITLE`: the file title for the post on the homepage.
 - `SECRET_KEY`: a secret key used for validating API requests that is never exposed to the browser
 
 `server/.env`:
@@ -40,6 +38,8 @@ You can change these to your liking.
 - `MEMORY_DB`: if `true`, a sqlite database will not be created and changes will only exist in memory. Mainly for the demo.
 - `REGISTRATION_PASSWORD`: if MEMORY_DB is not `true`, the user will be required to provide this password to sign-up, in addition to their username and account password. If it's not set, no password will be required.
 - `SECRET_KEY`: the same secret key as the client
+- `WELCOME_CONTENT`: a markdown string that's rendered on the home page
+- `WELCOME_TITLE`: the file title for the post on the homepage.
 
 ## Current status
 

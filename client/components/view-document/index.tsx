@@ -117,12 +117,10 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                         </Tabs.Item>
                         <Tabs.Item label="Preview" value="preview">
                             <div style={{ marginTop: 'var(--gap-half)', }}>
-
-                                <HtmlPreview height={height} fileId={id} />
+                                <HtmlPreview height={height} fileId={id} content={content} title={title} />
                             </div>
                         </Tabs.Item>
                     </Tabs>
-
                 </div >
             </div >
         </>

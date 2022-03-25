@@ -6,7 +6,7 @@ import { Page } from '@geist-ui/core'
 
 const New = () => {
   return (
-    <Page className={styles.container} width="100%">
+    <Page className={styles.wrapper}>
       <PageSeo title="Drift - New" />
 
       <Page.Header>

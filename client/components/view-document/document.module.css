@@ -38,3 +38,7 @@
 	position: absolute;
 	right: 0;
 }
+
+.textarea {
+	height: 100%;
+}

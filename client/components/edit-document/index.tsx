@@ -19,12 +19,11 @@ type Props = {
     setContent?: (content: string) => void
     handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
     initialTab?: "edit" | "preview"
-    skeleton?: boolean
     remove?: () => void
     onPaste?: (e: any) => void
 }
 
-const Document = ({ onPaste, remove, title, content, setTitle, setContent, initialTab = 'edit', skeleton, handleOnContentChange }: Props) => {
+const Document = ({ onPaste, remove, title, content, setTitle, setContent, initialTab = 'edit', handleOnContentChange }: Props) => {
     const codeEditorRef = useRef<HTMLTextAreaElement>(null)
     const [tab, setTab] = useState(initialTab)
     // const height = editable ? "500px" : '100%'
@@ -52,21 +51,21 @@ const Document = ({ onPaste, remove, title, content, setTitle, setContent, initi
         }
     }, [content])
 
-    if (skeleton) {
-        return <>
-            <Spacer height={1} />
-            <div className={styles.card}>
-                <div className={styles.fileNameContainer}>
-                    <Skeleton width={275} height={36} />
-                    {remove && <Skeleton width={36} height={36} />}
-                </div>
-                <div className={styles.descriptionContainer}>
-                    <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
-                    <Skeleton width={'100%'} height={350} />
-                </div >
-            </div>
-        </>
-    }
+    // if (skeleton) {
+    //     return <>
+    //         <Spacer height={1} />
+    //         <div className={styles.card}>
+    //             <div className={styles.fileNameContainer}>
+    //                 <Skeleton width={275} height={36} />
+    //                 {remove && <Skeleton width={36} height={36} />}
+    //             </div>
+    //             <div className={styles.descriptionContainer}>
+    //                 <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
+    //                 <Skeleton width={'100%'} height={350} />
+    //             </div >
+    //         </div>
+    //     </>
+    // }
 
     return (
         <>
@@ -112,7 +111,6 @@ const Document = ({ onPaste, remove, title, content, setTitle, setContent, initi
                             </div>
                         </Tabs.Item>
                     </Tabs>
-
                 </div >
             </div >
         </>

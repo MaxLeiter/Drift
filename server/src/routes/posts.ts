@@ -7,6 +7,7 @@ import * as crypto from "crypto"
 import { User } from "@lib/models/User"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
+import { Op } from "sequelize"
 
 export const posts = Router()
 
@@ -98,36 +99,85 @@ posts.get("/", secretKey, async (req, res, next) => {
   }
 })
 
-posts.get("/mine", jwt, secretKey, async (req: UserJwtRequest, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ error: "Unauthorized" })
-  }
-
-  try {
-    const user = await User.findByPk(req.user.id, {
-      include: [
-        {
-          model: Post,
-          as: "posts",
-          include: [
-            {
-              model: File,
-              as: "files"
-            }
-          ]
-        }
-      ]
-    })
-    if (!user) {
-      return res.status(404).json({ error: "User not found" })
+posts.get("/mine", jwt,
+  celebrate({
+    query: {
+      page: Joi.number().integer().min(1).default(1).optional()
     }
-    return res.json(
-      user.posts?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    )
-  } catch (error) {
-    next(error)
+  }),
+  async (req: UserJwtRequest, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ error: "Unauthorized" })
+    }
+
+    const { page } = req.query
+    const parsedPage = page ? parseInt(page as string) : 1
+
+    try {
+      const user = await User.findByPk(req.user.id, {
+        include: [
+          {
+            model: Post,
+            as: "posts",
+            include: [
+              {
+                model: File,
+                as: "files",
+                attributes: ["id", "title", "createdAt"]
+              },
+            ],
+            attributes: ["id", "title", "visibility", "createdAt"]
+          }
+        ]
+      })
+      if (!user) {
+        return res.status(404).json({ error: "User not found" })
+      }
+      return res.json(
+        user.posts?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).slice((parsedPage - 1) * 10, parsedPage * 10)
+      )
+    } catch (error) {
+      next(error)
+    }
+  })
+
+posts.get("/search",
+  jwt,
+  celebrate({
+    query: {
+      q: Joi.string().required()
+    }
+  }),
+  async (req, res, next) => {
+    const { q } = req.query
+    if (typeof q !== "string") {
+      return res.status(400).json({ error: "Invalid query" })
+    }
+
+    try {
+      const posts = await Post.findAll({
+        where: {
+          [Op.or]: [
+            { title: { [Op.like]: `%${q}%` } },
+            { "$files.title$": { [Op.like]: `%${q}%` } },
+            { "$files.content$": { [Op.like]: `%${q}%` } }
+          ]
+        },
+        include: [
+          {
+            model: File,
+            as: "files",
+            attributes: ["id", "title"]
+          }
+        ]
+      })
+
+      res.json(posts)
+    } catch (e) {
+      next(e)
+    }
   }
-})
+)
 
 posts.get(
   "/:id",
@@ -138,10 +188,7 @@ posts.get(
   }),
   async (req: UserJwtRequest, res, next) => {
     try {
-      const post = await Post.findOne({
-        where: {
-          id: req.params.id
-        },
+      const post = await Post.findByPk(req.params.id, {
         include: [
           {
             model: File,

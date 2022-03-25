@@ -1,17 +1,25 @@
 import styles from '@styles/Home.module.css'
 import Header from '@components/header'
-import Document from '@components/edit-document'
-import Image from 'next/image'
-import ShiftBy from '@components/shift-by'
 import PageSeo from '@components/page-seo'
-import { Page, Text, Spacer } from '@geist-ui/core'
+import HomeComponent from '@components/home'
+import { Page, Text, Spacer, Tabs, Textarea, Card } from '@geist-ui/core'
 
-export function getStaticProps() {
-  const introDoc = process.env.WELCOME_CONTENT
+export async function getStaticProps() {
+  const resp = await fetch(process.env.API_URL + `/welcome`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-secret-key": process.env.SECRET_KEY || ''
+      }
+    })
+
+  const { title, content, rendered } = await resp.json()
   return {
     props: {
-      introContent: introDoc,
-      introTitle: process.env.WELCOME_TITLE,
+      introContent: content || null,
+      rendered: rendered || null,
+      introTitle: title || null,
     }
   }
 }
@@ -19,26 +27,18 @@ export function getStaticProps() {
 type Props = {
   introContent: string
   introTitle: string
+  rendered: string
 }
 
-const Home = ({ introContent, introTitle }: Props) => {
+const Home = ({ rendered, introContent, introTitle }: Props) => {
   return (
-    <Page className={styles.container}>
+    <Page className={styles.wrapper}>
       <PageSeo />
       <Page.Header>
         <Header />
       </Page.Header>
       <Page.Content className={styles.main}>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <ShiftBy y={-2}><Image src={'/assets/logo-optimized.svg'} width={'48px'} height={'48px'} alt="" /></ShiftBy>
-          <Spacer />
-          <Text style={{ display: 'inline' }} h1> Welcome to Drift</Text>
-        </div>
-        <Document
-          content={introContent}
-          title={introTitle}
-          initialTab={`preview`}
-        />
+        <HomeComponent rendered={rendered} introContent={introContent} introTitle={introTitle} />
       </Page.Content>
     </Page>
   )

@@ -7,14 +7,14 @@ import type { GetServerSideProps } from 'next';
 import { Post } from '@lib/types';
 import { Page } from '@geist-ui/core';
 
-const Home = ({ posts, error }: { posts: Post[]; error: any; }) => {
+const Home = ({ morePosts, posts, error }: { morePosts: boolean, posts: Post[]; error: boolean; }) => {
   return (
-    <Page className={styles.container}>
+    <Page className={styles.wrapper}>
       <Page.Header>
         <Header />
       </Page.Header>
       <Page.Content className={styles.main}>
-        <MyPosts error={error} posts={posts} />
+        <MyPosts morePosts={morePosts} error={error} posts={posts} />
       </Page.Content>
     </Page >
   )
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
-  const posts = await fetch(process.env.API_URL + `/posts/mine`, {
+  const posts = await fetch(process.env.API_URL + `/posts/mine?page=1`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -49,10 +49,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
+  const data = await posts.json()
+
   return {
     props: {
-      posts: await posts.json(),
+      posts: data,
       error: posts.status !== 200,
+      morePosts: data.length > 10,
     }
   }
 }
