@@ -1,23 +1,35 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .header .titleAndBadge {
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	text-align: center;
+	justify-content: space-between;
+	align-items: center;
 }
 
-@media screen and (max-width: 650px) {
-  .header {
-    flex-direction: column;
-  }
+.header .titleAndBadge span {
+	margin-left: var(--gap);
+}
 
-  .header .titleAndBadge {
-    flex-direction: column;
-    padding-bottom: var(--gap-double);
-  }
+@media screen and (max-width: 680px) {
+	.header {
+		flex-direction: column;
+	}
+
+	.header .titleAndBadge {
+		flex-direction: column;
+		padding-bottom: var(--gap-double);
+	}
+
+	.header .titleAndBadge span {
+		margin-left: 0;
+		margin-bottom: var(--gap);
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+	}
 }

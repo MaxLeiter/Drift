@@ -6,8 +6,10 @@ import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
-import { Page, Button, Text } from "@geist-ui/core"
+import { Page, Button, Text, Badge, Tooltip, Spacer } from "@geist-ui/core"
 import ShiftBy from "@components/shift-by"
+import { useMemo, useState } from "react"
+import timeAgo from "@lib/time-ago"
 
 type Props = {
     post: Post
@@ -29,6 +31,10 @@ const PostPage = ({ post }: Props) => {
         link.click()
         link.remove()
     }
+    const createdDate = useMemo(() => new Date(post.createdAt), [post.createdAt])
+    const [time, setTimeAgo] = useState(timeAgo(createdDate))
+
+    const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
 
     return (
         <Page width={"100%"}>
@@ -46,9 +52,10 @@ const PostPage = ({ post }: Props) => {
                 <div className={styles.header}>
                     <div className={styles.titleAndBadge}>
                         <Text h2>{post.title}</Text>
-                        <ShiftBy y={-5}>
+                        <span>
                             <VisibilityBadge visibility={post.visibility} />
-                        </ShiftBy>
+                            <Badge type="secondary"><Tooltip text={formattedTime}>{time}</Tooltip></Badge>
+                        </span>
                     </div>
                     <Button auto onClick={download}>
                         Download as ZIP archive

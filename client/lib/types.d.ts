@@ -11,6 +11,7 @@ export type File = {
 	title: string
 	content: string
 	html: string
+	createdAt: string
 }
 
 type Files = File[]
@@ -21,4 +22,5 @@ export type Post = {
 	description: string
 	visibility: PostVisibility
 	files: Files
+	createdAt: string
 }
