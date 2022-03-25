@@ -12,6 +12,7 @@ import { useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import Archive from '@geist-ui/icons/archive'
 import FileDropdown from "@components/file-dropdown"
+import ScrollToTop from "@components/scroll-to-top"
 
 type Props = {
     post: Post
@@ -67,7 +68,6 @@ const PostPage = ({ post }: Props) => {
                             <FileDropdown files={post.files} />
                         </ButtonGroup>
                     </span>
-
                 </div>
                 {/* {post.files.length > 1 && <FileTree files={post.files} />} */}
                 {post.files.map(({ id, content, title }: File) => (
@@ -79,6 +79,8 @@ const PostPage = ({ post }: Props) => {
                         content={content}
                     />
                 ))}
+                <ScrollToTop />
+
             </Page.Content>
         </Page >
     )

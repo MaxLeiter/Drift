@@ -1,0 +1,17 @@
+.scroll-up {
+	position: fixed;
+	z-index: 2;
+	pointer-events: none;
+	opacity: 0;
+	transform: translateY(16px);
+	transition: transform 0.2s, opacity 0.2s;
+	cursor: pointer;
+	bottom: var(--gap-double);
+	will-change: transform, opacity;
+}
+
+.scroll-up-shown {
+	opacity: 0.8;
+	transform: none;
+	pointer-events: auto;
+}

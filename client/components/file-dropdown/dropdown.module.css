@@ -47,7 +47,8 @@
 }
 
 .content li .fileTitle {
-	font-size: 1rem;
+	/* from Geist */
+	font-size: calc(0.875 * 16px);
 }
 
 .content li::before {
