@@ -14,10 +14,11 @@ const ScrollToTop = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    const isReducedMotion = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         // blur the button
         e.currentTarget.blur()
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        window.scrollTo({ top: 0, behavior: isReducedMotion ? 'auto' : 'smooth' })
     }
 
     return (
