@@ -1,8 +1,8 @@
 import { Button, Link, Text, Popover } from '@geist-ui/core'
 import FileIcon from '@geist-ui/icons/fileText'
-import CodeIcon from '@geist-ui/icons/fileLambda'
+import CodeIcon from '@geist-ui/icons/fileFunction'
 import styles from './dropdown.module.css'
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { codeFileExtensions } from "@lib/constants"
 import ChevronDown from '@geist-ui/icons/chevronDown'
 import ShiftBy from "@components/shift-by"
@@ -20,6 +20,16 @@ const FileDropdown = ({
 }) => {
     const [expanded, setExpanded] = useState(false)
     const [items, setItems] = useState<Item[]>([])
+
+    const onOpen = useCallback(() => {
+        setExpanded(true)
+    }, [])
+
+    const onClose = useCallback(() => {
+        setExpanded(false)
+        // contentRef.current?.focus()
+    }, [])
+
     useEffect(() => {
         const newItems = files.map(file => {
             const extension = file.title.split('.').pop()
@@ -40,24 +50,24 @@ const FileDropdown = ({
 
     const content = useCallback(() => (<ul className={styles.content}>
         {items.map(item => (
-            <li key={item.id} onClick={() => setExpanded(false)}>
-                <Link color={false} href={`#${item.title}`}>
+            <li key={item.id} onClick={onClose}>
+                <a href={`#${item.title}`}>
                     <ShiftBy y={5}><span className={styles.fileIcon}>
                         {item.icon}</span></ShiftBy>
                     <span className={styles.fileTitle}>{item.title ? item.title : 'Untitled'}</span>
-                </Link>
+                </a>
             </li>
         ))}
     </ul>
-    ), [items])
+    ), [items, onClose])
 
     // a list of files with an icon and a title
     return (
-        <Button auto onClick={() => setExpanded(!expanded)} className={styles.button} iconRight={<ChevronDown />}>
-            <Popover content={content} visible={expanded} trigger="click" hideArrow={true}>
-                {files.length} {files.length === 1 ? 'file' : 'files'}
+        <Button auto onClick={onOpen} className={styles.button} iconRight={<ChevronDown />}>
+            <Popover tabIndex={0} content={content} visible={expanded} trigger="click" hideArrow={true}>
+                Jump to {files.length} {files.length === 1 ? 'file' : 'files'}
             </Popover>
-        </Button>
+        </Button >
     )
 }
 

@@ -54,7 +54,7 @@ const PostPage = ({ post }: Props) => {
                 {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
                 <div className={styles.header}>
                     <span className={styles.title}>
-                        <Text h2>{post.title}</Text>
+                        <Text h3>{post.title}</Text>
                         <div className={styles.badges}>
                             <VisibilityBadge visibility={post.visibility} />
                             <Badge type="secondary"><Tooltip text={formattedTime}>{time}</Tooltip></Badge>

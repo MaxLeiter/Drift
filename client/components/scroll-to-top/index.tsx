@@ -14,13 +14,15 @@ const ScrollToTop = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    const onClick = () => {
+    const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // blur the button
+        e.currentTarget.blur()
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     return (
         <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: 24, justifyContent: 'flex-end' }}>
-            <Tooltip text="Scroll to Top" className={`${styles['scroll-up']} ${shouldShow ? styles['scroll-up-shown'] : ''}`}>
+            <Tooltip hideArrow text="Scroll to Top" className={`${styles['scroll-up']} ${shouldShow ? styles['scroll-up-shown'] : ''}`}>
                 <Button aria-label='Scroll to Top' onClick={onClick} style={{ background: 'var(--light-gray)' }} auto >
                     <Spacer height={2 / 3} inline width={0} />
                     <ChevronUp />

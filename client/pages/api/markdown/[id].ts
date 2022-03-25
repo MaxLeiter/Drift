@@ -11,8 +11,7 @@ const renderMarkdown: NextApiHandler = async (req, res) => {
 			Authorization: `Bearer ${req.cookies["drift-token"]}`
 		}
 	})
-	if (file.status
-		!== 200) {
+	if (file.status !== 200) {
 		return res.status(404).json({ error: "File not found" })
 	}
 

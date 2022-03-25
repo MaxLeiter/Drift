@@ -16,26 +16,26 @@ app.use("/posts", posts)
 app.use("/users", users)
 app.use("/files", files)
 
-app.get('/welcome', secretKey, (req, res) => {
-    const introContent = process.env.WELCOME_CONTENT;
-    const introTitle = process.env.WELCOME_TITLE;
+app.get("/welcome", secretKey, (req, res) => {
+	const introContent = process.env.WELCOME_CONTENT
+	const introTitle = process.env.WELCOME_TITLE
 
-    if (!introContent || !introTitle) {
-        return res.status(500).json({ error: 'Missing welcome content' });
-    }
+	if (!introContent || !introTitle) {
+		return res.status(500).json({ error: "Missing welcome content" })
+	}
 
-    return res.json({
-        title: introTitle,
-        content: introContent,
-        rendered: markdown(introContent)
-    });
+	return res.json({
+		title: introTitle,
+		content: introContent,
+		rendered: markdown(introContent)
+	})
 })
 
 app.use(errors())
 
 app.use(
-    errorhandler({
-        debug: process.env.ENV !== "production",
-        log: true
-    })
+	errorhandler({
+		debug: process.env.ENV !== "production",
+		log: true
+	})
 )

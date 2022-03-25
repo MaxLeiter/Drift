@@ -11,9 +11,13 @@
 	align-items: center;
 }
 
+.header .title h3 {
+	margin: 0;
+	padding: 0;
+}
+
 .header .title .badges > * {
 	margin-left: var(--gap);
-	margin-bottom: var(--gap-quarter);
 }
 
 .header .buttons {
@@ -42,6 +46,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		width: 80%;
+		width: 100%;
 	}
 }

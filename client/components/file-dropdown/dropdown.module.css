@@ -23,7 +23,7 @@
 	transition: var(--transition);
 	border-radius: var(--radius);
 	margin: 0;
-	padding: 2px var(--gap);
+	padding: 0 0;
 }
 
 .content li:hover,
@@ -32,9 +32,11 @@
 }
 
 .content li a {
-	display: block;
-	height: 100%;
-	width: min-content;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding: var(--gap-half) var(--gap);
+	color: var(--dark-gray);
 }
 
 .button {
