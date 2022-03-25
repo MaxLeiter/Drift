@@ -81,7 +81,6 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                     clearable
                     placeholder="Search..."
                     onChange={debouncedSearchHandler} />
-                <Text type="secondary">Available filters: <Code>is:visibility</Code></Text>
             </div>
             {error && <Text type='error'>Failed to load.</Text>}
             {!posts && searching && <ul>
