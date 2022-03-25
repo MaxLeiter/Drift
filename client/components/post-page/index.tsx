@@ -10,6 +10,7 @@ import { Page, Button, Text, Badge, Tooltip, Spacer } from "@geist-ui/core"
 import ShiftBy from "@components/shift-by"
 import { useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
+import FileTree from "@components/file-tree"
 
 type Props = {
     post: Post
@@ -61,6 +62,7 @@ const PostPage = ({ post }: Props) => {
                         Download as ZIP archive
                     </Button>
                 </div>
+                {post.files.length > 1 && <FileTree files={post.files} />}
                 {post.files.map(({ id, content, title }: File) => (
                     <DocumentComponent
                         key={id}

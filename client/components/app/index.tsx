@@ -26,7 +26,7 @@ const App = ({
                 accents_6: 'var(--darker-gray)',
                 accents_7: 'var(--darkest-gray)',
                 accents_8: 'var(--darkest-gray)',
-                border: 'var(--light-gray)',
+                border: 'var(--lightest-gray)',
             },
             expressiveness: {
                 dropdownBoxShadow: '0 0 0 1px var(--light-gray)',
