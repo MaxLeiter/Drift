@@ -93,7 +93,6 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                 </li>
             </ul>}
             {posts?.length === 0 && !error && <Text type='secondary'>No posts found.Create one <NextLink passHref={true} href="/new"><Link color>here</Link></NextLink>.</Text>}
-            {posts?.length === 0 && <Text>No posts returned. Create one <NextLink passHref={true} href="/new"><Link color>here</Link></NextLink>.</Text>}
             {
                 posts?.length > 0 && <div>
                     <ul>
