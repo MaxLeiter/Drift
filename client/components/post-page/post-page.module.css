@@ -4,32 +4,44 @@
 	align-items: center;
 }
 
-.header .titleAndBadge {
+.header .title {
 	display: flex;
 	text-align: center;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.header .titleAndBadge span {
+.header .title .badges > * {
 	margin-left: var(--gap);
+	margin-bottom: var(--gap-quarter);
 }
 
-@media screen and (max-width: 680px) {
+.header .buttons {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+@media screen and (max-width: 900px) {
 	.header {
 		flex-direction: column;
 	}
+}
 
-	.header .titleAndBadge {
+@media screen and (max-width: 700px) {
+	.header .title {
 		flex-direction: column;
 		padding-bottom: var(--gap-double);
 	}
 
-	.header .titleAndBadge span {
+	.header .title .badges > * {
 		margin-left: 0;
-		margin-bottom: var(--gap);
+	}
+
+	.header .title .badges {
 		display: flex;
-		justify-content: space-around;
-		width: 100%;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 80%;
 	}
 }

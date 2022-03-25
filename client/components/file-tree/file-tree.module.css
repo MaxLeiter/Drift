@@ -17,11 +17,21 @@
 .fileTree li {
 	transition: var(--transition);
 	border-radius: var(--radius);
-	padding: var(--gap-half) 0;
 	margin: 0;
+	padding: var(--gap-half) 0;
 }
 
-.fileTree li:hover {
+.fileTree li a {
+	margin: 0px;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: var(--gap-half);
+}
+
+.fileTree li:hover,
+.fileTree li:focus,
+.fileTree li:active {
 	background: var(--lighter-gray);
 }
 

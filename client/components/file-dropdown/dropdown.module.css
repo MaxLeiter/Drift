@@ -1,0 +1,69 @@
+.wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.dropdownButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+}
+
+.content {
+	list-style: none;
+	width: 100%;
+	padding: 0 var(--gap);
+	margin: 0;
+}
+
+.content li {
+	transition: var(--transition);
+	border-radius: var(--radius);
+	margin: 0;
+	padding: 2px var(--gap);
+}
+
+.content li:hover,
+.content li:focus {
+	background-color: var(--lighter-gray);
+}
+
+.content li a {
+	display: block;
+	height: 100%;
+	width: min-content;
+}
+
+.button {
+	border-radius: none !important;
+}
+
+.content li .fileIcon {
+	display: inline-block;
+	margin-right: var(--gap-half);
+}
+
+.content li .fileTitle {
+	font-size: 1rem;
+}
+
+.content li::before {
+	content: "";
+	padding: 0;
+	margin: 0;
+}
+
+.cardContent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: var(--gap-half);
+	padding-top: 200px;
+}
+
+@media screen and (max-width: 82rem) {
+}

@@ -6,11 +6,12 @@ import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
-import { Page, Button, Text, Badge, Tooltip, Spacer } from "@geist-ui/core"
+import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup } from "@geist-ui/core"
 import ShiftBy from "@components/shift-by"
 import { useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
-import FileTree from "@components/file-tree"
+import Archive from '@geist-ui/icons/archive'
+import FileDropdown from "@components/file-dropdown"
 
 type Props = {
     post: Post
@@ -51,18 +52,24 @@ const PostPage = ({ post }: Props) => {
             <Page.Content className={homeStyles.main}>
                 {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
                 <div className={styles.header}>
-                    <div className={styles.titleAndBadge}>
+                    <span className={styles.title}>
                         <Text h2>{post.title}</Text>
-                        <span>
+                        <div className={styles.badges}>
                             <VisibilityBadge visibility={post.visibility} />
                             <Badge type="secondary"><Tooltip text={formattedTime}>{time}</Tooltip></Badge>
-                        </span>
-                    </div>
-                    <Button auto onClick={download}>
-                        Download as ZIP archive
-                    </Button>
+                        </div>
+                    </span>
+                    <span className={styles.buttons}>
+                        <ButtonGroup>
+                            <Button auto onClick={download} icon={<Archive />}>
+                                Download as ZIP archive
+                            </Button>
+                            <FileDropdown files={post.files} />
+                        </ButtonGroup>
+                    </span>
+
                 </div>
-                {post.files.length > 1 && <FileTree files={post.files} />}
+                {/* {post.files.length > 1 && <FileTree files={post.files} />} */}
                 {post.files.map(({ id, content, title }: File) => (
                     <DocumentComponent
                         key={id}
