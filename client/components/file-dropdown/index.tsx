@@ -1,4 +1,4 @@
-import { Button, Link, Note, Popover, Spacer } from '@geist-ui/core'
+import { Button, Link, Text, Popover } from '@geist-ui/core'
 import FileIcon from '@geist-ui/icons/fileText'
 import CodeIcon from '@geist-ui/icons/fileLambda'
 import styles from './dropdown.module.css'
@@ -44,7 +44,7 @@ const FileDropdown = ({
                 <Link color={false} href={`#${item.title}`}>
                     <ShiftBy y={5}><span className={styles.fileIcon}>
                         {item.icon}</span></ShiftBy>
-                    <span className={styles.fileTitle}>{item.title}</span>
+                    <span className={styles.fileTitle}>{item.title ? item.title : 'Untitled'}</span>
                 </Link>
             </li>
         ))}
@@ -55,9 +55,9 @@ const FileDropdown = ({
     return (
         <Button auto onClick={() => setExpanded(!expanded)} className={styles.button} iconRight={<ChevronDown />}>
             <Popover content={content} visible={expanded} trigger="click" hideArrow={true}>
-                {files.length} files
+                {files.length} {files.length === 1 ? 'file' : 'files'}
             </Popover>
-        </Button >
+        </Button>
     )
 }
 
