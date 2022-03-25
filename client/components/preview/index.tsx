@@ -15,7 +15,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
     useEffect(() => {
         async function fetchPost() {
             if (fileId) {
-                const resp = await fetch(`/server-api/files/html/${fileId}`, {
+                const resp = await fetch(`/api/html/${fileId}`, {
                     method: "GET",
                 })
                 if (resp.ok) {
