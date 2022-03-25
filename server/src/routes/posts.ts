@@ -169,7 +169,9 @@ posts.get("/search",
             as: "files",
             attributes: ["id", "title"]
           }
-        ]
+        ],
+        attributes: ["id", "title", "visibility", "createdAt"],
+        order: [["createdAt", "DESC"]]
       })
 
       res.json(posts)
