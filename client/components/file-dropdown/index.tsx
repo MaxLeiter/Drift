@@ -7,7 +7,6 @@ import { codeFileExtensions } from "@lib/constants"
 import ChevronDown from '@geist-ui/icons/chevronDown'
 import ShiftBy from "@components/shift-by"
 import type { File } from '@lib/types'
-import FileTree from '@geist-ui/icons/list'
 
 type Item = File & {
     icon: JSX.Element
@@ -64,7 +63,7 @@ const FileDropdown = ({
     // a list of files with an icon and a title
     return (
         <Button auto onClick={onOpen} className={styles.button} iconRight={<ChevronDown />}>
-            <Popover tabIndex={0} content={content} visible={expanded} trigger="click" hideArrow={true}>
+            <Popover content={content} visible={expanded} hideArrow={true}>
                 Jump to {files.length} {files.length === 1 ? 'file' : 'files'}
             </Popover>
         </Button >

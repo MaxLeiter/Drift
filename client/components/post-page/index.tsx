@@ -6,7 +6,7 @@ import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
-import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup } from "@geist-ui/core"
+import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup, useMediaQuery } from "@geist-ui/core"
 import { useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import Archive from '@geist-ui/icons/archive'
@@ -37,7 +37,7 @@ const PostPage = ({ post }: Props) => {
     const [time, setTimeAgo] = useState(timeAgo(createdDate))
 
     const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
-
+    const isMobile = useMediaQuery("mobile")
     return (
         <Page width={"100%"}>
             <PageSeo
@@ -60,7 +60,7 @@ const PostPage = ({ post }: Props) => {
                         </div>
                     </span>
                     <span className={styles.buttons}>
-                        <ButtonGroup>
+                        <ButtonGroup vertical={isMobile}>
                             <Button auto onClick={download} icon={<Archive />}>
                                 Download as ZIP archive
                             </Button>

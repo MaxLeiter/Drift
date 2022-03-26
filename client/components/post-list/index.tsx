@@ -127,7 +127,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                     </ul>
                 </div>
             }
-            {hasMorePosts && <div className={styles.moreContainer}>
+            {hasMorePosts && !setSearchValue && <div className={styles.moreContainer}>
                 <Button width={"100%"} onClick={loadMoreClick}>
                     Load more
                 </Button>
