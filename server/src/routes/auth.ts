@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { genSalt, hash, compare } from "bcrypt"
 import { User } from "@lib/models/User"
+import { JWTDenyList } from "@lib/models/JWTDenyList"
 import { sign } from "jsonwebtoken"
 import config from "@lib/config"
 import jwt from "@lib/middleware/jwt"
@@ -132,6 +133,24 @@ auth.get("/verify-token", jwt, async (req, res, next) => {
 		res.status(200).json({
 			message: "You are authenticated"
 		})
+	} catch (e) {
+		next(e)
+	}
+})
+
+auth.get("/signout", jwt, async (req, res, next) => {
+	try {
+		const authHeader = req.headers["authorization"]
+		const token = authHeader && authHeader.split(" ")[1]
+		const blacklist = await new JWTDenyList({token:token})
+		await blacklist.save()
+		req.headers["authorization"] = ''
+		res.status(200).json({
+			message: "You are now logged out",
+			token: `Expired token ${token}`
+		})
+
+
 	} catch (e) {
 		next(e)
 	}
