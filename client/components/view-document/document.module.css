@@ -13,15 +13,20 @@
 }
 
 .fileNameContainer {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 36px;
+	font-family: var(--font-mono) !important;
+	border-radius: var(--radius) !important;
+	margin-bottom: var(--gap-half) !important;
+	width: 100% !important;
 }
 
-.fileNameContainer {
-	display: flex;
-	align-content: center;
+.fileNameContainer span {
+	transition: background-color var(--transition) !important;
+	border-color: var(--light-gray) !important;
+}
+
+.fileNameContainer span:target,
+.fileNameContainer span:hover {
+	background-color: var(--lighter-gray) !important;
 }
 
 .fileNameContainer > div {

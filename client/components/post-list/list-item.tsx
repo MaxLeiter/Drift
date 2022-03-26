@@ -4,20 +4,12 @@ import { useEffect, useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import VisibilityBadge from "../visibility-badge"
 import getPostPath from "@lib/get-post-path"
-import { Input, Link, Text, Card, Spacer, Grid, Tooltip, Divider, Badge } from "@geist-ui/core"
+import { Link, Text, Card, Tooltip, Divider, Badge } from "@geist-ui/core"
+import { File, Post } from "@lib/types"
+import FadeIn from "@components/fade-in"
 
-const FilenameInput = ({ title }: { title: string }) => <Input
-    value={title || 'No title'}
-    marginTop="var(--gap)"
-    size={1.2}
-    font={1.2}
-    label="Filename"
-    readOnly
-    width={"100%"}
-    style={{ color: !!title ? 'var(--fg)' : 'var(--gray)' }}
-/>
-
-const ListItem = ({ post }: { post: any }) => {
+// TODO: isOwner should default to false so this can be used generically
+const ListItem = ({ post, isOwner = true }: { post: Post, isOwner?: boolean }) => {
     const createdDate = useMemo(() => new Date(post.createdAt), [post.createdAt])
     const [time, setTimeAgo] = useState(timeAgo(createdDate))
 
@@ -29,7 +21,8 @@ const ListItem = ({ post }: { post: any }) => {
     }, [createdDate])
 
     const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
-    return (<li key={post.id}>
+    return (<FadeIn><li key={post.id}>
+
         <Card style={{ overflowY: 'scroll' }}>
             <Card.Body>
                 <Text h3>
@@ -48,20 +41,26 @@ const ListItem = ({ post }: { post: any }) => {
                         <span style={{ marginLeft: 'var(--gap)' }}>
                             <Badge type="secondary">{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Badge>
                         </span>
-
                     </div>
+                    {isOwner && <span style={{ float: 'right' }}>
+
+                    </span>}
                 </Text>
 
             </Card.Body>
             <Divider h="1px" my={0} />
             <Card.Content>
-                {post.files.map((file: any) => {
-                    return <FilenameInput key={file.id} title={file.title} />
+                {post.files.map((file: File) => {
+                    return <div key={file.id}>
+                        <Link color href={`${getPostPath(post.visibility, post.id)}#${file.title}`}>
+                            {file.title || 'Untitled file'}
+                        </Link></div>
                 })}
             </Card.Content>
 
         </Card>
-    </li>)
+
+    </li> </FadeIn>)
 }
 
 export default ListItem

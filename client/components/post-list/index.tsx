@@ -1,4 +1,4 @@
-import { Code, Dot, Input, Note, Text } from "@geist-ui/core"
+import { Button, Code, Dot, Input, Note, Text } from "@geist-ui/core"
 import NextLink from "next/link"
 import Link from '../Link'
 
@@ -22,12 +22,23 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
     const [searching, setSearching] = useState(false)
     const [hasMorePosts, setHasMorePosts] = useState(morePosts)
 
-    const loadMoreClick = useCallback((e: React.MouseEvent<HTMLLinkElement>) => {
+    const loadMoreClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if (hasMorePosts) {
             async function fetchPosts() {
-                const res = await fetch(`/api/posts/mine&page=${posts.length / 10 + 1}`)
+                const res = await fetch(`/server-api/posts/mine`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${Cookies.get('drift-token')}`,
+                            "x-page": `${posts.length / 10 + 1}`,
+                        }
+                    }
+                )
+                console.log(res)
                 const json = await res.json()
+                console.log(json)
                 setPosts([...posts, ...json.posts])
                 setHasMorePosts(json.morePosts)
             }
@@ -102,9 +113,9 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                 </div>
             }
             {hasMorePosts && <div className={styles.moreContainer}>
-                <Text type="secondary">
-                    <Link color onClick={loadMoreClick} href="">Load more</Link>
-                </Text>
+                <Button width={"100%"} onClick={loadMoreClick}>
+                    Load more
+                </Button>
             </div>}
         </div>
     )

@@ -15,6 +15,7 @@ import SignUpIcon from '@geist-ui/icons/userPlus';
 import NewIcon from '@geist-ui/icons/plusCircle';
 import YourIcon from '@geist-ui/icons/list'
 import MoonIcon from '@geist-ui/icons/moon';
+// import SettingsIcon from '@geist-ui/icons/settings';
 import SunIcon from '@geist-ui/icons/sun';
 import { useTheme } from "next-themes"
 import { Button } from "@geist-ui/core";
@@ -83,6 +84,12 @@ const Header = () => {
                     value: 'yours',
                     href: '/mine'
                 },
+                // {
+                //     name: 'settings',
+                //     icon: <SettingsIcon />,
+                //     value: 'settings',
+                //     href: '/settings'
+                // },
                 {
                     name: 'sign out',
                     icon: <SignOutIcon />,

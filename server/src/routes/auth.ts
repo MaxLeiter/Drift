@@ -57,6 +57,7 @@ auth.post(
 			const existingUser = await User.findOne({
 				where: { username: username }
 			})
+
 			if (existingUser) {
 				throw new Error("Username already exists")
 			}

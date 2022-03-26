@@ -3,10 +3,7 @@
 import { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react"
 import styles from './document.module.css'
 import Trash from '@geist-ui/icons/trash'
-import Download from '@geist-ui/icons/download'
-import ExternalLink from '@geist-ui/icons/externalLink'
 import FormattingIcons from "./formatting-icons"
-import Skeleton from "react-loading-skeleton"
 
 import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
 import Preview from "@components/preview"

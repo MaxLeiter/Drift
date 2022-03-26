@@ -23,4 +23,10 @@ export type Post = {
 	visibility: PostVisibility
 	files: Files
 	createdAt: string
+	users?: User[]
+}
+
+type User = {
+	id: string
+	username: string
 }

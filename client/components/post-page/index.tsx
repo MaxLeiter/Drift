@@ -7,7 +7,6 @@ import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
 import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup } from "@geist-ui/core"
-import ShiftBy from "@components/shift-by"
 import { useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import Archive from '@geist-ui/icons/archive'

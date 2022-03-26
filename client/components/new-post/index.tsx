@@ -43,7 +43,7 @@ const Post = () => {
         } else {
             const json = await res.json()
             setToast({
-                text: json.error.message,
+                text: json.error.message || 'Please fill out all fields',
                 type: 'error'
             })
             setPasswordModalVisible(false)

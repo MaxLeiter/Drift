@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
-  const posts = await fetch(process.env.API_URL + `/posts/mine?page=1`, {
+  const posts = await fetch(process.env.API_URL + `/posts/mine`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -50,12 +50,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 
   const data = await posts.json()
-
   return {
     props: {
-      posts: data,
+      posts: data.posts,
       error: posts.status !== 200,
-      morePosts: data.length > 10,
+      morePosts: data.hasMore,
     }
   }
 }

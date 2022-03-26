@@ -38,6 +38,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         }
     })
 
+    if (!post.ok) {
+        return {
+            redirect: {
+                destination: "/404",
+            },
+            props: {
+                post: null
+            }
+        }
+    }
+
     return {
         props: {
             post: await post.json()

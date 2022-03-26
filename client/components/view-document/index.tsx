@@ -6,7 +6,7 @@ import Download from '@geist-ui/icons/download'
 import ExternalLink from '@geist-ui/icons/externalLink'
 import Skeleton from "react-loading-skeleton"
 
-import { Button, ButtonGroup, Card, Input, Spacer, Tabs, Textarea, Tooltip } from "@geist-ui/core"
+import { Button, Text, ButtonGroup, Spacer, Tabs, Textarea, Tooltip, Link, Tag } from "@geist-ui/core"
 import HtmlPreview from "@components/preview"
 
 // import Link from "next/link"
@@ -85,18 +85,11 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
         <>
             <Spacer height={1} />
             <div className={styles.card}>
-                <div className={styles.fileNameContainer}>
-                    <Input
-                        value={title}
-                        readOnly
-                        marginTop="var(--gap-double)"
-                        size={1.2}
-                        font={1.2}
-                        label="Filename"
-                        width={"100%"}
-                        id={title}
-                    />
-                </div>
+                <Link href={`#${title}`} className={styles.fileNameContainer}>
+                    <Tag height={"100%"} id={`${title}`} width={"100%"} style={{ borderRadius: 0 }}>
+                        {title || 'Untitled'}
+                    </Tag>
+                </Link>
                 <div className={styles.descriptionContainer}>
                     <DownloadButton rawLink={rawLink()} />
                     <Tabs onChange={handleTabChange} initialValue={initialTab} hideDivider leftSpace={0}>

@@ -29,7 +29,7 @@ posts.post(
 	jwt,
 	celebrate({
 		body: {
-			title: Joi.string().required().allow("", null),
+			title: Joi.string().required(),
 			files: Joi.any().required(),
 			visibility: Joi.string()
 				.custom(postVisibilitySchema, "valid visibility")
@@ -48,6 +48,14 @@ posts.post(
 					.digest("hex")
 			}
 
+			// check if all files have titles
+			const files = req.body.files
+			const fileTitles = files.map((file) => file.title)
+			const missingTitles = fileTitles.filter((title) => title === "")
+			if (missingTitles.length > 0) {
+				throw new Error("All files must have a title")
+			}
+
 			const newPost = new Post({
 				title: req.body.title,
 				visibility: req.body.visibility,
@@ -57,7 +65,7 @@ posts.post(
 			await newPost.save()
 			await newPost.$add("users", req.body.userId)
 			const newFiles = await Promise.all(
-				req.body.files.map(async (file) => {
+				files.map(async (file) => {
 					const html = getHtmlFromFile(file)
 					const newFile = new File({
 						title: file.title || "",
@@ -103,52 +111,52 @@ posts.get("/", secretKey, async (req, res, next) => {
 	}
 })
 
-posts.get(
-	"/mine",
-	jwt,
-	celebrate({
-		query: {
-			page: Joi.number().integer().min(1).default(1).optional()
-		}
-	}),
-	async (req: UserJwtRequest, res, next) => {
-		if (!req.user) {
-			return res.status(401).json({ error: "Unauthorized" })
-		}
-
-		const { page } = req.query
-		const parsedPage = page ? parseInt(page as string) : 1
-
-		try {
-			const user = await User.findByPk(req.user.id, {
-				include: [
-					{
-						model: Post,
-						as: "posts",
-						include: [
-							{
-								model: File,
-								as: "files",
-								attributes: ["id", "title", "createdAt"]
-							}
-						],
-						attributes: ["id", "title", "visibility", "createdAt"]
-					}
-				]
-			})
-			if (!user) {
-				return res.status(404).json({ error: "User not found" })
-			}
-			return res.json(
-				user.posts
-					?.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-					.slice((parsedPage - 1) * 10, parsedPage * 10)
-			)
-		} catch (error) {
-			next(error)
-		}
+posts.get("/mine", jwt, async (req: UserJwtRequest, res, next) => {
+	if (!req.user) {
+		return res.status(401).json({ error: "Unauthorized" })
 	}
-)
+
+	const page = parseInt(req.headers["x-page"]?.toString() || "1")
+
+	try {
+		const user = await User.findByPk(req.user.id, {
+			include: [
+				{
+					model: Post,
+					as: "posts",
+					include: [
+						{
+							model: File,
+							as: "files",
+							attributes: ["id", "title", "createdAt"]
+						}
+					],
+					attributes: ["id", "title", "visibility", "createdAt"]
+				}
+			]
+		})
+		if (!user) {
+			return res.status(404).json({ error: "User not found" })
+		}
+
+		const userPosts = user.posts
+		const sorted = userPosts?.sort((a, b) => {
+			return b.createdAt.getTime() - a.createdAt.getTime()
+		})
+
+		const paginated = sorted?.slice((page - 1) * 10, page * 10)
+
+		const hasMore =
+			paginated && sorted ? paginated.length < sorted.length : false
+
+		return res.json({
+			posts: paginated,
+			hasMore
+		})
+	} catch (error) {
+		next(error)
+	}
+})
 
 posts.get(
 	"/search",
@@ -262,6 +270,24 @@ posts.get(
 		}
 	}
 )
+
+posts.delete("/:id", jwt, async (req, res, next) => {
+	try {
+		const post = await Post.findByPk(req.params.id)
+		if (!post) {
+			return res.status(404).json({ error: "Post not found" })
+		}
+
+		jwt(req as UserJwtRequest, res, async () => {
+			if (post.files?.length)
+				await Promise.all(post.files.map((file) => file.destroy()))
+			await post.destroy()
+			res.json({ message: "Post deleted" })
+		})
+	} catch (e) {
+		next(e)
+	}
+})
 
 function getHtmlFromFile(file: any) {
 	const renderAsMarkdown = [
