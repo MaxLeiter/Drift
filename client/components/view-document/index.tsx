@@ -8,6 +8,7 @@ import Skeleton from "react-loading-skeleton"
 
 import { Button, Text, ButtonGroup, Spacer, Tabs, Textarea, Tooltip, Link, Tag } from "@geist-ui/core"
 import HtmlPreview from "@components/preview"
+import FadeIn from "@components/fade-in"
 
 // import Link from "next/link"
 type Props = {
@@ -82,7 +83,7 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
 
 
     return (
-        <>
+        <FadeIn>
             <Spacer height={1} />
             <div className={styles.card}>
                 <Link href={`#${title}`} className={styles.fileNameContainer}>
@@ -114,9 +115,9 @@ const Document = ({ content, title, initialTab = 'edit', skeleton, id }: Props) 
                             </div>
                         </Tabs.Item>
                     </Tabs>
-                </div >
-            </div >
-        </>
+                </div>
+            </div>
+        </FadeIn>
     )
 }
 

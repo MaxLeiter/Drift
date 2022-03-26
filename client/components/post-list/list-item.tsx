@@ -4,12 +4,14 @@ import { useEffect, useMemo, useState } from "react"
 import timeAgo from "@lib/time-ago"
 import VisibilityBadge from "../visibility-badge"
 import getPostPath from "@lib/get-post-path"
-import { Link, Text, Card, Tooltip, Divider, Badge } from "@geist-ui/core"
+import { Link, Text, Card, Tooltip, Divider, Badge, Button } from "@geist-ui/core"
 import { File, Post } from "@lib/types"
 import FadeIn from "@components/fade-in"
+import Trash from "@geist-ui/icons/trash"
+import Cookies from "js-cookie"
 
 // TODO: isOwner should default to false so this can be used generically
-const ListItem = ({ post, isOwner = true }: { post: Post, isOwner?: boolean }) => {
+const ListItem = ({ post, isOwner = true, deletePost }: { post: Post, isOwner?: boolean, deletePost: () => void }) => {
     const createdDate = useMemo(() => new Date(post.createdAt), [post.createdAt])
     const [time, setTimeAgo] = useState(timeAgo(createdDate))
 
@@ -43,7 +45,7 @@ const ListItem = ({ post, isOwner = true }: { post: Post, isOwner?: boolean }) =
                         </span>
                     </div>
                     {isOwner && <span style={{ float: 'right' }}>
-
+                        <Button iconRight={<Trash />} onClick={deletePost} auto />
                     </span>}
                 </Text>
 

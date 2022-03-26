@@ -104,7 +104,6 @@ posts.get("/", secretKey, async (req, res, next) => {
 		const posts = await Post.findAll({
 			attributes: ["id", "title", "visibility", "createdAt"]
 		})
-
 		res.json(posts)
 	} catch (e) {
 		next(e)

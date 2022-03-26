@@ -1,28 +1,29 @@
 .buttons {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: var(--gap-double);
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: var(--gap-double);
 }
 
 .title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: var(--gap);
 }
 
 @media screen and (max-width: 650px) {
-  .title {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+	.title {
+		align-items: flex-start;
+		flex-direction: column;
+	}
 
-  .buttons {
-    flex-direction: column;
-    margin: 0;
-    justify-content: space-between;
-    min-height: 95px;
-  }
+	.buttons {
+		flex-direction: column;
+		margin: 0;
+		justify-content: space-between;
+		min-height: 95px;
+	}
 }

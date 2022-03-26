@@ -6,7 +6,7 @@ import styles from './post-list.module.css'
 import ListItemSkeleton from "./list-item-skeleton"
 import ListItem from "./list-item"
 import { Post } from "@lib/types"
-import { ChangeEvent, MouseEventHandler, useCallback, useEffect, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import debounce from "lodash.debounce"
 import Cookies from "js-cookie"
 
@@ -36,9 +36,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                         }
                     }
                 )
-                console.log(res)
                 const json = await res.json()
-                console.log(json)
                 setPosts([...posts, ...json.posts])
                 setHasMorePosts(json.morePosts)
             }
@@ -85,6 +83,23 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
         }
     }, [debouncedSearchHandler]);
 
+    const deletePost = useCallback((postId: string) => async () => {
+        const res = await fetch(`/server-api/posts/${postId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Cookies.get("drift-token")}`
+            },
+        })
+
+        if (!res.ok) {
+            console.error(res)
+            return
+        } else {
+            setPosts((posts) => posts.filter(post => post.id !== postId))
+        }
+    }, [])
+
     return (
         <div className={styles.container}>
             <div className={styles.searchContainer}>
@@ -94,7 +109,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                     onChange={debouncedSearchHandler} />
             </div>
             {error && <Text type='error'>Failed to load.</Text>}
-            {!posts && searching && <ul>
+            {!posts.length && searching && <ul>
                 <li>
                     <ListItemSkeleton />
                 </li>
@@ -107,7 +122,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
                 posts?.length > 0 && <div>
                     <ul>
                         {posts.map((post) => {
-                            return <ListItem post={post} key={post.id} />
+                            return <ListItem deletePost={deletePost(post.id)} post={post} key={post.id} />
                         })}
                     </ul>
                 </div>
