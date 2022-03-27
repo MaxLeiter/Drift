@@ -106,11 +106,6 @@
 	content: "";
 }
 
-.markdownPreview img {
-	max-width: 100%;
-	max-height: 350px;
-}
-
 @media screen and (max-width: 800px) {
 	.markdownPreview h1 a::after,
 	.markdownPreview h2 a::after,

@@ -8,9 +8,11 @@ article > * + * {
 	margin-top: 2em;
 }
 
+article video,
 article img {
 	max-width: 100%;
-	margin: auto;
+	width: auto;
+	display: block;
 }
 
 article [id]::before {
@@ -110,21 +112,4 @@ article pre {
 	line-height: 1.8;
 	padding: 1rem;
 	font-size: 0.875rem;
-}
-
-/* Linkable Headers */
-
-.header-link {
-	color: inherit;
-	text-decoration: none;
-}
-
-.header-link::after {
-	opacity: 0;
-	content: "#";
-	margin-left: var(--gap-half);
-}
-
-.header-link:hover::after {
-	opacity: 1;
 }
