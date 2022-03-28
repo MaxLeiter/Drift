@@ -34,13 +34,14 @@ function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {
 
     const validator = (file: File) => {
         // TODO: make this configurable
-        const maxFileSize = 1000000;
+        const maxFileSize = 50000000;
         if (file.size > maxFileSize) {
             return {
                 code: 'file-too-big',
                 message: 'File is too big. Maximum file size is ' + (maxFileSize).toFixed(2) + ' MB.',
             }
         }
+
         // We initially try to use the browser provided mime type, and then fall back to file names and finally extensions
         if (allowedFileTypes.includes(file.type) || allowedFileNames.includes(file.name) || allowedFileExtensions.includes(file.name?.split('.').pop() || '')) {
             return null
