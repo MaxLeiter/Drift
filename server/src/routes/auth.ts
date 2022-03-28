@@ -9,7 +9,7 @@ import { celebrate, Joi } from "celebrate"
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 
 export const requiresServerPassword =
-	(process.env.MEMORY_DB || process.env.ENV === "production") &&
+	(process.env.MEMORY_DB || process.env.NODE_ENV === "production") &&
 	!!process.env.REGISTRATION_PASSWORD
 console.log(`Registration password required: ${requiresServerPassword}`)
 

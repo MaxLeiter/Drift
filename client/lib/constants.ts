@@ -54,7 +54,6 @@ export const allowedFileNames = [
 	".zshrc",
 	".zsh",
 	".zprofile",
-	"go"
 ]
 
 

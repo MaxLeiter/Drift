@@ -24,23 +24,18 @@ export function middleware(req: NextRequest) {
         }
     } else if (pathname === '/') {
         if (signedIn) {
-            return NextResponse.rewrite(getURL('new'))
+            return NextResponse.redirect(getURL('new'))
         }
         // If you're not signed in we redirect the new post page to the home page
     } else if (pathname === '/new') {
         if (!signedIn) {
-            return NextResponse.redirect(getURL(''))
+            return NextResponse.redirect(getURL('signin'))
         }
         // If you're signed in we redirect the sign in page to the home page (which is the new page)
     } else if (pathname === '/signin' || pathname === '/signup') {
         if (signedIn) {
             return NextResponse.redirect(getURL(''))
         }
-    } else if (pathname === '/new') {
-        if (!signedIn) {
-            return NextResponse.redirect(getURL('/signin'))
-        }
     }
-
     return NextResponse.next()
 }

@@ -20,7 +20,6 @@ app.use("/admin", admin)
 app.get("/welcome", secretKey, (req, res) => {
 	const introContent = process.env.WELCOME_CONTENT
 	const introTitle = process.env.WELCOME_TITLE
-
 	if (!introContent || !introTitle) {
 		return res.status(500).json({ error: "Missing welcome content" })
 	}
@@ -36,7 +35,7 @@ app.use(errors())
 
 app.use(
 	errorhandler({
-		debug: process.env.ENV !== "production",
+		debug: process.env.NODE_ENV !== "production",
 		log: true
 	})
 )

@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - "JWT_SECRET=change_me!" # use `openssl rand -hex 32` to generate a strong secret
+      - "SECRET=secret"
+    expose:
+      - 3000
+  client:
+    build: ./client
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - "API_URL=http://localhost:3000"
+      - "SECRET=secret"
+    expose:
+      - 3001
+    depends_on:
+      server:
+        condition: service_completed_successfully

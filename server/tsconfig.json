@@ -4,7 +4,7 @@
 		"target": "es6",
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"jsx": "react-jsxdev",
+		"jsx": "react-jsx",
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"noUnusedLocals": true,
@@ -22,7 +22,6 @@
 		}
 	},
 	"ts-node": {
-		// Do not forget to `npm i -D tsconfig-paths`
 		"require": ["tsconfig-paths/register"]
 	},
 	"include": ["index.ts", "src/**/*.ts"],

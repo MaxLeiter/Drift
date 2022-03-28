@@ -1,3 +1,4 @@
+import databasePath from "@lib/get-database-path";
 import { Sequelize } from "sequelize-typescript"
 import { SequelizeStorage, Umzug } from "umzug"
 
@@ -7,13 +8,19 @@ export const sequelize = new Sequelize({
 	storage:
 		process.env.MEMORY_DB === "true"
 			? ":memory:"
-			: __dirname + "/../drift.sqlite",
+			: databasePath,
 	models: [__dirname + "/lib/models"],
 	logging: true
 })
 
+if (process.env.MEMORY_DB !== "true") {
+	console.log(`Database path: ${databasePath}`)
+} else {
+	console.log("Using in-memory database")
+}
+
 const umzug = new Umzug({
-	migrations: { glob: __dirname + "/migrations/*.ts" },
+	migrations: { glob: process.env.NODE_ENV === "production" ? __dirname + "/migrations/*.js" : __dirname + "/migrations/*.ts" },
 	context: sequelize.getQueryInterface(),
 	storage: new SequelizeStorage({ sequelize }),
 	logger: console
