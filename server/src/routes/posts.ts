@@ -80,20 +80,20 @@ posts.post(
 							.digest("hex")
 							.toString(),
 						html: html || '',
+						userId: req.body.userId,
+						postId: newPost.id
 					})
-
-					await newFile.$set("user", req.body.userId)
-					await newFile.$set("post", newPost.id)
 					await newFile.save()
 					return newFile
 				})
 			)
+
 			await Promise.all(
-				newFiles.map((file) => {
-					newPost.$add("files", file.id)
+				newFiles.map(async (file) => {
+					await newPost.$add("files", file.id)
+					await newPost.save()
 				})
 			)
-			await newPost.save()
 
 			res.json(newPost)
 		} catch (e) {
