@@ -56,6 +56,10 @@ posts.post(
 				throw new Error("All files must have a title")
 			}
 
+			if (files.length === 0) {
+				throw new Error("You must submit at least one file")
+			}
+
 			const newPost = new Post({
 				title: req.body.title,
 				visibility: req.body.visibility,
@@ -75,7 +79,7 @@ posts.post(
 							.update(file.content)
 							.digest("hex")
 							.toString(),
-						html
+						html: html || '',
 					})
 
 					await newFile.$set("user", req.body.userId)
@@ -84,13 +88,12 @@ posts.post(
 					return newFile
 				})
 			)
-
 			await Promise.all(
 				newFiles.map((file) => {
 					newPost.$add("files", file.id)
-					newPost.save()
 				})
 			)
+			await newPost.save()
 
 			res.json(newPost)
 		} catch (e) {
