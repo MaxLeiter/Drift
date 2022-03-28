@@ -1,0 +1,14 @@
+.adminWrapper table {
+	width: 100%;
+	border-spacing: 0;
+	border: 1px solid var(--gray);
+	border-radius: var(--radius);
+	padding: var(--gap-half);
+}
+
+.adminWrapper table th {
+	text-align: left;
+	background: var(--gray-light);
+	color: var(--gray-dark);
+	font-weight: bold;
+}

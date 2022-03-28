@@ -15,15 +15,15 @@ import SignUpIcon from '@geist-ui/icons/userPlus';
 import NewIcon from '@geist-ui/icons/plusCircle';
 import YourIcon from '@geist-ui/icons/list'
 import MoonIcon from '@geist-ui/icons/moon';
-// import SettingsIcon from '@geist-ui/icons/settings';
+import SettingsIcon from '@geist-ui/icons/settings';
 import SunIcon from '@geist-ui/icons/sun';
 import { useTheme } from "next-themes"
 import { Button } from "@geist-ui/core";
+import useUserData from "@lib/hooks/use-user-data";
 
 type Tab = {
     name: string
     icon: JSX.Element
-    condition?: boolean
     value: string
     onClick?: () => void
     href?: string
@@ -37,6 +37,7 @@ const Header = () => {
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
     const { signedIn: isSignedIn, signout } = useSignedIn()
+    const userData = useUserData();
     const [pages, setPages] = useState<Tab[]>([])
     const { setTheme, theme } = useTheme()
     useEffect(() => {
@@ -55,7 +56,6 @@ const Header = () => {
                 name: isMobile ? "GitHub" : "",
                 href: "https://github.com/maxleiter/drift",
                 icon: <GitHubIcon />,
-                condition: true,
                 value: "github"
             },
             {
@@ -65,7 +65,6 @@ const Header = () => {
                         setTheme(theme === 'light' ? 'dark' : 'light');
                 },
                 icon: theme === 'light' ? <MoonIcon /> : <SunIcon />,
-                condition: true,
                 value: "theme",
             }
         ]
@@ -120,9 +119,20 @@ const Header = () => {
                 },
                 ...defaultPages
             ])
+        if (userData?.role === "admin") {
+            setPages((pages) => [
+                ...pages,
+                {
+                    name: 'admin',
+                    icon: <SettingsIcon />,
+                    value: 'admin',
+                    href: '/admin'
+                }
+            ])
+        }
         // TODO: investigate deps causing infinite loop 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMobile, isSignedIn, theme])
+    }, [isMobile, isSignedIn, theme, userData])
 
     const onTabChange = useCallback((tab: string) => {
         if (typeof window === 'undefined') return

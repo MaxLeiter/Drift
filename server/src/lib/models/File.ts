@@ -28,7 +28,11 @@ import { User } from "./User"
 		]
 	}
 }))
-@Table
+
+@Table({
+	tableName: "files",
+})
+
 export class File extends Model {
 	@IsUUID(4)
 	@PrimaryKey
@@ -51,13 +55,19 @@ export class File extends Model {
 	@Column
 	html!: string
 
-	@ForeignKey(() => User)
 	@BelongsTo(() => User, "userId")
 	user!: User
 
-	@ForeignKey(() => Post)
 	@BelongsTo(() => Post, "postId")
 	post!: Post
+
+	@ForeignKey(() => User)
+	@Column
+	userId!: number
+
+	@ForeignKey(() => Post)
+	@Column
+	postId!: number
 
 	@CreatedAt
 	@Column

@@ -63,9 +63,12 @@ auth.post(
 			}
 
 			const salt = await genSalt(10)
+			const { count } = await User.findAndCountAll()
+
 			const user = {
 				username: username as string,
-				password: await hash(req.body.password, salt)
+				password: await hash(req.body.password, salt),
+				role: (!process.env.MEMORY_DB && process.env.ENABLE_ADMIN && count === 0) ? "admin" : "user"
 			}
 
 			const created_user = await User.create(user)

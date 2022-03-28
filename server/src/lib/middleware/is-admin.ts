@@ -18,20 +18,24 @@ export default function authenticateToken(
 ) {
 	const authHeader = req.headers["authorization"]
 	const token = authHeader && authHeader.split(" ")[1]
-
+	console.log(token, process.env.ENABLE_ADMIN)
 	if (token == null) return res.sendStatus(401)
+	if (!process.env.ENABLE_ADMIN) return res.sendStatus(404)
 
 	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
 		if (err) return res.sendStatus(403)
 		const userObj = await UserModel.findByPk(user.id, {
 			attributes: {
-				exclude: ["password"]
+				exclude: ["password"],
 			}
 		})
-		if (!userObj) {
+
+		console.log(userObj)
+		if (!userObj || userObj.role !== 'admin') {
 			return res.sendStatus(403)
 		}
-		req.user = user
+
+		req.user = userObj
 
 		next()
 	})

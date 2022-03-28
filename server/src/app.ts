@@ -1,7 +1,7 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
 import * as errorhandler from "strong-error-handler"
-import { posts, users, auth, files } from "@routes/index"
+import { posts, users, auth, files, admin } from "@routes/index"
 import { errors } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
@@ -15,6 +15,7 @@ app.use("/auth", auth)
 app.use("/posts", posts)
 app.use("/users", users)
 app.use("/files", files)
+app.use("/admin", admin)
 
 app.get("/welcome", secretKey, (req, res) => {
 	const introContent = process.env.WELCOME_CONTENT

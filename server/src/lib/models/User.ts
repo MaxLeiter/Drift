@@ -29,7 +29,10 @@ import { PostAuthor } from "./PostAuthor"
 		}
 	}
 }))
-@Table
+@Table({
+	tableName: "users",
+})
+
 export class User extends Model {
 	@IsUUID(4)
 	@PrimaryKey
@@ -56,4 +59,7 @@ export class User extends Model {
 	@UpdatedAt
 	@Column
 	updatedAt!: Date
+
+	@Column
+	role!: string
 }

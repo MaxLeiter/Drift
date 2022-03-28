@@ -11,7 +11,10 @@ import {
 import { Post } from "./Post"
 import { User } from "./User"
 
-@Table
+@Table({
+	tableName: "post_authors",
+})
+
 export class PostAuthor extends Model {
 	@IsUUID(4)
 	@PrimaryKey
@@ -28,5 +31,5 @@ export class PostAuthor extends Model {
 
 	@ForeignKey(() => User)
 	@Column
-	authorId!: number
+	userId!: number
 }

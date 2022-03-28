@@ -40,6 +40,7 @@ You can change these to your liking.
 - `SECRET_KEY`: the same secret key as the client
 - `WELCOME_CONTENT`: a markdown string that's rendered on the home page
 - `WELCOME_TITLE`: the file title for the post on the homepage.
+- `ENABLE_ADMIN`: the first account created is an administrator account
 
 ## Current status
 
