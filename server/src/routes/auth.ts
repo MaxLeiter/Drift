@@ -138,14 +138,14 @@ auth.get("/verify-token", jwt, async (req, res, next) => {
 	}
 })
 
-auth.get("/signout", jwt, async (req, res, next) => {
+auth.post("/signout", jwt, async (req, res, next) => {
 	try {
 		const authHeader = req.headers["authorization"]
 		const token = authHeader && authHeader.split(" ")[1]
-		const blacklist = await new JWTDenyList({token:token})
+		const blacklist = await new JWTDenyList({token})
 		await blacklist.save()
 		req.headers["authorization"] = ''
-		res.status(200).json({
+		res.status(201).json({
 			message: "You are now logged out",
 			token: `Expired token ${token}`
 		})
