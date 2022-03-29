@@ -15,8 +15,6 @@ You can run `yarn dev` in either / both folders to start the server and client w
 
 ### Production
 
-**Note: Drift is not yet ready for production usage and should not be used too seriously. I'll make every effort to not lose data, but I won't make any guarantees until the project is further along.**
-
 `yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. The client and server each also have Dockerfiles which you can use with a docker-compose (an example compose will be provided in the near future).
 
 If you're deploying the front-end to something like Vercel, you'll need to set the root folder to `client/`.
