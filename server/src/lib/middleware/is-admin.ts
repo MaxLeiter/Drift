@@ -25,11 +25,11 @@ export default function authenticateToken(
 		if (err) return res.sendStatus(403)
 		const userObj = await UserModel.findByPk(user.id, {
 			attributes: {
-				exclude: ["password"],
+				exclude: ["password"]
 			}
 		})
 
-		if (!userObj || userObj.role !== 'admin') {
+		if (!userObj || userObj.role !== "admin") {
 			return res.sendStatus(403)
 		}
 

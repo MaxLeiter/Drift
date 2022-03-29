@@ -53,9 +53,8 @@ export const allowedFileNames = [
 	".fish_prompt",
 	".zshrc",
 	".zsh",
-	".zprofile",
+	".zprofile"
 ]
-
 
 export const codeFileExtensions = [
 	"awk",
@@ -120,5 +119,5 @@ export const allowedFileExtensions = [
 	"txt",
 	"webmanifest",
 	"log",
-	...codeFileExtensions,
+	...codeFileExtensions
 ]

@@ -80,7 +80,7 @@ posts.post(
 							.update(file.content)
 							.digest("hex")
 							.toString(),
-						html: html || '',
+						html: html || "",
 						userId: req.body.userId,
 						postId: newPost.id
 					})
@@ -183,9 +183,7 @@ posts.get(
 						{ "$files.title$": { [Op.like]: `%${q}%` } },
 						{ "$files.content$": { [Op.like]: `%${q}%` } }
 					],
-					[Op.and]: [
-						{ "$users.id$": req.user?.id || "" },
-					]
+					[Op.and]: [{ "$users.id$": req.user?.id || "" }]
 				},
 				include: [
 					{
@@ -195,7 +193,7 @@ posts.get(
 					},
 					{
 						model: User,
-						as: "users",
+						as: "users"
 					}
 				],
 				attributes: ["id", "title", "visibility", "createdAt", "deletedAt"],
@@ -295,7 +293,6 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 		if (!post) {
 			return res.status(404).json({ error: "Post not found" })
 		}
-
 
 		if (req.user?.id !== post.users![0].id) {
 			return res.status(403).json({ error: "Forbidden" })

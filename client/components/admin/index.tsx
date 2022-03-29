@@ -77,7 +77,7 @@ const Admin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {posts?.map((post, i) => (
+                        {posts?.map((post) => (
                             <tr key={post.id}>
                                 <td><PostModal id={post.id} /></td>
                                 <td>{post.visibility}</td>

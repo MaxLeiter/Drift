@@ -28,11 +28,9 @@ import { User } from "./User"
 		]
 	}
 }))
-
 @Table({
-	tableName: "files",
+	tableName: "files"
 })
-
 export class File extends Model {
 	@IsUUID(4)
 	@PrimaryKey

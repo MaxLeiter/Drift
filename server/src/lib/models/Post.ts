@@ -38,11 +38,9 @@ import { File } from "./File"
 		]
 	}
 }))
-@Table(
-	{
-		tableName: "posts",
-	}
-)
+@Table({
+	tableName: "posts"
+})
 export class Post extends Model {
 	@IsUUID(4)
 	@PrimaryKey

@@ -12,9 +12,8 @@ import { Post } from "./Post"
 import { User } from "./User"
 
 @Table({
-	tableName: "post_authors",
+	tableName: "post_authors"
 })
-
 export class PostAuthor extends Model {
 	@IsUUID(4)
 	@PrimaryKey
