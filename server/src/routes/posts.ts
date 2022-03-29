@@ -8,6 +8,7 @@ import { User } from "@lib/models/User"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
 import { Op } from "sequelize"
+import { PostAuthor } from "@lib/models/PostAuthor"
 
 export const posts = Router()
 
@@ -49,11 +50,15 @@ posts.post(
 			}
 
 			// check if all files have titles
-			const files = req.body.files
+			const files = req.body.files as File[]
 			const fileTitles = files.map((file) => file.title)
 			const missingTitles = fileTitles.filter((title) => title === "")
 			if (missingTitles.length > 0) {
 				throw new Error("All files must have a title")
+			}
+
+			if (files.length === 0) {
+				throw new Error("You must submit at least one file")
 			}
 
 			const newPost = new Post({
@@ -75,20 +80,19 @@ posts.post(
 							.update(file.content)
 							.digest("hex")
 							.toString(),
-						html
+						html: html || "",
+						userId: req.body.userId,
+						postId: newPost.id
 					})
-
-					await newFile.$set("user", req.body.userId)
-					await newFile.$set("post", newPost.id)
 					await newFile.save()
 					return newFile
 				})
 			)
 
 			await Promise.all(
-				newFiles.map((file) => {
-					newPost.$add("files", file.id)
-					newPost.save()
+				newFiles.map(async (file) => {
+					await newPost.$add("files", file.id)
+					await newPost.save()
 				})
 			)
 
@@ -165,7 +169,7 @@ posts.get(
 			q: Joi.string().required()
 		}
 	}),
-	async (req, res, next) => {
+	async (req: UserJwtRequest, res, next) => {
 		const { q } = req.query
 		if (typeof q !== "string") {
 			return res.status(400).json({ error: "Invalid query" })
@@ -178,16 +182,21 @@ posts.get(
 						{ title: { [Op.like]: `%${q}%` } },
 						{ "$files.title$": { [Op.like]: `%${q}%` } },
 						{ "$files.content$": { [Op.like]: `%${q}%` } }
-					]
+					],
+					[Op.and]: [{ "$users.id$": req.user?.id || "" }]
 				},
 				include: [
 					{
 						model: File,
 						as: "files",
 						attributes: ["id", "title"]
+					},
+					{
+						model: User,
+						as: "users"
 					}
 				],
-				attributes: ["id", "title", "visibility", "createdAt"],
+				attributes: ["id", "title", "visibility", "createdAt", "deletedAt"],
 				order: [["createdAt", "DESC"]]
 			})
 
@@ -270,19 +279,35 @@ posts.get(
 	}
 )
 
-posts.delete("/:id", jwt, async (req, res, next) => {
+posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 	try {
-		const post = await Post.findByPk(req.params.id)
+		const post = await Post.findByPk(req.params.id, {
+			include: [
+				{
+					model: User,
+					as: "users",
+					attributes: ["id"]
+				}
+			]
+		})
 		if (!post) {
 			return res.status(404).json({ error: "Post not found" })
 		}
 
-		jwt(req as UserJwtRequest, res, async () => {
-			if (post.files?.length)
-				await Promise.all(post.files.map((file) => file.destroy()))
-			await post.destroy()
-			res.json({ message: "Post deleted" })
+		if (req.user?.id !== post.users![0].id) {
+			return res.status(403).json({ error: "Forbidden" })
+		}
+		if (post.files?.length)
+			await Promise.all(post.files.map((file) => file.destroy()))
+
+		const postAuthor = await PostAuthor.findOne({
+			where: {
+				postId: post.id
+			}
 		})
+		if (postAuthor) await postAuthor.destroy()
+		await post.destroy()
+		res.json({ message: "Post deleted" })
 	} catch (e) {
 		next(e)
 	}

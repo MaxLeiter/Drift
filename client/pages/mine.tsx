@@ -41,6 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   })
 
   if (!posts.ok) {
+    console.error(await posts.json())
     return {
       redirect: {
         destination: '/',

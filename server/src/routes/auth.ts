@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { genSalt, hash, compare } from "bcrypt"
+import { genSalt, hash, compare } from "bcryptjs"
 import { User } from "@lib/models/User"
 import { JWTDenyList } from "@lib/models/JWTDenyList"
 import { sign } from "jsonwebtoken"
@@ -10,7 +10,7 @@ import { celebrate, Joi } from "celebrate"
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 
 export const requiresServerPassword =
-	(process.env.MEMORY_DB || process.env.ENV === "production") &&
+	(process.env.MEMORY_DB || process.env.NODE_ENV === "production") &&
 	!!process.env.REGISTRATION_PASSWORD
 console.log(`Registration password required: ${requiresServerPassword}`)
 
@@ -64,9 +64,15 @@ auth.post(
 			}
 
 			const salt = await genSalt(10)
+			const { count } = await User.findAndCountAll()
+
 			const user = {
 				username: username as string,
-				password: await hash(req.body.password, salt)
+				password: await hash(req.body.password, salt),
+				role:
+					!!process.env.MEMORY_DB && process.env.ENABLE_ADMIN && count === 0
+						? "admin"
+						: "user"
 			}
 
 			const created_user = await User.create(user)
