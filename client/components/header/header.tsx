@@ -76,7 +76,7 @@ const Header = () => {
                     name: 'new',
                     icon: <NewIcon />,
                     value: 'new',
-                    href: '/'
+                    href: '/new'
                 },
                 {
                     name: 'yours',
