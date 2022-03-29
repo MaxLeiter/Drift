@@ -46,7 +46,7 @@ You can change these to your liking.
 ## Running with pm2
 
 It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).
-First, add `.env` files to `client/` and `server/` with thev values you want (see the above section for possible values).
+First, add `.env` files to `client/` and `server/` with the values you want (see the above section for possible values).
 Then, use the following commands to start the client and server:
 
 - `cd server && yarn build && pm2 start yarn --name drift-server --interpreter bash -- start`
