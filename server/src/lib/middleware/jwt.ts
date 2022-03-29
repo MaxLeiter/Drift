@@ -23,7 +23,11 @@ export default function authenticateToken(
 
 	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
 		if (err) return res.sendStatus(403)
-		const userObj = await UserModel.findByPk(user.id)
+		const userObj = await UserModel.findByPk(user.id, {
+			attributes: {
+				exclude: ["password"]
+			}
+		})
 		if (!userObj) {
 			return res.sendStatus(403)
 		}

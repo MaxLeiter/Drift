@@ -29,4 +29,7 @@ export type Post = {
 type User = {
 	id: string
 	username: string
+	posts?: Post[]
+	role: "admin" | "user" | ""
+	createdAt: string
 }

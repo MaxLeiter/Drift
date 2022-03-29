@@ -33,13 +33,27 @@ You can change these to your liking.
 `server/.env`:
 
 - `PORT`: the default port to start the server on (3000 by default)
-- `ENV`: can be `production` or `debug`, toggles logging
+- `NODE_ENV`: defaults to development, can be `production`
 - `JWT_SECRET`: a secure token for JWT tokens. You can generate one [here](https://www.grc.com/passwords.htm).
 - `MEMORY_DB`: if `true`, a sqlite database will not be created and changes will only exist in memory. Mainly for the demo.
 - `REGISTRATION_PASSWORD`: if MEMORY_DB is not `true`, the user will be required to provide this password to sign-up, in addition to their username and account password. If it's not set, no password will be required.
 - `SECRET_KEY`: the same secret key as the client
 - `WELCOME_CONTENT`: a markdown string that's rendered on the home page
 - `WELCOME_TITLE`: the file title for the post on the homepage.
+- `ENABLE_ADMIN`: the first account created is an administrator account
+- `DRIFT_HOME`: defaults to ~/.drift, the directory for storing the database and eventually images
+
+## Running with pm2
+
+It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).
+First, add `.env` files to `client/` and `server/` with thev values you want (see the above section for possible values).
+Then, use the following commands to start the client and server:
+
+- `cd server && yarn build && pm2 start yarn --name drift-server --interpreter bash -- start`
+- `cd ..`
+- `cd client && yarn build && pm2 start yarn --name drift-client --interpreter bash -- start`
+
+You now use `pm2 ls` to see their statuses. Refer to pm2's docs or `pm2 help` for more information.
 
 ## Current status
 

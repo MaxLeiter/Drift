@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  server:
+    build: 
+      context: ./server
+      args:
+        SECRET_KEY: secret
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - JWT_SECRET=change_me! # use `openssl rand -hex 32` to generate a strong secret
+      - SECRET_KEY=secret
+    ports:
+      - "3000:3000"
+    networks:
+      - general
+    container_name: server
+  client:
+    build:
+      context: ./client
+      network: host
+      args:
+        API_URL: http://localhost:3000
+        SECRET_KEY: secret
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - API_URL=http://localhost:3000
+      - SECRET_KEY=secret
+    ports:
+      - "3001:3001"
+    expose:
+      - 3001
+    networks:
+      - general
+    # depends_on:
+    #   server:
+    #     condition: service_healthy
+    container_name: client
+
+networks:
+  general:
+    driver: bridge
