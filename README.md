@@ -1,6 +1,6 @@
 # <img src="client/public/assets/logo.png" height="32px" alt="" /> Drift
 
-Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is (almost, no database yet) completely functional.
+Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is completely functional.
 
 You can try a demo at https://drift.maxleiter.com. The demo is built on master but has no database, so files and accounts can be wiped at any time.
 
