@@ -43,6 +43,18 @@ You can change these to your liking.
 - `ENABLE_ADMIN`: the first account created is an administrator account
 - `DRIFT_HOME`: defaults to ~/.drift, the directory for storing the database and eventually images
 
+## Running with pm2
+
+It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).
+First, add `.env` files to `client/` and `server/` with thev values you want (see the above section for possible values).
+Then, use the following commands to start the client and server:
+
+- `cd server && yarn build && pm2 start yarn --name drift-server --interpreter bash -- start`
+- `cd ..`
+- `cd client && yarn build && pm2 start yarn --name drift-client --interpreter bash -- start`
+
+You now use `pm2 ls` to see their statuses. Refer to pm2's docs or `pm2 help` for more information.
+
 ## Current status
 
 Drift is a major work in progress. Below is a (rough) list of completed and envisioned features. If you want to help address any of them, please let me know regardless of your experience and I'll be happy to assist.

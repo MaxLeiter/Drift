@@ -10,29 +10,22 @@ services:
     environment:
       - JWT_SECRET=change_me! # use `openssl rand -hex 32` to generate a strong secret
       - SECRET_KEY=secret
-    expose:
-      - 3000
     ports:
       - "3000:3000"
     networks:
       - general
-    healthcheck:
-      test: [ "CMD", "curl",  "-s", "localhost:3000"]
-      interval: 10s
-      timeout: 45s
-      retries: 10
     container_name: server
   client:
     build:
       context: ./client
       network: host
       args:
-        API_URL: http://localhost:3000
+        API_URL: http://server:3000
         SECRET_KEY: secret
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - API_URL=http://localhost:3000
+      - API_URL=http://server:3000
       - SECRET_KEY=secret
     ports:
       - "3001:3001"
@@ -40,9 +33,9 @@ services:
       - 3001
     networks:
       - general
-    depends_on:
-      server:
-        condition: service_healthy
+    # depends_on:
+    #   server:
+    #     condition: service_healthy
     container_name: client
 
 networks:
