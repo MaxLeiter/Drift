@@ -20,12 +20,12 @@ services:
       context: ./client
       network: host
       args:
-        API_URL: http://server:3000
+        API_URL: http://localhost:3000
         SECRET_KEY: secret
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - API_URL=http://server:3000
+      - API_URL=http://localhost:3000
       - SECRET_KEY=secret
     ports:
       - "3001:3001"

@@ -8,6 +8,7 @@ import { User } from "@lib/models/User"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
 import { Op } from "sequelize"
+import { PostAuthor } from "@lib/models/PostAuthor"
 
 export const posts = Router()
 
@@ -168,7 +169,7 @@ posts.get(
 			q: Joi.string().required()
 		}
 	}),
-	async (req, res, next) => {
+	async (req: UserJwtRequest, res, next) => {
 		const { q } = req.query
 		if (typeof q !== "string") {
 			return res.status(400).json({ error: "Invalid query" })
@@ -181,6 +182,9 @@ posts.get(
 						{ title: { [Op.like]: `%${q}%` } },
 						{ "$files.title$": { [Op.like]: `%${q}%` } },
 						{ "$files.content$": { [Op.like]: `%${q}%` } }
+					],
+					[Op.and]: [
+						{ "$users.id$": req.user?.id || "" },
 					]
 				},
 				include: [
@@ -188,9 +192,13 @@ posts.get(
 						model: File,
 						as: "files",
 						attributes: ["id", "title"]
+					},
+					{
+						model: User,
+						as: "users",
 					}
 				],
-				attributes: ["id", "title", "visibility", "createdAt"],
+				attributes: ["id", "title", "visibility", "createdAt", "deletedAt"],
 				order: [["createdAt", "DESC"]]
 			})
 
@@ -273,19 +281,36 @@ posts.get(
 	}
 )
 
-posts.delete("/:id", jwt, async (req, res, next) => {
+posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 	try {
-		const post = await Post.findByPk(req.params.id)
+		const post = await Post.findByPk(req.params.id, {
+			include: [
+				{
+					model: User,
+					as: "users",
+					attributes: ["id"]
+				}
+			]
+		})
 		if (!post) {
 			return res.status(404).json({ error: "Post not found" })
 		}
 
-		jwt(req as UserJwtRequest, res, async () => {
-			if (post.files?.length)
-				await Promise.all(post.files.map((file) => file.destroy()))
-			await post.destroy()
-			res.json({ message: "Post deleted" })
+
+		if (req.user?.id !== post.users![0].id) {
+			return res.status(403).json({ error: "Forbidden" })
+		}
+		if (post.files?.length)
+			await Promise.all(post.files.map((file) => file.destroy()))
+
+		const postAuthor = await PostAuthor.findOne({
+			where: {
+				postId: post.id
+			}
 		})
+		if (postAuthor) await postAuthor.destroy()
+		await post.destroy()
+		res.json({ message: "Post deleted" })
 	} catch (e) {
 		next(e)
 	}

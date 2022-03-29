@@ -46,7 +46,7 @@ admin.get("/posts", async (req, res, next) => {
                 {
                     model: File,
                     as: "files",
-                    attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt"]
+                    attributes: ["id", "title", "createdAt", "html"]
                 },
                 {
                     model: User,
@@ -56,6 +56,58 @@ admin.get("/posts", async (req, res, next) => {
             ]
         })
         res.json(posts)
+    } catch (e) {
+        next(e)
+    }
+})
+
+admin.get("/post/:id", async (req, res, next) => {
+    try {
+        const post = await Post.findByPk(req.params.id, {
+            attributes: {
+                exclude: ["content"],
+                include: ["id", "title", "visibility", "createdAt"]
+            },
+            include: [
+                {
+                    model: File,
+                    as: "files",
+                    attributes: ["id", "title", "sha", "createdAt", "updatedAt", "html"]
+                },
+                {
+                    model: User,
+                    as: "users",
+                    attributes: ["id", "username"]
+                }
+            ]
+        })
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            })
+        }
+
+        res.json(post)
+    } catch (e) {
+        next(e)
+    }
+})
+
+admin.delete("/post/:id", async (req, res, next) => {
+    try {
+        const post = await Post.findByPk(req.params.id)
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            })
+        }
+
+        if (post.files?.length)
+            await Promise.all(post.files.map((file) => file.destroy()))
+        await post.destroy({ force: true })
+        res.json({
+            message: "Post deleted"
+        })
     } catch (e) {
         next(e)
     }

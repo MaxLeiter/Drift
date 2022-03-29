@@ -40,6 +40,7 @@ const Header = () => {
     const userData = useUserData();
     const [pages, setPages] = useState<Tab[]>([])
     const { setTheme, theme } = useTheme()
+
     useEffect(() => {
         setBodyHidden(expanded)
     }, [expanded, setBodyHidden])

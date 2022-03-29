@@ -33,12 +33,14 @@ function FileDropzone({ setDocs }: { setDocs: ((docs: Document[]) => void) }) {
     }
 
     const validator = (file: File) => {
+        const byteToMB = (bytes: number) => Math.round(bytes / 1024 / 1024 * 100) / 100
+
         // TODO: make this configurable
         const maxFileSize = 50000000;
         if (file.size > maxFileSize) {
             return {
                 code: 'file-too-big',
-                message: 'File is too big. Maximum file size is ' + (maxFileSize).toFixed(2) + ' MB.',
+                message: 'File is too big. Maximum file size is ' + byteToMB(maxFileSize) + ' MB.',
             }
         }
 

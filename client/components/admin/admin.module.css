@@ -12,3 +12,14 @@
 	color: var(--gray-dark);
 	font-weight: bold;
 }
+
+.postModal details {
+	border-radius: var(--radius);
+	padding: var(--gap);
+	border-radius: var(--radius);
+}
+
+.postModal summary {
+	cursor: pointer;
+	outline: none;
+}
