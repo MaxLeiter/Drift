@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { genSalt, hash, compare } from "bcrypt"
+import { genSalt, hash, compare } from "bcryptjs"
 import { User } from "@lib/models/User"
 import { sign } from "jsonwebtoken"
 import config from "@lib/config"
