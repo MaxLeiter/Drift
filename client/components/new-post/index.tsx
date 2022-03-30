@@ -16,6 +16,7 @@ const Post = () => {
     const { setToast } = useToasts()
     const router = useRouter();
     const [title, setTitle] = useState<string>()
+
     const [docs, setDocs] = useState<DocumentType[]>([{
         title: '',
         content: '',
@@ -60,6 +61,30 @@ const Post = () => {
             return
         }
         setSubmitting(true)
+
+        let hasErrored = false
+
+        if (!title) {
+            setToast({
+                text: 'Please fill out the post title',
+                type: 'error'
+            })
+            setSubmitting(false)
+            hasErrored = true
+        }
+
+        for (const doc of docs) {
+            if (!doc.title) {
+                setToast({
+                    text: 'Please fill out all the document titles',
+                    type: 'error'
+                })
+                setSubmitting(false)
+                hasErrored = true
+            }
+        }
+
+        if (hasErrored) return
 
         await sendRequest('/server-api/posts/create', {
             title,
