@@ -98,7 +98,7 @@ posts.post(
 
 			res.json(newPost)
 		} catch (e) {
-			next(e)
+			res.status(400).json(e)
 		}
 	}
 )
@@ -274,7 +274,7 @@ posts.get(
 				res.json(post)
 			}
 		} catch (e) {
-			next(e)
+			res.status(400).json(e)
 		}
 	}
 )

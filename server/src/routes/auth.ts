@@ -81,7 +81,11 @@ auth.post(
 
 			res.status(201).json({ token: token, userId: created_user.id })
 		} catch (e) {
-			next(e)
+			res.status(401).json({
+				error: {
+					message: e.message,
+				}
+			})
 		}
 	}
 )
@@ -117,7 +121,11 @@ auth.post(
 				throw errorToThrow
 			}
 		} catch (e) {
-			next(e)
+			res.status(401).json({
+				error: {
+					message: error,
+				}
+			})
 		}
 	}
 )

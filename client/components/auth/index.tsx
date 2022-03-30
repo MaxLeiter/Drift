@@ -41,7 +41,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
         signin(json.token)
         Cookies.set('drift-userid', json.userId);
 
-        router.push('/')
+        router.push('/new')
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

@@ -1,6 +1,6 @@
 # <img src="client/public/assets/logo.png" height="32px" alt="" /> Drift
 
-Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is (almost, no database yet) completely functional.
+Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is completely functional.
 
 You can try a demo at https://drift.maxleiter.com. The demo is built on master but has no database, so files and accounts can be wiped at any time.
 
@@ -14,8 +14,6 @@ In both `server` and `client`, run `yarn` (if you need yarn, you can download it
 You can run `yarn dev` in either / both folders to start the server and client with file watching / live reloading.
 
 ### Production
-
-**Note: Drift is not yet ready for production usage and should not be used too seriously. I'll make every effort to not lose data, but I won't make any guarantees until the project is further along.**
 
 `yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. The client and server each also have Dockerfiles which you can use with a docker-compose (an example compose will be provided in the near future).
 
@@ -46,7 +44,7 @@ You can change these to your liking.
 ## Running with pm2
 
 It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).
-First, add `.env` files to `client/` and `server/` with thev values you want (see the above section for possible values).
+First, add `.env` files to `client/` and `server/` with the values you want (see the above section for possible values).
 Then, use the following commands to start the client and server:
 
 - `cd server && yarn build && pm2 start yarn --name drift-server --interpreter bash -- start`
