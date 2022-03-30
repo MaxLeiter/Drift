@@ -155,7 +155,7 @@ auth.get("/verify-token", jwt, async (req, res, next) => {
 auth.post("/signout", jwt, async (req, res, next) => {
 	try {
 		const authHeader = req.headers["authorization"]
-		const token = authHeader && authHeader?.split(" ")[1]
+		const token = authHeader?.split(" ")[1]
 		const denylist = await new JWTDenyList({token})
 		await denylist.save()
 		req.headers["authorization"] = ''

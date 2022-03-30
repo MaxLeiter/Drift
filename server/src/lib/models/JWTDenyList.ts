@@ -6,6 +6,8 @@ import {
 	PrimaryKey,
 	DataType,
 	CreatedAt,
+	UpdatedAt,
+	DeletedAt,
 	Unique
 } from "sequelize-typescript"
 
@@ -27,4 +29,11 @@ export class JWTDenyList extends Model {
 	@Column
 	createdAt!: Date
 
+	@UpdatedAt
+	@Column
+	updatedAt!: Date
+
+	@DeletedAt
+	@Column
+	deleteddAt!: Date
 }
