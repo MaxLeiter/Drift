@@ -29,7 +29,6 @@ const getDuration = (timeAgoInSeconds: number) => {
 	}
 }
 
-// Calculate
 const timeAgo = (date: Date) => {
 	const timeAgoInSeconds = Math.floor(
 		(new Date().getTime() - new Date(date).getTime()) / 1000
@@ -40,4 +39,14 @@ const timeAgo = (date: Date) => {
 	return `${interval} ${epoch}${suffix} ago`
 }
 
-export default timeAgo
+const timeUntil = (date: Date) => {
+	const timeUntilInSeconds = Math.floor(
+		(new Date(date).getTime() - new Date().getTime()) / 1000
+	)
+	const { interval, epoch } = getDuration(timeUntilInSeconds)
+	const suffix = interval === 1 ? "" : "s"
+
+	return `in ${interval} ${epoch}${suffix}`
+}
+
+export { timeAgo, timeUntil }

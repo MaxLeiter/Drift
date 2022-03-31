@@ -1,6 +1,6 @@
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_FILE = /.(.*)$/
+// const PUBLIC_FILE = /.(.*)$/
 
 export function middleware(req: NextRequest) {
     const pathname = req.nextUrl.pathname

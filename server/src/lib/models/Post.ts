@@ -73,4 +73,12 @@ export class Post extends Model {
 	@UpdatedAt
 	@Column
 	updatedAt!: Date
+
+	@Column
+	deletedAt?: Date
+
+	@Column
+	expiresAt?: Date
+
+	// TODO: deletedBy
 }

@@ -21,7 +21,6 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
     const [posts, setPosts] = useState<Post[]>(initialPosts)
     const [searching, setSearching] = useState(false)
     const [hasMorePosts, setHasMorePosts] = useState(morePosts)
-
     const loadMoreClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if (hasMorePosts) {
