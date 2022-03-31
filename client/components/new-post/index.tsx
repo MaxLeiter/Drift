@@ -178,7 +178,7 @@ const Post = () => {
                             id: generateUUID()
                         }])
                     }}
-                    style={{ flex: .5, lineHeight: '40px' }}
+                    style={{ flex: .7, lineHeight: '40px' }}
                     type="default"
                 >
                     Add a File
@@ -190,7 +190,7 @@ const Post = () => {
                 }}>
                     {<DatePicker
                         onChange={onChangeExpiration}
-                        customInput={<Input label="Expires at" clearable width="300px" height="40px" />}
+                        customInput={<Input label="Expires at" clearable height="40px" />}
                         placeholderText="Won't expire"
                         selected={expiresAt}
                         showTimeInput={true}
