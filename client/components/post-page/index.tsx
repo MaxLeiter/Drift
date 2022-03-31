@@ -23,6 +23,32 @@ type Props = {
 
 const PostPage = ({ post }: Props) => {
     const router = useRouter()
+
+    const isMobile = useMediaQuery("mobile")
+    const [isExpired, setIsExpired] = useState(post.expiresAt ? new Date(post.expiresAt) < new Date() : null)
+
+    useEffect(() => {
+        let interval: NodeJS.Timer | null = null;
+        if (post.expiresAt) {
+            interval = setInterval(() => {
+                const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
+                setIsExpired(expirationDate < new Date())
+            }, 4000)
+        }
+        return () => {
+            if (interval) clearInterval(interval)
+        }
+    }, [post.expiresAt])
+
+    const onExpires = useCallback(() => {
+        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+
+        if (isExpired && !isOwner) {
+            router.push("/expired")
+            return <></>
+        }
+    }, [isExpired, post.users, router])
+
     const download = async () => {
         const downloadZip = (await import("client-zip")).downloadZip
         const blob = await downloadZip(post.files.map((file: any) => {
@@ -39,21 +65,6 @@ const PostPage = ({ post }: Props) => {
         link.remove()
     }
 
-
-    const isMobile = useMediaQuery("mobile")
-
-    const isExpired = useMemo(() => {
-        return post.expiresAt && new Date(post.expiresAt) < new Date()
-    }, [post.expiresAt])
-
-    const onExpires = useCallback(() => {
-        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
-
-        if (isExpired && !isOwner) {
-            router.push("/expired")
-            return <></>
-        }
-    }, [isExpired, post.users, router])
 
     return (
         <Page width={"100%"}>

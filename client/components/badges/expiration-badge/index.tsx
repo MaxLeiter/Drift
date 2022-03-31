@@ -30,10 +30,11 @@ const ExpirationBadge = ({
     }, [expirationDate])
 
     const isExpired = useMemo(() => {
-        return expirationDate && new Date(expirationDate) < new Date()
-    }, [expirationDate])
+        return timeUntilString && timeUntilString === "in 0 seconds"
+    }, [timeUntilString])
 
     useEffect(() => {
+        // check if expired every 
         if (isExpired) {
             if (onExpires) {
                 onExpires();
