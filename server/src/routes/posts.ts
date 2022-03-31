@@ -37,7 +37,8 @@ posts.post(
 				.required(),
 			userId: Joi.string().required(),
 			password: Joi.string().optional(),
-			expiresAt: Joi.date().optional()
+			//  expiresAt, allow to be null
+			expiresAt: Joi.date().optional().allow(null, '')
 		}
 	}),
 	async (req, res, next) => {
