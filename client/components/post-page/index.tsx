@@ -26,8 +26,17 @@ const PostPage = ({ post }: Props) => {
 
     const isMobile = useMediaQuery("mobile")
     const [isExpired, setIsExpired] = useState(post.expiresAt ? new Date(post.expiresAt) < new Date() : null)
-
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
+        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+
+        const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
+        if (!isOwner && expirationDate < new Date()) {
+            router.push("/expired")
+        } else {
+            setIsLoading(false)
+        }
+
         let interval: NodeJS.Timer | null = null;
         if (post.expiresAt) {
             interval = setInterval(() => {
@@ -38,16 +47,8 @@ const PostPage = ({ post }: Props) => {
         return () => {
             if (interval) clearInterval(interval)
         }
-    }, [post.expiresAt])
+    }, [post.expiresAt, post.users, router])
 
-    const onExpires = useCallback(() => {
-        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
-
-        if (isExpired && !isOwner) {
-            router.push("/expired")
-            return <></>
-        }
-    }, [isExpired, post.users, router])
 
     const download = async () => {
         const downloadZip = (await import("client-zip")).downloadZip
@@ -65,6 +66,9 @@ const PostPage = ({ post }: Props) => {
         link.remove()
     }
 
+    if (isLoading) {
+        return <></>
+    }
 
     return (
         <Page width={"100%"}>
