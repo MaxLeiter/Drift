@@ -1,22 +1,22 @@
 .container {
-  padding: 2rem 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+	padding: 2rem 2rem;
+	border-radius: var(--radius);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .form {
-  display: grid;
-  place-items: center;
+	display: grid;
+	place-items: center;
 }
 
 .formGroup {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  gap: 10px;
+	display: flex;
+	flex-direction: column;
+	place-items: center;
+	gap: 10px;
 }
 
 .formContentSpace {
-  margin-bottom: 1rem;
-  text-align: center;
+	margin-bottom: 1rem;
+	text-align: center;
 }

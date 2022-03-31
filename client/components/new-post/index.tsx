@@ -1,21 +1,22 @@
-import { Button, useToasts, ButtonDropdown } from '@geist-ui/core'
+import { Button, useToasts, ButtonDropdown, Toggle, Input, useClickAway } from '@geist-ui/core'
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
 import Cookies from 'js-cookie'
 import type { PostVisibility, Document as DocumentType } from '@lib/types';
-import PasswordModal from './password';
+import PasswordModal from './password-modal';
 import getPostPath from '@lib/get-post-path';
 import EditDocumentList from '@components/edit-document-list';
 import { ChangeEvent } from 'react';
-
+import DatePicker from 'react-datepicker';
 const Post = () => {
     const { setToast } = useToasts()
     const router = useRouter();
     const [title, setTitle] = useState<string>()
+    const [expiresAt, setExpiresAt] = useState<Date | null>(null)
 
     const [docs, setDocs] = useState<DocumentType[]>([{
         title: '',
@@ -24,7 +25,8 @@ const Post = () => {
     }])
 
     const [passwordModalVisible, setPasswordModalVisible] = useState(false)
-    const sendRequest = useCallback(async (url: string, data: { visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
+
+    const sendRequest = useCallback(async (url: string, data: { expiresAt: Date | null, visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
         const res = await fetch(url, {
             method: "POST",
             headers: {
@@ -55,11 +57,14 @@ const Post = () => {
 
     const [isSubmitting, setSubmitting] = useState(false)
 
-    const onSubmit = async (visibility: PostVisibility, password?: string) => {
+    const onSubmit = useCallback(async (visibility: PostVisibility, password?: string) => {
         if (visibility === 'protected' && !password) {
             setPasswordModalVisible(true)
             return
         }
+
+        setPasswordModalVisible(false)
+
         setSubmitting(true)
 
         let hasErrored = false
@@ -91,14 +96,19 @@ const Post = () => {
             files: docs,
             visibility,
             password,
-            userId: Cookies.get('drift-userid') || ''
+            userId: Cookies.get('drift-userid') || '',
+            expiresAt
         })
-    }
+    }, [docs, expiresAt, sendRequest, setToast, title])
 
     const onClosePasswordModal = () => {
         setPasswordModalVisible(false)
         setSubmitting(false)
     }
+
+    const submitPassword = useCallback((password) => onSubmit('protected', password), [onSubmit])
+
+    const onChangeExpiration = useCallback((date) => setExpiresAt(date), [])
 
     const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
@@ -116,7 +126,6 @@ const Post = () => {
     const removeDoc = useCallback((i: number) => () => {
         setDocs((docs) => docs.filter((_, index) => i !== index))
     }, [setDocs])
-
 
     const uploadDocs = useCallback((files: DocumentType[]) => {
         // if no title is set and the only document is empty,
@@ -174,15 +183,36 @@ const Post = () => {
                 >
                     Add a File
                 </Button>
-
-                <ButtonDropdown loading={isSubmitting} type="success">
-                    <ButtonDropdown.Item main onClick={() => onSubmit('private')}>Create Private</ButtonDropdown.Item>
-                    <ButtonDropdown.Item onClick={() => onSubmit('public')} >Create Public</ButtonDropdown.Item>
-                    <ButtonDropdown.Item onClick={() => onSubmit('unlisted')} >Create Unlisted</ButtonDropdown.Item>
-                    <ButtonDropdown.Item onClick={() => onSubmit('protected')} >Create with Password</ButtonDropdown.Item>
-                </ButtonDropdown>
-                <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={(password) => onSubmit('protected', password)} />
+                <div style={{
+                    display: 'flex',
+                    gap: 'var(--gap)',
+                    alignItems: 'center',
+                }}>
+                    {<DatePicker
+                        onChange={onChangeExpiration}
+                        customInput={<Input label="Expires at" clearable width="300px" height="40px" />}
+                        placeholderText="Won't expire"
+                        selected={expiresAt}
+                        showTimeInput={true}
+                        // customTimeInput={<Input htmlType="time" />}
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm aa"
+                        className={styles.datePicker}
+                        clearButtonTitle={"Clear"}
+                        // TODO: investigate why this causes margin shift if true
+                        enableTabLoop={false}
+                        minDate={new Date()}
+                    />}
+                    <ButtonDropdown loading={isSubmitting} type="success">
+                        <ButtonDropdown.Item main onClick={() => onSubmit('private')}>Create Private</ButtonDropdown.Item>
+                        <ButtonDropdown.Item onClick={() => onSubmit('public')} >Create Public</ButtonDropdown.Item>
+                        <ButtonDropdown.Item onClick={() => onSubmit('unlisted')} >Create Unlisted</ButtonDropdown.Item>
+                        <ButtonDropdown.Item onClick={() => onSubmit('protected')} >Create with Password</ButtonDropdown.Item>
+                    </ButtonDropdown>
+                </div>
             </div>
+            <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={submitPassword} />
+            {/* <ExpirationModal isOpen={expirationModalVisibile} onClose={onCloseExpirationModal} onSubmit={submitExpiration} /> */}
         </div>
     )
 }

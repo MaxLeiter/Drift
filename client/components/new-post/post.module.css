@@ -6,6 +6,10 @@
 	margin-top: var(--gap-double);
 }
 
+.datePicker {
+	flex: 1;
+}
+
 .title {
 	display: flex;
 	flex-direction: row;

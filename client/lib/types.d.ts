@@ -24,6 +24,7 @@ export type Post = {
 	files: Files
 	createdAt: string
 	users?: User[]
+	expiresAt: Date | string | null
 }
 
 type User = {

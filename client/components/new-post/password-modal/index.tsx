@@ -29,7 +29,9 @@ const PasswordModal = ({ isOpen, onClose, onSubmit: onSubmitAfterVerify, creatin
     }
 
     return (<>
-        {<Modal visible={isOpen} >
+        {/* TODO: investigate disableBackdropClick not updating state? */}
+
+        {<Modal visible={isOpen} disableBackdropClick={true} >
             <Modal.Title>Enter a password</Modal.Title>
             <Modal.Content>
                 {!error && creating && <Note type="warning" label='Warning'>

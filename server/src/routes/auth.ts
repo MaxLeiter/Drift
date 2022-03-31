@@ -82,7 +82,7 @@ auth.post(
 		} catch (e) {
 			res.status(401).json({
 				error: {
-					message: e.message,
+					message: e.message
 				}
 			})
 		}
@@ -122,7 +122,7 @@ auth.post(
 		} catch (e) {
 			res.status(401).json({
 				error: {
-					message: error,
+					message: error
 				}
 			})
 		}
