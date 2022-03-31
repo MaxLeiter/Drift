@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const ExpirationBadge = ({
     postExpirationDate,
-    onExpires
+    // onExpires
 }: {
     postExpirationDate: Date | string | null
     onExpires?: () => void
@@ -33,14 +33,14 @@ const ExpirationBadge = ({
         return timeUntilString && timeUntilString === "in 0 seconds"
     }, [timeUntilString])
 
-    useEffect(() => {
-        // check if expired every 
-        if (isExpired) {
-            if (onExpires) {
-                onExpires();
-            }
-        }
-    }, [isExpired, onExpires])
+    // useEffect(() => {
+    //     // check if expired every 
+    //     if (isExpired) {
+    //         if (onExpires) {
+    //             onExpires();
+    //         }
+    //     }
+    // }, [isExpired, onExpires])
 
     if (!expirationDate) {
         return null;

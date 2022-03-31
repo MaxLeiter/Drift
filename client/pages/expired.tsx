@@ -8,7 +8,7 @@ const Expired = () => {
             <Header />
             <Page.Content className={styles.main}>
                 <Note type="error" label={false}>
-                    <Text h4>Error: The drift you&apos;re trying to view has expired.</Text>
+                    <Text h4>Error: The Drift you&apos;re trying to view has expired.</Text>
                 </Note>
 
             </Page.Content>

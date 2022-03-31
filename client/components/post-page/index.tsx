@@ -94,12 +94,11 @@ const PostPage = ({ post }: Props) => {
                             }}>
                             <VisibilityBadge visibility={post.visibility} />
                             <CreatedAgoBadge createdAt={post.createdAt} />
-                            <ExpirationBadge onExpires={onExpires} postExpirationDate={post.expiresAt} />
+                            <ExpirationBadge postExpirationDate={post.expiresAt} />
                         </ButtonGroup>
                     </span>
                     <span className={styles.buttons}>
-                        {/* If it hasn't expired, the badge can be too long */}
-                        <ButtonGroup vertical={isMobile || (post.expiresAt && !isExpired) ? true : false}>
+                        <ButtonGroup vertical={true}>
                             <Button auto onClick={download} icon={<Archive />}>
                                 Download as ZIP archive
                             </Button>
