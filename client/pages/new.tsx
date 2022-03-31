@@ -10,7 +10,7 @@ const New = () => {
     <Page className={styles.wrapper}>
       <PageSeo title="Drift - New" />
       <Head>
-        {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/4.7.0/react-datepicker.min.css" /> */}
+        {/* TODO: solve this. */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/css/react-datepicker.css" />
       </Head>

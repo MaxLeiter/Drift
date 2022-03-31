@@ -50,7 +50,6 @@
     "@types/nprogress": "^0.2.0",
     "@types/react": "17.0.39",
     "@types/react-datepicker": "^4.3.4",
-    "@types/react-datetime-picker": "^3.4.1",
     "@types/react-dom": "^17.0.14",
     "@types/react-syntax-highlighter": "^13.5.2",
     "eslint": "8.10.0",

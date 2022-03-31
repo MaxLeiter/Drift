@@ -67,7 +67,6 @@ const PostPage = ({ post }: Props) => {
                 <Header />
             </Page.Header>
             <Page.Content className={homeStyles.main}>
-                {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
                 <div className={styles.header}>
                     <span className={styles.title}>
                         <Text h3>{post.title}</Text>
