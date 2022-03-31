@@ -18,30 +18,33 @@ const ListItem = ({ post, isOwner = true, deletePost }: { post: Post, isOwner?: 
     return (<FadeIn><li key={post.id}>
         <Card style={{ overflowY: 'scroll' }}>
             <Card.Body>
-                <Text h3>
+                <Text h3 style={{
+                }}>
                     <NextLink passHref={true} href={getPostPath(post.visibility, post.id)}>
                         <Link color marginRight={'var(--gap)'}>
                             {post.title}
                         </Link>
                     </NextLink>
-                    <div style={{ display: 'inline-flex' }}>
-                        <span>
-                            <VisibilityBadge visibility={post.visibility} />
-                        </span>
-                        <span style={{ marginLeft: 'var(--gap)' }}>
-                            <CreatedAgoBadge createdAt={post.createdAt} />
-                        </span>
-                        <span style={{ marginLeft: 'var(--gap)' }}>
-                            <Badge type="secondary">{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Badge>
-                        </span>
-                        <span style={{ marginLeft: 'var(--gap)' }}>
-                            <ExpirationBadge postExpirationDate={post.expiresAt} />
-                        </span>
-                    </div>
                     {isOwner && <span style={{ float: 'right' }}>
                         <Button iconRight={<Trash />} onClick={deletePost} auto />
                     </span>}
                 </Text>
+
+
+                <div style={{ display: 'inline-flex' }}>
+                    <span>
+                        <VisibilityBadge visibility={post.visibility} />
+                    </span>
+                    <span style={{ marginLeft: 'var(--gap)' }}>
+                        <CreatedAgoBadge createdAt={post.createdAt} />
+                    </span>
+                    <span style={{ marginLeft: 'var(--gap)' }}>
+                        <Badge type="secondary">{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Badge>
+                    </span>
+                    <span style={{ marginLeft: 'var(--gap)' }}>
+                        <ExpirationBadge postExpirationDate={post.expiresAt} />
+                    </span>
+                </div>
 
             </Card.Body>
             <Divider h="1px" my={0} />

@@ -163,6 +163,28 @@ const Post = () => {
         }
     }, [title])
 
+    const CustomTimeInput = ({ date, value, onChange }: {
+        date: Date,
+        value: string,
+        onChange: (date: string) => void
+    }) => (
+        <input
+            type="time"
+            value={value}
+            onChange={(e) => {
+                if (!isNaN(date.getTime())) {
+                    onChange(e.target.value || date.toISOString().slice(11, 16))
+                }
+            }}
+            style={{
+                backgroundColor: 'var(--bg)',
+                border: '1px solid var(--light-gray)',
+                borderRadius: 'var(--radius)'
+            }}
+            required
+        />
+    );
+
     return (
         <div style={{ paddingBottom: 150 }}>
             <Title title={title} onChange={onChangeTitle} />
@@ -178,23 +200,19 @@ const Post = () => {
                             id: generateUUID()
                         }])
                     }}
-                    style={{ flex: .7, lineHeight: '40px' }}
                     type="default"
                 >
                     Add a File
                 </Button>
-                <div style={{
-                    display: 'flex',
-                    gap: 'var(--gap)',
-                    alignItems: 'center',
-                }}>
+                <div className={styles.rightButtons}>
                     {<DatePicker
                         onChange={onChangeExpiration}
-                        customInput={<Input label="Expires at" clearable height="40px" />}
+                        customInput={<Input label="Expires at" clearable width="100%" height="40px" />}
                         placeholderText="Won't expire"
                         selected={expiresAt}
                         showTimeInput={true}
-                        // customTimeInput={<Input htmlType="time" />}
+                        // @ts-ignore
+                        customTimeInput={<CustomTimeInput />}
                         timeInputLabel="Time:"
                         dateFormat="MM/dd/yyyy h:mm aa"
                         className={styles.datePicker}

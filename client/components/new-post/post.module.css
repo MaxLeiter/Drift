@@ -4,6 +4,13 @@
 	justify-content: space-between;
 	width: 100%;
 	margin-top: var(--gap-double);
+	gap: var(--gap);
+}
+
+.buttons .rightButtons {
+	display: flex;
+	gap: var(--gap);
+	align-items: center;
 }
 
 .datePicker {
@@ -29,5 +36,14 @@
 		margin: 0;
 		justify-content: space-between;
 		min-height: 95px;
+	}
+
+	.buttons .rightButtons {
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	.buttons .rightButtons > * {
+		width: min(100%, 350px);
 	}
 }
