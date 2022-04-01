@@ -30,7 +30,7 @@ const PostModal = ({ id }: {
       <Modal width={'var(--main-content)'} {...bindings}>
         <Modal.Title>{post.title}</Modal.Title>
         <Modal.Subtitle>Click an item to expand</Modal.Subtitle>
-        {post.files.map((file) => (
+        {post.files?.map((file) => (
           <div key={file.id} className={styles.postModal}>
             <Modal.Content>
               <details>

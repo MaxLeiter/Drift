@@ -23,7 +23,7 @@ const Admin = () => {
         if (posts) {
             // sum the sizes of each file per post
             const sizes = posts.reduce((acc, post) => {
-                const size = post.files.reduce((acc, file) => acc + file.html.length, 0)
+                const size = post.files?.reduce((acc, file) => acc + file.html.length, 0) || 0
                 return { ...acc, [post.id]: byteToMB(size) }
             }, {})
             setPostSizes(sizes)

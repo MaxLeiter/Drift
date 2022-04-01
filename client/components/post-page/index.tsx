@@ -6,9 +6,8 @@ import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
-import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup, useMediaQuery } from "@geist-ui/core"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { timeAgo, timeUntil } from "@lib/time-ago"
+import { Page, Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core"
+import { useEffect, useState } from "react"
 import Archive from '@geist-ui/icons/archive'
 import FileDropdown from "@components/file-dropdown"
 import ScrollToTop from "@components/scroll-to-top"
@@ -51,6 +50,7 @@ const PostPage = ({ post }: Props) => {
 
 
     const download = async () => {
+        if (!post.files) return
         const downloadZip = (await import("client-zip")).downloadZip
         const blob = await downloadZip(post.files.map((file: any) => {
             return {
@@ -102,12 +102,12 @@ const PostPage = ({ post }: Props) => {
                             <Button auto onClick={download} icon={<Archive />}>
                                 Download as ZIP archive
                             </Button>
-                            <FileDropdown files={post.files} />
+                            <FileDropdown files={post.files || []} />
                         </ButtonGroup>
                     </span>
                 </div>
                 {/* {post.files.length > 1 && <FileTree files={post.files} />} */}
-                {post.files.map(({ id, content, title }: File) => (
+                {post.files?.map(({ id, content, title }: File) => (
                     <DocumentComponent
                         key={id}
                         title={title}

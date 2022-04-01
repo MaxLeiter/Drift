@@ -39,7 +39,7 @@ const ListItem = ({ post, isOwner = true, deletePost }: { post: Post, isOwner?: 
                         <CreatedAgoBadge createdAt={post.createdAt} />
                     </span>
                     <span style={{ marginLeft: 'var(--gap)' }}>
-                        <Badge type="secondary">{post.files.length === 1 ? "1 file" : `${post.files.length} files`}</Badge>
+                        <Badge type="secondary">{post.files?.length === 1 ? "1 file" : `${post.files?.length || 0} files`}</Badge>
                     </span>
                     <span style={{ marginLeft: 'var(--gap)' }}>
                         <ExpirationBadge postExpirationDate={post.expiresAt} />
@@ -49,7 +49,7 @@ const ListItem = ({ post, isOwner = true, deletePost }: { post: Post, isOwner?: 
             </Card.Body>
             <Divider h="1px" my={0} />
             <Card.Content>
-                {post.files.map((file: File) => {
+                {post.files?.map((file: File) => {
                     return <div key={file.id}>
                         <Link color href={`${getPostPath(post.visibility, post.id)}#${file.title}`}>
                             {file.title || 'Untitled file'}
