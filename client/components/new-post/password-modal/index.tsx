@@ -3,7 +3,7 @@ import { Modal, Note, Spacer, Input } from "@geist-ui/core"
 import { useState } from "react"
 
 type Props = {
-    creating?: boolean
+    creating: boolean
     isOpen: boolean
     onClose: () => void
     onSubmit: (password: string) => void

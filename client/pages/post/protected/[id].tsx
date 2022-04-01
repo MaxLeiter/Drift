@@ -63,6 +63,7 @@ const Post = () => {
 
     const onClose = () => {
         setIsPasswordModalOpen(false);
+        router.push("/");
     }
 
     if (!router.isReady) {

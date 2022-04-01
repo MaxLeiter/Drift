@@ -229,7 +229,7 @@ const Post = () => {
                     </ButtonDropdown>
                 </div>
             </div>
-            <PasswordModal isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={submitPassword} />
+            <PasswordModal creating={true} isOpen={passwordModalVisible} onClose={onClosePasswordModal} onSubmit={submitPassword} />
         </div>
     )
 }

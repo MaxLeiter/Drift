@@ -32,7 +32,7 @@ export type Migration = typeof umzug._types.migration
 
 // If you're in a development environment, you can manually migrate with `yarn migrate:{up,down}` in the `server` folder
 if (config.is_production) {
-	; (async () => {
+	;(async () => {
 		// Checks migrations and run them if they are not already applied. To keep
 		// track of the executed migrations, a table (and sequelize model) called SequelizeMeta
 		// will be automatically created (if it doesn't exist already) and parsed.
