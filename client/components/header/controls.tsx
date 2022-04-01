@@ -8,11 +8,11 @@ import { useTheme } from 'next-themes'
 
 const Controls = () => {
     const [mounted, setMounted] = useState(false)
-    const { theme, setTheme } = useTheme()
+    const { resolvedTheme, setTheme } = useTheme()
     useEffect(() => setMounted(true), [])
     if (!mounted) return null
     const switchThemes = () => {
-        if (theme === 'dark') {
+        if (resolvedTheme === 'dark') {
             setTheme('light')
         } else {
             setTheme('dark')
@@ -26,7 +26,7 @@ const Controls = () => {
                 h="28px"
                 pure
                 onChange={switchThemes}
-                value={theme}
+                value={resolvedTheme}
             >
                 <Select.Option value="light">
                     <span className={styles.selectContent}>

@@ -39,7 +39,7 @@ const Header = () => {
     const { signedIn: isSignedIn, signout } = useSignedIn()
     const userData = useUserData();
     const [pages, setPages] = useState<Tab[]>([])
-    const { setTheme, theme } = useTheme()
+    const { setTheme, resolvedTheme } = useTheme()
 
     useEffect(() => {
         setBodyHidden(expanded)
@@ -63,9 +63,9 @@ const Header = () => {
                 name: isMobile ? "Change theme" : "",
                 onClick: function () {
                     if (typeof window !== 'undefined')
-                        setTheme(theme === 'light' ? 'dark' : 'light');
+                        setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
                 },
-                icon: theme === 'light' ? <MoonIcon /> : <SunIcon />,
+                icon: resolvedTheme === 'light' ? <MoonIcon /> : <SunIcon />,
                 value: "theme",
             }
         ]
@@ -133,7 +133,7 @@ const Header = () => {
         }
         // TODO: investigate deps causing infinite loop 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMobile, isSignedIn, theme, userData])
+    }, [isMobile, isSignedIn, resolvedTheme, userData])
 
     const onTabChange = useCallback((tab: string) => {
         if (typeof window === 'undefined') return
