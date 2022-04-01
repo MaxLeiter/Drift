@@ -7,8 +7,7 @@ import config from "./config"
 // This does *not* support `~other_user/tmp` => `/home/other_user/tmp`.
 function getDatabasePath() {
 	const fileName = "drift.sqlite"
-	const databasePath =
-		`${config.drift_home}/${fileName}` || `~/.drift/${fileName}`
+	const databasePath = `${config.drift_home}/${fileName}`
 
 	const home = os.homedir().replace("$", "$$$$")
 	return path.resolve(databasePath.replace(/^~($|\/|\\)/, home + "$1"))
