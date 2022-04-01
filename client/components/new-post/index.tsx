@@ -74,7 +74,14 @@ const Post = () => {
                 text: 'Please fill out the post title',
                 type: 'error'
             })
-            setSubmitting(false)
+            hasErrored = true
+        }
+
+        if (!docs.length) {
+            setToast({
+                text: 'Please add at least one document',
+                type: 'error'
+            })
             hasErrored = true
         }
 
@@ -84,12 +91,14 @@ const Post = () => {
                     text: 'Please fill out all the document titles',
                     type: 'error'
                 })
-                setSubmitting(false)
                 hasErrored = true
             }
         }
 
-        if (hasErrored) return
+        if (hasErrored) {
+            setSubmitting(false)
+            return
+        }
 
         await sendRequest('/server-api/posts/create', {
             title,

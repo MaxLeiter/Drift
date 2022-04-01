@@ -12,9 +12,9 @@ export const sequelize = new Sequelize({
 })
 
 if (config.memory_db) {
-	console.log(`Database path: ${databasePath}`)
-} else {
 	console.log("Using in-memory database")
+} else {
+	console.log(`Database path: ${databasePath}`)
 }
 
 export const umzug = new Umzug({
