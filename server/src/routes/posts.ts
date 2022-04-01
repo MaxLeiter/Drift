@@ -246,7 +246,8 @@ posts.get(
 					"createdAt",
 					"updatedAt",
 					"deletedAt",
-					"expiresAt"
+					"expiresAt",
+					"password"
 				]
 			})
 
