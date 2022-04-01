@@ -30,13 +30,14 @@ const config = (): Config => {
 	const validNodeEnvs = (str: string | undefined) => {
 		const valid = ["development", "production"]
 		if (str && !valid.includes(str)) {
-			throw new Error(`Invalid environment variable: ${str}`)
+			throw new Error(`Invalid NODE_ENV set: ${str}`)
 		} else if (!str) {
 			console.warn("No NODE_ENV specified, defaulting to development")
 		} else {
 			console.log(`Using NODE_ENV: ${str}`)
 		}
 	}
+
 	validNodeEnvs(process.env.NODE_ENV)
 
 	const config: Config = {
