@@ -299,6 +299,11 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 					model: User,
 					as: "users",
 					attributes: ["id"]
+				},
+				{
+					model: File,
+					as: "files",
+					attributes: ["id"]
 				}
 			]
 		})
