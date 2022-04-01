@@ -8,7 +8,7 @@ export const sequelize = new Sequelize({
 	database: "drift",
 	storage: config.memory_db ? ":memory:" : databasePath,
 	models: [__dirname + "/lib/models"],
-	logging: true
+	logging: console.log
 })
 
 if (config.memory_db) {
