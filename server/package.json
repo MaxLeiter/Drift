@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "index.ts",
 	"scripts": {
-		"start": "NODE_ENV=production node dist/index.js",
-		"dev": "NODE_ENV=development nodemon index.ts",
+		"start": "cross-env NODE_ENV=production node dist/index.js",
+		"dev": "cross-env NODE_ENV=development nodemon index.ts",
 		"build": "mkdir -p ./dist && cp .env ./dist/.env && tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json && yarn post-build",
 		"post-build": "cp package.json ./dist/package.json && cp yarn.lock ./dist/yarn.lock && cd dist && env NODE_ENV=production yarn install",
 		"migrate": "sequelize-cli-ts db:migrate",
@@ -45,6 +45,7 @@
 		"@types/marked": "^4.0.3",
 		"@types/node": "^17.0.21",
 		"@types/react-dom": "^17.0.14",
+		"cross-env": "^7.0.3",
 		"prettier": "^2.6.0",
 		"ts-node": "^10.6.0",
 		"tsc-alias": "^1.6.5",
