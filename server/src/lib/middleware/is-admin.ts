@@ -19,7 +19,7 @@ export default function authenticateToken(
 	const authHeader = req.headers["authorization"]
 	const token = authHeader && authHeader.split(" ")[1]
 	if (token == null) return res.sendStatus(401)
-	if (!process.env.ENABLE_ADMIN) return res.sendStatus(404)
+	if (!config.enable_admin) return res.sendStatus(404)
 
 	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
 		if (err) return res.sendStatus(403)

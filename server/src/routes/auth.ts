@@ -8,10 +8,10 @@ import { celebrate, Joi } from "celebrate"
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 
+// we require a server password if the password is set and we're in production
 export const requiresServerPassword =
-	(process.env.MEMORY_DB || process.env.NODE_ENV === "production") &&
-	!!process.env.REGISTRATION_PASSWORD
-console.log(`Registration password required: ${requiresServerPassword}`)
+	config.registration_password.length > 0 && config.is_production
+if (requiresServerPassword) console.log(`Registration password enabled.`)
 
 export const auth = Router()
 
@@ -25,10 +25,7 @@ const validateAuthPayload = (
 	}
 
 	if (requiresServerPassword) {
-		if (
-			!serverPassword ||
-			process.env.REGISTRATION_PASSWORD !== serverPassword
-		) {
+		if (!serverPassword || config.registration_password !== serverPassword) {
 			throw new Error(
 				"Server password is incorrect. Please contact the server administrator."
 			)
@@ -68,10 +65,7 @@ auth.post(
 			const user = {
 				username: username as string,
 				password: await hash(req.body.password, salt),
-				role:
-					!!process.env.MEMORY_DB && process.env.ENABLE_ADMIN && count === 0
-						? "admin"
-						: "user"
+				role: config.enable_admin && count === 0 ? "admin" : "user"
 			}
 
 			const created_user = await User.create(user)

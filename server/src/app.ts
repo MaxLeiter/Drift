@@ -5,6 +5,7 @@ import { posts, users, auth, files, admin } from "@routes/index"
 import { errors } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
+import config from "@lib/config"
 
 export const app = express()
 
@@ -35,7 +36,7 @@ app.use(errors())
 
 app.use(
 	errorhandler({
-		debug: process.env.NODE_ENV !== "production",
+		debug: !config.is_production,
 		log: true
 	})
 )

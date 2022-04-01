@@ -21,7 +21,7 @@ export type Post = {
 	title: string
 	description: string
 	visibility: PostVisibility
-	files: Files
+	files?: Files
 	createdAt: string
 	users?: User[]
 	expiresAt: Date | string | null

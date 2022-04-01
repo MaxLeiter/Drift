@@ -13,11 +13,15 @@ If you want to contribute, need support, or want to stay updated, you can join t
 In both `server` and `client`, run `yarn` (if you need yarn, you can download it [here](https://yarnpkg.com/).)
 You can run `yarn dev` in either / both folders to start the server and client with file watching / live reloading.
 
+To migrate the sqlite database in development, you can use `yarn migrate` to see a list of options.
+
 ### Production
 
 `yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. The client and server each also have Dockerfiles which you can use with a docker-compose (an example compose will be provided in the near future).
 
 If you're deploying the front-end to something like Vercel, you'll need to set the root folder to `client/`.
+
+In production the sqlite database will be automatically migrated to the latest version.
 
 ### Environment Variables
 

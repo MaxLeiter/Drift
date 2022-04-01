@@ -8,8 +8,9 @@
 		"dev": "cross-env NODE_ENV=development nodemon index.ts",
 		"build": "mkdir -p ./dist && cp .env ./dist/.env && tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json && yarn post-build",
 		"post-build": "cp package.json ./dist/package.json && cp yarn.lock ./dist/yarn.lock && cd dist && env NODE_ENV=production yarn install",
-		"migrate": "sequelize-cli-ts db:migrate",
-		"migrate:undo": "sequelize-cli-ts db:migrate:undo",
+		"migrate:up": "ts-node migrate up",
+		"migrate:down": "ts-node migrate down",
+		"migrate": "ts-node migrate",
 		"lint": "prettier --config .prettierrc 'src/**/*.ts' 'index.ts' --write"
 	},
 	"author": "",
