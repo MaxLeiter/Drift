@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && prettier --config .prettierrc '{components,lib,pages}/**/*.ts' --write",
-    "analyze": "ANALYZE=true next build",
+    "analyze": "cross-env ANALYZE=true next build",
     "find:unused": "next-unused"
   },
   "dependencies": {
@@ -52,6 +52,7 @@
     "@types/react-datepicker": "^4.3.4",
     "@types/react-dom": "^17.0.14",
     "@types/react-syntax-highlighter": "^13.5.2",
+    "cross-env": "^7.0.3",
     "eslint": "8.10.0",
     "eslint-config-next": "^12.1.1-canary.16",
     "next-unused": "^0.0.6",
