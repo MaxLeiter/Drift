@@ -98,7 +98,7 @@ const PostPage = ({ post }: Props) => {
                         </ButtonGroup>
                     </span>
                     <span className={styles.buttons}>
-                        <ButtonGroup vertical={true}>
+                        <ButtonGroup vertical={isMobile || !!post.expiresAt}>
                             <Button auto onClick={download} icon={<Archive />}>
                                 Download as ZIP archive
                             </Button>
