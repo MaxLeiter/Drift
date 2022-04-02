@@ -114,7 +114,6 @@ const PostPage = ({ post }: Props) => {
                                 style={{ textTransform: 'none' }}>
                                 Edit a Copy
                             </Button>
-                            {console.log(post)}
                             {post.parent && <Button
                                 auto
                                 icon={<Parent />}
