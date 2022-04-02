@@ -1,0 +1,30 @@
+.title {
+	display: flex;
+	justify-content: space-between;
+}
+
+.badges {
+	display: flex;
+	gap: var(--gap-half);
+}
+
+.buttons {
+	display: flex;
+	gap: var(--gap-half);
+}
+
+@media screen and (max-width: 700px) {
+	.badges {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.badges > * {
+		width: min-content;
+	}
+
+	.title {
+		flex-direction: column;
+		gap: var(--gap);
+	}
+}

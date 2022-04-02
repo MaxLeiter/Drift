@@ -15,14 +15,16 @@ const config = (): Config => {
 			return true
 		} else if (str === "false") {
 			return false
-		} else {
+		} else if (str) {
 			throw new Error(`Invalid boolean value: ${str}`)
+		} else {
+			return false
 		}
 	}
 
-	const throwIfUndefined = (str: string | undefined): string => {
+	const throwIfUndefined = (str: string | undefined, name: string): string => {
 		if (str === undefined) {
-			throw new Error(`Missing environment variable: ${str}`)
+			throw new Error(`Missing environment variable: ${name}`)
 		}
 		return str
 	}
@@ -47,7 +49,7 @@ const config = (): Config => {
 		is_production: process.env.NODE_ENV === "production",
 		memory_db: stringToBoolean(process.env.MEMORY_DB),
 		enable_admin: stringToBoolean(process.env.ENABLE_ADMIN),
-		secret_key: throwIfUndefined(process.env.SECRET_KEY),
+		secret_key: throwIfUndefined(process.env.SECRET_KEY, "SECRET_KEY"),
 		registration_password: process.env.REGISTRATION_PASSWORD || ""
 	}
 	return config

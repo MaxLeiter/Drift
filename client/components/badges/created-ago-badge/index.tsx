@@ -16,7 +16,7 @@ const CreatedAgoBadge = ({ createdAt }: {
     }, [createdDate])
 
     const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
-    return (<Badge type="secondary"> <Tooltip text={formattedTime}>Created {time}</Tooltip></Badge>)
+    return (<Badge type="secondary"> <Tooltip hideArrow text={formattedTime}>Created {time}</Tooltip></Badge>)
 }
 
 export default CreatedAgoBadge

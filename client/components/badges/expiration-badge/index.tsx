@@ -51,6 +51,7 @@ const ExpirationBadge = ({
             <Tooltip
                 text={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}>
                 {isExpired ? "Expired" : `Expires ${timeUntilString}`}
+                hideArrow
             </Tooltip>
         </Badge>
     )

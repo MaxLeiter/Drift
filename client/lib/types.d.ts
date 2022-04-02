@@ -24,6 +24,7 @@ export type Post = {
 	files?: Files
 	createdAt: string
 	users?: User[]
+	parent?: Pick<Post, "id" | "title" | "visibility" | "createdAt">
 	expiresAt: Date | string | null
 }
 

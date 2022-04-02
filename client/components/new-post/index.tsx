@@ -1,32 +1,63 @@
 import { Button, useToasts, ButtonDropdown, Toggle, Input, useClickAway } from '@geist-ui/core'
 import { useRouter } from 'next/router';
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import generateUUID from '@lib/generate-uuid';
 import FileDropzone from './drag-and-drop';
 import styles from './post.module.css'
 import Title from './title';
 import Cookies from 'js-cookie'
-import type { PostVisibility, Document as DocumentType } from '@lib/types';
+import type { Post as PostType, PostVisibility, Document as DocumentType } from '@lib/types';
 import PasswordModal from './password-modal';
 import getPostPath from '@lib/get-post-path';
 import EditDocumentList from '@components/edit-document-list';
 import { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
-const Post = () => {
+
+const Post = ({
+    initialPost,
+    newPostParent
+}: {
+    initialPost?: PostType,
+    newPostParent?: string
+}) => {
     const { setToast } = useToasts()
     const router = useRouter();
     const [title, setTitle] = useState<string>()
     const [expiresAt, setExpiresAt] = useState<Date | null>(null)
 
-    const [docs, setDocs] = useState<DocumentType[]>([{
+    const emptyDoc = useMemo(() => [{
         title: '',
         content: '',
         id: generateUUID()
-    }])
+    }], [])
+
+    const [docs, setDocs] = useState<DocumentType[]>(emptyDoc)
+
+    // the /new/from/{id} route fetches an initial post
+    useEffect(() => {
+        if (initialPost) {
+            setTitle(`Copy of ${initialPost.title}`)
+            setDocs(initialPost.files?.map(doc => ({
+                title: doc.title,
+                content: doc.content,
+                id: doc.id
+            })) || emptyDoc)
+        }
+    }, [emptyDoc, initialPost])
 
     const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 
-    const sendRequest = useCallback(async (url: string, data: { expiresAt: Date | null, visibility?: PostVisibility, title?: string, files?: DocumentType[], password?: string, userId: string }) => {
+    const sendRequest = useCallback(async (url: string, data:
+        {
+            expiresAt: Date | null,
+            visibility?: PostVisibility,
+            title?: string,
+            files?: DocumentType[],
+            password?: string,
+            userId: string,
+            parentId?: string
+        }) => {
+
         const res = await fetch(url, {
             method: "POST",
             headers: {
@@ -106,9 +137,10 @@ const Post = () => {
             visibility,
             password,
             userId: Cookies.get('drift-userid') || '',
-            expiresAt
+            expiresAt,
+            parentId: newPostParent
         })
-    }, [docs, expiresAt, sendRequest, setToast, title])
+    }, [docs, expiresAt, newPostParent, sendRequest, setToast, title])
 
     const onClosePasswordModal = () => {
         setPasswordModalVisible(false)

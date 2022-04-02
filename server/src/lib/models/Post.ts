@@ -4,6 +4,7 @@ import {
 	CreatedAt,
 	DataType,
 	HasMany,
+	HasOne,
 	IsUUID,
 	Model,
 	PrimaryKey,
@@ -79,6 +80,9 @@ export class Post extends Model {
 
 	@Column
 	expiresAt?: Date
+
+	@HasOne(() => Post, { foreignKey: "parentId", constraints: false })
+	parent?: Post
 
 	// TODO: deletedBy
 }
