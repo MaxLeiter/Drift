@@ -12,7 +12,7 @@ export function middleware(req: NextRequest) {
         // header added when next/link pre-fetches a route
         !req.headers.get('x-middleware-preflight')
 
-    if (pathname === '/signout') {
+    if (!req.headers.get('x-middleware-preflight') && pathname === '/signout') {
         // If you're signed in we remove the cookie and redirect to the home page
         // If you're not signed in we redirect to the home page
         if (signedIn) {
