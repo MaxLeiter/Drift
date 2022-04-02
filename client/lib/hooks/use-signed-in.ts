@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useSharedState from "./use-shared-state"
 
 const useSignedIn = () => {
@@ -16,12 +16,6 @@ const useSignedIn = () => {
 		Cookies.set("drift-token", token)
 	}
 
-	const signout = () => {
-		setSignedIn(false)
-		Cookies.remove("drift-token")
-		router.push("/")
-	}
-
 	useEffect(() => {
 		if (token) {
 			setSignedIn(true)
@@ -30,7 +24,7 @@ const useSignedIn = () => {
 		}
 	}, [setSignedIn, token])
 
-	return { signedIn, signin, token, signout }
+	return { signedIn, signin, token }
 }
 
 export default useSignedIn

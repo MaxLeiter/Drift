@@ -35,7 +35,7 @@ const Header = () => {
     const [expanded, setExpanded] = useState<boolean>(false)
     const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
     const isMobile = useMediaQuery('xs', { match: 'down' })
-    const { signedIn: isSignedIn, signout } = useSignedIn()
+    const { signedIn: isSignedIn } = useSignedIn()
     const userData = useUserData();
     const [pages, setPages] = useState<Tab[]>([])
     const { setTheme, resolvedTheme } = useTheme()
@@ -93,7 +93,6 @@ const Header = () => {
                     name: 'sign out',
                     icon: <SignOutIcon />,
                     value: 'signout',
-                    // onClick: signout,
                     href: '/signout'
                 },
                 ...defaultPages
