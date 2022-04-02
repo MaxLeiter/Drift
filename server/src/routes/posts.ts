@@ -38,7 +38,8 @@ posts.post(
 			userId: Joi.string().required(),
 			password: Joi.string().optional(),
 			//  expiresAt, allow to be null
-			expiresAt: Joi.date().optional().allow(null, "")
+			expiresAt: Joi.date().optional().allow(null, ""),
+			parentId: Joi.string().optional().allow(null, "")
 		}
 	}),
 	async (req, res, next) => {
@@ -98,6 +99,22 @@ posts.post(
 					await newPost.save()
 				})
 			)
+			if (req.body.parentId) {
+				// const parentPost = await Post.findOne({
+				// 	where: { id: req.body.parentId }
+				// })
+				// if (parentPost) {
+				// 	await parentPost.$add("children", newPost.id)
+				// 	await parentPost.save()
+				// }
+				const parentPost = await Post.findByPk(req.body.parentId)
+				if (parentPost) {
+					newPost.$set("parent", req.body.parentId)
+					await newPost.save()
+				} else {
+					throw new Error("Parent post not found")
+				}
+			}
 
 			res.json(newPost)
 		} catch (e) {
@@ -135,6 +152,11 @@ posts.get("/mine", jwt, async (req: UserJwtRequest, res, next) => {
 							model: File,
 							as: "files",
 							attributes: ["id", "title", "createdAt"]
+						},
+						{
+							model: Post,
+							as: "parent",
+							attributes: ["id", "title", "visibility"]
 						}
 					],
 					attributes: ["id", "title", "visibility", "createdAt", "expiresAt"]
@@ -237,6 +259,11 @@ posts.get(
 						model: User,
 						as: "users",
 						attributes: ["id", "username"]
+					},
+					{
+						model: Post,
+						as: "parent",
+						attributes: ["id", "title", "visibility", "createdAt"]
 					}
 				],
 				attributes: [

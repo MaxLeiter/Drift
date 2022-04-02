@@ -22,7 +22,7 @@ type Props = {
 const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
     return (<div className={styles.actionWrapper}>
         <ButtonGroup className={styles.actions}>
-            <Tooltip text="Download">
+            <Tooltip hideArrow text="Download">
                 <a href={`${rawLink}?download=true`} target="_blank" rel="noopener noreferrer">
                     <Button
                         scale={2 / 3} px={0.6}
@@ -32,7 +32,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
                     />
                 </a>
             </Tooltip>
-            <Tooltip text="Open raw in new tab">
+            <Tooltip hideArrow text="Open raw in new tab">
                 <a href={rawLink} target="_blank" rel="noopener noreferrer">
                     <Button
                         scale={2 / 3} px={0.6}

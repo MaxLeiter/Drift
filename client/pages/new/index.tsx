@@ -8,7 +8,7 @@ import Head from 'next/head'
 const New = () => {
   return (
     <Page className={styles.wrapper}>
-      <PageSeo title="Drift - New" />
+      <PageSeo title="Create a new Drift" />
       <Head>
         {/* TODO: solve this. */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}

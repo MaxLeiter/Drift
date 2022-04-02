@@ -9,12 +9,15 @@ import type { File, Post } from "@lib/types"
 import { Page, Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core"
 import { useEffect, useState } from "react"
 import Archive from '@geist-ui/icons/archive'
+import Edit from '@geist-ui/icons/edit'
+import Parent from '@geist-ui/icons/arrowUpCircle'
 import FileDropdown from "@components/file-dropdown"
 import ScrollToTop from "@components/scroll-to-top"
 import { useRouter } from "next/router"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
+import getPostPath from "@lib/get-post-path"
 
 type Props = {
     post: Post
@@ -27,6 +30,9 @@ const PostPage = ({ post }: Props) => {
     const [isExpired, setIsExpired] = useState(post.expiresAt ? new Date(post.expiresAt) < new Date() : null)
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
+        if (isExpired) {
+            router.push("/expired")
+        }
         const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
 
         const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
@@ -46,7 +52,7 @@ const PostPage = ({ post }: Props) => {
         return () => {
             if (interval) clearInterval(interval)
         }
-    }, [post.expiresAt, post.users, router])
+    }, [isExpired, post.expiresAt, post.users, router])
 
 
     const download = async () => {
@@ -64,6 +70,10 @@ const PostPage = ({ post }: Props) => {
         link.download = `${post.title}.zip`
         link.click()
         link.remove()
+    }
+
+    const editACopy = () => {
+        router.push(`/new/from/${post.id}`)
     }
 
     if (isLoading) {
@@ -85,24 +95,34 @@ const PostPage = ({ post }: Props) => {
                 <div className={styles.header}>
                     <span className={styles.title}>
                         <Text h3>{post.title}</Text>
-                        <ButtonGroup
-                            vertical={isMobile}
-                            style={{
-                                border: "none",
-                                gap: 'var(--gap-half)',
-                                marginLeft: isMobile ? "0" : "var(--gap-half)",
-                            }}>
+                        <span className={styles.badges}>
                             <VisibilityBadge visibility={post.visibility} />
                             <CreatedAgoBadge createdAt={post.createdAt} />
                             <ExpirationBadge postExpirationDate={post.expiresAt} />
-                        </ButtonGroup>
+                        </span>
                     </span>
+
                     <span className={styles.buttons}>
-                        <ButtonGroup vertical={isMobile || !!post.expiresAt}>
-                            <Button auto onClick={download} icon={<Archive />}>
-                                Download as ZIP archive
+                        <ButtonGroup vertical={isMobile}>
+                            <Button auto onClick={download} icon={<Archive />} style={{ textTransform: 'none' }}>
+                                Download as ZIP Archive
                             </Button>
-                            <FileDropdown files={post.files || []} />
+                            <Button
+                                auto
+                                icon={<Edit />}
+                                onClick={editACopy}
+                                style={{ textTransform: 'none' }}>
+                                Edit a Copy
+                            </Button>
+                            {console.log(post)}
+                            {post.parent && <Button
+                                auto
+                                icon={<Parent />}
+                                onClick={() => router.push(getPostPath(post.parent!.visibility, post.parent!.id))}
+                            >
+                                View Parent
+                            </Button>}
+                            <FileDropdown isMobile={isMobile} files={post.files || []} />
                         </ButtonGroup>
                     </span>
                 </div>
