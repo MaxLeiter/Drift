@@ -11,18 +11,19 @@ export function middleware(req: NextRequest) {
         !req.nextUrl.pathname.startsWith('/api') &&
         // header added when next/link pre-fetches a route
         !req.headers.get('x-middleware-preflight')
-    if (isPageRequest) {
-        if (pathname === '/signout') {
-            // If you're signed in we remove the cookie and redirect to the home page
-            // If you're not signed in we redirect to the home page
-            if (signedIn) {
-                const resp = NextResponse.redirect(getURL(''));
-                resp.clearCookie('drift-token');
-                resp.clearCookie('drift-userid');
 
-                return resp
-            }
-        } else if (pathname === '/') {
+    if (pathname === '/signout') {
+        // If you're signed in we remove the cookie and redirect to the home page
+        // If you're not signed in we redirect to the home page
+        if (signedIn) {
+            const resp = NextResponse.redirect(getURL(''));
+            resp.clearCookie('drift-token');
+            resp.clearCookie('drift-userid');
+
+            return resp
+        }
+    } else if (isPageRequest) {
+        if (pathname === '/') {
             if (signedIn) {
                 return NextResponse.redirect(getURL('new'))
             }

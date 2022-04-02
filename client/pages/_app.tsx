@@ -2,11 +2,8 @@ import '@styles/globals.css'
 import type { AppProps as NextAppProps } from "next/app";
 
 import 'react-loading-skeleton/dist/skeleton.css'
-import { SkeletonTheme } from 'react-loading-skeleton';
 import Head from 'next/head';
-import { CssBaseline, GeistProvider, Themes } from '@geist-ui/core';
-import { useTheme, ThemeProvider } from 'next-themes'
-import { useEffect } from 'react';
+import { ThemeProvider } from 'next-themes'
 import App from '@components/app';
 
 type AppProps<P = any> = {

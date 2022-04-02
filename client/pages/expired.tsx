@@ -5,7 +5,6 @@ import styles from '@styles/Home.module.css'
 const Expired = () => {
     return (
         <Page>
-            <Header />
             <Page.Content className={styles.main}>
                 <Note type="error" label={false}>
                     <Text h4>Error: The Drift you&apos;re trying to view has expired.</Text>

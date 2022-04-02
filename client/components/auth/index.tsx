@@ -29,7 +29,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
                     const res = await resp.json()
                     setRequiresServerPassword(res.requiresPasscode)
                 } else {
-                    setErrorMsg("Something went wrong.")
+                    setErrorMsg("Something went wrong. Is the server running?")
                 }
             }
         }

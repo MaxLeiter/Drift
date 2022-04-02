@@ -14,10 +14,6 @@ const New = () => {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/css/react-datepicker.css" />
       </Head>
-      <Page.Header>
-        <Header />
-      </Page.Header>
-
       <Page.Content className={styles.main}>
         <NewPost />
       </Page.Content>

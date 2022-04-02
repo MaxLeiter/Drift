@@ -1,4 +1,3 @@
-import Header from "@components/header/header"
 import PageSeo from "@components/page-seo"
 import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from '@components/view-document'
@@ -88,9 +87,6 @@ const PostPage = ({ post }: Props) => {
                 isPrivate={false}
             />
 
-            <Page.Header>
-                <Header />
-            </Page.Header>
             <Page.Content className={homeStyles.main}>
                 <div className={styles.header}>
                     <span className={styles.title}>

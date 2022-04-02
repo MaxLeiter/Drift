@@ -1,43 +1,62 @@
 .tabs {
-  flex: 1 1;
-  padding: 0 var(--gap);
+	justify-content: center;
+	display: flex;
+	margin-top: var(--gap);
+}
+
+.tabs .buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tabs .buttons > button,
+.tabs .buttons > a > button {
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+}
+
+.tabs .active {
+	border-bottom: 1px solid var(--darker-gray) !important;
 }
 
 .mobile {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 1;
 }
 
 .controls {
-  display: none !important;
+	margin-top: var(--gap);
+	display: none !important;
 }
 
 @media only screen and (max-width: 650px) {
-  .tabs {
-    display: none;
-  }
+	.tabs {
+		display: none;
+	}
 
-  .controls {
-    display: block !important;
-  }
+	.controls {
+		display: block !important;
+	}
 }
 
 .controls button:active,
 .controls button:focus,
 .controls button:hover {
-  outline: 1px solid rgba(0, 0, 0, 0.2);
+	outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .wrapper {
-  display: flex;
-  align-items: center;
-  width: min-content;
+	display: flex;
+	align-items: center;
+	width: min-content;
 }
 
 .selectContent {
-  width: auto;
-  height: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	width: auto;
+	height: 18px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }

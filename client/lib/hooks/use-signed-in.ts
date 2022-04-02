@@ -12,6 +12,7 @@ const useSignedIn = () => {
 	const router = useRouter()
 	const signin = (token: string) => {
 		setSignedIn(true)
+		// TODO: investigate SameSite / CORS cookie security
 		Cookies.set("drift-token", token)
 	}
 
