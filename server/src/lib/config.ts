@@ -30,7 +30,7 @@ const config = (): Config => {
 	}
 
 	const validNodeEnvs = (str: string | undefined) => {
-		const valid = ["development", "production"]
+		const valid = ["development", "production", "test"]
 		if (str && !valid.includes(str)) {
 			throw new Error(`Invalid NODE_ENV set: ${str}`)
 		} else if (!str) {

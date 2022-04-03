@@ -1,0 +1,21 @@
+name: Server CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: Install deps
+        run: yarn
+      - name: Run tests
+        run: yarn test
