@@ -20,8 +20,8 @@ app.use("/admin", admin)
 app.use("/health", health)
 
 app.get("/welcome", secretKey, (req, res) => {
-	const introContent = process.env.WELCOME_CONTENT
-	const introTitle = process.env.WELCOME_TITLE
+	const introContent = config.welcome_content
+	const introTitle = config.welcome_title
 	if (!introContent || !introTitle) {
 		return res.status(500).json({ error: "Missing welcome content" })
 	}
