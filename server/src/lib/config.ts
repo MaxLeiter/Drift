@@ -29,6 +29,13 @@ const config = (): Config => {
 		return str
 	}
 
+	const defaultIfUndefined = (str: string | undefined, defaultValue: string): string => {
+		if (str === undefined) {
+			return defaultValue
+		}
+		return str
+	}
+
 	const validNodeEnvs = (str: string | undefined) => {
 		const valid = ["development", "production", "test"]
 		if (str && !valid.includes(str)) {
@@ -40,16 +47,23 @@ const config = (): Config => {
 		}
 	}
 
+	const is_production = process.env.NODE_ENV === "production";
+
+	const developmentDefault = (str: string | undefined, name: string, defaultValue: string): string => {
+		if (is_production) return throwIfUndefined(str, name);
+		return defaultIfUndefined(str, defaultValue);
+	}
+
 	validNodeEnvs(process.env.NODE_ENV)
 
 	const config: Config = {
 		port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
 		jwt_secret: process.env.JWT_SECRET || "myjwtsecret",
 		drift_home: process.env.DRIFT_HOME || "~/.drift",
-		is_production: process.env.NODE_ENV === "production",
+		is_production,
 		memory_db: stringToBoolean(process.env.MEMORY_DB),
 		enable_admin: stringToBoolean(process.env.ENABLE_ADMIN),
-		secret_key: throwIfUndefined(process.env.SECRET_KEY, "SECRET_KEY"),
+		secret_key: developmentDefault(process.env.SECRET_KEY, "SECRET_KEY", "secret"),
 		registration_password: process.env.REGISTRATION_PASSWORD || ""
 	}
 	return config
