@@ -174,7 +174,7 @@ const Header = () => {
     const buttons = useMemo(() => pages.map(getButton), [pages, getButton])
 
     return (
-        <Page.Header height={'var(--page-nav-height)'} marginBottom={2}>
+        <Page.Header>
             <div className={styles.tabs}>
                 <div className={styles.buttons}>
                     {buttons}
@@ -192,7 +192,8 @@ const Header = () => {
                     <MenuIcon />
                 </Button>
             </div>
-            {isMobile && expanded && (<div className={styles.mobile}>
+            {/* setExpanded should occur elsewhere; we don't want to close if they change themes */}
+            {isMobile && expanded && (<div className={styles.mobile} onClick={() => setExpanded(!expanded)}>
                 <ButtonGroup vertical style={{
                     background: "var(--bg)",
                 }}>

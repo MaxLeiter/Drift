@@ -3,7 +3,6 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: var(--gap);
 }
 
 .header .title .badges {
@@ -20,6 +19,7 @@
 .header .buttons {
 	display: flex;
 	justify-content: flex-end;
+	margin-bottom: var(--gap);
 }
 
 @media screen and (max-width: 900px) {

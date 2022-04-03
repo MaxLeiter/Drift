@@ -89,20 +89,8 @@ const PostPage = ({ post }: Props) => {
 
             <Page.Content className={homeStyles.main}>
                 <div className={styles.header}>
-                    <span className={styles.title}>
-                        <Text h3>{post.title}</Text>
-                        <span className={styles.badges}>
-                            <VisibilityBadge visibility={post.visibility} />
-                            <CreatedAgoBadge createdAt={post.createdAt} />
-                            <ExpirationBadge postExpirationDate={post.expiresAt} />
-                        </span>
-                    </span>
-
                     <span className={styles.buttons}>
-                        <ButtonGroup vertical={isMobile}>
-                            <Button auto onClick={download} icon={<Archive />} style={{ textTransform: 'none' }}>
-                                Download as ZIP Archive
-                            </Button>
+                        <ButtonGroup vertical={isMobile} marginLeft={0} marginRight={0} marginTop={1} marginBottom={1}>
                             <Button
                                 auto
                                 icon={<Edit />}
@@ -117,9 +105,22 @@ const PostPage = ({ post }: Props) => {
                             >
                                 View Parent
                             </Button>}
+                            <Button auto onClick={download} icon={<Archive />} style={{ textTransform: 'none' }}>
+                                Download as ZIP Archive
+                            </Button>
                             <FileDropdown isMobile={isMobile} files={post.files || []} />
                         </ButtonGroup>
                     </span>
+                    <span className={styles.title}>
+                        <Text h3>{post.title}</Text>
+                        <span className={styles.badges}>
+                            <VisibilityBadge visibility={post.visibility} />
+                            <CreatedAgoBadge createdAt={post.createdAt} />
+                            <ExpirationBadge postExpirationDate={post.expiresAt} />
+                        </span>
+                    </span>
+
+
                 </div>
                 {/* {post.files.length > 1 && <FileTree files={post.files} />} */}
                 {post.files?.map(({ id, content, title }: File) => (

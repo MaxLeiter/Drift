@@ -1,7 +1,7 @@
 .tabs {
 	justify-content: center;
 	display: flex;
-	margin-top: var(--gap);
+	margin: var(--gap) 0;
 }
 
 .tabs .buttons {
@@ -22,7 +22,7 @@
 }
 
 .mobile {
-	position: relative;
+	position: absolute;
 	z-index: 1;
 }
 
