@@ -2,7 +2,7 @@ import { Router } from "express"
 import { genSalt, hash, compare } from "bcryptjs"
 import { User } from "@lib/models/User"
 import { JWTDenyList } from "@lib/models/JWTDenyList"
-import { sign } from "jsonwebtoken"
+import { sign, verify } from "jsonwebtoken"
 import config from "@lib/config"
 import jwt from "@lib/middleware/jwt"
 import { celebrate, Joi } from "celebrate"
@@ -150,12 +150,24 @@ auth.post("/signout", jwt, async (req, res, next) => {
 	try {
 		const authHeader = req.headers["authorization"]
 		const token = authHeader?.split(" ")[1]
-		const denylist = await new JWTDenyList({token})
+		let reason = ""
+		if (token == null) return res.sendStatus(401)
+		
+		verify(token, config.jwt_secret, (err: any, user: any) => {
+			if (err) return res.sendStatus(403)
+			if(user){
+				reason = "Manually revoked"
+			} else {
+				reason = "Token expired"
+			}
+		})
+		const denylist = await new JWTDenyList({token,reason})
 		await denylist.save()
 		req.headers["authorization"] = ''
 		res.status(201).json({
 			message: "You are now logged out",
-			token
+			token,
+			reason
 		})
 
 

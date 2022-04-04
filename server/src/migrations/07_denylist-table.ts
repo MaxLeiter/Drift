@@ -13,6 +13,9 @@ export const up: Migration = async ({ context: queryInterface }) =>
 		token: {
 			type: DataTypes.STRING
 		},
+		reason: {
+			type: DataTypes.STRING
+		},
 		createdAt: {
 			type: DataTypes.DATE
 		},

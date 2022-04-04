@@ -25,6 +25,9 @@ export class JWTDenyList extends Model {
 	@Column
 	token!: string
 
+	@Column
+	reason!: string
+
 	@CreatedAt
 	@Column
 	createdAt!: Date
