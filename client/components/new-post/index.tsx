@@ -24,6 +24,7 @@ import EditDocumentList from "@components/edit-document-list"
 import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
+import Description from "./description"
 
 const Post = ({
 	initialPost,
@@ -35,6 +36,7 @@ const Post = ({
 	const { setToast } = useToasts()
 	const router = useRouter()
 	const [title, setTitle] = useState<string>()
+	const [description, setDescription] = useState<string>()
 	const [expiresAt, setExpiresAt] = useState<Date | null>(null)
 
 	const emptyDoc = useMemo(
@@ -62,6 +64,7 @@ const Post = ({
 			)
 
 			setTitle(getTitleForPostCopy(initialPost.title))
+			setDescription(initialPost.description)
 		}
 	}, [emptyDoc, initialPost])
 
@@ -88,6 +91,7 @@ const Post = ({
 				},
 				body: JSON.stringify({
 					title,
+					description,
 					files: docs,
 					...data
 				})
@@ -187,6 +191,13 @@ const Post = ({
 		[setTitle]
 	)
 
+	const onChangeDescription = useCallback(
+		(e: ChangeEvent<HTMLTextAreaElement>) => {
+			setDescription(e.target.value)
+		},
+		[setDescription]
+	)
+
 	const updateDocTitle = useCallback(
 		(i: number) => (title: string) => {
 			setDocs((docs) =>
@@ -284,6 +295,7 @@ const Post = ({
 	return (
 		<div style={{ paddingBottom: 150 }}>
 			<Title title={title} onChange={onChangeTitle} />
+			<Description description={description} onChange={onChangeDescription} />
 			<FileDropzone setDocs={uploadDocs} />
 			<EditDocumentList
 				onPaste={onPaste}

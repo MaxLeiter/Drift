@@ -13,6 +13,12 @@
 	gap: var(--gap-half);
 }
 
+.oneline {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 700px) {
 	.badges {
 		flex-direction: column;
