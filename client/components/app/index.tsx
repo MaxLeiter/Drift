@@ -1,7 +1,8 @@
-import { GeistProvider, CssBaseline, Themes } from "@geist-ui/core"
+import Header from "@components/header"
+import { GeistProvider, CssBaseline, Themes, Page } from "@geist-ui/core"
 import type { NextComponentType, NextPageContext } from "next"
 import { SkeletonTheme } from "react-loading-skeleton"
-import { useTheme } from 'next-themes'
+
 const App = ({
     Component,
     pageProps,
@@ -50,9 +51,10 @@ const App = ({
             }
         }
     )
-    return (<GeistProvider themes={[customTheme]} themeType={"custom"} >
+    return (<GeistProvider themes={[customTheme]} themeType={"custom"}>
         <SkeletonTheme baseColor={skeletonBaseColor} highlightColor={skeletonHighlightColor}>
             <CssBaseline />
+            <Header />
             <Component {...pageProps} />
         </SkeletonTheme>
     </GeistProvider >)

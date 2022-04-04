@@ -10,9 +10,6 @@ import { Page } from '@geist-ui/core';
 const Home = ({ morePosts, posts, error }: { morePosts: boolean, posts: Post[]; error: boolean; }) => {
   return (
     <Page className={styles.wrapper}>
-      <Page.Header>
-        <Header />
-      </Page.Header>
       <Page.Content className={styles.main}>
         <MyPosts morePosts={morePosts} error={error} posts={posts} />
       </Page.Content>

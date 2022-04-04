@@ -1,7 +1,7 @@
 import { Page, useToasts } from '@geist-ui/core';
 
 import type { Post } from "@lib/types";
-import PasswordModal from "@components/new-post/password";
+import PasswordModal from "@components/new-post/password-modal";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -63,6 +63,7 @@ const Post = () => {
 
     const onClose = () => {
         setIsPasswordModalOpen(false);
+        router.push("/");
     }
 
     if (!router.isReady) {
@@ -70,7 +71,9 @@ const Post = () => {
     }
 
     if (!post) {
-        return <Page><PasswordModal creating={false} onClose={onClose} onSubmit={onSubmit} isOpen={isPasswordModalOpen} /></Page>
+        return <Page>
+            <PasswordModal creating={false} onClose={onClose} onSubmit={onSubmit} isOpen={isPasswordModalOpen} />
+        </Page>
     }
 
     return (<PostPage post={post} />)

@@ -21,9 +21,11 @@ export type Post = {
 	title: string
 	description: string
 	visibility: PostVisibility
-	files: Files
+	files?: Files
 	createdAt: string
 	users?: User[]
+	parent?: Pick<Post, "id" | "title" | "visibility" | "createdAt">
+	expiresAt: Date | string | null
 }
 
 type User = {

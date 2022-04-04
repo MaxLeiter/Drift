@@ -9,5 +9,8 @@ export default function getPostPath(visibility: PostVisibility, id: string) {
 		case "unlisted":
 		case "public":
 			return `/post/${id}`
+		default:
+			console.error(`Unknown visibility: ${visibility}`)
+			return `/post/${id}`
 	}
 }

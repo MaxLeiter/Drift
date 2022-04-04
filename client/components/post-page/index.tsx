@@ -1,24 +1,61 @@
-import Header from "@components/header/header"
 import PageSeo from "@components/page-seo"
-import VisibilityBadge from "@components/visibility-badge"
+import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from '@components/view-document'
 import styles from './post-page.module.css'
 import homeStyles from '@styles/Home.module.css'
 
 import type { File, Post } from "@lib/types"
-import { Page, Button, Text, Badge, Tooltip, Spacer, ButtonDropdown, ButtonGroup, useMediaQuery } from "@geist-ui/core"
-import { useMemo, useState } from "react"
-import timeAgo from "@lib/time-ago"
+import { Page, Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core"
+import { useEffect, useState } from "react"
 import Archive from '@geist-ui/icons/archive'
+import Edit from '@geist-ui/icons/edit'
+import Parent from '@geist-ui/icons/arrowUpCircle'
 import FileDropdown from "@components/file-dropdown"
 import ScrollToTop from "@components/scroll-to-top"
+import { useRouter } from "next/router"
+import ExpirationBadge from "@components/badges/expiration-badge"
+import CreatedAgoBadge from "@components/badges/created-ago-badge"
+import Cookies from "js-cookie"
+import getPostPath from "@lib/get-post-path"
 
 type Props = {
     post: Post
 }
 
 const PostPage = ({ post }: Props) => {
+    const router = useRouter()
+
+    const isMobile = useMediaQuery("mobile")
+    const [isExpired, setIsExpired] = useState(post.expiresAt ? new Date(post.expiresAt) < new Date() : null)
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(() => {
+        if (isExpired) {
+            router.push("/expired")
+        }
+        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+
+        const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
+        if (!isOwner && expirationDate < new Date()) {
+            router.push("/expired")
+        } else {
+            setIsLoading(false)
+        }
+
+        let interval: NodeJS.Timer | null = null;
+        if (post.expiresAt) {
+            interval = setInterval(() => {
+                const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
+                setIsExpired(expirationDate < new Date())
+            }, 4000)
+        }
+        return () => {
+            if (interval) clearInterval(interval)
+        }
+    }, [isExpired, post.expiresAt, post.users, router])
+
+
     const download = async () => {
+        if (!post.files) return
         const downloadZip = (await import("client-zip")).downloadZip
         const blob = await downloadZip(post.files.map((file: any) => {
             return {
@@ -33,11 +70,15 @@ const PostPage = ({ post }: Props) => {
         link.click()
         link.remove()
     }
-    const createdDate = useMemo(() => new Date(post.createdAt), [post.createdAt])
-    const [time, setTimeAgo] = useState(timeAgo(createdDate))
 
-    const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
-    const isMobile = useMediaQuery("mobile")
+    const editACopy = () => {
+        router.push(`/new/from/${post.id}`)
+    }
+
+    if (isLoading) {
+        return <></>
+    }
+
     return (
         <Page width={"100%"}>
             <PageSeo
@@ -46,30 +87,43 @@ const PostPage = ({ post }: Props) => {
                 isPrivate={false}
             />
 
-            <Page.Header>
-                <Header />
-            </Page.Header>
             <Page.Content className={homeStyles.main}>
-                {/* {!isLoading && <PostFileExplorer files={post.files} />} */}
                 <div className={styles.header}>
-                    <span className={styles.title}>
-                        <Text h3>{post.title}</Text>
-                        <div className={styles.badges}>
-                            <VisibilityBadge visibility={post.visibility} />
-                            <Badge type="secondary"><Tooltip text={formattedTime}>{time}</Tooltip></Badge>
-                        </div>
-                    </span>
                     <span className={styles.buttons}>
-                        <ButtonGroup vertical={isMobile}>
-                            <Button auto onClick={download} icon={<Archive />}>
-                                Download as ZIP archive
+                        <ButtonGroup vertical={isMobile} marginLeft={0} marginRight={0} marginTop={1} marginBottom={1}>
+                            <Button
+                                auto
+                                icon={<Edit />}
+                                onClick={editACopy}
+                                style={{ textTransform: 'none' }}>
+                                Edit a Copy
                             </Button>
-                            <FileDropdown files={post.files} />
+                            {post.parent && <Button
+                                auto
+                                icon={<Parent />}
+                                onClick={() => router.push(getPostPath(post.parent!.visibility, post.parent!.id))}
+                            >
+                                View Parent
+                            </Button>}
+                            <Button auto onClick={download} icon={<Archive />} style={{ textTransform: 'none' }}>
+                                Download as ZIP Archive
+                            </Button>
+                            <FileDropdown isMobile={isMobile} files={post.files || []} />
                         </ButtonGroup>
                     </span>
+                    <span className={styles.title}>
+                        <Text h3>{post.title}</Text>
+                        <span className={styles.badges}>
+                            <VisibilityBadge visibility={post.visibility} />
+                            <CreatedAgoBadge createdAt={post.createdAt} />
+                            <ExpirationBadge postExpirationDate={post.expiresAt} />
+                        </span>
+                    </span>
+
+
                 </div>
                 {/* {post.files.length > 1 && <FileTree files={post.files} />} */}
-                {post.files.map(({ id, content, title }: File) => (
+                {post.files?.map(({ id, content, title }: File) => (
                     <DocumentComponent
                         key={id}
                         title={title}

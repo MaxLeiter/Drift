@@ -95,7 +95,15 @@ admin.get("/post/:id", async (req, res, next) => {
 
 admin.delete("/post/:id", async (req, res, next) => {
 	try {
-		const post = await Post.findByPk(req.params.id)
+		const post = await Post.findByPk(req.params.id, {
+			include: [
+				{
+					model: File,
+					as: "files"
+				}
+			]
+		})
+
 		if (!post) {
 			return res.status(404).json({
 				message: "Post not found"

@@ -36,19 +36,14 @@ posts.post(
 				.custom(postVisibilitySchema, "valid visibility")
 				.required(),
 			userId: Joi.string().required(),
-			password: Joi.string().optional()
+			password: Joi.string().optional(),
+			//  expiresAt, allow to be null
+			expiresAt: Joi.date().optional().allow(null, ""),
+			parentId: Joi.string().optional().allow(null, "")
 		}
 	}),
 	async (req, res, next) => {
 		try {
-			let hashedPassword: string = ""
-			if (req.body.visibility === "protected") {
-				hashedPassword = crypto
-					.createHash("sha256")
-					.update(req.body.password)
-					.digest("hex")
-			}
-
 			// check if all files have titles
 			const files = req.body.files as File[]
 			const fileTitles = files.map((file) => file.title)
@@ -61,10 +56,19 @@ posts.post(
 				throw new Error("You must submit at least one file")
 			}
 
+			let hashedPassword: string = ""
+			if (req.body.visibility === "protected") {
+				hashedPassword = crypto
+					.createHash("sha256")
+					.update(req.body.password)
+					.digest("hex")
+			}
+
 			const newPost = new Post({
 				title: req.body.title,
 				visibility: req.body.visibility,
-				password: hashedPassword
+				password: hashedPassword,
+				expiresAt: req.body.expiresAt
 			})
 
 			await newPost.save()
@@ -95,6 +99,22 @@ posts.post(
 					await newPost.save()
 				})
 			)
+			if (req.body.parentId) {
+				// const parentPost = await Post.findOne({
+				// 	where: { id: req.body.parentId }
+				// })
+				// if (parentPost) {
+				// 	await parentPost.$add("children", newPost.id)
+				// 	await parentPost.save()
+				// }
+				const parentPost = await Post.findByPk(req.body.parentId)
+				if (parentPost) {
+					newPost.$set("parent", req.body.parentId)
+					await newPost.save()
+				} else {
+					throw new Error("Parent post not found")
+				}
+			}
 
 			res.json(newPost)
 		} catch (e) {
@@ -132,9 +152,14 @@ posts.get("/mine", jwt, async (req: UserJwtRequest, res, next) => {
 							model: File,
 							as: "files",
 							attributes: ["id", "title", "createdAt"]
+						},
+						{
+							model: Post,
+							as: "parent",
+							attributes: ["id", "title", "visibility"]
 						}
 					],
-					attributes: ["id", "title", "visibility", "createdAt"]
+					attributes: ["id", "title", "visibility", "createdAt", "expiresAt"]
 				}
 			]
 		})
@@ -234,7 +259,22 @@ posts.get(
 						model: User,
 						as: "users",
 						attributes: ["id", "username"]
+					},
+					{
+						model: Post,
+						as: "parent",
+						attributes: ["id", "title", "visibility", "createdAt"]
 					}
+				],
+				attributes: [
+					"id",
+					"title",
+					"visibility",
+					"createdAt",
+					"updatedAt",
+					"deletedAt",
+					"expiresAt",
+					"password"
 				]
 			})
 
@@ -286,6 +326,11 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 				{
 					model: User,
 					as: "users",
+					attributes: ["id"]
+				},
+				{
+					model: File,
+					as: "files",
 					attributes: ["id"]
 				}
 			]

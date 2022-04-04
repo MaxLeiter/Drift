@@ -3,7 +3,7 @@ import { Modal, Note, Spacer, Input } from "@geist-ui/core"
 import { useState } from "react"
 
 type Props = {
-    creating?: boolean
+    creating: boolean
     isOpen: boolean
     onClose: () => void
     onSubmit: (password: string) => void
@@ -29,7 +29,9 @@ const PasswordModal = ({ isOpen, onClose, onSubmit: onSubmitAfterVerify, creatin
     }
 
     return (<>
-        {<Modal visible={isOpen} >
+        {/* TODO: investigate disableBackdropClick not updating state? */}
+
+        {<Modal visible={isOpen} disableBackdropClick={true} >
             <Modal.Title>Enter a password</Modal.Title>
             <Modal.Content>
                 {!error && creating && <Note type="warning" label='Warning'>

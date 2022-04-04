@@ -13,12 +13,17 @@ type Item = File & {
 }
 
 const FileDropdown = ({
-    files
+    files,
+    isMobile
 }: {
-    files: File[]
+    files: File[],
+    isMobile: boolean
 }) => {
     const [expanded, setExpanded] = useState(false)
     const [items, setItems] = useState<Item[]>([])
+    const changeHandler = (next: boolean) => {
+        setExpanded(next)
+    }
 
     const onOpen = useCallback(() => {
         setExpanded(true)
@@ -62,11 +67,16 @@ const FileDropdown = ({
 
     // a list of files with an icon and a title
     return (
-        <Button auto onClick={onOpen} className={styles.button} iconRight={<ChevronDown />}>
-            <Popover content={content} visible={expanded} hideArrow={true}>
+        <>
+            <Button auto onClick={onOpen} className={styles.button} iconRight={<ChevronDown />} style={{ textTransform: 'none' }} >
                 Jump to {files.length} {files.length === 1 ? 'file' : 'files'}
-            </Popover>
-        </Button >
+            </Button>
+            <Popover
+                style={{ transform: isMobile ? "translateX(110px)" : "translateX(-75px)" }}
+                onVisibleChange={changeHandler}
+                content={content} visible={expanded} hideArrow={true} onClick={onClose} />
+        </>
+
     )
 }
 

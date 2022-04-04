@@ -34,19 +34,6 @@
 	color: var(--fg);
 }
 
-/*   
---bg: #131415;
-  --fg: #fafbfc;
-  --gray: #666;
-  --light-gray: #444;
-  --lighter-gray: #222;
-  --lightest-gray: #1a1a1a;
-  --article-color: #eaeaea;
-  --header-bg: rgba(19, 20, 21, 0.45);
-  --gray-alpha: rgba(255, 255, 255, 0.5);
-  --selection: rgba(255, 255, 255, 0.99);
- */
-
 .primary {
 	background: var(--fg);
 	color: var(--bg);

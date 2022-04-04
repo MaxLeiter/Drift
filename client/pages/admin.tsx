@@ -20,9 +20,6 @@ const AdminPage = () => {
     }, [router, signedIn])
     return (
         <Page className={styles.wrapper}>
-            <Page.Header>
-                <Header />
-            </Page.Header>
             <Page.Content className={styles.main}>
                 <Admin />
             </Page.Content>
