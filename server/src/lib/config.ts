@@ -6,12 +6,12 @@ type Config = {
 	memory_db: boolean
 	enable_admin: boolean
 	secret_key: string
-	registration_password: string,
-	welcome_content: string | undefined,
-	welcome_title: string | undefined,
+	registration_password: string
+	welcome_content: string | undefined
+	welcome_title: string | undefined
 }
 
-type EnvironmentValue = string | undefined;
+type EnvironmentValue = string | undefined
 type Environment = { [key: string]: EnvironmentValue }
 
 export const config = (env: Environment): Config => {
@@ -34,7 +34,10 @@ export const config = (env: Environment): Config => {
 		return str
 	}
 
-	const defaultIfUndefined = (str: EnvironmentValue, defaultValue: string): string => {
+	const defaultIfUndefined = (
+		str: EnvironmentValue,
+		defaultValue: string
+	): string => {
 		if (str === undefined) {
 			return defaultValue
 		}
@@ -52,11 +55,15 @@ export const config = (env: Environment): Config => {
 		}
 	}
 
-	const is_production = env.NODE_ENV === "production";
+	const is_production = env.NODE_ENV === "production"
 
-	const developmentDefault = (str: EnvironmentValue, name: string, defaultValue: string): string => {
-		if (is_production) return throwIfUndefined(str, name);
-		return defaultIfUndefined(str, defaultValue);
+	const developmentDefault = (
+		str: EnvironmentValue,
+		name: string,
+		defaultValue: string
+	): string => {
+		if (is_production) return throwIfUndefined(str, name)
+		return defaultIfUndefined(str, defaultValue)
 	}
 
 	validNodeEnvs(env.NODE_ENV)
@@ -72,7 +79,6 @@ export const config = (env: Environment): Config => {
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT,
 		welcome_title: env.WELCOME_TITLE
-
 	}
 	return config
 }
