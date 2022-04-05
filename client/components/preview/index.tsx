@@ -1,3 +1,4 @@
+import Cookies from "js-cookie"
 import { memo, useEffect, useState } from "react"
 import styles from './preview.module.css'
 
@@ -24,16 +25,18 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
                     setIsLoading(false)
                 }
             } else if (content) {
-                const resp = await fetch(`/api/render-markdown`, {
+                const resp = await fetch("/server-api/files/html", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${Cookies.get("drift-token") || ""}`,
                     },
                     body: JSON.stringify({
                         title,
                         content,
                     }),
                 })
+
                 if (resp.ok) {
                     const res = await resp.text()
                     setPreview(res)
