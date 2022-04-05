@@ -2,8 +2,33 @@ import { celebrate, Joi } from "celebrate"
 import { Router } from "express"
 import { File } from "@lib/models/File"
 import secretKey from "@lib/middleware/secret-key"
+import jwt from "@lib/middleware/jwt"
+import getHtmlFromFile from "@lib/get-html-from-drift-file"
 
 export const files = Router()
+
+files.post(
+	"/html",
+	jwt,
+	// celebrate({
+	// 	body: Joi.object().keys({
+	// 		content: Joi.string().required().allow(""),
+	// 		title: Joi.string().required().allow(""),
+	// 	})
+	// }),
+	async (req, res, next) => {
+		const { content, title } = req.body
+		const renderedHtml = getHtmlFromFile({
+			content,
+			title
+		})
+
+		res.setHeader("Content-Type", "text/plain")
+		// res.setHeader("Cache-Control", "public, max-age=4800")
+		res.status(200).write(renderedHtml)
+		res.end()
+	}
+)
 
 files.get(
 	"/raw/:id",

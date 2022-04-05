@@ -6,9 +6,9 @@ import jwt, { UserJwtRequest } from "@lib/middleware/jwt"
 import * as crypto from "crypto"
 import { User } from "@lib/models/User"
 import secretKey from "@lib/middleware/secret-key"
-import markdown from "@lib/render-markdown"
 import { Op } from "sequelize"
 import { PostAuthor } from "@lib/models/PostAuthor"
+import getHtmlFromFile from "@lib/get-html-from-drift-file"
 
 export const posts = Router()
 
@@ -358,34 +358,3 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 	}
 })
 
-function getHtmlFromFile(file: any) {
-	const renderAsMarkdown = [
-		"markdown",
-		"md",
-		"mdown",
-		"mkdn",
-		"mkd",
-		"mdwn",
-		"mdtxt",
-		"mdtext",
-		"text",
-		""
-	]
-	const fileType = () => {
-		const pathParts = file.title.split(".")
-		const language = pathParts.length > 1 ? pathParts[pathParts.length - 1] : ""
-		return language
-	}
-	const type = fileType()
-	let contentToRender: string = file.content || ""
-
-	if (!renderAsMarkdown.includes(type)) {
-		contentToRender = `~~~${type}
-${file.content}
-~~~`
-	} else {
-		contentToRender = "\n" + file.content
-	}
-	const html = markdown(contentToRender)
-	return html
-}
