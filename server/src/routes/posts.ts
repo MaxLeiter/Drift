@@ -240,6 +240,10 @@ posts.get(
 		}
 	}),
 	async (req: UserJwtRequest, res, next) => {
+		const isUserAuthor = (post: Post) => {
+			return req.user?.id && post.users?.map((user) => user.id).includes(req.user?.id)
+		}
+
 		try {
 			const post = await Post.findByPk(req.params.id, {
 				include: [
@@ -293,20 +297,30 @@ posts.get(
 				})
 			} else if (post.visibility === "private") {
 				jwt(req as UserJwtRequest, res, () => {
-					res.json(post)
+					if (isUserAuthor(post)) {
+						res.json(post)
+					} else {
+						res.status(403).send()
+					}
 				})
 			} else if (post.visibility === "protected") {
 				const { password } = req.query
 				if (!password || typeof password !== "string") {
 					return jwt(req as UserJwtRequest, res, () => {
-						res.json(post)
+						if (isUserAuthor(post)) {
+							res.json(post)
+						} else {
+							res.status(403).send()
+						}
 					})
 				}
+
 				const hash = crypto
 					.createHash("sha256")
 					.update(password)
 					.digest("hex")
 					.toString()
+
 				if (hash !== post.password) {
 					return res.status(400).json({ error: "Incorrect password." })
 				}
