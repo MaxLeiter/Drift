@@ -38,5 +38,5 @@ export class JWTDenyList extends Model {
 
 	@DeletedAt
 	@Column
-	deleteddAt!: Date
+	deletedAt?: Date
 }

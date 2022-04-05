@@ -357,4 +357,3 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 		next(e)
 	}
 })
-

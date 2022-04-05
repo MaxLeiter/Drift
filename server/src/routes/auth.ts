@@ -152,25 +152,23 @@ auth.post("/signout", jwt, async (req, res, next) => {
 		const token = authHeader?.split(" ")[1]
 		let reason = ""
 		if (token == null) return res.sendStatus(401)
-		
+
 		verify(token, config.jwt_secret, (err: any, user: any) => {
 			if (err) return res.sendStatus(403)
-			if(user){
+			if (user) {
 				reason = "Manually revoked"
 			} else {
 				reason = "Token expired"
 			}
 		})
-		const denylist = await new JWTDenyList({token,reason})
+		const denylist = await new JWTDenyList({ token, reason })
 		await denylist.save()
-		req.headers["authorization"] = ''
+		req.headers["authorization"] = ""
 		res.status(201).json({
 			message: "You are now logged out",
 			token,
 			reason
 		})
-
-
 	} catch (e) {
 		next(e)
 	}
