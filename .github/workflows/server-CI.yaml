@@ -1,6 +1,11 @@
 name: Server CI
 
-on: push
+on:
+  push:
+    paths:
+    - 'server/**'
+    - '.github/workflows/**'
+
 
 jobs:
   build:
