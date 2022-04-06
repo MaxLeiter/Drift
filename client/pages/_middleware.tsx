@@ -1,14 +1,14 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_FILE = /.(.*)$/
+const PUBLIC_FILE = /\.(.*)$/
 
 export function middleware(req: NextRequest, event: NextFetchEvent) {
     const pathname = req.nextUrl.pathname
     const signedIn = req.cookies['drift-token']
     const getURL = (pageName: string) => new URL(`/${pageName}`, req.url).href
     const isPageRequest =
-        !PUBLIC_FILE.test(req.nextUrl.pathname) &&
-        !req.nextUrl.pathname.startsWith('/api') &&
+        !PUBLIC_FILE.test(pathname) &&
+        !pathname.startsWith('/api') &&
         // header added when next/link pre-fetches a route
         !req.headers.get('x-middleware-preflight')
 
