@@ -1,5 +1,4 @@
 import styles from '@styles/Home.module.css'
-import Header from '@components/header'
 import PageSeo from '@components/page-seo'
 import HomeComponent from '@components/home'
 import { Page, Text } from '@geist-ui/core'
