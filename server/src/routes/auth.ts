@@ -1,11 +1,12 @@
 import { Router } from "express"
 import { genSalt, hash, compare } from "bcryptjs"
 import { User } from "@lib/models/User"
-import { JWTDenyList } from "@lib/models/JWTDenyList"
+import { AuthToken } from "@lib/models/AuthToken"
 import { sign, verify } from "jsonwebtoken"
 import config from "@lib/config"
 import jwt from "@lib/middleware/jwt"
 import { celebrate, Joi } from "celebrate"
+import secretKey from "@lib/middleware/secret-key"
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 
@@ -71,7 +72,7 @@ auth.post(
 
 			const created_user = await User.create(user)
 
-			const token = generateAccessToken(created_user.id)
+			const token = generateAccessToken(created_user)
 
 			res.status(201).json({ token: token, userId: created_user.id })
 		} catch (e) {
@@ -109,7 +110,7 @@ auth.post(
 
 			const password_valid = await compare(req.body.password, user.password)
 			if (password_valid) {
-				const token = generateAccessToken(user.id)
+				const token = generateAccessToken(user)
 				res.status(200).json({ token: token, userId: user.id })
 			} else {
 				throw errorToThrow
@@ -132,8 +133,19 @@ auth.get("/requires-passcode", async (req, res, next) => {
 	}
 })
 
-function generateAccessToken(id: string) {
-	return sign({ id: id }, config.jwt_secret, { expiresIn: "2d" })
+
+/**
+ * Creates an access token, stores it in AuthToken table, and returns it
+ */
+function generateAccessToken(user: User) {
+	const token = sign({ id: user.id }, config.jwt_secret, { expiresIn: "2d" })
+	const authToken = new AuthToken({
+		userId: user.id,
+		token: token
+	})
+	authToken.save()
+
+	return token
 }
 
 auth.get("/verify-token", jwt, async (req, res, next) => {
@@ -146,28 +158,38 @@ auth.get("/verify-token", jwt, async (req, res, next) => {
 	}
 })
 
-auth.post("/signout", jwt, async (req, res, next) => {
+auth.post("/signout", secretKey, async (req, res, next) => {
 	try {
 		const authHeader = req.headers["authorization"]
 		const token = authHeader?.split(" ")[1]
 		let reason = ""
 		if (token == null) return res.sendStatus(401)
 
-		verify(token, config.jwt_secret, (err: any, user: any) => {
-			if (err) return res.sendStatus(403)
-			if (user) {
-				reason = "Manually revoked"
-			} else {
+		verify(token, config.jwt_secret, async (err: any, user: any) => {
+			if (err) {
 				reason = "Token expired"
+			} else if (user) {
+				reason = "User signed out"
+			} else {
+				reason = "Unknown"
 			}
-		})
-		const denylist = await new JWTDenyList({ token, reason })
-		await denylist.save()
-		req.headers["authorization"] = ""
-		res.status(201).json({
-			message: "You are now logged out",
-			token,
-			reason
+
+			// find and destroy the AuthToken + set the reason
+			const authToken = await AuthToken.findOne({ where: { token: token } })
+			if (authToken == null) {
+				res.sendStatus(401)
+			} else {
+				authToken.expiredReason = reason
+				authToken.save()
+				authToken.destroy()
+			}
+
+			req.headers["authorization"] = ""
+			res.status(201).json({
+				message: "You are now logged out",
+				token,
+				reason
+			})
 		})
 	} catch (e) {
 		next(e)

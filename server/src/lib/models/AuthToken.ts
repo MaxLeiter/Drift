@@ -8,11 +8,14 @@ import {
 	CreatedAt,
 	UpdatedAt,
 	DeletedAt,
-	Unique
+	Unique,
+	BelongsTo,
+	ForeignKey
 } from "sequelize-typescript"
+import { User } from "./User"
 
 @Table
-export class JWTDenyList extends Model {
+export class AuthToken extends Model {
 	@IsUUID(4)
 	@PrimaryKey
 	@Unique
@@ -25,8 +28,15 @@ export class JWTDenyList extends Model {
 	@Column
 	token!: string
 
+	@BelongsTo(() => User, "userId")
+	user!: User
+
+	@ForeignKey(() => User)
 	@Column
-	reason!: string
+	userId!: number
+
+	@Column
+	expiredReason?: string
 
 	@CreatedAt
 	@Column

@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
 
 const PUBLIC_FILE = /.(.*)$/
 
-export function middleware(req: NextRequest) {
+export function middleware(req: NextRequest, event: NextFetchEvent) {
     const pathname = req.nextUrl.pathname
     const signedIn = req.cookies['drift-token']
     const getURL = (pageName: string) => new URL(`/${pageName}`, req.url).href
@@ -19,6 +19,20 @@ export function middleware(req: NextRequest) {
             const resp = NextResponse.redirect(getURL(''));
             resp.clearCookie('drift-token');
             resp.clearCookie('drift-userid');
+            const signoutPromise = new Promise((resolve) => {
+                fetch(`${process.env.API_URL}/auth/signout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${signedIn}`,
+                        'x-secret-key': process.env.SECRET_KEY || '',
+                    },
+                })
+                    .then(() => {
+                        resolve(true)
+                    })
+            })
+            event.waitUntil(signoutPromise)
 
             return resp
         }

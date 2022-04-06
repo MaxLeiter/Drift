@@ -1,3 +1,4 @@
+import { AuthToken } from "@lib/models/AuthToken"
 import { NextFunction, Request, Response } from "express"
 import * as jwt from "jsonwebtoken"
 import config from "../config"
@@ -11,7 +12,7 @@ export interface UserJwtRequest extends Request {
 	user?: User
 }
 
-export default function authenticateToken(
+export default async function authenticateToken(
 	req: UserJwtRequest,
 	res: Response,
 	next: NextFunction
@@ -20,6 +21,17 @@ export default function authenticateToken(
 	const token = authHeader && authHeader.split(" ")[1]
 
 	if (token == null) return res.sendStatus(401)
+
+	const authToken = await AuthToken.findOne({ where: { token: token } })
+	if (authToken == null) {
+		return res.sendStatus(401)
+	}
+
+	if (authToken.deletedAt) {
+		return res.sendStatus(401).json({
+			message: "Token is no longer valid",
+		})
+	}
 
 	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
 		if (err) return res.sendStatus(403)
