@@ -12,7 +12,7 @@
 		"migrate:down": "ts-node migrate down",
 		"migrate": "ts-node migrate",
 		"lint": "prettier --config .prettierrc 'src/**/*.ts' 'index.ts' --write",
-		"test": "jest"
+		"test": "jest --silent"
 	},
 	"author": "",
 	"license": "ISC",
