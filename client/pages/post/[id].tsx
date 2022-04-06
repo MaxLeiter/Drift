@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps } from "next";
+import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 
 import type { Post } from "@lib/types";
 import PostPage from "@components/post-page";
@@ -11,25 +11,7 @@ const PostView = ({ post }: PostProps) => {
     return <PostPage post={post} />
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const posts = await fetch(process.env.API_URL + `/posts/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "x-secret-key": process.env.SECRET_KEY || "",
-        }
-    })
-
-    const json = await posts.json()
-    const filtered = json.filter((post: Post) => post.visibility === "public" || post.visibility === "unlisted")
-    const paths = filtered.map((post: Post) => ({
-        params: { id: post.id }
-    }))
-
-    return { paths, fallback: 'blocking' }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, res }) => {
     const post = await fetch(process.env.API_URL + `/posts/${params?.id}`, {
         method: "GET",
         headers: {
@@ -38,21 +20,29 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         }
     })
 
-    if (!post.ok) {
+    const sMaxAge = 60 * 60 * 24
+    res.setHeader(
+        'Cache-Control',
+        `public, s-maxage=${sMaxAge}, max-age=${sMaxAge}`
+    )
+
+    if (!post.ok || post.status !== 200) {
         return {
             redirect: {
-                destination: "/404",
+                destination: '/404',
+                permanent: false,
             },
-            props: {
-                post: null
-            }
+            props: {}
         }
     }
 
+
+    const json = await post.json();
+
     return {
         props: {
-            post: await post.json()
-        },
+            post: json
+        }
     }
 }
 

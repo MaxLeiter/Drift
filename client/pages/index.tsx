@@ -2,11 +2,11 @@ import styles from '@styles/Home.module.css'
 import Header from '@components/header'
 import PageSeo from '@components/page-seo'
 import HomeComponent from '@components/home'
-import { Page, Text, Spacer, Tabs, Textarea, Card } from '@geist-ui/core'
+import { Page, Text } from '@geist-ui/core'
+import { GetServerSideProps } from 'next'
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   try {
-
     const resp = await fetch(process.env.API_URL + `/welcome`,
       {
         method: "GET",
@@ -17,6 +17,12 @@ export async function getStaticProps() {
       })
 
     const { title, content, rendered } = await resp.json()
+
+    res.setHeader(
+      'Cache-Control',
+      `public, s-maxage=${60 * 60 * 24 * 360}, max-age=${60 * 60 * 24 * 360}`
+    )
+
     return {
       props: {
         introContent: content || null,

@@ -13,7 +13,6 @@ describe("Config", () => {
 		expect(result).toHaveProperty("enable_admin")
 		expect(result).toHaveProperty("secret_key")
 		expect(result).toHaveProperty("registration_password")
-		expect(result).toHaveProperty("welcome_content")
 		expect(result).toHaveProperty("welcome_title")
 	})
 
