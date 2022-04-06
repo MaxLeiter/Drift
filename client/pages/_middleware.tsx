@@ -37,21 +37,16 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
             return resp
         }
     } else if (isPageRequest) {
-        if (pathname === '/') {
-            if (signedIn) {
+        if (signedIn) {
+            if (pathname === '/' || pathname === '/signin' || pathname === '/signup') {
                 return NextResponse.redirect(getURL('new'))
             }
-            // If you're not signed in we redirect the new post page to the home page
-        } else if (pathname === '/new') {
-            if (!signedIn) {
+        } else if (!signedIn) {
+            if (pathname === '/new') {
                 return NextResponse.redirect(getURL('signin'))
             }
-            // If you're signed in we redirect the sign in page to the home page (which is the new page)
-        } else if (pathname === '/signin' || pathname === '/signup') {
-            if (signedIn) {
-                return NextResponse.redirect(getURL(''))
-            }
         }
+
     }
 
     return NextResponse.next()
