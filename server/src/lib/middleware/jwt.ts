@@ -17,7 +17,7 @@ export default async function authenticateToken(
 	res: Response,
 	next: NextFunction
 ) {
-	const authHeader = req.headers["authorization"]
+	const authHeader = req.headers ? req.headers["authorization"] : undefined
 	const token = authHeader && authHeader.split(" ")[1]
 
 	if (token == null) return res.sendStatus(401)
