@@ -241,7 +241,10 @@ posts.get(
 	}),
 	async (req: UserJwtRequest, res, next) => {
 		const isUserAuthor = (post: Post) => {
-			return req.user?.id && post.users?.map((user) => user.id).includes(req.user?.id)
+			return (
+				req.user?.id &&
+				post.users?.map((user) => user.id).includes(req.user?.id)
+			)
 		}
 
 		try {

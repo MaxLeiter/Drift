@@ -133,7 +133,6 @@ auth.get("/requires-passcode", async (req, res, next) => {
 	}
 })
 
-
 /**
  * Creates an access token, stores it in AuthToken table, and returns it
  */

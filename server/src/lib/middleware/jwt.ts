@@ -29,7 +29,7 @@ export default async function authenticateToken(
 
 	if (authToken.deletedAt) {
 		return res.sendStatus(401).json({
-			message: "Token is no longer valid",
+			message: "Token is no longer valid"
 		})
 	}
 
