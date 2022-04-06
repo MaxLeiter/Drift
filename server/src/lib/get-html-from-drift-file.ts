@@ -32,7 +32,7 @@ ${content}
 	} else {
 		contentToRender = "\n" + content
 	}
-	console.log(contentToRender.slice(0, 50))
+
 	const html = markdown(contentToRender)
 	return html
 }

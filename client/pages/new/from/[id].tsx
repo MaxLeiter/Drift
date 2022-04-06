@@ -15,7 +15,6 @@ const NewFromExisting = ({
     post: Post,
     parentId: string
 }) => {
-    console.log(parentId, post)
     return (
         <Page className={styles.wrapper}>
             <PageSeo title="Create a new Drift" />
