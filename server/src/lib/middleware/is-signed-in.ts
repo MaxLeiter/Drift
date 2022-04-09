@@ -20,6 +20,33 @@ export default async function authenticateToken(
 	const authHeader = req.headers ? req.headers["authorization"] : undefined
 	const token = authHeader && authHeader.split(" ")[1]
 
+	if (config.header_auth && config.header_auth_name) {
+		// with header auth, we assume the user is authenticated,
+		// but their user may not be created in the database yet.
+
+		let user = await UserModel.findByPk(req.user?.id)
+		if (!user) {
+			const username = req.header[config.header_auth_name]
+			const role = config.header_auth_role ? req.header[config.header_auth_role] || "user" : "user"
+			user = new UserModel({
+				username,
+				role
+			})
+			await user.save()
+		}
+
+		if (!token) {
+			const token = jwt.sign({ id: user.id }, config.jwt_secret, {
+				expiresIn: "2d"
+			})
+			const authToken = new AuthToken({
+				userId: user.id,
+				token: token
+			})
+			await authToken.save()
+		}
+	}
+
 	if (token == null) return res.sendStatus(401)
 
 	const authToken = await AuthToken.findOne({ where: { token: token } })
@@ -34,7 +61,23 @@ export default async function authenticateToken(
 	}
 
 	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
-		if (err) return res.sendStatus(403)
+		if (err) {
+			if (config.header_auth) {
+				// if the token has expired or is invalid, we need to delete it and generate a new one
+				authToken.destroy()
+				const token = jwt.sign({ id: user.id }, config.jwt_secret, {
+					expiresIn: "2d"
+				})
+				const newToken = new AuthToken({
+					userId: user.id,
+					token: token
+				})
+				await newToken.save()
+			} else {
+				return res.sendStatus(403)
+			}
+		}
+
 		const userObj = await UserModel.findByPk(user.id, {
 			attributes: {
 				exclude: ["password"]

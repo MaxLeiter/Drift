@@ -9,6 +9,9 @@ type Config = {
 	registration_password: string
 	welcome_content: string | undefined
 	welcome_title: string | undefined
+	header_auth: boolean
+	header_auth_name: string | undefined
+	header_auth_role: string | undefined
 }
 
 type EnvironmentValue = string | undefined
@@ -78,7 +81,10 @@ export const config = (env: Environment): Config => {
 		secret_key: developmentDefault(env.SECRET_KEY, "SECRET_KEY", "secret"),
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT,
-		welcome_title: env.WELCOME_TITLE
+		welcome_title: env.WELCOME_TITLE,
+		header_auth: stringToBoolean(env.HEADER_AUTH),
+		header_auth_name: env.HEADER_AUTH_NAME,
+		header_auth_role: env.HEADER_AUTH_ROLE
 	}
 	return config
 }

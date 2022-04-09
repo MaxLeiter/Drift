@@ -55,6 +55,12 @@ You can change these to your liking.
 - `ENABLE_ADMIN`: the first account created is an administrator account
 - `DRIFT_HOME`: defaults to ~/.drift, the directory for storing the database and eventually images
 
+### For SSO
+
+- `HEADER_AUTH`: if true, enables authenthication via the HTTP header specified in `HEADER_AUTH_KEY` which generally populated at the reverse-proxy level.
+- `HEADER_AUTH_KEY`: if `HEADER_AUTH` is true, the header to look for the users username (like `Auth-User`)
+- `HEADER_AUTH_ROLE`: if `HEADER_AUTH` is true, the header to look for the users role ("user" | "admin", at the moment)
+
 ## Running with pm2
 
 It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).

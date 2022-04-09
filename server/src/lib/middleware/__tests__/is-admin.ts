@@ -2,7 +2,7 @@
 // import { app } from '../../../app'
 import { NextFunction, Response } from "express"
 import isAdmin from "@lib/middleware/is-admin"
-import { UserJwtRequest } from "@lib/middleware/jwt"
+import { UserJwtRequest } from "@lib/middleware/is-signed-in"
 
 describe("is-admin middlware", () => {
 	let mockRequest: Partial<UserJwtRequest>
