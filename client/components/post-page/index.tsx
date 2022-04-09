@@ -29,10 +29,10 @@ const PostPage = ({ post }: Props) => {
     const [isExpired, setIsExpired] = useState(post.expiresAt ? new Date(post.expiresAt) < new Date() : null)
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        if (isExpired) {
+        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+        if (!isOwner && isExpired) {
             router.push("/expired")
         }
-        const isOwner = post.users ? post.users[0].id === Cookies.get("drift-userid") : false
 
         const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
         if (!isOwner && expirationDate < new Date()) {
