@@ -1,74 +1,74 @@
 {
-  "name": "drift",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --port 3001",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint && prettier --config .prettierrc '{components,lib,pages}/**/*.ts' --write",
-    "analyze": "cross-env ANALYZE=true next build",
-    "find:unused": "next-unused"
-  },
-  "dependencies": {
-    "@geist-ui/core": "^2.3.5",
-    "@geist-ui/icons": "^1.0.1",
-    "@types/cookie": "^0.4.1",
-    "@types/js-cookie": "^3.0.1",
-    "client-zip": "^2.0.0",
-    "cookie": "^0.4.2",
-    "dotenv": "^16.0.0",
-    "js-cookie": "^3.0.1",
-    "lodash.debounce": "^4.0.8",
-    "marked": "^4.0.12",
-    "next": "^12.1.1-canary.15",
-    "next-themes": "^0.1.1",
-    "postcss": "^8.4.12",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-hover-media-feature": "^1.0.2",
-    "postcss-preset-env": "^7.4.3",
-    "preact": "^10.6.6",
-    "prism-react-renderer": "^1.3.1",
-    "react": "17.0.2",
-    "react-datepicker": "^4.7.0",
-    "react-dom": "17.0.2",
-    "react-dropzone": "^12.0.4",
-    "react-loading-skeleton": "^3.0.3",
-    "react-markdown": "^8.0.0",
-    "react-syntax-highlighter": "^15.4.5",
-    "rehype-autolink-headings": "^6.1.1",
-    "rehype-raw": "^6.1.1",
-    "rehype-slug": "^5.0.1",
-    "remark-gfm": "^3.0.1",
-    "swr": "^1.2.2"
-  },
-  "devDependencies": {
-    "@next/bundle-analyzer": "^12.1.0",
-    "@types/lodash.debounce": "^4.0.6",
-    "@types/marked": "^4.0.3",
-    "@types/node": "17.0.21",
-    "@types/nprogress": "^0.2.0",
-    "@types/react": "17.0.39",
-    "@types/react-datepicker": "^4.3.4",
-    "@types/react-dom": "^17.0.14",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "cross-env": "^7.0.3",
-    "eslint": "8.10.0",
-    "eslint-config-next": "^12.1.1-canary.16",
-    "next-unused": "^0.0.6",
-    "prettier": "^2.6.0",
-    "typescript": "4.6.2",
-    "typescript-plugin-css-modules": "^3.4.0"
-  },
-  "next-unused": {
-    "alias": {
-      "@components": "components/",
-      "@lib": "lib/",
-      "@styles": "styles/"
-    },
-    "include": [
-      "components",
-      "lib"
-    ]
-  }
+	"name": "drift",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --port 3001",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint && prettier --list-different --config .prettierrc '{components,lib,pages}/**/*.{ts,tsx}' --write",
+		"analyze": "cross-env ANALYZE=true next build",
+		"find:unused": "next-unused"
+	},
+	"dependencies": {
+		"@geist-ui/core": "^2.3.5",
+		"@geist-ui/icons": "^1.0.1",
+		"@types/cookie": "^0.4.1",
+		"@types/js-cookie": "^3.0.1",
+		"client-zip": "^2.0.0",
+		"cookie": "^0.4.2",
+		"dotenv": "^16.0.0",
+		"js-cookie": "^3.0.1",
+		"lodash.debounce": "^4.0.8",
+		"marked": "^4.0.12",
+		"next": "^12.1.1-canary.15",
+		"next-themes": "^0.1.1",
+		"postcss": "^8.4.12",
+		"postcss-flexbugs-fixes": "^5.0.2",
+		"postcss-hover-media-feature": "^1.0.2",
+		"postcss-preset-env": "^7.4.3",
+		"preact": "^10.6.6",
+		"prism-react-renderer": "^1.3.1",
+		"react": "17.0.2",
+		"react-datepicker": "^4.7.0",
+		"react-dom": "17.0.2",
+		"react-dropzone": "^12.0.4",
+		"react-loading-skeleton": "^3.0.3",
+		"react-markdown": "^8.0.0",
+		"react-syntax-highlighter": "^15.4.5",
+		"rehype-autolink-headings": "^6.1.1",
+		"rehype-raw": "^6.1.1",
+		"rehype-slug": "^5.0.1",
+		"remark-gfm": "^3.0.1",
+		"swr": "^1.2.2"
+	},
+	"devDependencies": {
+		"@next/bundle-analyzer": "^12.1.0",
+		"@types/lodash.debounce": "^4.0.6",
+		"@types/marked": "^4.0.3",
+		"@types/node": "17.0.21",
+		"@types/nprogress": "^0.2.0",
+		"@types/react": "17.0.39",
+		"@types/react-datepicker": "^4.3.4",
+		"@types/react-dom": "^17.0.14",
+		"@types/react-syntax-highlighter": "^13.5.2",
+		"cross-env": "^7.0.3",
+		"eslint": "8.10.0",
+		"eslint-config-next": "^12.1.1-canary.16",
+		"next-unused": "^0.0.6",
+		"prettier": "^2.6.0",
+		"typescript": "4.6.2",
+		"typescript-plugin-css-modules": "^3.4.0"
+	},
+	"next-unused": {
+		"alias": {
+			"@components": "components/",
+			"@lib": "lib/",
+			"@styles": "styles/"
+		},
+		"include": [
+			"components",
+			"lib"
+		]
+	}
 }
