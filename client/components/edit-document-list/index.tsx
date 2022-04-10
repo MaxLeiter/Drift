@@ -16,7 +16,7 @@ const DocumentList = ({
 	onPaste: (e: any) => void
 }) => {
 	const handleOnChange = useCallback(
-		(i) => (e: ChangeEvent<HTMLTextAreaElement>) => {
+		(i: number) => (e: ChangeEvent<HTMLTextAreaElement>) => {
 			updateDocContent(i)(e.target.value)
 		},
 		[updateDocContent]
