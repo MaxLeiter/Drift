@@ -172,7 +172,7 @@ const Post = ({
 	}
 
 	const submitPassword = useCallback(
-		(password) => onSubmit("protected", password),
+		(password: string) => onSubmit("protected", password),
 		[onSubmit]
 	)
 

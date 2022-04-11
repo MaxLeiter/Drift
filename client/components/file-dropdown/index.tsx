@@ -25,14 +25,8 @@ const FileDropdown = ({
 		setExpanded(next)
 	}
 
-	const onOpen = useCallback(() => {
-		setExpanded(true)
-	}, [])
-
-	const onClose = useCallback(() => {
-		setExpanded(false)
-		// contentRef.current?.focus()
-	}, [])
+	const onOpen = () => setExpanded(true)
+	const onClose = useCallback(() => setExpanded(false), [setExpanded])
 
 	useEffect(() => {
 		const newItems = files.map((file) => {
@@ -52,25 +46,21 @@ const FileDropdown = ({
 		setItems(newItems)
 	}, [files])
 
-	const content = useCallback(
-		() => (
-			<ul className={styles.content}>
-				{items.map((item) => (
-					<li key={item.id} onClick={onClose}>
-						<a href={`#${item.title}`}>
-							<ShiftBy y={5}>
-								<span className={styles.fileIcon}>{item.icon}</span>
-							</ShiftBy>
-							<span className={styles.fileTitle}>
-								{item.title ? item.title : "Untitled"}
-							</span>
-						</a>
-					</li>
-				))}
-			</ul>
-		),
-		[items, onClose]
-	)
+	const content =
+		<ul className={styles.content}>
+			{items.map((item) => (
+				<li key={item.id} onClick={onClose}>
+					<a href={`#${item.title}`}>
+						<ShiftBy y={5}>
+							<span className={styles.fileIcon}>{item.icon}</span>
+						</ShiftBy>
+						<span className={styles.fileTitle}>
+							{item.title ? item.title : "Untitled"}
+						</span>
+					</a>
+				</li>
+			))}
+		</ul>
 
 	// a list of files with an icon and a title
 	return (

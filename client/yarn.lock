@@ -3524,11 +3524,6 @@ postcss@^8.1.7, postcss@^8.3.0, postcss@^8.4.12:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-preact@^10.6.6:
-  version "10.6.6"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.6.6.tgz#f1899bc8dab7c0788b858481532cb3b5d764a520"
-  integrity sha512-dgxpTFV2vs4vizwKohYKkk7g7rmp1wOOcfd4Tz3IB3Wi+ivZzsn/SpeKJhRENSE+n8sUfsAl4S3HiCVT923ABw==
-
 precinct@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/precinct/-/precinct-7.1.0.tgz#a0311e0b59029647eaf57c2d30b8efa9c85d129a"
