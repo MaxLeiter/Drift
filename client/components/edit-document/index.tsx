@@ -9,17 +9,9 @@ import {
 import styles from "./document.module.css"
 import Trash from "@geist-ui/icons/trash"
 import FormattingIcons from "./formatting-icons"
+import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
-import {
-	Button,
-	ButtonGroup,
-	Card,
-	Input,
-	Spacer,
-	Tabs,
-	Textarea,
-	Tooltip
-} from "@geist-ui/core"
+import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
 import Preview from "@components/preview"
 
 // import Link from "next/link"
@@ -27,7 +19,6 @@ type Props = {
 	title?: string
 	content?: string
 	setTitle?: (title: string) => void
-	setContent?: (content: string) => void
 	handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
 	initialTab?: "edit" | "preview"
 	remove?: () => void
@@ -40,11 +31,10 @@ const Document = ({
 	title,
 	content,
 	setTitle,
-	setContent,
 	initialTab = "edit",
 	handleOnContentChange
 }: Props) => {
-	const codeEditorRef = useRef<HTMLTextAreaElement>(null)
+	const codeEditorRef = useRef<TextareaMarkdownRef>(null)
 	const [tab, setTab] = useState(initialTab)
 	// const height = editable ? "500px" : '100%'
 	const height = "100%"
@@ -125,9 +115,7 @@ const Document = ({
 					)}
 				</div>
 				<div className={styles.descriptionContainer}>
-					{tab === "edit" && (
-						<FormattingIcons setText={setContent} textareaRef={codeEditorRef} />
-					)}
+					{tab === "edit" && <FormattingIcons textareaRef={codeEditorRef} />}
 					<Tabs
 						onChange={handleTabChange}
 						initialValue={initialTab}
@@ -143,18 +131,20 @@ const Document = ({
 									flexDirection: "column"
 								}}
 							>
-								<Textarea
-									onPaste={onPaste ? onPaste : undefined}
-									ref={codeEditorRef}
-									placeholder=""
-									value={content}
-									onChange={handleOnContentChange}
-									width="100%"
-									// TODO: Textarea should grow to fill parent if height == 100%
-									style={{ flex: 1, minHeight: 350 }}
-									resize="vertical"
-									className={styles.textarea}
-								/>
+								<TextareaMarkdown.Wrapper ref={codeEditorRef}>
+									<Textarea
+										onPaste={onPaste ? onPaste : undefined}
+										ref={codeEditorRef}
+										placeholder=""
+										value={content}
+										onChange={handleOnContentChange}
+										width="100%"
+										// TODO: Textarea should grow to fill parent if height == 100%
+										style={{ flex: 1, minHeight: 350 }}
+										resize="vertical"
+										className={styles.textarea}
+									/>
+								</TextareaMarkdown.Wrapper>
 							</div>
 						</Tabs.Item>
 						<Tabs.Item label="Preview" value="preview">

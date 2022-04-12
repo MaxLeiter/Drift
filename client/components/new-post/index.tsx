@@ -65,7 +65,6 @@ const Post = ({
 		}
 	}, [emptyDoc, initialPost])
 
-
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 
 	const sendRequest = useCallback(

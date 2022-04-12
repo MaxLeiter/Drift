@@ -30,7 +30,6 @@ const DocumentList = ({
 						onPaste={onPaste}
 						key={id}
 						remove={removeDoc(i)}
-						setContent={updateDocContent(i)}
 						setTitle={updateDocTitle(i)}
 						handleOnContentChange={handleOnChange(i)}
 						content={content}
