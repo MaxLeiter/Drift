@@ -37,7 +37,7 @@ const PasswordModal = ({
 			{/* TODO: investigate disableBackdropClick not updating state? */}
 
 			{
-				<Modal visible={isOpen} disableBackdropClick={true}>
+				<Modal visible={isOpen} disableBackdropClick={false}>
 					<Modal.Title>Enter a password</Modal.Title>
 					<Modal.Content>
 						{!error && creating && (

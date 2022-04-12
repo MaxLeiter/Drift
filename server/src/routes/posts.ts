@@ -238,8 +238,78 @@ posts.get(
 	}
 )
 
+const fullPostSequelizeOptions = {
+	include: [
+		{
+			model: File,
+			as: "files",
+			attributes: [
+				"id",
+				"title",
+				"content",
+				"sha",
+				"createdAt",
+				"updatedAt"
+			]
+		},
+		{
+			model: User,
+			as: "users",
+			attributes: ["id", "username"]
+		},
+		{
+			model: Post,
+			as: "parent",
+			attributes: ["id", "title", "visibility", "createdAt"]
+		}
+	],
+	attributes: [
+		"id",
+		"title",
+		"visibility",
+		"createdAt",
+		"updatedAt",
+		"deletedAt",
+		"expiresAt",
+	]
+}
+
+posts.get("/authenticate",
+	celebrate({
+		query: {
+			id: Joi.string().required(),
+			password: Joi.string().required()
+		}
+	}),
+	async (req, res, next) => {
+		const { id, password } = req.query
+
+		const post = await Post.findByPk(id?.toString(), {
+			...fullPostSequelizeOptions,
+			attributes: [
+				...fullPostSequelizeOptions.attributes,
+				"password"
+			]
+		})
+
+		const hash = crypto
+			.createHash("sha256")
+			.update(password?.toString() || "")
+			.digest("hex")
+			.toString()
+
+		if (hash !== post?.password) {
+			return res.status(400).json({ error: "Incorrect password." })
+		}
+
+		res.json(post)
+	}
+)
+
+
 posts.get(
 	"/:id",
+	secretKey,
 	celebrate({
 		params: {
 			id: Joi.string().required()
@@ -254,42 +324,7 @@ posts.get(
 		}
 
 		try {
-			const post = await Post.findByPk(req.params.id, {
-				include: [
-					{
-						model: File,
-						as: "files",
-						attributes: [
-							"id",
-							"title",
-							"content",
-							"sha",
-							"createdAt",
-							"updatedAt"
-						]
-					},
-					{
-						model: User,
-						as: "users",
-						attributes: ["id", "username"]
-					},
-					{
-						model: Post,
-						as: "parent",
-						attributes: ["id", "title", "visibility", "createdAt"]
-					}
-				],
-				attributes: [
-					"id",
-					"title",
-					"visibility",
-					"createdAt",
-					"updatedAt",
-					"deletedAt",
-					"expiresAt",
-					"password"
-				]
-			})
+			const post = await Post.findByPk(req.params.id, fullPostSequelizeOptions)
 
 			if (!post) {
 				return res.status(404).json({ error: "Post not found" })
@@ -301,9 +336,7 @@ posts.get(
 			}
 
 			if (post.visibility === "public" || post?.visibility === "unlisted") {
-				secretKey(req, res, () => {
-					res.json(post)
-				})
+				res.json(post)
 			} else if (post.visibility === "private") {
 				jwt(req as UserJwtRequest, res, () => {
 					if (isUserAuthor(post)) {
@@ -313,27 +346,8 @@ posts.get(
 					}
 				})
 			} else if (post.visibility === "protected") {
-				const { password } = req.query
-				if (!password || typeof password !== "string") {
-					return jwt(req as UserJwtRequest, res, () => {
-						if (isUserAuthor(post)) {
-							res.json(post)
-						} else {
-							res.status(403).send()
-						}
-					})
-				}
-
-				const hash = crypto
-					.createHash("sha256")
-					.update(password)
-					.digest("hex")
-					.toString()
-
-				if (hash !== post.password) {
-					return res.status(400).json({ error: "Incorrect password." })
-				}
-
+				// The client ensures to not send the post to the client.
+				// See client/pages/post/[id].tsx::getServerSideProps
 				res.json(post)
 			}
 		} catch (e) {
