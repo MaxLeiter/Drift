@@ -3,7 +3,8 @@ services:
     build:
       context: ./server
       args:
-        SECRET_KEY: secret
+        - SECRET_KEY=secret
+        - NODE_ENV=production
     container_name: server
     restart: unless-stopped
     user: 1000:1000
@@ -16,13 +17,13 @@ services:
     build:
       context: ./client
       args:
-        API_URL: http://localhost:3000
-        SECRET_KEY: secret
+        - API_URL=http://server:3000
+        - SECRET_KEY=secret
     container_name: client
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - API_URL=http://localhost:3000
+      - API_URL=http://server:3000
       - SECRET_KEY=secret
     ports:
       - "3001:3001"
