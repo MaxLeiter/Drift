@@ -23,6 +23,7 @@ import getPostPath from "@lib/get-post-path"
 import EditDocumentList from "@components/edit-document-list"
 import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
+import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 
 const Post = ({
 	initialPost,
@@ -52,7 +53,6 @@ const Post = ({
 	// the /new/from/{id} route fetches an initial post
 	useEffect(() => {
 		if (initialPost) {
-			setTitle(`Copy of ${initialPost.title}`)
 			setDocs(
 				initialPost.files?.map((doc) => ({
 					title: doc.title,
@@ -60,8 +60,11 @@ const Post = ({
 					id: doc.id
 				})) || emptyDoc
 			)
+
+			setTitle(getTitleForPostCopy(initialPost.title))
 		}
 	}, [emptyDoc, initialPost])
+
 
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 
