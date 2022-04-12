@@ -49,6 +49,11 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 				return NextResponse.redirect(getURL("signin"))
 			}
 		}
+
+		if (pathname.includes("/protected/") || pathname.includes("/private/")) {
+			const urlWithoutVisibility = pathname.replace("/protected/", "/").replace("/private/", "/").substring(1)
+			return NextResponse.redirect(getURL(urlWithoutVisibility))
+		}
 	}
 
 	return NextResponse.next()
