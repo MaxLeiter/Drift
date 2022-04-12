@@ -2876,6 +2876,11 @@ module-lookup-amd@^7.0.1:
     requirejs "^2.3.5"
     requirejs-config-file "^4.0.0"
 
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
+
 mri@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
@@ -3739,6 +3744,11 @@ react-syntax-highlighter@^15.4.5:
     prismjs "^1.25.0"
     refractor "^3.2.0"
 
+react-trigger-change@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-trigger-change/-/react-trigger-change-1.0.2.tgz#af573398ecef2475362b84f8c08c07fea23914c3"
+  integrity sha1-r1czmOzvJHU2K4T4wIwH/qI5FMM=
+
 react@17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -4245,6 +4255,14 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+textarea-markdown-editor@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/textarea-markdown-editor/-/textarea-markdown-editor-0.1.13.tgz#27aeda4bc95148a8ed69021f553753feb224325f"
+  integrity sha512-2r1gTPFA/wwAzt+Aa6LVZWjJNvL0aXfR6Z9T6eQBpJ1AK6gtPVCZgkO97KIrqpAmMcwgNCz0ToYj2AqPufdVeg==
+  dependencies:
+    mousetrap "^1.6.5"
+    react-trigger-change "^1.0.2"
 
 to-regex-range@^5.0.1:
   version "5.0.1"
