@@ -19,7 +19,6 @@
 		"cookie": "^0.4.2",
 		"dotenv": "^16.0.0",
 		"js-cookie": "^3.0.1",
-		"lodash.debounce": "^4.0.8",
 		"marked": "^4.0.12",
 		"next": "^12.1.1-canary.15",
 		"next-themes": "^0.1.1",

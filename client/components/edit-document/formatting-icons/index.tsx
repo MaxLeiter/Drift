@@ -10,49 +10,43 @@ import { TextareaMarkdownRef } from "textarea-markdown-editor"
 // TODO: clean up
 
 const FormattingIcons = ({
-	textareaRef,
+	textareaRef
 }: {
 	textareaRef?: RefObject<TextareaMarkdownRef>
 }) => {
-
-
-
-	const formattingActions = useMemo(
-		() => {
-			const handleBoldClick = () => textareaRef?.current?.trigger("bold")
-			const handleItalicClick = () => textareaRef?.current?.trigger("italic")
-			const handleLinkClick = () => textareaRef?.current?.trigger("link")
-			const handleImageClick = () => textareaRef?.current?.trigger("image")
-			return [
-				{
-					icon: <Bold />,
-					name: "bold",
-					action: handleBoldClick
-				},
-				{
-					icon: <Italic />,
-					name: "italic",
-					action: handleItalicClick
-				},
-				// {
-				//     icon: <Underline />,
-				//     name: 'underline',
-				//     action: handleUnderlineClick
-				// },
-				{
-					icon: <Link />,
-					name: "hyperlink",
-					action: handleLinkClick
-				},
-				{
-					icon: <ImageIcon />,
-					name: "image",
-					action: handleImageClick
-				}
-			]
-		},
-		[textareaRef]
-	)
+	const formattingActions = useMemo(() => {
+		const handleBoldClick = () => textareaRef?.current?.trigger("bold")
+		const handleItalicClick = () => textareaRef?.current?.trigger("italic")
+		const handleLinkClick = () => textareaRef?.current?.trigger("link")
+		const handleImageClick = () => textareaRef?.current?.trigger("image")
+		return [
+			{
+				icon: <Bold />,
+				name: "bold",
+				action: handleBoldClick
+			},
+			{
+				icon: <Italic />,
+				name: "italic",
+				action: handleItalicClick
+			},
+			// {
+			//     icon: <Underline />,
+			//     name: 'underline',
+			//     action: handleUnderlineClick
+			// },
+			{
+				icon: <Link />,
+				name: "hyperlink",
+				action: handleLinkClick
+			},
+			{
+				icon: <ImageIcon />,
+				name: "image",
+				action: handleImageClick
+			}
+		]
+	}, [textareaRef])
 
 	return (
 		<div className={styles.actionWrapper}>

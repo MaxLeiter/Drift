@@ -1,4 +1,4 @@
-import { Button, Code, Dot, Input, Note, Text } from "@geist-ui/core"
+import { Button, Input, Select, Text } from "@geist-ui/core"
 import NextLink from "next/link"
 import Link from "../Link"
 
@@ -7,8 +7,8 @@ import ListItemSkeleton from "./list-item-skeleton"
 import ListItem from "./list-item"
 import { Post } from "@lib/types"
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
-import debounce from "lodash.debounce"
 import Cookies from "js-cookie"
+import useDebounce from "@lib/hooks/use-debounce"
 
 type Props = {
 	initialPosts: Post[]
@@ -21,6 +21,9 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 	const [posts, setPosts] = useState<Post[]>(initialPosts)
 	const [searching, setSearching] = useState(false)
 	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
+
+	const debouncedSearchValue = useDebounce(search, 200)
+
 	const loadMoreClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			e.preventDefault()
@@ -46,13 +49,15 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 
 	// update posts on search
 	useEffect(() => {
-		if (search) {
+		if (debouncedSearchValue) {
 			// fetch results from /server-api/posts/search
 			const fetchResults = async () => {
 				setSearching(true)
 				//encode search
 				const res = await fetch(
-					`/server-api/posts/search?q=${encodeURIComponent(search)}`,
+					`/server-api/posts/search?q=${encodeURIComponent(
+						debouncedSearchValue
+					)}`,
 					{
 						method: "GET",
 						headers: {
@@ -70,22 +75,22 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 		} else {
 			setPosts(initialPosts)
 		}
-	}, [initialPosts, search])
+	}, [initialPosts, debouncedSearchValue])
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
 	}
 
-	const debouncedSearchHandler = useMemo(
-		() => debounce(handleSearchChange, 300),
-		[]
-	)
+	// const debouncedSearchHandler = useMemo(
+	// 	() => debounce(handleSearchChange, 300),
+	// 	[]
+	// )
 
-	useEffect(() => {
-		return () => {
-			debouncedSearchHandler.cancel()
-		}
-	}, [debouncedSearchHandler])
+	// useEffect(() => {
+	// 	return () => {
+	// 		debouncedSearchHandler.cancel()
+	// 	}
+	// }, [debouncedSearchHandler])
 
 	const deletePost = useCallback(
 		(postId: string) => async () => {
@@ -114,7 +119,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 					scale={3 / 2}
 					clearable
 					placeholder="Search..."
-					onChange={debouncedSearchHandler}
+					onChange={handleSearchChange}
 				/>
 			</div>
 			{error && <Text type="error">Failed to load.</Text>}

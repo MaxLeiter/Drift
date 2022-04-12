@@ -46,7 +46,7 @@ const FileDropdown = ({
 		setItems(newItems)
 	}, [files])
 
-	const content =
+	const content = (
 		<ul className={styles.content}>
 			{items.map((item) => (
 				<li key={item.id} onClick={onClose}>
@@ -61,6 +61,7 @@ const FileDropdown = ({
 				</li>
 			))}
 		</ul>
+	)
 
 	// a list of files with an icon and a title
 	return (

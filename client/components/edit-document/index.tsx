@@ -9,15 +9,9 @@ import {
 import styles from "./document.module.css"
 import Trash from "@geist-ui/icons/trash"
 import FormattingIcons from "./formatting-icons"
-import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor";
+import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
-import {
-	Button,
-	Input,
-	Spacer,
-	Tabs,
-	Textarea,
-} from "@geist-ui/core"
+import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
 import Preview from "@components/preview"
 
 // import Link from "next/link"
@@ -121,9 +115,7 @@ const Document = ({
 					)}
 				</div>
 				<div className={styles.descriptionContainer}>
-					{tab === "edit" && (
-						<FormattingIcons textareaRef={codeEditorRef} />
-					)}
+					{tab === "edit" && <FormattingIcons textareaRef={codeEditorRef} />}
 					<Tabs
 						onChange={handleTabChange}
 						initialValue={initialTab}
