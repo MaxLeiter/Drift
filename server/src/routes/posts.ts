@@ -42,7 +42,7 @@ posts.post(
 			parentId: Joi.string().optional().allow(null, "")
 		}
 	}),
-	async (req, res, next) => {
+	async (req, res) => {
 		try {
 			// check if all files have titles
 			const files = req.body.files as File[]
@@ -218,7 +218,13 @@ posts.get(
 					},
 					{
 						model: User,
-						as: "users"
+						as: "users",
+						attributes: ["id", "username"]
+					},
+					{
+						model: Post,
+						as: "parent",
+						attributes: ["id", "title", "visibility"]
 					}
 				],
 				attributes: ["id", "title", "visibility", "createdAt", "deletedAt"],
