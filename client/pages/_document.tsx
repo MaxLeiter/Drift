@@ -19,7 +19,8 @@ class MyDocument extends Document {
 					{initialProps.styles}
 					{styles}
 				</>
-			) as any
+			) as // TODO: Investigate typescript
+			any
 		}
 	}
 

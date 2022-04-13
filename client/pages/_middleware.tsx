@@ -51,7 +51,10 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 		}
 
 		if (pathname.includes("/protected/") || pathname.includes("/private/")) {
-			const urlWithoutVisibility = pathname.replace("/protected/", "/").replace("/private/", "/").substring(1)
+			const urlWithoutVisibility = pathname
+				.replace("/protected/", "/")
+				.replace("/private/", "/")
+				.substring(1)
 			return NextResponse.redirect(getURL(urlWithoutVisibility))
 		}
 	}

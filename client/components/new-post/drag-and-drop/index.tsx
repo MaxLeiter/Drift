@@ -9,6 +9,7 @@ import {
 	allowedFileNames,
 	allowedFileExtensions
 } from "@lib/constants"
+import byteToMB from "@lib/byte-to-mb"
 
 function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 	const { palette } = useTheme()
@@ -40,9 +41,6 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 	}
 
 	const validator = (file: File) => {
-		const byteToMB = (bytes: number) =>
-			Math.round((bytes / 1024 / 1024) * 100) / 100
-
 		// TODO: make this configurable
 		const maxFileSize = 50000000
 		if (file.size > maxFileSize) {

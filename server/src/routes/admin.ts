@@ -1,8 +1,9 @@
-import isAdmin from "@lib/middleware/is-admin"
+import isAdmin, { UserJwtRequest } from "@lib/middleware/is-admin"
 import { Post } from "@lib/models/Post"
 import { User } from "@lib/models/User"
 import { File } from "@lib/models/File"
 import { Router } from "express"
+import { celebrate, Joi } from "celebrate"
 
 export const admin = Router()
 
@@ -34,6 +35,81 @@ admin.get("/users", async (req, res, next) => {
 		next(e)
 	}
 })
+
+admin.post(
+	"/users/toggle-role",
+	celebrate({
+		body: {
+			id: Joi.string().required(),
+			role: Joi.string().required().allow("user", "admin")
+		}
+	}),
+	async (req: UserJwtRequest, res, next) => {
+		try {
+			const { id, role } = req.body
+			if (req.user?.id === id) {
+				return res.status(400).json({
+					error: "You can't change your own role"
+				})
+			}
+
+			const user = await User.findByPk(id)
+			if (!user) {
+				return res.status(404).json({
+					error: "User not found"
+				})
+			}
+
+			await user.update({
+				role
+			})
+
+			await user.save()
+
+			res.json({
+				success: true
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+)
+
+admin.delete("/users/:id", async (req, res, next) => {
+	try {
+		const user = await User.findByPk(req.params.id)
+		if (!user) {
+			return res.status(404).json({
+				error: "User not found"
+			})
+		}
+		await user.destroy()
+
+		res.json({
+			success: true
+		})
+	} catch (e) {
+		next(e)
+	}
+})
+
+// admin.delete("/posts/:id", async (req, res, next) => {
+// 	try {
+// 		const post = await Post.findByPk(req.params.id)
+// 		if (!post) {
+// 			return res.status(404).json({
+// 				error: "Post not found"
+// 			})
+// 		}
+// 		await post.destroy()
+
+// 		res.json({
+// 			success: true
+// 		})
+// 	} catch (e) {
+// 		next(e)
+// 	}
+// })
 
 admin.get("/posts", async (req, res, next) => {
 	try {
