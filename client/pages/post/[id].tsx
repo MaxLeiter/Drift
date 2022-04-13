@@ -45,8 +45,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 		}
 	}
 
-	const json = await post.json() as Post
-	const isAuthor = json.users?.find(user => user.id === req.cookies["drift-userid"])
+	const json = (await post.json()) as Post
+	const isAuthor = json.users?.find(
+		(user) => user.id === req.cookies["drift-userid"]
+	)
 
 	if (json.visibility === "public" || json.visibility === "unlisted") {
 		const sMaxAge = 60 * 60 * 12 // half a day
@@ -60,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 				post: {
 					id: json.id,
 					visibility: json.visibility,
-					expiresAt: json.expiresAt,
+					expiresAt: json.expiresAt
 				},
 				isProtected: true
 			}

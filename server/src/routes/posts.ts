@@ -243,14 +243,7 @@ const fullPostSequelizeOptions = {
 		{
 			model: File,
 			as: "files",
-			attributes: [
-				"id",
-				"title",
-				"content",
-				"sha",
-				"createdAt",
-				"updatedAt"
-			]
+			attributes: ["id", "title", "content", "sha", "createdAt", "updatedAt"]
 		},
 		{
 			model: User,
@@ -270,11 +263,12 @@ const fullPostSequelizeOptions = {
 		"createdAt",
 		"updatedAt",
 		"deletedAt",
-		"expiresAt",
+		"expiresAt"
 	]
 }
 
-posts.get("/authenticate",
+posts.get(
+	"/authenticate",
 	celebrate({
 		query: {
 			id: Joi.string().required(),
@@ -286,10 +280,7 @@ posts.get("/authenticate",
 
 		const post = await Post.findByPk(id?.toString(), {
 			...fullPostSequelizeOptions,
-			attributes: [
-				...fullPostSequelizeOptions.attributes,
-				"password"
-			]
+			attributes: [...fullPostSequelizeOptions.attributes, "password"]
 		})
 
 		const hash = crypto
@@ -305,7 +296,6 @@ posts.get("/authenticate",
 		res.json(post)
 	}
 )
-
 
 posts.get(
 	"/:id",
