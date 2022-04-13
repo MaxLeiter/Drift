@@ -83,6 +83,7 @@ admin.delete("/users/:id", async (req, res, next) => {
 				error: "User not found"
 			})
 		}
+		// TODO: verify CASCADE is removing files + posts
 		await user.destroy()
 
 		res.json({
