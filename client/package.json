@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@geist-ui/core": "2.3.8",
 		"@geist-ui/icons": "1.0.1",
-		"@types/cookie": "0.4.1",
+		"@types/cookie": "0.5.0",
 		"@types/js-cookie": "3.0.1",
 		"client-zip": "2.0.1",
 		"cookie": "0.5.0",
@@ -33,7 +33,7 @@
 	"devDependencies": {
 		"@next/bundle-analyzer": "12.1.5",
 		"@types/node": "17.0.23",
-		"@types/react": "18.0.3",
+		"@types/react": "18.0.4",
 		"@types/react-datepicker": "4.4.0",
 		"@types/react-dom": "18.0.0",
 		"cross-env": "7.0.3",
