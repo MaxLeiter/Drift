@@ -48,7 +48,7 @@ You can change these to your liking.
 - `NODE_ENV`: defaults to development, can be `production`
 - `JWT_SECRET`: a secure token for JWT tokens. You can generate one [here](https://www.grc.com/passwords.htm).
 - `MEMORY_DB`: if `true`, a sqlite database will not be created and changes will only exist in memory. Mainly for the demo.
-- `REGISTRATION_PASSWORD`: if MEMORY_DB is not `true`, the user will be required to provide this password to sign-up, in addition to their username and account password. If it's not set, no password will be required.
+- `REGISTRATION_PASSWORD`: if `true`, the user will be required to provide this password to sign-up, in addition to their username and account password. If it's not set, no additional password will be required.
 - `SECRET_KEY`: the same secret key as the client
 - `WELCOME_CONTENT`: a markdown string that's rendered on the home page
 - `WELCOME_TITLE`: the file title for the post on the homepage.
