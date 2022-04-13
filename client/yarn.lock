@@ -2456,7 +2456,7 @@ rc-resize-observer@^1.1.0:
     rc-util "^5.15.0"
     resize-observer-polyfill "^1.5.1"
 
-rc-table@^7.24.1:
+rc-table@7.24.1:
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.24.1.tgz#15ecabc9d69f8300b988caa52986e3b215150f2b"
   integrity sha512-DRWpv5z5pmOaTmy5GqWoskeV1thaOu5HuD+2f61b/CkbBqlgJR3cygc5R/Qvd2uVW6pHU0lYulhmz0VLVFm+rw==
