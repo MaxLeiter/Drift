@@ -18,9 +18,8 @@ class MyDocument extends Document {
 				<>
 					{initialProps.styles}
 					{styles}
-				</>
-			) as // TODO: Investigate typescript
-			any
+				</> // TODO: Investigate typescript
+			) as any
 		}
 	}
 
