@@ -3,14 +3,20 @@ services:
     build:
       context: ./server
       args:
-        - SECRET_KEY=secret
         - NODE_ENV=production
     container_name: server
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - JWT_SECRET=change_me! # use `openssl rand -hex 32` to generate a strong secret
-      - SECRET_KEY=secret
+      - PORT
+      - JWT_SECRET=jwt_secret # change_me! # use `openssl rand -hex 32` to generate a strong secret
+      - SECRET_KEY=secret # change me!
+      - MEMORY_DB
+      - REGISTRATION_PASSWORD
+      - WELCOME_CONTENT
+      - WELCOME_TITLE
+      - ENABLE_ADMIN
+      - DRIFT_HOME
     ports:
       - "3000:3000"
   client:
@@ -18,12 +24,11 @@ services:
       context: ./client
       args:
         - API_URL=http://server:3000
-        - SECRET_KEY=secret
     container_name: client
     restart: unless-stopped
     user: 1000:1000
     environment:
       - API_URL=http://server:3000
-      - SECRET_KEY=secret
+      - SECRET_KEY=secret # change me!
     ports:
       - "3001:3001"
