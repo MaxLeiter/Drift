@@ -1,9 +1,6 @@
-import { Text, Fieldset, Spacer } from "@geist-ui/core"
-import { Post, User } from "@lib/types"
+import { Text, Spacer } from "@geist-ui/core"
 import Cookies from "js-cookie"
-import { useEffect, useMemo, useState } from "react"
 import styles from "./admin.module.css"
-import PostModal from "./post-modal-link"
 import PostTable from "./post-table"
 import UserTable from "./user-table"
 
