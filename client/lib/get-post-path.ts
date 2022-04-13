@@ -3,9 +3,9 @@ import type { PostVisibility } from "./types"
 export default function getPostPath(visibility: PostVisibility, id: string) {
 	switch (visibility) {
 		case "private":
-			return `/post/private/${id}`
+		// return `/post/private/${id}`
 		case "protected":
-			return `/post/protected/${id}`
+		// return `/post/protected/${id}`
 		case "unlisted":
 		case "public":
 			return `/post/${id}`

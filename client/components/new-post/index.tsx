@@ -178,7 +178,7 @@ const Post = ({
 		[onSubmit]
 	)
 
-	const onChangeExpiration = useCallback((date) => setExpiresAt(date), [])
+	const onChangeExpiration = useCallback((date: Date) => setExpiresAt(date), [])
 
 	const onChangeTitle = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {

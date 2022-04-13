@@ -17,19 +17,23 @@ import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
 import getPostPath from "@lib/get-post-path"
+import PasswordModalPage from "./password-modal-wrapper"
 
 type Props = {
 	post: Post
+	isProtected?: boolean
 }
 
-const PostPage = ({ post }: Props) => {
-	const router = useRouter()
-
-	const isMobile = useMediaQuery("mobile")
+const PostPage = ({ post: initialPost, isProtected }: Props) => {
+	const [post, setPost] = useState<Post>(initialPost)
 	const [isExpired, setIsExpired] = useState(
 		post.expiresAt ? new Date(post.expiresAt) < new Date() : null
 	)
 	const [isLoading, setIsLoading] = useState(true)
+
+	const router = useRouter()
+	const isMobile = useMediaQuery("mobile")
+
 	useEffect(() => {
 		const isOwner = post.users
 			? post.users[0].id === Cookies.get("drift-userid")
@@ -84,6 +88,8 @@ const PostPage = ({ post }: Props) => {
 		return <></>
 	}
 
+	const isAvailable = !isExpired && !isProtected && post.title
+
 	return (
 		<Page width={"100%"}>
 			<PageSeo
@@ -91,7 +97,7 @@ const PostPage = ({ post }: Props) => {
 				description={post.description}
 				isPrivate={false}
 			/>
-
+			{!isAvailable && <PasswordModalPage setPost={setPost} />}
 			<Page.Content className={homeStyles.main}>
 				<div className={styles.header}>
 					<span className={styles.buttons}>

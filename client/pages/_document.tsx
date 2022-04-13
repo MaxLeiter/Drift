@@ -19,7 +19,7 @@ class MyDocument extends Document {
 					{initialProps.styles}
 					{styles}
 				</>
-			)
+			) as any
 		}
 	}
 
