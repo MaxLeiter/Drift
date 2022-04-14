@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - PORT=3331
+      - PORT
       - JWT_SECRET=jwt_secret # change_me! # use `openssl rand -hex 32` to generate a strong secret
       - SECRET_KEY=secret # change me!
       - MEMORY_DB
@@ -15,19 +15,18 @@ services:
       - WELCOME_TITLE
       - ENABLE_ADMIN
       - DRIFT_HOME
-    # TODO: server isnt needing exposed in this instance is it?
     # ports:
-    #   - "3000:3000" # only needs exposed if running on a separate host from client
+    #   - "3000:3000" # only expose if needed
   client:
     build:
       context: ./client
       args:
-        - API_URL=http://server:3331
+        - API_URL=http://server:3000
     container_name: client
     restart: unless-stopped
     user: 1000:1000
     environment:
-      - API_URL=http://server:3331
+      - API_URL=http://server:3000
       - SECRET_KEY=secret # change me!
     ports:
       - "3001:3001"
