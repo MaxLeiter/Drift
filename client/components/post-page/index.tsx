@@ -4,7 +4,7 @@ import DocumentComponent from "@components/view-document"
 import styles from "./post-page.module.css"
 import homeStyles from "@styles/Home.module.css"
 
-import type { File, Post } from "@lib/types"
+import type { File, Post, PostVisibility } from "@lib/types"
 import { Page, Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
@@ -18,6 +18,7 @@ import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
 import getPostPath from "@lib/get-post-path"
 import PasswordModalPage from "./password-modal-wrapper"
+import VisibilityControl from "@components/badges/visibility-control"
 
 type Props = {
 	post: Post
@@ -26,18 +27,19 @@ type Props = {
 
 const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	const [post, setPost] = useState<Post>(initialPost)
+	const [visibility, setVisibility] = useState<PostVisibility>(post.visibility)
 	const [isExpired, setIsExpired] = useState(
 		post.expiresAt ? new Date(post.expiresAt) < new Date() : null
 	)
 	const [isLoading, setIsLoading] = useState(true)
+	const [isOwner] = useState(
+		post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+	)
 
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")
 
 	useEffect(() => {
-		const isOwner = post.users
-			? post.users[0].id === Cookies.get("drift-userid")
-			: false
 		if (!isOwner && isExpired) {
 			router.push("/expired")
 		}
@@ -59,7 +61,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 		return () => {
 			if (interval) clearInterval(interval)
 		}
-	}, [isExpired, post.expiresAt, post.users, router])
+	}, [isExpired, isOwner, post.expiresAt, post.users, router])
 
 	const download = async () => {
 		if (!post.files) return
@@ -143,7 +145,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 					<span className={styles.title}>
 						<Text h3>{post.title}</Text>
 						<span className={styles.badges}>
-							<VisibilityBadge visibility={post.visibility} />
+							<VisibilityBadge visibility={visibility} />
 							<CreatedAgoBadge createdAt={post.createdAt} />
 							<ExpirationBadge postExpirationDate={post.expiresAt} />
 						</span>
@@ -164,6 +166,9 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 						content={content}
 					/>
 				))}
+				{isOwner && <span className={styles.controls}>
+					<VisibilityControl postId={post.id} visibility={visibility} setVisibility={setVisibility} />
+				</span>}
 				<ScrollToTop />
 			</Page.Content>
 		</Page>
