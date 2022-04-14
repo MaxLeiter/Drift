@@ -9,6 +9,7 @@ import secretKey from "@lib/middleware/secret-key"
 import { Op } from "sequelize"
 import { PostAuthor } from "@lib/models/PostAuthor"
 import getHtmlFromFile from "@lib/get-html-from-drift-file"
+import { getGist, createPostFromGist } from "@lib/gist"
 
 export const posts = Router()
 
@@ -465,6 +466,48 @@ posts.put(
 			res.json({ id, visibility })
 		} catch (e) {
 			res.status(400).json(e)
+		}
+	}
+)
+
+
+posts.post(
+	"/import/gist/id/:id",
+	jwt,
+	celebrate({
+		body: {
+			visibility: Joi.string()
+				.custom(postVisibilitySchema, "valid visibility")
+				.required(),
+			password: Joi.string().optional(),
+			expiresAt: Joi.date().optional().allow(null, "")
+		}
+	}),
+	async (req: UserJwtRequest, res, next) => {
+		try {
+			const { id } = req.params
+			const { visibility, password, expiresAt } = req.body
+			const gist = await getGist(id)
+
+			let hashedPassword: string = ""
+			if (visibility === "protected") {
+				hashedPassword = crypto
+					.createHash("sha256")
+					.update(password)
+					.digest("hex")
+			}
+			const newFile = await createPostFromGist(
+				{
+					userId: req.user!.id,
+					visibility,
+					password: hashedPassword,
+					expiresAt
+				},
+				gist
+			)
+			return res.json(newFile)
+		} catch (e) {
+			res.status(400).json({ error: e.toString() })
 		}
 	}
 )
