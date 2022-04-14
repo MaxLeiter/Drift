@@ -149,6 +149,11 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 						</span>
 					</span>
 				</div>
+				{post.description && (
+					<div>
+						<Text p>{post.description}</Text>
+					</div>
+				)}
 				{/* {post.files.length > 1 && <FileTree files={post.files} />} */}
 				{post.files?.map(({ id, content, title }: File) => (
 					<DocumentComponent
