@@ -27,10 +27,10 @@ FROM node:17-alpine AS runner
 
 WORKDIR /app
 
-ARG NODE_ENV
+# ARG NODE_ENV
 
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=${NODE_ENV:-production}
+# ENV NODE_ENV=${NODE_ENV:-production}
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -45,6 +45,6 @@ USER nextjs
 
 ENV PORT=3001
 
-EXPOSE 3001
+EXPOSE ${PORT}
 
 CMD ["node", "server.js"]

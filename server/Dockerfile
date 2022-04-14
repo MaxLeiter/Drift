@@ -16,10 +16,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG NODE_ENV
-
-ENV NODE_ENV=${NODE_ENV:-production}
-
 RUN apk add --no-cache git
 RUN yarn build:docker
 
@@ -27,9 +23,7 @@ FROM node:17-alpine AS runner
 
 WORKDIR /app
 
-ARG NODE_ENV
-
-ENV NODE_ENV=${NODE_ENV:-production}
+ENV NODE_ENV=production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 drift
@@ -41,6 +35,6 @@ USER drift
 
 ENV PORT=3000
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
 CMD ["node", "dist/index.js"]
