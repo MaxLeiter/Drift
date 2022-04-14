@@ -470,7 +470,6 @@ posts.put(
 	}
 )
 
-
 posts.post(
 	"/import/gist/id/:id",
 	jwt,

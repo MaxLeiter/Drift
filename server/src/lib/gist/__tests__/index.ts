@@ -2,7 +2,7 @@ import { Post } from "@lib/models/Post"
 import { User } from "@lib/models/User"
 import { File } from "@lib/models/File"
 import { Sequelize } from "sequelize-typescript"
-import { createPostFromGist, responseToGist  } from ".."
+import { createPostFromGist, responseToGist } from ".."
 import { GistResponse } from "../fetch"
 import { AdditionalPostInformation } from "../transform"
 import * as path from "path"
@@ -41,7 +41,7 @@ async function createPost(
 		visibility: "public",
 		...override
 	}
-	return createPostFromGist(info, responseToGist (response))
+	return createPostFromGist(info, responseToGist(response))
 }
 
 describe("Gist", () => {
