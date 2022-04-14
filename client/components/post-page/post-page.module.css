@@ -22,6 +22,11 @@
 	margin-bottom: var(--gap);
 }
 
+.controls {
+	display: flex;
+	justify-content: flex-end;
+}
+
 @media screen and (max-width: 900px) {
 	.header {
 		flex-direction: column;

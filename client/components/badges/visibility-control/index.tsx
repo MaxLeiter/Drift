@@ -1,9 +1,7 @@
 import PasswordModal from "@components/new-post/password-modal"
 import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core"
-import getPostPath from "@lib/get-post-path"
-import type { Post, PostVisibility } from "@lib/types"
+import type { PostVisibility } from "@lib/types"
 import Cookies from "js-cookie"
-import router from "next/router"
 import { useCallback, useState } from "react"
 
 type Props = {
