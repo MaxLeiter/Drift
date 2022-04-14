@@ -55,6 +55,9 @@ export class Post extends Model {
 	@Column
 	title!: string
 
+	@Column
+	description?: string
+
 	@BelongsToMany(() => User, () => PostAuthor)
 	users?: User[]
 

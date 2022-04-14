@@ -31,6 +31,7 @@ posts.post(
 	celebrate({
 		body: {
 			title: Joi.string().required(),
+			description: Joi.string().optional().min(0).max(256),
 			files: Joi.any().required(),
 			visibility: Joi.string()
 				.custom(postVisibilitySchema, "valid visibility")
@@ -66,6 +67,7 @@ posts.post(
 
 			const newPost = new Post({
 				title: req.body.title,
+				description: req.body.description,
 				visibility: req.body.visibility,
 				password: hashedPassword,
 				expiresAt: req.body.expiresAt
@@ -126,7 +128,7 @@ posts.post(
 posts.get("/", secretKey, async (req, res, next) => {
 	try {
 		const posts = await Post.findAll({
-			attributes: ["id", "title", "visibility", "createdAt"]
+			attributes: ["id", "title", "description", "visibility", "createdAt"]
 		})
 		res.json(posts)
 	} catch (e) {
@@ -159,7 +161,14 @@ posts.get("/mine", jwt, async (req: UserJwtRequest, res, next) => {
 							attributes: ["id", "title", "visibility"]
 						}
 					],
-					attributes: ["id", "title", "visibility", "createdAt", "expiresAt"]
+					attributes: [
+						"id",
+						"title",
+						"description",
+						"visibility",
+						"createdAt",
+						"expiresAt"
+					]
 				}
 			]
 		})
@@ -205,6 +214,7 @@ posts.get(
 				where: {
 					[Op.or]: [
 						{ title: { [Op.like]: `%${q}%` } },
+						{ description: { [Op.like]: `%${q}%` } },
 						{ "$files.title$": { [Op.like]: `%${q}%` } },
 						{ "$files.content$": { [Op.like]: `%${q}%` } }
 					],
@@ -227,7 +237,14 @@ posts.get(
 						attributes: ["id", "title", "visibility"]
 					}
 				],
-				attributes: ["id", "title", "visibility", "createdAt", "deletedAt"],
+				attributes: [
+					"id",
+					"title",
+					"description",
+					"visibility",
+					"createdAt",
+					"deletedAt"
+				],
 				order: [["createdAt", "DESC"]]
 			})
 
@@ -259,6 +276,7 @@ const fullPostSequelizeOptions = {
 	attributes: [
 		"id",
 		"title",
+		"description",
 		"visibility",
 		"createdAt",
 		"updatedAt",
@@ -384,3 +402,69 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 		next(e)
 	}
 })
+
+posts.put(
+	"/:id",
+	jwt,
+	celebrate({
+		params: {
+			id: Joi.string().required()
+		},
+		body: {
+			visibility: Joi.string()
+				.custom(postVisibilitySchema, "valid visibility")
+				.required(),
+			password: Joi.string().optional()
+		}
+	}),
+	async (req: UserJwtRequest, res, next) => {
+		try {
+			const isUserAuthor = (post: Post) => {
+				return (
+					req.user?.id &&
+					post.users?.map((user) => user.id).includes(req.user?.id)
+				)
+			}
+
+			const { visibility, password } = req.body
+
+			let hashedPassword: string = ""
+			if (visibility === "protected") {
+				hashedPassword = crypto
+					.createHash("sha256")
+					.update(password)
+					.digest("hex")
+			}
+
+			const { id } = req.params
+			const post = await Post.findByPk(id, {
+				include: [
+					{
+						model: User,
+						as: "users",
+						attributes: ["id"]
+					}
+				]
+			})
+
+			if (!post) {
+				return res.status(404).json({ error: "Post not found" })
+			}
+
+			if (!isUserAuthor(post)) {
+				return res
+					.status(403)
+					.json({ error: "This post does not belong to you" })
+			}
+
+			await Post.update(
+				{ password: hashedPassword, visibility },
+				{ where: { id } }
+			)
+
+			res.json({ id, visibility })
+		} catch (e) {
+			res.status(400).json(e)
+		}
+	}
+)
