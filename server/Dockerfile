@@ -9,27 +9,23 @@ COPY package.json yarn.lock tsconfig.json tslint.json ./
 
 RUN yarn install --frozen-lockfile
 
-FROM node:17-alpine AS builder
+FROM deps AS builder
 
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN apk add --no-cache git
-RUN yarn build:docker
+RUN apk add --no-cache git && \
+  yarn build:docker
 
-FROM node:17-alpine AS runner
+FROM builder AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 drift
-
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+RUN addgroup --system --gid 1001 nodejs && \
+  adduser --system --uid 1001 drift
 
 USER drift
 

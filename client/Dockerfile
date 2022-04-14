@@ -9,11 +9,10 @@ COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile
 
-FROM node:17-alpine AS builder
+FROM deps AS builder
 
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ARG API_URL
@@ -23,23 +22,15 @@ ENV API_URL=${API_URL:-http://localhost:3000}
 
 RUN yarn build
 
-FROM node:17-alpine AS runner
+FROM builder AS runner
 
 WORKDIR /app
 
-# ARG NODE_ENV
-
-ENV NEXT_TELEMETRY_DISABLED=1
-# ENV NODE_ENV=${NODE_ENV:-production}
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/next.config.mjs ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+RUN addgroup --system --gid 1001 nodejs && \
+  adduser --system --uid 1001 nextjs  && \
+  chown  nextjs:nodejs /app/.next/standalone && \
+  chown  nextjs:nodejs /app/.next/static && \
+  cp --recursive /app/.next/standalone/* /app
 
 USER nextjs
 
