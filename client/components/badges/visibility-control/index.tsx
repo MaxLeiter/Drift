@@ -38,7 +38,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 				setPasswordModalVisible(false)
 			}
 		},
-		[setToast]
+		[postId, setToast, setVisibility]
 	)
 
 	const onSubmit = useCallback(
@@ -63,7 +63,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 	}
 
 	const submitPassword = useCallback(
-		(password) => onSubmit("protected", password),
+		(password: string) => onSubmit("protected", password),
 		[onSubmit]
 	)
 

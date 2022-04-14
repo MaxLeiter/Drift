@@ -166,9 +166,15 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 						content={content}
 					/>
 				))}
-				{isOwner && <span className={styles.controls}>
-					<VisibilityControl postId={post.id} visibility={visibility} setVisibility={setVisibility} />
-				</span>}
+				{isOwner && (
+					<span className={styles.controls}>
+						<VisibilityControl
+							postId={post.id}
+							visibility={visibility}
+							setVisibility={setVisibility}
+						/>
+					</span>
+				)}
 				<ScrollToTop />
 			</Page.Content>
 		</Page>

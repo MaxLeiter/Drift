@@ -110,7 +110,7 @@ const Post = ({
 				setSubmitting(false)
 			}
 		},
-		[docs, router, setToast, title]
+		[description, docs, router, setToast, title]
 	)
 
 	const [isSubmitting, setSubmitting] = useState(false)
@@ -192,7 +192,7 @@ const Post = ({
 	)
 
 	const onChangeDescription = useCallback(
-		(e: ChangeEvent<HTMLTextAreaElement>) => {
+		(e: ChangeEvent<HTMLInputElement>) => {
 			setDescription(e.target.value)
 		},
 		[setDescription]

@@ -403,7 +403,6 @@ posts.delete("/:id", jwt, async (req: UserJwtRequest, res, next) => {
 	}
 })
 
-
 posts.put(
 	"/:id",
 	jwt,
@@ -415,7 +414,7 @@ posts.put(
 			visibility: Joi.string()
 				.custom(postVisibilitySchema, "valid visibility")
 				.required(),
-			password: Joi.string().optional(),
+			password: Joi.string().optional()
 		}
 	}),
 	async (req: UserJwtRequest, res, next) => {
@@ -427,7 +426,7 @@ posts.put(
 				)
 			}
 
-			const { visibility, password } = req.body;
+			const { visibility, password } = req.body
 
 			let hashedPassword: string = ""
 			if (visibility === "protected") {
@@ -437,14 +436,14 @@ posts.put(
 					.digest("hex")
 			}
 
-			const { id } = req.params;
+			const { id } = req.params
 			const post = await Post.findByPk(id, {
 				include: [
 					{
 						model: User,
 						as: "users",
 						attributes: ["id"]
-					},
+					}
 				]
 			})
 
@@ -453,7 +452,9 @@ posts.put(
 			}
 
 			if (!isUserAuthor(post)) {
-				return res.status(403).json({ error: "This post does not belong to you" })
+				return res
+					.status(403)
+					.json({ error: "This post does not belong to you" })
 			}
 
 			await Post.update(
