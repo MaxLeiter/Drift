@@ -78,6 +78,12 @@ const ListItem = ({
 							)}
 						</Text>
 
+						{post.description && (
+							<Text p className={styles.oneline}>
+								{post.description}
+							</Text>
+						)}
+
 						<div className={styles.badges}>
 							<VisibilityBadge visibility={post.visibility} />
 							<CreatedAgoBadge createdAt={post.createdAt} />

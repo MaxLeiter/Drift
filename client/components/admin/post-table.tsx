@@ -102,7 +102,7 @@ const PostTable = () => {
 			dataIndex: "",
 			key: "actions",
 			width: 50,
-			render(post: any) {
+			render() {
 				return (
 					<Popover
 						content={
