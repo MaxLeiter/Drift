@@ -2,9 +2,7 @@ import {
 	Button,
 	useToasts,
 	ButtonDropdown,
-	Toggle,
 	Input,
-	useClickAway
 } from "@geist-ui/core"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -19,7 +17,6 @@ import type {
 	Document as DocumentType
 } from "@lib/types"
 import PasswordModal from "./password-modal"
-import getPostPath from "@lib/get-post-path"
 import EditDocumentList from "@components/edit-document-list"
 import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
@@ -99,7 +96,7 @@ const Post = ({
 
 			if (res.ok) {
 				const json = await res.json()
-				router.push(getPostPath(json.visibility, json.id))
+				router.push(`/post/${json.id}`)
 			} else {
 				const json = await res.json()
 				setToast({
