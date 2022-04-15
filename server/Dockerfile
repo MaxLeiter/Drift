@@ -13,24 +13,27 @@ FROM deps AS builder
 
 WORKDIR /app
 
+ENV NODE_ENV=production
+
 COPY . .
 
-RUN apk add --no-cache git && \
-  yarn build:docker
+RUN yarn build:docker
 
-FROM builder AS runner
+FROM node:17-alpine AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PORT=3000
+
+EXPOSE ${PORT}
 
 RUN addgroup --system --gid 1001 nodejs && \
   adduser --system --uid 1001 drift
 
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+
 USER drift
-
-ENV PORT=3000
-
-EXPOSE ${PORT}
 
 CMD ["node", "dist/index.js"]
