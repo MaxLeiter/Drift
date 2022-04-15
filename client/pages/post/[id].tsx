@@ -1,4 +1,4 @@
-import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
+import type { GetServerSideProps } from "next"
 
 import type { Post } from "@lib/types"
 import PostPage from "@components/post-page"
@@ -69,9 +69,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 		}
 	}
 
+
 	return {
 		props: {
-			post: json
+			post: json,
+			key: params?.id
 		}
 	}
 }

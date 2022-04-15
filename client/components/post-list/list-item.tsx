@@ -1,6 +1,5 @@
 import NextLink from "next/link"
 import VisibilityBadge from "../badges/visibility-badge"
-import getPostPath from "@lib/get-post-path"
 import {
 	Link,
 	Text,
@@ -36,6 +35,10 @@ const ListItem = ({
 		router.push(`/new/from/${post.id}`)
 	}
 
+	const viewParentClick = () => {
+		router.push(`/post/${post.parent?.id}`)
+	}
+
 	return (
 		<FadeIn>
 			<li key={post.id}>
@@ -44,7 +47,8 @@ const ListItem = ({
 						<Text h3 className={styles.title}>
 							<NextLink
 								passHref={true}
-								href={getPostPath(post.visibility, post.id)}
+								href={`/post/[id]`}
+								as={`/post/${post.id}`}
 							>
 								<Link color marginRight={"var(--gap)"}>
 									{post.title}
@@ -57,14 +61,7 @@ const ListItem = ({
 											<Button
 												auto
 												icon={<Parent />}
-												onClick={() =>
-													router.push(
-														getPostPath(
-															post.parent!.visibility,
-															post.parent!.id
-														)
-													)
-												}
+												onClick={viewParentClick}
 											/>
 										</Tooltip>
 									)}
@@ -102,9 +99,7 @@ const ListItem = ({
 								<div key={file.id}>
 									<Link
 										color
-										href={`${getPostPath(post.visibility, post.id)}#${
-											file.title
-										}`}
+										href={`/post/${post.id}#${file.title}`}
 									>
 										{file.title || "Untitled file"}
 									</Link>

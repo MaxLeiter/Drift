@@ -17,6 +17,7 @@ const Description = ({ onChange, description }: props) => {
 				label="Description"
 				maxLength={256}
 				width="100%"
+				placeholder="A short description of your post"
 			/>
 		</div>
 	)

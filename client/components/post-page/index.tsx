@@ -16,7 +16,6 @@ import { useRouter } from "next/router"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
-import getPostPath from "@lib/get-post-path"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
 
@@ -86,6 +85,12 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 		router.push(`/new/from/${post.id}`)
 	}
 
+	const viewParentClick = () => {
+		router.push(
+			`/post/${post.parent!.id}`
+		)
+	}
+
 	if (isLoading) {
 		return <></>
 	}
@@ -122,11 +127,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 								<Button
 									auto
 									icon={<Parent />}
-									onClick={() =>
-										router.push(
-											getPostPath(post.parent!.visibility, post.parent!.id)
-										)
-									}
+									onClick={viewParentClick}
 								>
 									View Parent
 								</Button>
