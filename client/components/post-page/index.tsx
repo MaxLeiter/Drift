@@ -18,7 +18,6 @@ import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
-import useSharedState from "@lib/hooks/use-shared-state"
 
 type Props = {
 	post: Post
@@ -35,8 +34,6 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	const [isOwner] = useState(
 		post.users ? post.users[0].id === Cookies.get("drift-userid") : false
 	)
-	const [signedIn] = useSharedState<boolean>("signedIn")
-
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")
 
