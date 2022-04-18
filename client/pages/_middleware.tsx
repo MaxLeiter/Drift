@@ -45,7 +45,7 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 				return NextResponse.redirect(getURL("new"))
 			}
 		} else if (!signedIn) {
-			if (pathname === "/new") {
+			if (pathname.startsWith("/new")) {
 				return NextResponse.redirect(getURL("signin"))
 			}
 		}
