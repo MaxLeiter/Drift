@@ -4,10 +4,12 @@ Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is 
 
 You can try a demo at https://drift.maxleiter.com. The demo is built on master but has no database, so files and accounts can be wiped at any time.
 
-If you want to contribute, need support, or want to stay updated, you can join the IRC channel at #drift on irc.libera.chat or [reach me on twitter](https://twitter.com/Max_Leiter). If you don't have an IRC client yet, you can use a webclient [here](https://demo.thelounge.chat/#/connect?join=%23drift&nick=drift-user&realname=Drift%20User). 
+If you want to contribute, need support, or want to stay updated, you can join the IRC channel at #drift on irc.libera.chat or [reach me on twitter](https://twitter.com/Max_Leiter). If you don't have an IRC client yet, you can use a webclient [here](https://demo.thelounge.chat/#/connect?join=%23drift&nick=drift-user&realname=Drift%20User).
+
 <hr />
 
 **Contents:**
+
 - [Setup](#setup)
   - [Development](#development)
   - [Production](#production)
@@ -27,7 +29,7 @@ To migrate the sqlite database in development, you can use `yarn migrate` to see
 
 ### Production
 
-`yarn build` in both `client/` and `server/` will produce production code for the client and server respectively. 
+`yarn build` in both `client/` and `server/` will produce production code for the client and server respectively.
 
 If you're deploying the front-end to something like Vercel, you'll need to set the root folder to `client/`.
 
@@ -50,8 +52,6 @@ You can change these to your liking.
 - `MEMORY_DB`: if `true`, a sqlite database will not be created and changes will only exist in memory. Mainly for the demo.
 - `REGISTRATION_PASSWORD`: if `true`, the user will be required to provide this password to sign-up, in addition to their username and account password. If it's not set, no additional password will be required.
 - `SECRET_KEY`: the same secret key as the client
-- `WELCOME_CONTENT`: a markdown string that's rendered on the home page
-- `WELCOME_TITLE`: the file title for the post on the homepage.
 - `ENABLE_ADMIN`: the first account created is an administrator account
 - `DRIFT_HOME`: defaults to ~/.drift, the directory for storing the database and eventually images
 

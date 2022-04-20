@@ -4,6 +4,7 @@ import { User } from "@lib/models/User"
 import { File } from "@lib/models/File"
 import { Router } from "express"
 import { celebrate, Joi } from "celebrate"
+import { ServerInfo } from "@lib/models/ServerInfo"
 
 export const admin = Router()
 
@@ -197,3 +198,54 @@ admin.delete("/post/:id", async (req, res, next) => {
 		next(e)
 	}
 })
+
+admin.get("/server-info", async (req, res, next) => {
+	try {
+		const info = await ServerInfo.findOne({
+			where: {
+				id: 1
+			}
+		})
+
+		res.json(info)
+	} catch (e) {
+		next(e)
+	}
+})
+
+admin.put(
+	"/server-info",
+	celebrate({
+		body: {
+			title: Joi.string().required(),
+			description: Joi.string().required()
+		}
+	}),
+	async (req, res, next) => {
+		try {
+			const { description, title } = req.body
+			const serverInfo = await ServerInfo.findOne({
+				where: {
+					id: 1
+				}
+			})
+
+			if (!serverInfo) {
+				return res.status(404).json({
+					error: "Server info not found"
+				})
+			}
+
+			await serverInfo.update({
+				welcomeMessage: description,
+				welcomeTitle: title
+			})
+
+			res.json({
+				success: true
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+)

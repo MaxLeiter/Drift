@@ -6,6 +6,7 @@ import { errors } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
 import config from "@lib/config"
+import { ServerInfo } from "@lib/models/ServerInfo"
 
 export const app = express()
 
@@ -19,17 +20,25 @@ app.use("/files", files)
 app.use("/admin", admin)
 app.use("/health", health)
 
-app.get("/welcome", secretKey, (req, res) => {
-	const introContent = config.welcome_content
-	const introTitle = config.welcome_title
-	if (!introContent || !introTitle) {
-		return res.status(500).json({ error: "Missing welcome content" })
+app.get("/welcome", secretKey, async (req, res) => {
+	const serverInfo = await ServerInfo.findOne({
+		where: {
+			id: "1"
+		}
+	})
+
+	if (!serverInfo) {
+		return res.status(500).json({
+			message: "Server info not found."
+		})
 	}
 
+	const { welcomeMessage, welcomeTitle } = serverInfo
+
 	return res.json({
-		title: introTitle,
-		content: introContent,
-		rendered: markdown(introContent)
+		title: welcomeTitle,
+		content: welcomeMessage,
+		rendered: markdown(welcomeMessage)
 	})
 })
 
