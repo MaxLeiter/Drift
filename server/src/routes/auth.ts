@@ -4,7 +4,7 @@ import { User } from "@lib/models/User"
 import { AuthToken } from "@lib/models/AuthToken"
 import { sign, verify } from "jsonwebtoken"
 import config from "@lib/config"
-import jwt from "@lib/middleware/jwt"
+import jwt, { UserJwtRequest } from "@lib/middleware/jwt"
 import { celebrate, Joi } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 
@@ -194,3 +194,38 @@ auth.post("/signout", secretKey, async (req, res, next) => {
 		next(e)
 	}
 })
+
+auth.put("/change-password",
+	jwt,
+	celebrate({
+		body: {
+			oldPassword: Joi.string().required().min(6).max(128),
+			newPassword: Joi.string().required().min(6).max(128)
+		}
+	}),
+	async (req: UserJwtRequest, res, next) => {
+		try {
+			const user = await User.findOne({ where: { id: req.user?.id } })
+			if (!user) {
+				return res.sendStatus(401)
+			}
+
+			const password_valid = await compare(req.body.oldPassword, user.password)
+			if (!password_valid) {
+				res.status(401).json({
+					error: "Old password is incorrect"
+				})
+			}
+
+			const salt = await genSalt(10)
+			user.password = await hash(req.body.newPassword, salt)
+			user.save()
+
+			res.status(200).json({
+				message: "Password changed"
+			})
+		} catch (e) {
+			next(e)
+		}
+	}
+)
