@@ -94,23 +94,23 @@ admin.delete("/users/:id", async (req, res, next) => {
 	}
 })
 
-// admin.delete("/posts/:id", async (req, res, next) => {
-// 	try {
-// 		const post = await Post.findByPk(req.params.id)
-// 		if (!post) {
-// 			return res.status(404).json({
-// 				error: "Post not found"
-// 			})
-// 		}
-// 		await post.destroy()
+admin.delete("/posts/:id", async (req, res, next) => {
+	try {
+		const post = await Post.findByPk(req.params.id)
+		if (!post) {
+			return res.status(404).json({
+				error: "Post not found"
+			})
+		}
+		await post.destroy()
 
-// 		res.json({
-// 			success: true
-// 		})
-// 	} catch (e) {
-// 		next(e)
-// 	}
-// })
+		res.json({
+			success: true
+		})
+	} catch (e) {
+		next(e)
+	}
+})
 
 admin.get("/posts", async (req, res, next) => {
 	try {

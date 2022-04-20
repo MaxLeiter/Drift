@@ -1,11 +1,11 @@
-import { Button, Fieldset, Link, Popover, useToasts } from "@geist-ui/core"
-import MoreVertical from "@geist-ui/icons/moreVertical"
+import SettingsGroup from "@components/settings-group"
+import { Fieldset, useToasts } from "@geist-ui/core"
+import byteToMB from "@lib/byte-to-mb"
 import { Post } from "@lib/types"
-import Cookies from "js-cookie"
+import Table from "rc-table"
 import { useEffect, useMemo, useState } from "react"
 import { adminFetcher } from "."
-import Table from "rc-table"
-import byteToMB from "@lib/byte-to-mb"
+import ActionDropdown from "./action-dropdown"
 
 const PostTable = () => {
 	const [posts, setPosts] = useState<Post[]>()
@@ -35,8 +35,8 @@ const PostTable = () => {
 					visibility: post.visibility,
 					size: post.files
 						? byteToMB(
-								post.files.reduce((acc, file) => acc + file.html.length, 0)
-						  )
+							post.files.reduce((acc, file) => acc + file.html.length, 0)
+						)
 						: 0,
 					actions: ""
 				}
@@ -44,27 +44,34 @@ const PostTable = () => {
 		[posts]
 	)
 
-	// const deletePost = async (id: number) => {
-	//     const confirm = window.confirm("Are you sure you want to delete this post?")
-	//     if (!confirm) return
-	//     const res = await adminFetcher(`/posts/${id}`, {
-	//         method: "DELETE",
-	//     })
+	const deletePost = async (/* id: string */) => {
+		return alert("Not implemented")
 
-	//     const json = await res.json()
+		// const confirm = window.confirm("Are you sure you want to delete this post?")
+		// if (!confirm) return
+		// const res = await adminFetcher(`/posts/${id}`, {
+		// 	method: "DELETE",
+		// })
 
-	//     if (res.status === 200) {
-	//         setToast({
-	//             text: "Post deleted",
-	//             type: "success"
-	//         })
-	//     } else {
-	//         setToast({
-	//             text: json.error || "Something went wrong",
-	//             type: "error"
-	//         })
-	//     }
-	// }
+		// const json = await res.json()
+
+		// if (res.status === 200) {
+		// 	setToast({
+		// 		text: "Post deleted",
+		// 		type: "success"
+		// 	})
+
+		// 	setPosts((posts) => {
+		// 		const newPosts = posts?.filter((post) => post.id !== id)
+		// 		return newPosts
+		// 	})
+		// } else {
+		// 	setToast({
+		// 		text: json.error || "Something went wrong",
+		// 		type: "error"
+		// 	})
+		// }
+	}
 
 	const tableColumns = [
 		{
@@ -102,37 +109,28 @@ const PostTable = () => {
 			dataIndex: "",
 			key: "actions",
 			width: 50,
-			render() {
+			render(post: Post) {
 				return (
-					<Popover
-						content={
-							<div
-								style={{
-									width: 100,
-									display: "flex",
-									flexDirection: "column",
-									alignItems: "center"
-								}}
-							>
-								{/* <Link href="#" onClick={() => deletePost(post.id)}>Delete post</Link> */}
-							</div>
-						}
-						hideArrow
-					>
-						<Button iconRight={<MoreVertical />} auto></Button>
-					</Popover>
+					<ActionDropdown
+						title="Actions"
+						actions={[
+							{
+								title: "Delete",
+								onClick: () => deletePost(post.id)
+							}
+						]}
+					/>
 				)
 			}
 		}
 	]
 
 	return (
-		<Fieldset>
-			<Fieldset.Title>Posts</Fieldset.Title>
-			{posts && <Fieldset.Subtitle>{posts.length} posts</Fieldset.Subtitle>}
+		<SettingsGroup title="Posts">
 			{!posts && <Fieldset.Subtitle>Loading...</Fieldset.Subtitle>}
+			{posts && <Fieldset.Subtitle><h5>{posts.length} posts</h5></Fieldset.Subtitle>}
 			{posts && <Table columns={tableColumns} data={tablePosts} />}
-		</Fieldset>
+		</SettingsGroup>
 	)
 }
 
