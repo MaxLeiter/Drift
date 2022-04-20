@@ -30,14 +30,13 @@ user.get("/self", jwt, async (req: UserJwtRequest, res, next) => {
 	}
 })
 
-user.put(
-	"/profile",
+user.put("/profile",
 	jwt,
 	celebrate({
 		body: {
 			displayName: Joi.string().optional().allow(""),
 			bio: Joi.string().optional().allow(""),
-			email: Joi.string().optional().email().allow("")
+			email: Joi.string().optional().email().allow(""),
 		}
 	}),
 	async (req: UserJwtRequest, res, next) => {

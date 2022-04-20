@@ -195,8 +195,7 @@ auth.post("/signout", secretKey, async (req, res, next) => {
 	}
 })
 
-auth.put(
-	"/change-password",
+auth.put("/change-password",
 	jwt,
 	celebrate({
 		body: {

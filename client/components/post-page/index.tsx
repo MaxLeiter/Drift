@@ -85,7 +85,9 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	}
 
 	const viewParentClick = () => {
-		router.push(`/post/${post.parent!.id}`)
+		router.push(
+			`/post/${post.parent!.id}`
+		)
 	}
 
 	if (isLoading) {
@@ -121,7 +123,11 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 								Edit a Copy
 							</Button>
 							{post.parent && (
-								<Button auto icon={<Parent />} onClick={viewParentClick}>
+								<Button
+									auto
+									icon={<Parent />}
+									onClick={viewParentClick}
+								>
 									View Parent
 								</Button>
 							)}

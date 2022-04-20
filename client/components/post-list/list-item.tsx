@@ -97,7 +97,10 @@ const ListItem = ({
 						{post.files?.map((file: File) => {
 							return (
 								<div key={file.id}>
-									<Link color href={`/post/${post.id}#${file.title}`}>
+									<Link
+										color
+										href={`/post/${post.id}#${file.title}`}
+									>
 										{file.title || "Untitled file"}
 									</Link>
 								</div>

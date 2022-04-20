@@ -3,16 +3,14 @@ import PageSeo from "@components/page-seo"
 import HomeComponent from "@components/home"
 import { Page, Text } from "@geist-ui/core"
 import type { GetStaticProps } from "next"
-import { InferGetStaticPropsType } from "next"
-type Props =
-	| {
-			introContent: string
-			introTitle: string
-			rendered: string
-	  }
-	| {
-			error: boolean
-	  }
+import { InferGetStaticPropsType } from 'next'
+type Props = {
+	introContent: string
+	introTitle: string
+	rendered: string
+} | {
+	error: boolean
+}
 
 export const getStaticProps: GetStaticProps = async () => {
 	try {
@@ -34,26 +32,21 @@ export const getStaticProps: GetStaticProps = async () => {
 			// Next.js will attempt to re-generate the page:
 			// - When a request comes in
 			// - At most every 60 seconds
-			revalidate: 60 // In seconds
+			revalidate: 60, // In seconds
 		}
 	} catch (err) {
 		// If there was an error, it's likely due to the server not running, so we attempt to regenerate the page
 		return {
 			props: {
-				error: true
+				error: true,
 			},
-			revalidate: 10 // In seconds
+			revalidate: 10, // In seconds
 		}
 	}
 }
 
 // TODO: fix props type
-const Home = ({
-	rendered,
-	introContent,
-	introTitle,
-	error
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = ({ rendered, introContent, introTitle, error }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<Page className={styles.wrapper}>
 			<PageSeo />

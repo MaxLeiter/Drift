@@ -89,10 +89,10 @@ const Header = () => {
 					href: "/mine"
 				},
 				{
-					name: "settings",
+					name: 'settings',
 					icon: <SettingsIcon />,
-					value: "settings",
-					href: "/settings"
+					value: 'settings',
+					href: '/settings'
 				},
 				{
 					name: "sign out",
