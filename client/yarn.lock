@@ -213,10 +213,10 @@
     date-fns "^2.0.1"
     react-popper "^2.2.5"
 
-"@types/react-dom@18.0.0":
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.0.tgz#b13f8d098e4b0c45df4f1ed123833143b0c71141"
-  integrity sha512-49897Y0UiCGmxZqpC8Blrf6meL8QUla6eb+BBhn69dTXlmuOlzkfr7HHY/O8J25e1lTUMs+YYxSlVDAaGHCOLg==
+"@types/react-dom@18.0.1":
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.1.tgz#cb3cc10ea91141b12c71001fede1017acfbce4db"
+  integrity sha512-jCwTXvHtRLiyVvKm9aEdHXs8rflVOGd5Sl913JZrPshfXjn8NYsTNZOz70bCsA31IR0TOqwi3ad+X4tSCBoMTw==
   dependencies:
     "@types/react" "*"
 
@@ -578,10 +578,10 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.6.1.tgz#adc954ebe281c37a6319bfa401e6dd2488ffb70d"
   integrity sha512-x/5fWmGMnbKQAaNwN+UZlV79qBLM9JFnJuJ03gIi5whrob0xV0ofNVHy9DhwGdsMJQc2OKv0oGmLzvaqvAVv+g==
 
-client-zip@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/client-zip/-/client-zip-2.0.1.tgz#185de9d8a87f8072d5e29b1095b6c4293fb5d009"
-  integrity sha512-eTelzw8Nb1vOUYDqGh3hzdFwQT7MHpH1oO4Nwd04An09t9ulYyt5ojTdrvoySjBEwanVIn3CQ0vl0IyWBQZ4Bg==
+client-zip@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/client-zip/-/client-zip-2.1.0.tgz#a652f33211300b705ed2cb0d2c933a9199d42eeb"
+  integrity sha512-09Ua+LdIvnwxh5Y0UnmlkHL9Nmx5uUCCmrpnMYG0+yfc9kY9TnmJeLyqX189N45t0CQoGv4tPiScTzWPhviQBQ==
 
 clone@^1.0.2:
   version "1.0.4"
