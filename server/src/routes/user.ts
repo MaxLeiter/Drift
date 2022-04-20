@@ -54,7 +54,7 @@ user.put("/profile",
 			if (!user) {
 				return error()
 			}
-			console.log(req.body)
+
 			const { displayName, bio, email } = req.body
 			const toUpdate = {} as any
 			if (displayName) {
