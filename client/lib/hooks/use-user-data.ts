@@ -19,7 +19,7 @@ const useUserData = () => {
 	useEffect(() => {
 		if (authToken) {
 			const fetchUser = async () => {
-				const response = await fetch(`/server-api/users/self`, {
+				const response = await fetch(`/server-api/user/self`, {
 					headers: {
 						Authorization: `Bearer ${authToken}`
 					}

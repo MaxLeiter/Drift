@@ -61,4 +61,13 @@ export class User extends Model {
 
 	@Column
 	role!: string
+
+	@Column
+	email?: string
+
+	@Column
+	displayName?: string
+
+	@Column
+	bio?: string
 }

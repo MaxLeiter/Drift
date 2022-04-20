@@ -1,7 +1,7 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
 import * as errorhandler from "strong-error-handler"
-import { posts, users, auth, files, admin, health } from "@routes/index"
+import { posts, user, auth, files, admin, health } from "@routes/index"
 import { errors } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 import markdown from "@lib/render-markdown"
@@ -14,7 +14,7 @@ app.use(bodyParser.json({ limit: "5mb" }))
 
 app.use("/auth", auth)
 app.use("/posts", posts)
-app.use("/users", users)
+app.use("/user", user)
 app.use("/files", files)
 app.use("/admin", admin)
 app.use("/health", health)
