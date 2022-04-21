@@ -34,4 +34,7 @@ type User = {
 	posts?: Post[]
 	role: "admin" | "user" | ""
 	createdAt: string
+	displayName?: string
+	bio?: string
+	email?: string
 }

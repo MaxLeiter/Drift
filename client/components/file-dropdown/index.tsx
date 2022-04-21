@@ -1,12 +1,12 @@
-import { Button, Link, Text, Popover } from "@geist-ui/core"
-import FileIcon from "@geist-ui/icons/fileText"
-import CodeIcon from "@geist-ui/icons/fileFunction"
-import styles from "./dropdown.module.css"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { codeFileExtensions } from "@lib/constants"
-import ChevronDown from "@geist-ui/icons/chevronDown"
 import ShiftBy from "@components/shift-by"
+import { Button, Popover } from "@geist-ui/core"
+import ChevronDown from "@geist-ui/icons/chevronDown"
+import CodeIcon from "@geist-ui/icons/fileFunction"
+import FileIcon from "@geist-ui/icons/fileText"
+import { codeFileExtensions } from "@lib/constants"
 import type { File } from "@lib/types"
+import { useCallback, useEffect, useState } from "react"
+import styles from "./dropdown.module.css"
 
 type Item = File & {
 	icon: JSX.Element

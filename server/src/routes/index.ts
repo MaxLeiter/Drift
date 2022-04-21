@@ -1,6 +1,6 @@
 export { auth } from "./auth"
 export { posts } from "./posts"
-export { users } from "./users"
+export { user } from "./user"
 export { files } from "./files"
 export { admin } from "./admin"
 export { health } from "./health"

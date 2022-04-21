@@ -1,10 +1,10 @@
-import { Button, Fieldset, Link, Popover, useToasts } from "@geist-ui/core"
-import MoreVertical from "@geist-ui/icons/moreVertical"
+import { Fieldset, useToasts } from "@geist-ui/core"
 import { User } from "@lib/types"
-import Cookies from "js-cookie"
 import { useEffect, useMemo, useState } from "react"
 import { adminFetcher } from "."
 import Table from "rc-table"
+import SettingsGroup from "@components/settings-group"
+import ActionDropdown from "./action-dropdown"
 
 const UserTable = () => {
 	const [users, setUsers] = useState<User[]>()
@@ -19,7 +19,7 @@ const UserTable = () => {
 		fetchUsers()
 	}, [])
 
-	const toggleRole = async (id: number, role: "admin" | "user") => {
+	const toggleRole = async (id: string, role: "admin" | "user") => {
 		const res = await adminFetcher("/users/toggle-role", {
 			method: "POST",
 			body: { id, role }
@@ -33,17 +33,18 @@ const UserTable = () => {
 				type: "success"
 			})
 
-			// TODO: swr should handle updating this
-			const newUsers = users?.map((user) => {
-				if (user.id === id.toString()) {
-					return {
-						...user,
-						role: role === "admin" ? "user" : ("admin" as User["role"])
+			setUsers((users) => {
+				const newUsers = users?.map((user) => {
+					if (user.id === id) {
+						return {
+							...user,
+							role
+						}
 					}
-				}
-				return user
+					return user
+				})
+				return newUsers
 			})
-			setUsers(newUsers)
 		} else {
 			setToast({
 				text: json.error || "Something went wrong",
@@ -52,7 +53,7 @@ const UserTable = () => {
 		}
 	}
 
-	const deleteUser = async (id: number) => {
+	const deleteUser = async (id: string) => {
 		const confirm = window.confirm("Are you sure you want to delete this user?")
 		if (!confirm) return
 		const res = await adminFetcher(`/users/${id}`, {
@@ -123,42 +124,32 @@ const UserTable = () => {
 			dataIndex: "",
 			key: "actions",
 			width: 50,
-			render(user: any) {
+			render(user: User) {
 				return (
-					<Popover
-						content={
-							<div
-								style={{
-									width: 100,
-									display: "flex",
-									flexDirection: "column",
-									alignItems: "center"
-								}}
-							>
-								<Link href="#" onClick={() => toggleRole(user.id, user.role)}>
-									{user.role === "admin" ? "Change role" : "Make admin"}
-								</Link>
-								<Link href="#" onClick={() => deleteUser(user.id)}>
-									Delete user
-								</Link>
-							</div>
-						}
-						hideArrow
-					>
-						<Button iconRight={<MoreVertical />} auto></Button>
-					</Popover>
+					<ActionDropdown
+						title="Actions"
+						actions={[
+							{
+								title: user.role === "admin" ? "Change role" : "Make admin",
+								onClick: () => toggleRole(user.id, user.role === "admin" ? "user" : "admin")
+							},
+							{
+								title: "Delete",
+								onClick: () => deleteUser(user.id)
+							}
+						]}
+					/>
 				)
 			}
 		}
 	]
 
 	return (
-		<Fieldset>
-			<Fieldset.Title>Users</Fieldset.Title>
-			{users && <Fieldset.Subtitle>{users.length} users</Fieldset.Subtitle>}
+		<SettingsGroup title="Users">
 			{!users && <Fieldset.Subtitle>Loading...</Fieldset.Subtitle>}
+			{users && <Fieldset.Subtitle><h5>{users.length} users</h5></Fieldset.Subtitle>}
 			{users && <Table columns={usernameColumns} data={tableUsers} />}
-		</Fieldset>
+		</SettingsGroup>
 	)
 }
 

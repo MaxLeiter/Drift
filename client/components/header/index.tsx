@@ -88,12 +88,12 @@ const Header = () => {
 					value: "yours",
 					href: "/mine"
 				},
-				// {
-				//     name: 'settings',
-				//     icon: <SettingsIcon />,
-				//     value: 'settings',
-				//     href: '/settings'
-				// },
+				{
+					name: 'settings',
+					icon: <SettingsIcon />,
+					value: 'settings',
+					href: '/settings'
+				},
 				{
 					name: "sign out",
 					icon: <SignOutIcon />,

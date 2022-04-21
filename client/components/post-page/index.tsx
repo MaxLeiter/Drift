@@ -34,7 +34,6 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	const [isOwner] = useState(
 		post.users ? post.users[0].id === Cookies.get("drift-userid") : false
 	)
-
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")
 
