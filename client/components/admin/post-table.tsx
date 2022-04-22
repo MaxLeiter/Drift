@@ -35,8 +35,8 @@ const PostTable = () => {
 					visibility: post.visibility,
 					size: post.files
 						? byteToMB(
-							post.files.reduce((acc, file) => acc + file.html.length, 0)
-						)
+								post.files.reduce((acc, file) => acc + file.html.length, 0)
+						  )
 						: 0,
 					actions: ""
 				}
@@ -109,14 +109,14 @@ const PostTable = () => {
 			dataIndex: "",
 			key: "actions",
 			width: 50,
-			render(post: Post) {
+			render() {
 				return (
 					<ActionDropdown
 						title="Actions"
 						actions={[
 							{
 								title: "Delete",
-								onClick: () => deletePost(post.id)
+								onClick: () => deletePost()
 							}
 						]}
 					/>
@@ -128,7 +128,11 @@ const PostTable = () => {
 	return (
 		<SettingsGroup title="Posts">
 			{!posts && <Fieldset.Subtitle>Loading...</Fieldset.Subtitle>}
-			{posts && <Fieldset.Subtitle><h5>{posts.length} posts</h5></Fieldset.Subtitle>}
+			{posts && (
+				<Fieldset.Subtitle>
+					<h5>{posts.length} posts</h5>
+				</Fieldset.Subtitle>
+			)}
 			{posts && <Table columns={tableColumns} data={tablePosts} />}
 		</SettingsGroup>
 	)
