@@ -38,3 +38,10 @@
 	position: absolute;
 	right: 0;
 }
+
+@media (max-width: 768px) {
+	.actionWrapper .actions {
+		position: relative;
+		margin-left: 0 !important;
+	}
+}

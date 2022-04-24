@@ -131,7 +131,8 @@ const UserTable = () => {
 						actions={[
 							{
 								title: user.role === "admin" ? "Change role" : "Make admin",
-								onClick: () => toggleRole(user.id, user.role === "admin" ? "user" : "admin")
+								onClick: () =>
+									toggleRole(user.id, user.role === "admin" ? "user" : "admin")
 							},
 							{
 								title: "Delete",
@@ -147,7 +148,11 @@ const UserTable = () => {
 	return (
 		<SettingsGroup title="Users">
 			{!users && <Fieldset.Subtitle>Loading...</Fieldset.Subtitle>}
-			{users && <Fieldset.Subtitle><h5>{users.length} users</h5></Fieldset.Subtitle>}
+			{users && (
+				<Fieldset.Subtitle>
+					<h5>{users.length} users</h5>
+				</Fieldset.Subtitle>
+			)}
 			{users && <Table columns={usernameColumns} data={tableUsers} />}
 		</SettingsGroup>
 	)
