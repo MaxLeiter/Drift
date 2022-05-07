@@ -2,7 +2,7 @@ import { celebrate, Joi } from "celebrate"
 import { Router } from "express"
 import { File } from "@lib/models/File"
 import secretKey from "@lib/middleware/secret-key"
-import jwt from "@lib/middleware/jwt"
+import jwt from "@lib/middleware/is-signed-in"
 import getHtmlFromFile from "@lib/get-html-from-drift-file"
 
 export const files = Router()

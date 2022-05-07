@@ -1,7 +1,7 @@
 import config from "@lib/config"
 import { NextFunction, Request, Response } from "express"
 
-export default function authenticateToken(
+export default function secretKey(
 	req: Request,
 	res: Response,
 	next: NextFunction

@@ -1,5 +1,5 @@
 import { Router } from "express"
-import jwt, { UserJwtRequest } from "@lib/middleware/jwt"
+import jwt, { UserJwtRequest } from "@lib/middleware/is-signed-in"
 import { User } from "@lib/models/User"
 import { celebrate, Joi } from "celebrate"
 
