@@ -57,10 +57,10 @@ You can change these to your liking.
 
 ### For SSO
 
-- `HEADER_AUTH`: if true, enables authenthication via the HTTP header specified in `HEADER_AUTH_KEY` which generally populated at the reverse-proxy level.
+- `HEADER_AUTH`: if true, enables authenthication via the HTTP header specified in `HEADER_AUTH_KEY` which is generally populated at the reverse-proxy level.
 - `HEADER_AUTH_KEY`: if `HEADER_AUTH` is true, the header to look for the users username (like `Auth-User`)
 - `HEADER_AUTH_ROLE`: if `HEADER_AUTH` is true, the header to look for the users role ("user" | "admin", at the moment)
-
+- `HEADER_AUTH_WHITELISTED_IPS`: comma-separated list of IPs users can access Drift from using header authentication. Defaults to '127.0.0.1'. 
 ## Running with pm2
 
 It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).

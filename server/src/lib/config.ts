@@ -9,9 +9,12 @@ type Config = {
 	registration_password: string
 	welcome_content: string | undefined
 	welcome_title: string | undefined
+
+	// header auth
 	header_auth: boolean
 	header_auth_name: string | undefined
 	header_auth_role: string | undefined
+	header_auth_whitelisted_ips: string[] | undefined
 }
 
 type EnvironmentValue = string | undefined
@@ -58,6 +61,14 @@ export const config = (env: Environment): Config => {
 		}
 	}
 
+	const parseArrayFromString = (str: EnvironmentValue): string[] => {
+		if (str) {
+			return str.split(",").map((s) => s.trim())
+		} else {
+			return ['127.0.0.1']
+		}
+	}
+
 	const is_production = env.NODE_ENV === "production"
 
 	const developmentDefault = (
@@ -84,7 +95,8 @@ export const config = (env: Environment): Config => {
 		welcome_title: env.WELCOME_TITLE,
 		header_auth: stringToBoolean(env.HEADER_AUTH),
 		header_auth_name: env.HEADER_AUTH_NAME,
-		header_auth_role: env.HEADER_AUTH_ROLE
+		header_auth_role: env.HEADER_AUTH_ROLE,
+		header_auth_whitelisted_ips: parseArrayFromString(env.HEADER_AUTH_WHITELISTED_IPS)
 	}
 	return config
 }

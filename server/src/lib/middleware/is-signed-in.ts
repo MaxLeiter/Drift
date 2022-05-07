@@ -21,6 +21,11 @@ export default async function isSignedIn(
 	const token = authHeader && authHeader.split(" ")[1]
 
 	if (config.header_auth && config.header_auth_name) {
+		if (!config.header_auth_whitelisted_ips?.includes(req.ip)) {
+			console.warn(`IP ${req.ip} is not whitelisted and tried to authenticate with header auth.`)
+			return res.sendStatus(401)
+		}
+
 		// with header auth, we assume the user is authenticated,
 		// but their user may not be created in the database yet.
 
@@ -33,6 +38,7 @@ export default async function isSignedIn(
 				role
 			})
 			await user.save()
+			console.log(`Created user ${username} with role ${role} via header auth.`)
 		}
 
 		req.user = user
