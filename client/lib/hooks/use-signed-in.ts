@@ -19,7 +19,7 @@ const useSignedIn = () => {
 		const attemptSignIn = async () => {
 			// If header auth is enabled, the reverse proxy will add it between this fetch and the server.
 			// Otherwise, the token will be used. 
-			const res = await fetch("/server-api/auth/verify-token", {
+			const res = await fetch("/server-api/auth/verify-signed-in", {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",

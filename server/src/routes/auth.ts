@@ -147,7 +147,7 @@ function generateAccessToken(user: User) {
 	return token
 }
 
-auth.get("/verify-token", jwt, async (req, res, next) => {
+auth.get("/verify-signed-in", jwt, async (req, res, next) => {
 	try {
 		res.status(200).json({
 			message: "You are authenticated"
