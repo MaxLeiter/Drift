@@ -95,10 +95,6 @@ auth.post(
 		}
 	}),
 	async (req, res) => {
-		if (config.header_auth) {
-
-		}
-
 		const error = "User does not exist or password is incorrect"
 		const errorToThrow = new Error(error)
 		try {

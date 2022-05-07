@@ -12,7 +12,7 @@ export interface UserJwtRequest extends Request {
 	user?: User
 }
 
-export default async function authenticateToken(
+export default async function isSignedIn(
 	req: UserJwtRequest,
 	res: Response,
 	next: NextFunction
@@ -35,59 +35,51 @@ export default async function authenticateToken(
 			await user.save()
 		}
 
-		if (!token) {
-			const token = jwt.sign({ id: user.id }, config.jwt_secret, {
-				expiresIn: "2d"
-			})
-			const authToken = new AuthToken({
-				userId: user.id,
-				token: token
-			})
-			await authToken.save()
+		req.user = user
+		next()
+	} else {
+		if (token == null) return res.sendStatus(401)
+
+		const authToken = await AuthToken.findOne({ where: { token: token } })
+		if (authToken == null) {
+			return res.sendStatus(401)
 		}
-	}
-
-	if (token == null) return res.sendStatus(401)
-
-	const authToken = await AuthToken.findOne({ where: { token: token } })
-	if (authToken == null) {
-		return res.sendStatus(401)
-	}
-
-	if (authToken.deletedAt) {
-		return res.sendStatus(401).json({
-			message: "Token is no longer valid"
-		})
-	}
-
-	jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
-		if (err) {
-			if (config.header_auth) {
-				// if the token has expired or is invalid, we need to delete it and generate a new one
-				authToken.destroy()
-				const token = jwt.sign({ id: user.id }, config.jwt_secret, {
-					expiresIn: "2d"
-				})
-				const newToken = new AuthToken({
-					userId: user.id,
-					token: token
-				})
-				await newToken.save()
-			} else {
+	
+		if (authToken.deletedAt) {
+			return res.sendStatus(401).json({
+				message: "Token is no longer valid"
+			})
+		}
+	
+		jwt.verify(token, config.jwt_secret, async (err: any, user: any) => {
+			if (err) {
+				if (config.header_auth) {
+					// if the token has expired or is invalid, we need to delete it and generate a new one
+					authToken.destroy()
+					const token = jwt.sign({ id: user.id }, config.jwt_secret, {
+						expiresIn: "2d"
+					})
+					const newToken = new AuthToken({
+						userId: user.id,
+						token: token
+					})
+					await newToken.save()
+				} else {
+					return res.sendStatus(403)
+				}
+			}
+	
+			const userObj = await UserModel.findByPk(user.id, {
+				attributes: {
+					exclude: ["password"]
+				}
+			})
+			if (!userObj) {
 				return res.sendStatus(403)
 			}
-		}
-
-		const userObj = await UserModel.findByPk(user.id, {
-			attributes: {
-				exclude: ["password"]
-			}
+			req.user = user
+	
+			next()
 		})
-		if (!userObj) {
-			return res.sendStatus(403)
-		}
-		req.user = user
-
-		next()
-	})
+	}
 }
