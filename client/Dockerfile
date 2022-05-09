@@ -9,17 +9,17 @@ COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile
 
-FROM node:17-alpine AS builder
+FROM deps AS builder
 
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
 ARG API_URL
 
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 ENV API_URL=${API_URL:-http://localhost:3000}
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY . .
 
 RUN yarn build
 
@@ -27,13 +27,13 @@ FROM node:17-alpine AS runner
 
 WORKDIR /app
 
-ARG NODE_ENV
-
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=${NODE_ENV:-production}
+ENV PORT=3001
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+EXPOSE ${PORT}
+
+RUN addgroup --system --gid 1001 nodejs && \
+  adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
@@ -42,9 +42,5 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
-
-ENV PORT=3001
-
-EXPOSE 3001
 
 CMD ["node", "server.js"]
