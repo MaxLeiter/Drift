@@ -2549,11 +2549,6 @@ react-popper@^2.2.5:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
-react-trigger-change@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-trigger-change/-/react-trigger-change-1.0.2.tgz#af573398ecef2475362b84f8c08c07fea23914c3"
-  integrity sha1-r1czmOzvJHU2K4T4wIwH/qI5FMM=
-
 react@18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
@@ -2972,13 +2967,12 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-textarea-markdown-editor@0.1.13:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/textarea-markdown-editor/-/textarea-markdown-editor-0.1.13.tgz#27aeda4bc95148a8ed69021f553753feb224325f"
-  integrity sha512-2r1gTPFA/wwAzt+Aa6LVZWjJNvL0aXfR6Z9T6eQBpJ1AK6gtPVCZgkO97KIrqpAmMcwgNCz0ToYj2AqPufdVeg==
+textarea-markdown-editor@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/textarea-markdown-editor/-/textarea-markdown-editor-1.0.1.tgz#8cb68627ef8489261f4209217899dad86934a75a"
+  integrity sha512-JFb2Y7sALJEVeCAFh2li1Otb/vHiXhXwaJcrbRU+NHhk5SfQcM0W9FwBZIux35TZTCv0L4bewJn9FxEB275nNQ==
   dependencies:
     mousetrap "^1.6.5"
-    react-trigger-change "^1.0.2"
 
 to-regex-range@^5.0.1:
   version "5.0.1"
