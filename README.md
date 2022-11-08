@@ -2,7 +2,7 @@
 
 Drift is a self-hostable Gist clone. It's also a major work-in-progress, but is completely functional.
 
-You can try a demo at https://drift.maxleiter.com. The demo is built on master but has no database, so files and accounts can be wiped at any time.
+You can try a demo at https://drift.lol. The demo is built on master but has no database, so files and accounts can be wiped at any time.
 
 If you want to contribute, need support, or want to stay updated, you can join the IRC channel at #drift on irc.libera.chat or [reach me on twitter](https://twitter.com/Max_Leiter). If you don't have an IRC client yet, you can use a webclient [here](https://demo.thelounge.chat/#/connect?join=%23drift&nick=drift-user&realname=Drift%20User). 
 <hr />
@@ -92,3 +92,5 @@ Drift is a major work in progress. Below is a (rough) list of completed and envi
 - [ ] works enough with JavaScript disabled
 - [x] documentation
 - [x] customizable homepage, so the demo can exist as-is but other instances can be built from the same source. Environment variable for the file contents?
+- [ ] Next.js 13 + app directory / server components
+  - [ ] Migrate away from `geist-ui`
