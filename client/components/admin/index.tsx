@@ -1,4 +1,3 @@
-import { Text, Spacer } from "@geist-ui/core"
 import Cookies from "js-cookie"
 import styles from "./admin.module.css"
 import PostTable from "./post-table"
@@ -23,10 +22,18 @@ export const adminFetcher = async (
 const Admin = () => {
 	return (
 		<div className={styles.adminWrapper}>
-			<Text h2>Administration</Text>
-			<UserTable />
-			<Spacer height={1} />
-			<PostTable />
+			<h2>Administration</h2>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					gap: 4
+				}}
+			>
+				<UserTable />
+				<PostTable />
+			</div>
 		</div>
 	)
 }

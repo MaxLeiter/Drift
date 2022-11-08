@@ -1,0 +1,27 @@
+.note {
+	font-size: 0.8em;
+	color: var(--fg);
+	margin: 0;
+	padding: var(--gap);
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	border-radius: var(--radius);
+}
+
+.info {
+	background: var(--gray);
+}
+
+.warning {
+	background: #f33;
+}
+
+.error {
+	background: red;
+}
+
+.type {
+	color: var(--fg);
+	margin-right: 0.5em;
+	text-transform: capitalize;
+}

@@ -169,10 +169,7 @@ const Post = ({
 		setSubmitting(false)
 	}
 
-	const submitPassword = useCallback(
-		(password: string) => onSubmit("protected", password),
-		[onSubmit]
-	)
+	const submitPassword = (password: string) => onSubmit("protected", password)
 
 	const onChangeExpiration = useCallback((date: Date) => setExpiresAt(date), [])
 
@@ -199,41 +196,32 @@ const Post = ({
 		[setDocs]
 	)
 
-	const updateDocContent = useCallback(
-		(i: number) => (content: string) => {
-			setDocs((docs) =>
-				docs.map((doc, index) => (i === index ? { ...doc, content } : doc))
-			)
-		},
-		[setDocs]
-	)
+	const updateDocContent = (i: number) => (content: string) => {
+		setDocs((docs) =>
+			docs.map((doc, index) => (i === index ? { ...doc, content } : doc))
+		)
+	}
 
-	const removeDoc = useCallback(
-		(i: number) => () => {
-			setDocs((docs) => docs.filter((_, index) => i !== index))
-		},
-		[setDocs]
-	)
+	const removeDoc = (i: number) => () => {
+		setDocs((docs) => docs.filter((_, index) => i !== index))
+	}
 
-	const uploadDocs = useCallback(
-		(files: DocumentType[]) => {
-			// if no title is set and the only document is empty,
-			const isFirstDocEmpty =
-				docs.length <= 1 && (docs.length ? docs[0].title === "" : true)
-			const shouldSetTitle = !title && isFirstDocEmpty
-			if (shouldSetTitle) {
-				if (files.length === 1) {
-					setTitle(files[0].title)
-				} else if (files.length > 1) {
-					setTitle("Uploaded files")
-				}
+	const uploadDocs = (files: DocumentType[]) => {
+		// if no title is set and the only document is empty,
+		const isFirstDocEmpty =
+			docs.length <= 1 && (docs.length ? docs[0].title === "" : true)
+		const shouldSetTitle = !title && isFirstDocEmpty
+		if (shouldSetTitle) {
+			if (files.length === 1) {
+				setTitle(files[0].title)
+			} else if (files.length > 1) {
+				setTitle("Uploaded files")
 			}
+		}
 
-			if (isFirstDocEmpty) setDocs(files)
-			else setDocs((docs) => [...docs, ...files])
-		},
-		[docs, title]
-	)
+		if (isFirstDocEmpty) setDocs(files)
+		else setDocs((docs) => [...docs, ...files])
+	}
 
 	// pasted files
 	// const files = e.clipboardData.files as File[]
@@ -340,14 +328,14 @@ const Post = ({
 						/>
 					}
 					<ButtonDropdown loading={isSubmitting} type="success">
+						<ButtonDropdown.Item onClick={() => onSubmit("unlisted")}>
+							Create Unlisted
+						</ButtonDropdown.Item>
 						<ButtonDropdown.Item main onClick={() => onSubmit("private")}>
 							Create Private
 						</ButtonDropdown.Item>
 						<ButtonDropdown.Item onClick={() => onSubmit("public")}>
 							Create Public
-						</ButtonDropdown.Item>
-						<ButtonDropdown.Item onClick={() => onSubmit("unlisted")}>
-							Create Unlisted
 						</ButtonDropdown.Item>
 						<ButtonDropdown.Item onClick={() => onSubmit("protected")}>
 							Create with Password

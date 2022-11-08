@@ -1,4 +1,3 @@
-import Header from "@components/header"
 import { Note, Page, Text } from "@geist-ui/core"
 import styles from "@styles/Home.module.css"
 
