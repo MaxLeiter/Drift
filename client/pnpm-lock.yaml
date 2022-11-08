@@ -29,7 +29,7 @@ specifiers:
   react-loading-skeleton: 3.1.0
   sharp: ^0.31.2
   swr: 1.3.0
-  textarea-markdown-editor: 0.1.13
+  textarea-markdown-editor: 1.0.4
   typescript: 4.6.4
   typescript-plugin-css-modules: 3.4.0
 
@@ -51,7 +51,7 @@ dependencies:
   react-dropzone: 14.2.3_react@18.2.0
   react-loading-skeleton: 3.1.0_react@18.2.0
   swr: 1.3.0_react@18.2.0
-  textarea-markdown-editor: 0.1.13_biqbaboplfbrettd7655fr4n2y
+  textarea-markdown-editor: 1.0.4_biqbaboplfbrettd7655fr4n2y
 
 optionalDependencies:
   sharp: 0.31.2
@@ -2986,10 +2986,6 @@ packages:
       react-fast-compare: 3.2.0
       warning: 4.0.3
 
-  /react-trigger-change/1.0.2:
-    resolution: {integrity: sha512-3x2i/CTQZZlzTuDIfOrJ12r1IqcNWLxHVHXKTtlb4L0slt6Zy3YF3smimx4kdX4X/ASSuQnI/n1q4cTqDwWkPA==}
-    dev: false
-
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -3476,16 +3472,15 @@ packages:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
     dev: true
 
-  /textarea-markdown-editor/0.1.13_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-2r1gTPFA/wwAzt+Aa6LVZWjJNvL0aXfR6Z9T6eQBpJ1AK6gtPVCZgkO97KIrqpAmMcwgNCz0ToYj2AqPufdVeg==}
+  /textarea-markdown-editor/1.0.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-4uA8EZ0FkIL0dq89+xiA0BEo832/rKdtoi2T4Wab0wLZfHys82JE1i5YJf8BKAr/IQELF2NxQ5LITYkb8BGIFA==}
     peerDependencies:
-      react: ^16.9.0 || ^17.0
-      react-dom: ^16.9.0 || ^17.0
+      react: ^16.8.0 || ^17.0.0 || || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       mousetrap: 1.6.5
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-trigger-change: 1.0.2
     dev: false
 
   /to-fast-properties/2.0.0:
