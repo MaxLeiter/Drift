@@ -6,6 +6,7 @@ type Props = React.HTMLProps<HTMLButtonElement> & {
 	buttonType?: "primary" | "secondary"
 	className?: string
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+	iconRight?: React.ReactNode
 }
 
 // eslint-disable-next-line react/display-name
@@ -18,6 +19,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			buttonType = "primary",
 			type = "button",
 			disabled = false,
+			iconRight,
 			...props
 		},
 		ref
@@ -31,6 +33,11 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 				{...props}
 			>
 				{children}
+				{iconRight && (
+					<span className={`${styles.icon} ${styles.iconRight}`}>
+						{iconRight}
+					</span>
+				)}
 			</button>
 		)
 	}

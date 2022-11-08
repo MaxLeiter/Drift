@@ -1,14 +1,6 @@
 import NextLink from "next/link"
 import VisibilityBadge from "../badges/visibility-badge"
-import {
-	Link,
-	Text,
-	Card,
-	Tooltip,
-	Divider,
-	Badge,
-	Button
-} from "@geist-ui/core"
+import { Text, Card, Tooltip, Divider, Badge, Button } from "@geist-ui/core"
 import { File, Post } from "@lib/types"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"
@@ -18,6 +10,7 @@ import Edit from "@geist-ui/icons/edit"
 import { useRouter } from "next/router"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
+import Link from "@components/link"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -45,15 +38,14 @@ const ListItem = ({
 				<Card style={{ overflowY: "scroll" }}>
 					<Card.Body>
 						<Text h3 className={styles.title}>
-							<NextLink
-								passHref={true}
+							<Link
+								colored
+								style={{ marginRight: "var(--gap)" }}
 								href={`/post/[id]`}
 								as={`/post/${post.id}`}
 							>
-								<Link color marginRight={"var(--gap)"}>
-									{post.title}
-								</Link>
-							</NextLink>
+								{post.title}
+							</Link>
 							{isOwner && (
 								<span className={styles.buttons}>
 									{post.parent && (
@@ -97,7 +89,7 @@ const ListItem = ({
 						{post.files?.map((file: File) => {
 							return (
 								<div key={file.id}>
-									<Link color href={`/post/${post.id}#${file.title}`}>
+									<Link colored href={`/post/${post.id}#${file.title}`}>
 										{file.title || "Untitled file"}
 									</Link>
 								</div>

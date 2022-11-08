@@ -1,6 +1,4 @@
-import { Button, Input, Select, Text } from "@geist-ui/core"
-import NextLink from "next/link"
-import Link from "../Link"
+import { Button, Input, Text } from "@geist-ui/core"
 
 import styles from "./post-list.module.css"
 import ListItemSkeleton from "./list-item-skeleton"
@@ -9,6 +7,7 @@ import { Post } from "@lib/types"
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import Cookies from "js-cookie"
 import useDebounce from "@lib/hooks/use-debounce"
+import Link from "@components/link"
 
 type Props = {
 	initialPosts: Post[]
@@ -136,9 +135,9 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 			{posts?.length === 0 && !error && (
 				<Text type="secondary">
 					No posts found. Create one{" "}
-					<NextLink passHref={true} href="/new">
-						<Link color>here</Link>
-					</NextLink>
+					<Link colored href="/new">
+						here
+					</Link>
 					.
 				</Text>
 			)}

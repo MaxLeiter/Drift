@@ -1,15 +1,28 @@
 import { File } from "@lib/types"
-import { Card, Link, Text } from "@geist-ui/core"
 import FileIcon from "@geist-ui/icons/fileText"
 import CodeIcon from "@geist-ui/icons/fileLambda"
 import styles from "./file-tree.module.css"
 import ShiftBy from "@components/shift-by"
 import { useEffect, useState } from "react"
 import { codeFileExtensions } from "@lib/constants"
+import Link from "@components/link"
 
 type Item = File & {
 	icon: JSX.Element
 }
+
+const Card = ({
+	children,
+	className,
+	...props
+}: {
+	children: React.ReactNode
+	className?: string
+} & React.ComponentProps<"div">) => (
+	<div className={styles.card} {...props}>
+		{children}
+	</div>
+)
 
 const FileTree = ({ files }: { files: File[] }) => {
 	const [items, setItems] = useState<Item[]>([])
@@ -34,13 +47,13 @@ const FileTree = ({ files }: { files: File[] }) => {
 	// a list of files with an icon and a title
 	return (
 		<div className={styles.fileTreeWrapper}>
-			<Card height={"100%"} className={styles.card}>
+			<Card className={styles.card}>
 				<div className={styles.cardContent}>
-					<Text h4>Files</Text>
+					<h4>Files</h4>
 					<ul className={styles.fileTree}>
 						{items.map(({ id, title, icon }) => (
 							<li key={id}>
-								<Link color={false} href={`#${title}`}>
+								<Link href={`#${title}`}>
 									<ShiftBy y={5}>
 										<span className={styles.fileTreeIcon}>{icon}</span>
 									</ShiftBy>

@@ -3,16 +3,15 @@ import styles from "./document.module.css"
 import Download from "@geist-ui/icons/download"
 import ExternalLink from "@geist-ui/icons/externalLink"
 import Skeleton from "react-loading-skeleton"
+import Link from 'next/link';
 
 import {
 	Button,
-	Text,
 	ButtonGroup,
 	Spacer,
 	Tabs,
 	Textarea,
 	Tooltip,
-	Link,
 	Tag
 } from "@geist-ui/core"
 import HtmlPreview from "@components/preview"
@@ -32,7 +31,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 		<div className={styles.actionWrapper}>
 			<ButtonGroup className={styles.actions}>
 				<Tooltip hideArrow text="Download">
-					<a
+					<Link
 						href={`${rawLink}?download=true`}
 						target="_blank"
 						rel="noopener noreferrer"
@@ -44,10 +43,10 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 							auto
 							aria-label="Download"
 						/>
-					</a>
+					</Link>
 				</Tooltip>
 				<Tooltip hideArrow text="Open raw in new tab">
-					<a href={rawLink} target="_blank" rel="noopener noreferrer">
+					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
 							scale={2 / 3}
 							px={0.6}
@@ -55,7 +54,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 							auto
 							aria-label="Open raw file in new tab"
 						/>
-					</a>
+					</Link>
 				</Tooltip>
 			</ButtonGroup>
 		</div>

@@ -49,11 +49,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<meta name="theme-color" content="#ffffff" />
 				<title>Drift</title>
 			</Head>
-			<React.StrictMode>
-				<ThemeProvider defaultTheme="system" disableTransitionOnChange>
-					<App Component={Component} pageProps={pageProps} />
-				</ThemeProvider>
-			</React.StrictMode>
+			<ThemeProvider defaultTheme="system" disableTransitionOnChange>
+				<App Component={Component} pageProps={pageProps} />
+			</ThemeProvider>
 		</div>
 	)
 }

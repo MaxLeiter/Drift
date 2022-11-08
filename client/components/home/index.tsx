@@ -20,8 +20,8 @@ const Home = ({
 				<ShiftBy y={-2}>
 					<Image
 						src={"/assets/logo-optimized.svg"}
-						width={"48px"}
-						height={"48px"}
+						width={48}
+						height={48}
 						alt=""
 					/>
 				</ShiftBy>

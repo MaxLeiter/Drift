@@ -7,8 +7,9 @@ dotenv.config()
 const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
-		outputStandalone: true,
-		esmExternals: true
+		// outputStandalone: true,
+		esmExternals: true,
+		// appDir: true
 	},
 	webpack: (config, { dev, isServer }) => {
 		if (!dev && !isServer) {

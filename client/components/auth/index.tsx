@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useState } from "react"
-import { Button, Input, Text, Note } from "@geist-ui/core"
 import styles from "./auth.module.css"
 import { useRouter } from "next/router"
-import Link from "../Link"
+import Link from "../link"
 import Cookies from "js-cookie"
 import useSignedIn from "@lib/hooks/use-signed-in"
+import Input from "@components/input"
+import Button from "@components/button"
+import Note from "@components/note"
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 const ERROR_MESSAGE =
@@ -90,58 +92,57 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 				<form onSubmit={handleSubmit}>
 					<div className={styles.formGroup}>
 						<Input
-							htmlType="text"
+							type="text"
 							id="username"
 							value={username}
-							onChange={(event) => setUsername(event.target.value)}
+							onChange={(event) => setUsername(event.currentTarget.value)}
 							placeholder="Username"
 							required
-							scale={4 / 3}
 						/>
 						<Input
-							htmlType="password"
+							type="password"
 							id="password"
 							value={password}
-							onChange={(event) => setPassword(event.target.value)}
+							onChange={(event) => setPassword(event.currentTarget.value)}
 							placeholder="Password"
 							required
-							scale={4 / 3}
 						/>
 						{requiresServerPassword && (
 							<Input
-								htmlType="password"
+								type="password"
 								id="server-password"
 								value={serverPassword}
-								onChange={(event) => setServerPassword(event.target.value)}
+								onChange={(event) =>
+									setServerPassword(event.currentTarget.value)
+								}
 								placeholder="Server Password"
 								required
-								scale={4 / 3}
 							/>
 						)}
 
-						<Button type="success" htmlType="submit">
+						<Button buttonType="primary" type="submit">
 							{signingIn ? "Sign In" : "Sign Up"}
 						</Button>
 					</div>
 					<div className={styles.formContentSpace}>
 						{signingIn ? (
-							<Text>
+							<p>
 								Don&apos;t have an account?{" "}
-								<Link color href="/signup">
+								<Link colored href="/signup">
 									Sign up
 								</Link>
-							</Text>
+							</p>
 						) : (
-							<Text>
+							<p>
 								Already have an account?{" "}
-								<Link color href="/signin">
+								<Link colored href="/signin">
 									Sign in
 								</Link>
-							</Text>
+							</p>
 						)}
 					</div>
 					{errorMsg && (
-						<Note scale={0.75} type="error">
+						<Note type="error">
 							{errorMsg}
 						</Note>
 					)}

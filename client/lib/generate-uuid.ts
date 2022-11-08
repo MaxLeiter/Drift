@@ -16,7 +16,7 @@ export default function generateUUID() {
 					(crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (num / 4)))
 				).toString(16)
 			}
-			return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, callback)
+			return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, callback);
 		}
 	}
 	let timestamp = new Date().getTime()
@@ -35,5 +35,5 @@ export default function generateUUID() {
 			perforNow = Math.floor(perforNow / 16)
 		}
 		return (c === "x" ? random : (random & 0x3) | 0x8).toString(16)
-	})
+	});
 }

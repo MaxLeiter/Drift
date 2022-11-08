@@ -1,6 +1,5 @@
 import styles from "@styles/Home.module.css"
 
-import Header from "@components/header"
 import { Page } from "@geist-ui/core"
 import { useEffect } from "react"
 import Admin from "@components/admin"
