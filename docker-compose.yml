@@ -16,9 +16,12 @@ services:
       - WELCOME_CONTENT
       - WELCOME_TITLE
       - ENABLE_ADMIN
-      - DRIFT_HOME
+      - DRIFT_HOME=/drift
+    volumes:
+      - drift_data:/drift
     ports:
       - "3000:3000"
+
   client:
     build:
       context: ./client
