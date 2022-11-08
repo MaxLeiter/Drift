@@ -6,7 +6,7 @@ specifiers:
   '@next/bundle-analyzer': 12.1.6
   '@types/cookie': 0.5.1
   '@types/js-cookie': 3.0.2
-  '@types/node': 17.0.23
+  '@types/node': 18.11.9
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1
   '@types/react-dom': 18.0.3
@@ -58,7 +58,7 @@ optionalDependencies:
 
 devDependencies:
   '@next/bundle-analyzer': 12.1.6
-  '@types/node': 17.0.23
+  '@types/node': 18.11.9
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1_biqbaboplfbrettd7655fr4n2y
   '@types/react-dom': 18.0.3
@@ -357,8 +357,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
-  /@types/node/17.0.23:
-    resolution: {integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==}
+  /@types/node/18.11.9:
+    resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
     dev: true
 
   /@types/prop-types/15.7.5:
