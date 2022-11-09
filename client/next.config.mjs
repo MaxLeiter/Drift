@@ -8,8 +8,8 @@ const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
 		// outputStandalone: true,
-		esmExternals: true,
-		// appDir: true
+		// esmExternals: true,
+		appDir: true
 	},
 	webpack: (config, { dev, isServer }) => {
 		if (!dev && !isServer) {

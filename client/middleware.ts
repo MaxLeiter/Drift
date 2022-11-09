@@ -36,19 +36,19 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 			return resp
 		}
 	} else if (isPageRequest) {
-		if (signedIn) {
-			if (
-				pathname === "/" ||
-				pathname === "/signin" ||
-				pathname === "/signup"
-			) {
-				return NextResponse.redirect(getURL("new"))
-			}
-		} else if (!signedIn) {
-			if (pathname.startsWith("/new")) {
-				return NextResponse.redirect(getURL("signin"))
-			}
-		}
+		// if (signedIn) {
+		// 	if (
+		// 		pathname === "/" ||
+		// 		pathname === "/signin" ||
+		// 		pathname === "/signup"
+		// 	) {
+		// 		return NextResponse.redirect(getURL("new"))
+		// 	}
+		// } else if (!signedIn) {
+		// 	if (pathname.startsWith("/new")) {
+		// 		return NextResponse.redirect(getURL("signin"))
+		// 	}
+		// }
 
 		if (pathname.includes("/protected/") || pathname.includes("/private/")) {
 			const urlWithoutVisibility = pathname
