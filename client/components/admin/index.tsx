@@ -1,4 +1,5 @@
-import Cookies from "js-cookie"
+import { TOKEN_COOKIE_NAME } from "@lib/constants"
+import { getCookie } from "cookies-next"
 import styles from "./admin.module.css"
 import PostTable from "./post-table"
 import UserTable from "./user-table"
@@ -14,7 +15,7 @@ export const adminFetcher = async (
 		method: options?.method || "GET",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${Cookies.get("drift-token")}`
+			Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 		},
 		body: options?.body && JSON.stringify(options.body)
 	})

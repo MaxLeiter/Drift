@@ -9,6 +9,7 @@ const useSignedIn = () => {
 		"signedIn",
 		typeof window === "undefined" ? false : !!token
 	)
+
 	const signin = (token: string) => {
 		setSignedIn(true)
 		// TODO: investigate SameSite / CORS cookie security

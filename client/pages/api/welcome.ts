@@ -13,7 +13,6 @@ export const getWelcomeContent = async () => {
 
 	console.log(introContent)
 
-
 	return {
 		title: introTitle,
 		content: introContent,

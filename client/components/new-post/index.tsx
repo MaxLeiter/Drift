@@ -2,12 +2,11 @@
 
 import { Button, useToasts, Input, ButtonDropdown } from "@geist-ui/core/dist"
 import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
 import FileDropzone from "./drag-and-drop"
 import styles from "./post.module.css"
 import Title from "./title"
-import Cookies from "js-cookie"
 import type { PostVisibility, Document as DocumentType } from "@lib/types"
 import PasswordModal from "./password-modal"
 import EditDocumentList from "@components/edit-document-list"
@@ -16,7 +15,8 @@ import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
 import { PostWithFiles } from "app/prisma"
-import { USER_COOKIE_NAME } from "@lib/constants"
+import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
+import { getCookie } from "cookies-next"
 
 const emptyDoc = {
 	title: "",
@@ -68,7 +68,7 @@ const Post = ({
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${Cookies.get("drift-token")}`
+					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 				},
 				body: JSON.stringify({
 					title,
@@ -140,12 +140,13 @@ const Post = ({
 				return
 			}
 
+			const cookieName = getCookie(USER_COOKIE_NAME)
 			await sendRequest("/api/posts/create", {
 				title,
 				files: docs,
 				visibility,
 				password,
-				userId: Cookies.get(USER_COOKIE_NAME) || "",
+				userId: cookieName ? String(getCookie(USER_COOKIE_NAME)) : "",
 				expiresAt: expiresAt || null,
 				parentId: newPostParent
 			})

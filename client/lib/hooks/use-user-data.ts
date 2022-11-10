@@ -1,25 +1,26 @@
 import { User } from "@lib/types"
-import Cookies from "js-cookie"
+import { deleteCookie, getCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const useUserData = () => {
+	const cookie = getCookie("drift-token")
 	const [authToken, setAuthToken] = useState<string>(
-		Cookies.get("drift-token") || ""
+		cookie ? String(cookie) : ""
 	)
 	const [user, setUser] = useState<User>()
 	const router = useRouter()
 	useEffect(() => {
-		const token = Cookies.get("drift-token")
+		const token = getCookie("drift-token")
 		if (token) {
-			setAuthToken(token)
+			setAuthToken(String(token))
 		}
 	}, [setAuthToken])
 
 	useEffect(() => {
 		if (authToken) {
 			const fetchUser = async () => {
-				const response = await fetch(`/server-api/user/self`, {
+				const response = await fetch(`/api/user/self`, {
 					headers: {
 						Authorization: `Bearer ${authToken}`
 					}
@@ -28,7 +29,7 @@ const useUserData = () => {
 					const user = await response.json()
 					setUser(user)
 				} else {
-					Cookies.remove("drift-token")
+					deleteCookie("drift-token")
 					setAuthToken("")
 					router.push("/")
 				}

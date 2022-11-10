@@ -1,3 +1,4 @@
+import { getCookie } from "cookies-next"
 import Cookies from "js-cookie"
 import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
@@ -35,7 +36,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${Cookies.get("drift-token") || ""}`
+						Authorization: `Bearer ${getCookie("drift-token")}`
 					},
 			
 				})

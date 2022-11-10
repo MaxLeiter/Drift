@@ -5,9 +5,10 @@ import ListItemSkeleton from "./list-item-skeleton"
 import ListItem from "./list-item"
 import { Post } from "@lib/types"
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
-import Cookies from "js-cookie"
 import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
+import { TOKEN_COOKIE_NAME } from "@lib/constants"
+import { getCookie } from "cookies-next"
 
 type Props = {
 	initialPosts: Post[]
@@ -32,7 +33,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							Authorization: `Bearer ${Cookies.get("drift-token")}`,
+							Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`,
 							"x-page": `${posts.length / 10 + 1}`
 						}
 					})
@@ -61,7 +62,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							Authorization: `Bearer ${Cookies.get("drift-token")}`
+							Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 							// "tok": process.env.SECRET_KEY || ''
 						}
 					}
@@ -97,7 +98,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${Cookies.get("drift-token")}`
+					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 				}
 			})
 

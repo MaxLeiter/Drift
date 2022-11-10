@@ -9,7 +9,7 @@ export async function generateAndExpireAccessToken(userId: User["id"]) {
 	await prisma.authTokens.create({
 		data: {
 			userId: userId,
-			token: token
+			token: token,
 		}
 	})
 

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import prisma from "app/prisma"
 import bcrypt from "bcrypt"
-import { signin } from "@lib/api/signin"
+import { signin } from "@lib/server/signin"
 
 export default async function handler(
 	req: NextApiRequest,

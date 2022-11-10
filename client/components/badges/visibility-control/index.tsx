@@ -1,7 +1,8 @@
 import PasswordModal from "@components/new-post/password-modal"
 import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core/dist"
+import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import type { PostVisibility } from "@lib/types"
-import Cookies from "js-cookie"
+import { getCookie } from "cookies-next"
 import { useCallback, useState } from "react"
 
 type Props = {
@@ -21,7 +22,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${Cookies.get("drift-token")}`
+					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 				},
 				body: JSON.stringify({ visibility, password })
 			})

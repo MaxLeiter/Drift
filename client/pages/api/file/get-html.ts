@@ -1,5 +1,5 @@
-import getHtmlFromFile from "@lib/api/get-html-from-drift-file"
-import { parseUrlQuery } from "@lib/api/parse-url-query"
+import getHtmlFromFile from "@lib/server/get-html-from-drift-file"
+import { parseUrlQuery } from "@lib/server/parse-url-query"
 import prisma from "app/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 

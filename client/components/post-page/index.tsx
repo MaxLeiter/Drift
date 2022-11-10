@@ -15,10 +15,10 @@ import ScrollToTop from "@components/scroll-to-top"
 import { useRouter } from "next/router"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
-import Cookies from "js-cookie"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
 import { USER_COOKIE_NAME } from "@lib/constants"
+import { getCookie } from "cookies-next"
 
 type Props = {
 	post: Post
@@ -33,7 +33,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [isOwner] = useState(
-		post.users ? post.users[0].id === Cookies.get(USER_COOKIE_NAME) : false
+		post.users ? post.users[0].id === getCookie(USER_COOKIE_NAME) : false
 	)
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")

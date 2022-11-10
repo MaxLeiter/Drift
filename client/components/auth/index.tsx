@@ -10,6 +10,7 @@ import Input from "@components/input"
 import Button from "@components/button"
 import Note from "@components/note"
 import { USER_COOKIE_NAME } from "@lib/constants"
+import { setCookie } from "cookies-next"
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 const ERROR_MESSAGE =
@@ -33,7 +34,7 @@ const Auth = ({
 
 	const handleJson = (json: any) => {
 		signin(json.token)
-		Cookies.set(USER_COOKIE_NAME, json.userId)
+		setCookie(USER_COOKIE_NAME, json.userId)
 
 		router.push("/new")
 	}
