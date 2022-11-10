@@ -1,4 +1,3 @@
-import Head from "next/head"
 import React from "react"
 
 type PageSeoProps = {
@@ -15,10 +14,8 @@ const PageSeo = ({
 }: PageSeoProps) => {
 	return (
 		<>
-			<Head>
-				<title>{title}</title>
-				{!isPrivate && <meta name="description" content={description} />}
-			</Head>
+			<title>Drift - {title}</title>
+			{!isPrivate && <meta name="description" content={description} />}
 		</>
 	)
 }

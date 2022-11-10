@@ -1,6 +1,8 @@
+"use client"
+
 import { FormEvent, useEffect, useState } from "react"
 import styles from "./auth.module.css"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import Link from "../link"
 import Cookies from "js-cookie"
 import useSignedIn from "@lib/hooks/use-signed-in"
@@ -12,32 +14,21 @@ const NO_EMPTY_SPACE_REGEX = /^\S*$/
 const ERROR_MESSAGE =
 	"Provide a non empty username and a password with at least 6 characters"
 
-const Auth = ({ page }: { page: "signup" | "signin" }) => {
+const Auth = ({
+	page,
+	requiresServerPassword
+}: {
+	page: "signup" | "signin"
+	requiresServerPassword?: boolean
+}) => {
 	const router = useRouter()
 
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [serverPassword, setServerPassword] = useState("")
 	const [errorMsg, setErrorMsg] = useState("")
-	const [requiresServerPassword, setRequiresServerPassword] = useState(false)
 	const signingIn = page === "signin"
 	const { signin } = useSignedIn()
-	useEffect(() => {
-		async function fetchRequiresPass() {
-			if (!signingIn) {
-				const resp = await fetch("/server-api/auth/requires-passcode", {
-					method: "GET"
-				})
-				if (resp.ok) {
-					const res = await resp.json()
-					setRequiresServerPassword(res.requiresPasscode)
-				} else {
-					setErrorMsg("Something went wrong. Is the server running?")
-				}
-			}
-		}
-		fetchRequiresPass()
-	}, [page, signingIn])
 
 	const handleJson = (json: any) => {
 		signin(json.token)
@@ -70,9 +61,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 		}
 
 		try {
-			const signUrl = signingIn
-				? "/server-api/auth/signin"
-				: "/server-api/auth/signup"
+			const signUrl = signingIn ? "/api/auth/signin" : "/api/auth/signup"
 			const resp = await fetch(signUrl, reqOpts)
 			const json = await resp.json()
 			if (!resp.ok) throw new Error(json.error.message)
@@ -141,11 +130,7 @@ const Auth = ({ page }: { page: "signup" | "signin" }) => {
 							</p>
 						)}
 					</div>
-					{errorMsg && (
-						<Note type="error">
-							{errorMsg}
-						</Note>
-					)}
+					{errorMsg && <Note type="error">{errorMsg}</Note>}
 				</form>
 			</div>
 		</div>

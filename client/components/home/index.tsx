@@ -1,5 +1,5 @@
 import ShiftBy from "@components/shift-by"
-import { Spacer, Tabs, Card, Textarea, Text } from "@geist-ui/core"
+import { Spacer, Tabs, Card, Textarea, Text } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
 import markdownStyles from "@components/preview/preview.module.css"

@@ -7,7 +7,7 @@ import List from "@geist-ui/icons/list"
 import ImageIcon from "@geist-ui/icons/image"
 import { RefObject, useMemo } from "react"
 import styles from "../document.module.css"
-import { Button, ButtonGroup, Tooltip } from "@geist-ui/core"
+import { Button, ButtonGroup, Tooltip } from "@geist-ui/core/dist"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
 
 // TODO: clean up

@@ -16,7 +16,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
 	useEffect(() => {
 		async function fetchPost() {
 			if (fileId) {
-				const resp = await fetch(`/api/html/${fileId}`, {
+				const resp = await fetch(`/api/file/html/${fileId}`, {
 					method: "GET"
 				})
 				if (resp.ok) {
@@ -25,16 +25,19 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
 					setIsLoading(false)
 				}
 			} else if (content) {
-				const resp = await fetch("/server-api/files/html", {
-					method: "POST",
+				// add title and query to url params
+				const urlQuery = new URLSearchParams({
+					title: title || "",
+					content
+				})
+
+				const resp = await fetch(`/api/files/get-html?${urlQuery}`, {
+					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${Cookies.get("drift-token") || ""}`
 					},
-					body: JSON.stringify({
-						title,
-						content
-					})
+			
 				})
 
 				if (resp.ok) {

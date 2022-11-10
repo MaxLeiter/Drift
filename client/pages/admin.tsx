@@ -1,6 +1,6 @@
 import styles from "@styles/Home.module.css"
 
-import { Page } from "@geist-ui/core"
+import { Page } from "@geist-ui/core/dist"
 import { useEffect } from "react"
 import Admin from "@components/admin"
 import useSignedIn from "@lib/hooks/use-signed-in"

@@ -1,4 +1,4 @@
-import { Badge, Tooltip } from "@geist-ui/core"
+import { Badge, Tooltip } from "@geist-ui/core/dist"
 import { timeAgo } from "@lib/time-ago"
 import { useMemo, useState, useEffect } from "react"
 

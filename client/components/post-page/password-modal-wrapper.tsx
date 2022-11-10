@@ -1,5 +1,5 @@
 import PasswordModal from "@components/new-post/password-modal"
-import { Page, useToasts } from "@geist-ui/core"
+import { Page, useToasts } from "@geist-ui/core/dist"
 import { Post } from "@lib/types"
 import { useRouter } from "next/router"
 import { useState } from "react"

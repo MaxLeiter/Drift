@@ -1,5 +1,5 @@
 import PasswordModal from "@components/new-post/password-modal"
-import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core"
+import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core/dist"
 import type { PostVisibility } from "@lib/types"
 import Cookies from "js-cookie"
 import { useCallback, useState } from "react"

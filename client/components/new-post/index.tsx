@@ -1,64 +1,52 @@
-import { Button, useToasts, ButtonDropdown, Input } from "@geist-ui/core"
-import { useRouter } from "next/router"
+"use client"
+
+import { Button, useToasts, Input, ButtonDropdown } from "@geist-ui/core/dist"
+import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
 import FileDropzone from "./drag-and-drop"
 import styles from "./post.module.css"
 import Title from "./title"
 import Cookies from "js-cookie"
-import type {
-	Post as PostType,
-	PostVisibility,
-	Document as DocumentType
-} from "@lib/types"
+import type { PostVisibility, Document as DocumentType } from "@lib/types"
 import PasswordModal from "./password-modal"
 import EditDocumentList from "@components/edit-document-list"
 import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
+import { PostWithFiles } from "app/prisma"
+
+const emptyDoc = {
+	title: "",
+	content: "",
+	id: generateUUID()
+}
 
 const Post = ({
 	initialPost,
 	newPostParent
 }: {
-	initialPost?: PostType
+	initialPost?: PostWithFiles
 	newPostParent?: string
 }) => {
 	const { setToast } = useToasts()
 	const router = useRouter()
-	const [title, setTitle] = useState<string>()
-	const [description, setDescription] = useState<string>()
-	const [expiresAt, setExpiresAt] = useState<Date | null>(null)
-
-	const emptyDoc = useMemo(
-		() => [
-			{
-				title: "",
-				content: "",
-				id: generateUUID()
-			}
-		],
-		[]
+	const [title, setTitle] = useState(
+		getTitleForPostCopy(initialPost?.title) || ""
 	)
+	const [description, setDescription] = useState(initialPost?.description || "")
+	const [expiresAt, setExpiresAt] = useState(initialPost?.expiresAt)
 
-	const [docs, setDocs] = useState<DocumentType[]>(emptyDoc)
+	const defaultDocs: DocumentType[] = initialPost
+		? initialPost.files?.map((doc) => ({
+				title: doc.title,
+				content: doc.content,
+				id: doc.id
+		  }))
+		: [emptyDoc]
 
-	// the /new/from/{id} route fetches an initial post
-	useEffect(() => {
-		if (initialPost) {
-			setDocs(
-				initialPost.files?.map((doc) => ({
-					title: doc.title,
-					content: doc.content,
-					id: doc.id
-				})) || emptyDoc
-			)
-
-			setTitle(getTitleForPostCopy(initialPost.title))
-			setDescription(initialPost.description)
-		}
-	}, [emptyDoc, initialPost])
+	const [docs, setDocs] = useState(defaultDocs)
 
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 
@@ -151,13 +139,13 @@ const Post = ({
 				return
 			}
 
-			await sendRequest("/server-api/posts/create", {
+			await sendRequest("/api/posts/create", {
 				title,
 				files: docs,
 				visibility,
 				password,
 				userId: Cookies.get("drift-userid") || "",
-				expiresAt,
+				expiresAt: expiresAt || null,
 				parentId: newPostParent
 			})
 		},
@@ -233,18 +221,15 @@ const Post = ({
 	//     }))
 	// }
 
-	const onPaste = useCallback(
-		(e: any) => {
-			const pastedText = e.clipboardData.getData("text")
+	const onPaste = (e: ClipboardEvent) => {
+		const pastedText = e.clipboardData?.getData("text")
 
-			if (pastedText) {
-				if (!title) {
-					setTitle("Pasted text")
-				}
+		if (pastedText) {
+			if (!title) {
+				setTitle("Pasted text")
 			}
-		},
-		[title]
-	)
+		}
+	}
 
 	const CustomTimeInput = ({
 		date,
@@ -328,10 +313,10 @@ const Post = ({
 						/>
 					}
 					<ButtonDropdown loading={isSubmitting} type="success">
-						<ButtonDropdown.Item onClick={() => onSubmit("unlisted")}>
+						<ButtonDropdown.Item main onClick={() => onSubmit("unlisted")}>
 							Create Unlisted
 						</ButtonDropdown.Item>
-						<ButtonDropdown.Item main onClick={() => onSubmit("private")}>
+						<ButtonDropdown.Item onClick={() => onSubmit("private")}>
 							Create Private
 						</ButtonDropdown.Item>
 						<ButtonDropdown.Item onClick={() => onSubmit("public")}>

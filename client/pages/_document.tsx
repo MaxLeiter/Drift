@@ -1,4 +1,4 @@
-import { CssBaseline } from "@geist-ui/core"
+import { CssBaseline } from "@geist-ui/core/dist"
 import Document, {
 	Html,
 	Head,

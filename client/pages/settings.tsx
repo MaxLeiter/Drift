@@ -7,7 +7,7 @@ import {
 	Page,
 	Note,
 	Textarea
-} from "@geist-ui/core"
+} from "@geist-ui/core/dist"
 import PageSeo from "@components/page-seo"
 import styles from "@styles/Home.module.css"
 import SettingsPage from "@components/settings"

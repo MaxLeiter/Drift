@@ -2,7 +2,7 @@ import styles from "@styles/Home.module.css"
 import NewPost from "@components/new-post"
 import Header from "@components/header"
 import PageSeo from "@components/page-seo"
-import { Page } from "@geist-ui/core"
+import { Page } from "@geist-ui/core/dist"
 import Head from "next/head"
 
 const New = () => {

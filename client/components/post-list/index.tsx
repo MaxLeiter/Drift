@@ -1,4 +1,4 @@
-import { Button, Input, Text } from "@geist-ui/core"
+import { Button, Input, Text } from "@geist-ui/core/dist"
 
 import styles from "./post-list.module.css"
 import ListItemSkeleton from "./list-item-skeleton"

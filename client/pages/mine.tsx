@@ -5,7 +5,7 @@ import MyPosts from "@components/my-posts"
 import cookie from "cookie"
 import type { GetServerSideProps } from "next"
 import { Post } from "@lib/types"
-import { Page } from "@geist-ui/core"
+import { Page } from "@geist-ui/core/dist"
 
 const Home = ({
 	morePosts,

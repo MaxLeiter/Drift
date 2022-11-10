@@ -3,7 +3,7 @@ import MoonIcon from "@geist-ui/icons/moon"
 import SunIcon from "@geist-ui/icons/sun"
 // import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from "./header.module.css"
-import { Select } from "@geist-ui/core"
+import { Select } from "@geist-ui/core/dist"
 import { useTheme } from "next-themes"
 
 const Controls = () => {

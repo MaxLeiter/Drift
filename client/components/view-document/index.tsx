@@ -13,7 +13,7 @@ import {
 	Textarea,
 	Tooltip,
 	Tag
-} from "@geist-ui/core"
+} from "@geist-ui/core/dist"
 import HtmlPreview from "@components/preview"
 import FadeIn from "@components/fade-in"
 

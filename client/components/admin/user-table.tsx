@@ -1,4 +1,4 @@
-import { Fieldset, useToasts } from "@geist-ui/core"
+import { Fieldset, useToasts } from "@geist-ui/core/dist"
 import { User } from "@lib/types"
 import { useEffect, useMemo, useState } from "react"
 import { adminFetcher } from "."

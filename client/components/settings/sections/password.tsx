@@ -1,4 +1,4 @@
-import { Input, Button, useToasts } from "@geist-ui/core"
+import { Input, Button, useToasts } from "@geist-ui/core/dist"
 import Cookies from "js-cookie"
 import { useState } from "react"
 

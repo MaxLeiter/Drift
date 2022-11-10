@@ -1,4 +1,4 @@
-import { Text, useMediaQuery, useTheme, useToasts } from "@geist-ui/core"
+import { Text, useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
 import { memo } from "react"
 import { useDropzone } from "react-dropzone"
 import styles from "./drag-and-drop.module.css"

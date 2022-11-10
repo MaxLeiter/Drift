@@ -1,4 +1,4 @@
-import { Tooltip, Button, Spacer } from "@geist-ui/core"
+import { Tooltip, Button, Spacer } from "@geist-ui/core/dist"
 import ChevronUp from "@geist-ui/icons/chevronUpCircleFill"
 import { useEffect, useState } from "react"
 import styles from "./scroll.module.css"

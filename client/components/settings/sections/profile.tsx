@@ -1,4 +1,4 @@
-import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core"
+import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
 import useUserData from "@lib/hooks/use-user-data"
 import Cookies from "js-cookie"
 import { useEffect, useState } from "react"

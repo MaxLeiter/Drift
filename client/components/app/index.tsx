@@ -1,5 +1,5 @@
 import Header from "@components/header"
-import { GeistProvider, CssBaseline, Themes, Page } from "@geist-ui/core"
+import { GeistProvider, CssBaseline, Themes, Page } from "@geist-ui/core/dist"
 import type { NextComponentType, NextPageContext } from "next"
 import { SkeletonTheme } from "react-loading-skeleton"
 

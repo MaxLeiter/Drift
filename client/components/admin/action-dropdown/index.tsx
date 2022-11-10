@@ -1,4 +1,4 @@
-import { Popover, Button } from "@geist-ui/core"
+import { Popover, Button } from "@geist-ui/core/dist"
 import { MoreVertical } from "@geist-ui/icons"
 
 type Action = {

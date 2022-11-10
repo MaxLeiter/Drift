@@ -1,7 +1,7 @@
 import styles from "@styles/Home.module.css"
 import PageSeo from "@components/page-seo"
 import HomeComponent from "@components/home"
-import { Page, Text } from "@geist-ui/core"
+import { Page, Text } from "@geist-ui/core/dist"
 import type { GetStaticProps } from "next"
 import { InferGetStaticPropsType } from "next"
 type Props =

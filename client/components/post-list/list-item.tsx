@@ -1,6 +1,6 @@
 import NextLink from "next/link"
 import VisibilityBadge from "../badges/visibility-badge"
-import { Text, Card, Tooltip, Divider, Badge, Button } from "@geist-ui/core"
+import { Text, Card, Tooltip, Divider, Badge, Button } from "@geist-ui/core/dist"
 import { File, Post } from "@lib/types"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"

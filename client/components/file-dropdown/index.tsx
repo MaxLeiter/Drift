@@ -1,5 +1,5 @@
 import ShiftBy from "@components/shift-by"
-import { Button, Popover } from "@geist-ui/core"
+import { Button, Popover } from "@geist-ui/core/dist"
 import ChevronDown from "@geist-ui/icons/chevronDown"
 import CodeIcon from "@geist-ui/icons/fileFunction"
 import FileIcon from "@geist-ui/icons/fileText"

@@ -1,4 +1,4 @@
-import { Page } from "@geist-ui/core"
+import { Page } from "@geist-ui/core/dist"
 import Auth from "@components/auth"
 import PageSeo from "@components/page-seo"
 import styles from "@styles/Home.module.css"

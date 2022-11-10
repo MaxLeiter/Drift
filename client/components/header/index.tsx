@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import {
 	ButtonGroup,
@@ -7,7 +7,7 @@ import {
 	Spacer,
 	useBodyScroll,
 	useMediaQuery
-} from "@geist-ui/core"
+} from "@geist-ui/core/dist"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 import styles from "./header.module.css"
@@ -27,7 +27,7 @@ import SunIcon from "@geist-ui/icons/sun"
 import { useTheme } from "next-themes"
 import useUserData from "@lib/hooks/use-user-data"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { usePathname } from "next/navigation"
 
 type Tab = {
 	name: string
@@ -38,7 +38,7 @@ type Tab = {
 }
 
 const Header = () => {
-	const router = useRouter()
+	const pathname = usePathname()
 	const [expanded, setExpanded] = useState<boolean>(false)
 	const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
 	const isMobile = useMediaQuery("xs", { match: "down" })
@@ -154,7 +154,7 @@ const Header = () => {
 
 	const getButton = useCallback(
 		(tab: Tab) => {
-			const activeStyle = router.pathname === tab.href ? styles.active : ""
+			const activeStyle = pathname === tab.href ? styles.active : ""
 			if (tab.onClick) {
 				return (
 					<Button
@@ -170,21 +170,20 @@ const Header = () => {
 				)
 			} else if (tab.href) {
 				return (
-                    (<Link key={tab.value} href={tab.href} className={styles.tab}>
-                        <Button
-                            className={activeStyle}
-                            auto={isMobile ? false : true}
-                            icon={tab.icon}
-                            shadow={false}
-                        >
-                            {tab.name ? tab.name : undefined}
-                        </Button>
-
-                    </Link>)
-                );
+					<Link key={tab.value} href={tab.href} className={styles.tab}>
+						<Button
+							className={activeStyle}
+							auto={isMobile ? false : true}
+							icon={tab.icon}
+							shadow={false}
+						>
+							{tab.name ? tab.name : undefined}
+						</Button>
+					</Link>
+				)
 			}
 		},
-		[isMobile, onTabChange, router.pathname]
+		[isMobile, onTabChange, pathname]
 	)
 
 	const buttons = useMemo(() => pages.map(getButton), [pages, getButton])

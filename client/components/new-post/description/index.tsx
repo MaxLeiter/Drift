@@ -1,18 +1,18 @@
 import { ChangeEvent, memo } from "react"
-import { Input } from "@geist-ui/core"
+import { Input } from "@geist-ui/core/dist"
 
 import styles from "../post.module.css"
 
 type props = {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
-	description?: string
+	description: string
 }
 
 const Description = ({ onChange, description }: props) => {
 	return (
 		<div className={styles.description}>
 			<Input
-				value={description}
+				value={description || ""}
 				onChange={onChange}
 				label="Description"
 				maxLength={256}

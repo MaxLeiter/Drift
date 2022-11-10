@@ -1,4 +1,4 @@
-import { Page } from "@geist-ui/core"
+import { Page } from "@geist-ui/core/dist"
 
 const Error = ({ status }: { status: number }) => {
 	return (

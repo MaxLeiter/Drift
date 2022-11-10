@@ -11,7 +11,7 @@ import Trash from "@geist-ui/icons/trash"
 import FormattingIcons from "./formatting-icons"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
-import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core"
+import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core/dist"
 import Preview from "@components/preview"
 
 // import Link from "next/link"

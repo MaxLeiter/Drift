@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AuthTokens {
+  id            String   @default(cuid())
+  token         String
+  expiredReason String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  userId        String
+  // TODO: verify this isn't necessary / is replaced by an implicit m-n relation
+  // users         User[]    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([id, token])
+  // make id and token keys
+  @@unique([id, token])
+}
+
+model SequelizeMeta {
+  name String @id
+}
+
+model File {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  sha       String
+  html      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  userId    String
+  postId    String
+  // posts     Post[]     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  // users     User[]     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("Files")
+}
+
+model PostToAuthors {
+  id        String   @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    String
+  userId    String
+  // users     User[]   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // posts     Post[]   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([id, postId, userId])
+  @@map("PostAuthors")
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  visibility  String
+  password    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  expiresAt   DateTime?
+  parentId    String?
+  description String?
+  // files         File[]
+  // postToAuthors PostToAuthors[]
+
+  @@map("Posts")
+}
+
+model User {
+  id          String    @id @default(cuid())
+  username    String
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  role        String?   @default("user")
+  email       String?
+  displayName String?
+  bio         String?
+  // AuthTokens   AuthTokens[]
+  // files        File[]
+  // post_authors PostToAuthors[]
+
+  @@map("Users")
+}

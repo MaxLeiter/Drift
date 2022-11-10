@@ -1,4 +1,4 @@
-import { Fieldset, Text, Divider } from "@geist-ui/core"
+import { Fieldset, Text, Divider } from "@geist-ui/core/dist"
 import styles from "./settings-group.module.css"
 
 type Props = {

@@ -1,5 +1,5 @@
 import SettingsGroup from "@components/settings-group"
-import { Fieldset, useToasts } from "@geist-ui/core"
+import { Fieldset, useToasts } from "@geist-ui/core/dist"
 import byteToMB from "@lib/byte-to-mb"
 import { Post } from "@lib/types"
 import Table from "rc-table"

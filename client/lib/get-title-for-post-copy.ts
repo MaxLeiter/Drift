@@ -14,7 +14,9 @@ const replaceLastInString = (
 	)
 }
 
-const getTitleForPostCopy = (title: string) => {
+const getTitleForPostCopy = (title?: string) => {
+	if (!title) return ""
+
 	const numberAtEndOfTitle = title.split(" ").pop()
 	if (numberAtEndOfTitle) {
 		const number = parseInt(numberAtEndOfTitle)
