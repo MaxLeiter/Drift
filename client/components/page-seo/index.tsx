@@ -16,6 +16,7 @@ const PageSeo = ({
 		<>
 			<title>Drift - {title}</title>
 			{!isPrivate && <meta name="description" content={description} />}
+			{isPrivate && <meta name="robots" content="noindex" />}
 		</>
 	)
 }

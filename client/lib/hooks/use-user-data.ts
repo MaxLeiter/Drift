@@ -1,17 +1,18 @@
+import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { User } from "@lib/types"
 import { deleteCookie, getCookie } from "cookies-next"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const useUserData = () => {
-	const cookie = getCookie("drift-token")
+	const cookie = getCookie(TOKEN_COOKIE_NAME)
 	const [authToken, setAuthToken] = useState<string>(
 		cookie ? String(cookie) : ""
 	)
 	const [user, setUser] = useState<User>()
 	const router = useRouter()
 	useEffect(() => {
-		const token = getCookie("drift-token")
+		const token = getCookie(TOKEN_COOKIE_NAME)
 		if (token) {
 			setAuthToken(String(token))
 		}
@@ -29,9 +30,10 @@ const useUserData = () => {
 					const user = await response.json()
 					setUser(user)
 				} else {
-					deleteCookie("drift-token")
-					setAuthToken("")
-					router.push("/")
+					// deleteCookie("drift-token")
+					// setAuthToken("")
+					// router.push("/")
+					console.log("not ok")
 				}
 			}
 			fetchUser()

@@ -1,5 +1,5 @@
-import getHtmlFromFile from "@lib/server/get-html-from-drift-file"
-import { parseUrlQuery } from "@lib/server/parse-url-query"
+import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
+import { parseQueryParam } from "@lib/server/parse-query-param"
 import prisma from "app/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
@@ -10,9 +10,9 @@ export default async function handler(
 	switch (req.method) {
 		case "GET":
 			const query = req.query
-			const fileId = parseUrlQuery(query.fileId)
-			const content = parseUrlQuery(query.content)
-			const title = parseUrlQuery(query.title)
+			const fileId = parseQueryParam(query.fileId)
+			const content = parseQueryParam(query.content)
+			const title = parseQueryParam(query.title)
 
 			if (fileId && (content || title)) {
 				return res.status(400).json({ error: "Too many arguments" })

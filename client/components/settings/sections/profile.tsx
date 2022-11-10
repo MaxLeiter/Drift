@@ -1,8 +1,9 @@
+"use client"
+
 import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import useUserData from "@lib/hooks/use-user-data"
 import { getCookie } from "cookies-next"
-import Cookies from "js-cookie"
 import { useEffect, useState } from "react"
 
 const Profile = () => {

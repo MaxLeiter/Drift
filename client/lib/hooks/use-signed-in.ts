@@ -1,9 +1,10 @@
+import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie, setCookie } from "cookies-next"
 import { useEffect } from "react"
 import useSharedState from "./use-shared-state"
 
 const useSignedIn = () => {
-	const token = getCookie("drift-token")
+	const token = getCookie(TOKEN_COOKIE_NAME)
 
 	const [signedIn, setSignedIn] = useSharedState(
 		"signedIn",
@@ -13,7 +14,7 @@ const useSignedIn = () => {
 	const signin = (token: string) => {
 		setSignedIn(true)
 		// TODO: investigate SameSite / CORS cookie security
-		setCookie("drift-token", token)
+		setCookie(TOKEN_COOKIE_NAME, token)
 	}
 
 	useEffect(() => {
@@ -23,6 +24,8 @@ const useSignedIn = () => {
 			setSignedIn(false)
 		}
 	}, [setSignedIn, token])
+
+	console.log("signed 	in", signedIn)
 
 	return { signedIn, signin, token }
 }

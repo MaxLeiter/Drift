@@ -20,21 +20,18 @@ import Link from "next/link"
 const renderer = new marked.Renderer()
 
 // @ts-ignore
-renderer.heading = (text, level, _, slugger) => {
-	const id = slugger.slug(text)
-	const Component = `h${level}`
+// renderer.heading = (text, level, raw, slugger) => {
+// 	const id = slugger.slug(text)
+// 	const Component = `h${level}`
 
-	return (
-		<h1>
-			<Link
-				href={`#${id}`}
-				id={id}
-				style={{ color: "inherit" }}
-				dangerouslySetInnerHTML={{ __html: text }}
-			></Link>
-		</h1>
-	)
-}
+// 	return (
+// 		<Component>
+// 			<Link href={`#${id}`} id={id}>
+// 				{text}
+// 			</Link>
+// 		</Component>
+// 	)
+// }
 
 // renderer.link = (href, _, text) => {
 //     const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')

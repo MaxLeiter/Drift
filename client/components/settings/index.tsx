@@ -1,3 +1,5 @@
+"use client"
+
 import Password from "./sections/password"
 import Profile from "./sections/profile"
 import SettingsGroup from "../settings-group"

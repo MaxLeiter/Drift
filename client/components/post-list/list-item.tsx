@@ -1,7 +1,13 @@
 import NextLink from "next/link"
 import VisibilityBadge from "../badges/visibility-badge"
-import { Text, Card, Tooltip, Divider, Badge, Button } from "@geist-ui/core/dist"
-import { File, Post } from "@lib/types"
+import {
+	Text,
+	Card,
+	Tooltip,
+	Divider,
+	Badge,
+	Button
+} from "@geist-ui/core/dist"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
@@ -11,6 +17,8 @@ import { useRouter } from "next/router"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
+import { PostWithFiles, File } from "app/prisma"
+import { PostVisibility } from "@lib/types"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -18,7 +26,7 @@ const ListItem = ({
 	isOwner = true,
 	deletePost
 }: {
-	post: Post
+	post: PostWithFiles
 	isOwner?: boolean
 	deletePost: () => void
 }) => {
@@ -29,7 +37,7 @@ const ListItem = ({
 	}
 
 	const viewParentClick = () => {
-		router.push(`/post/${post.parent?.id}`)
+		router.push(`/post/${post.parentId}`)
 	}
 
 	return (
@@ -48,7 +56,7 @@ const ListItem = ({
 							</Link>
 							{isOwner && (
 								<span className={styles.buttons}>
-									{post.parent && (
+									{post.parentId && (
 										<Tooltip text={"View parent"} hideArrow>
 											<Button
 												auto
@@ -74,7 +82,7 @@ const ListItem = ({
 						)}
 
 						<div className={styles.badges}>
-							<VisibilityBadge visibility={post.visibility} />
+							<VisibilityBadge visibility={post.visibility as PostVisibility} />
 							<CreatedAgoBadge createdAt={post.createdAt} />
 							<Badge type="secondary">
 								{post.files?.length === 1

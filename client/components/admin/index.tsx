@@ -1,3 +1,5 @@
+"use client"
+
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
 import styles from "./admin.module.css"

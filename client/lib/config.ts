@@ -80,10 +80,9 @@ export const config = (env: Environment): Config => {
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT ?? "",
 		welcome_title: env.WELCOME_TITLE ?? "",
-		url: 'http://localhost:3000'
+		url: "http://localhost:3000"
 	}
 	return config
 }
-
 
 export default config(process.env)

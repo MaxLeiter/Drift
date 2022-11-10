@@ -1,16 +1,10 @@
-import { Post, PrismaClient, File } from "@prisma/client"
+import { Post, PrismaClient, File, User } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
 export default prisma
 
-export type {
-	User,
-	AuthTokens,
-	File,
-	Post,
-	PostToAuthors
-} from "@prisma/client"
+export type { User, AuthTokens, File, Post } from "@prisma/client"
 
 export type PostWithFiles = Post & {
 	files: File[]
@@ -49,4 +43,75 @@ export const getPostWithFiles = async (
 		...post,
 		files
 	}
+}
+
+export async function getPostsByUser(userId: string): Promise<Post[]>
+export async function getPostsByUser(
+	userId: string,
+	includeFiles: true
+): Promise<PostWithFiles[]>
+export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
+	const sharedOptions = {
+		take: 20,
+		orderBy: {
+			createdAt: "desc" as const
+		}
+	}
+
+	const posts = await prisma.post.findMany({
+		where: {
+			authorId: userId
+		},
+		...sharedOptions
+	})
+
+	if (withFiles) {
+		return Promise.all(
+			posts.map(async (post) => {
+				const files = await prisma.file.findMany({
+					where: {
+						postId: post.id
+					},
+					...sharedOptions
+				})
+
+				return {
+					...post,
+					files
+				}
+			})
+		)
+	}
+
+	return posts
+}
+
+export const getUserById = async (userId: User["id"]) => {
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		select: {
+			id: true,
+			email: true,
+			displayName: true,
+			role: true,
+			username: true
+		}
+	})
+
+	return user
+}
+
+export const isUserAdmin = async (userId: User["id"]) => {
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		select: {
+			role: true
+		}
+	})
+
+	return user?.role?.toLowerCase() === "admin"
 }

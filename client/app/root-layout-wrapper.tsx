@@ -1,9 +1,10 @@
 "use client"
 
-import { CssBaseline, GeistProvider, Themes } from "@geist-ui/core/dist"
+import Header from "@components/header"
+import { CssBaseline, GeistProvider, Page, Themes } from "@geist-ui/core/dist"
 import { ThemeProvider } from "next-themes"
 import { SkeletonTheme } from "react-loading-skeleton"
-import PageWrapper from "./page-wrapper"
+import styles from "@styles/Home.module.css"
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 	const skeletonBaseColor = "var(--light-gray)"
@@ -58,7 +59,13 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 					attribute="data-theme"
 				>
 					<CssBaseline />
-					<PageWrapper>{children}</PageWrapper>
+					<Page width={"100%"}>
+						<Page.Header>
+							<Header />
+						</Page.Header>
+
+						<Page.Content className={styles.main}>{children}</Page.Content>
+					</Page>
 				</ThemeProvider>
 			</SkeletonTheme>
 		</GeistProvider>

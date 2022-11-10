@@ -27,6 +27,7 @@ export async function withJwt(
 		if (token == null) return res.status(401).send("Unauthorized")
 
 		const authToken = await prisma.authTokens.findUnique({
+			// @ts-ignore
 			where: { id: token }
 		})
 		if (authToken == null) {

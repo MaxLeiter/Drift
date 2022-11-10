@@ -3,7 +3,7 @@ import styles from "./document.module.css"
 import Download from "@geist-ui/icons/download"
 import ExternalLink from "@geist-ui/icons/externalLink"
 import Skeleton from "react-loading-skeleton"
-import Link from 'next/link';
+import Link from "next/link"
 
 import {
 	Button,

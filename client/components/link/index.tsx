@@ -3,7 +3,7 @@ import NextLink from "next/link"
 import styles from "./link.module.css"
 
 type LinkProps = {
-	colored?: boolean,
+	colored?: boolean
 	children: React.ReactNode
 } & React.ComponentProps<typeof NextLink>
 

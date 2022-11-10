@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getPostWithFiles } from "app/prisma"
 import { useRedirectIfNotAuthed } from "@lib/server/hooks/use-redirect-if-not-authed"
+
 const NewFromExisting = async ({
 	params
 }: {

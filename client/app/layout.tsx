@@ -49,7 +49,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					<meta name="theme-color" content="#ffffff" />
 					<title>Drift</title>
 				</head>
-				<body><LayoutWrapper>{children}</LayoutWrapper></body>
+				<body>
+					<LayoutWrapper>{children}</LayoutWrapper>
+				</body>
 			</html>
 		</ServerThemeProvider>
 	)

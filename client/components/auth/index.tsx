@@ -1,16 +1,13 @@
 "use client"
 
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useState } from "react"
 import styles from "./auth.module.css"
 import { useRouter } from "next/navigation"
 import Link from "../link"
-import Cookies from "js-cookie"
 import useSignedIn from "@lib/hooks/use-signed-in"
-import Input from "@components/input"
-import Button from "@components/button"
-import Note from "@components/note"
 import { USER_COOKIE_NAME } from "@lib/constants"
 import { setCookie } from "cookies-next"
+import { Button, Input, Note } from "@geist-ui/core/dist"
 
 const NO_EMPTY_SPACE_REGEX = /^\S*$/
 const ERROR_MESSAGE =
@@ -83,24 +80,26 @@ const Auth = ({
 				<form onSubmit={handleSubmit}>
 					<div className={styles.formGroup}>
 						<Input
-							type="text"
+							htmlType="text"
 							id="username"
 							value={username}
 							onChange={(event) => setUsername(event.currentTarget.value)}
 							placeholder="Username"
 							required
+							minLength={3}
 						/>
 						<Input
-							type="password"
+							htmlType="password"
 							id="password"
 							value={password}
 							onChange={(event) => setPassword(event.currentTarget.value)}
 							placeholder="Password"
 							required
+							minLength={6}
 						/>
 						{requiresServerPassword && (
 							<Input
-								type="password"
+								htmlType="password"
 								id="server-password"
 								value={serverPassword}
 								onChange={(event) =>
@@ -108,10 +107,11 @@ const Auth = ({
 								}
 								placeholder="Server Password"
 								required
+								width="100%"
 							/>
 						)}
 
-						<Button buttonType="primary" type="submit">
+						<Button width={"100%"} htmlType="submit">
 							{signingIn ? "Sign In" : "Sign Up"}
 						</Button>
 					</div>

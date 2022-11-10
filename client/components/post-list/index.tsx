@@ -1,24 +1,25 @@
+"use client"
+
 import { Button, Input, Text } from "@geist-ui/core/dist"
 
 import styles from "./post-list.module.css"
 import ListItemSkeleton from "./list-item-skeleton"
 import ListItem from "./list-item"
-import { Post } from "@lib/types"
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
+import type { PostWithFiles } from "app/prisma"
 
 type Props = {
-	initialPosts: Post[]
-	error: boolean
+	initialPosts: PostWithFiles[]
 	morePosts: boolean
 }
 
-const PostList = ({ morePosts, initialPosts, error }: Props) => {
+const PostList = ({ morePosts, initialPosts }: Props) => {
 	const [search, setSearchValue] = useState("")
-	const [posts, setPosts] = useState<Post[]>(initialPosts)
+	const [posts, setPosts] = useState(initialPosts)
 	const [searching, setSearching] = useState(false)
 	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
 
@@ -122,7 +123,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 					onChange={handleSearchChange}
 				/>
 			</div>
-			{error && <Text type="error">Failed to load.</Text>}
+			{!posts && <Text type="error">Failed to load.</Text>}
 			{!posts.length && searching && (
 				<ul>
 					<li>
@@ -133,7 +134,7 @@ const PostList = ({ morePosts, initialPosts, error }: Props) => {
 					</li>
 				</ul>
 			)}
-			{posts?.length === 0 && !error && (
+			{posts?.length === 0 && posts && (
 				<Text type="secondary">
 					No posts found. Create one{" "}
 					<Link colored href="/new">

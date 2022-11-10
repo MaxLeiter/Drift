@@ -6,7 +6,7 @@
 		"dev": "next dev --port 3000",
 		"build": "next build",
 		"start": "next start --port 3000",
-		"lint": "next lint && prettier --list-different --config .prettierrc '{components,lib,pages}/**/*.{ts,tsx}' --write",
+		"lint": "next lint && prettier --list-different --config .prettierrc '{components,lib,app}/**/*.{ts,tsx}' --write",
 		"analyze": "cross-env ANALYZE=true next build",
 		"find:unused": "next-unused",
 		"prisma": "prisma"
@@ -32,6 +32,7 @@
 		"react-dropzone": "14.2.3",
 		"react-hot-toast": "^2.4.0",
 		"react-loading-skeleton": "3.1.0",
+		"showdown": "^2.1.0",
 		"swr": "1.3.0",
 		"textarea-markdown-editor": "0.1.13",
 		"zod": "^3.19.1"
@@ -45,6 +46,7 @@
 		"@types/react": "18.0.9",
 		"@types/react-datepicker": "4.4.1",
 		"@types/react-dom": "18.0.3",
+		"@types/showdown": "^2.0.0",
 		"cross-env": "7.0.3",
 		"eslint": "8.27.0",
 		"eslint-config-next": "13.0.2",

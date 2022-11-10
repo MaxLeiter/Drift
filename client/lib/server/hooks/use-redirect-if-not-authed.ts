@@ -1,12 +1,12 @@
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation"
 import { isSignedIn } from "../is-signed-in"
 
-export const useRedirectIfNotAuthed = (to = '/signin') => {
-    const router = useRouter();
+export const useRedirectIfNotAuthed = (to = "/signin") => {
+	const router = useRouter()
 
-    const signedIn = isSignedIn();
+	const signedIn = isSignedIn()
 
-    if (!signedIn) {
-        router.push(to);
-    }
+	if (!signedIn) {
+		router.push(to)
+	}
 }

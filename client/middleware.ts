@@ -1,6 +1,7 @@
 import { NextFetchEvent, NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
+import serverConfig from "@lib/config"
 
 const PUBLIC_FILE = /\.(.*)$/
 
@@ -21,7 +22,7 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 			resp.cookies.delete(TOKEN_COOKIE_NAME)
 			resp.cookies.delete(USER_COOKIE_NAME)
 			const signoutPromise = new Promise((resolve) => {
-				fetch(`${process.env.API_URL}/auth/signout`, {
+				fetch(`${serverConfig.url}/auth/signout`, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -65,7 +66,7 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 
 export const config = {
 	match: [
-		"/signout",
+		// "/signout",
 		// "/",
 		"/signin",
 		"/signup",

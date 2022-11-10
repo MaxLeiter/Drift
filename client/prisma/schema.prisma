@@ -68,8 +68,7 @@ model Post {
   expiresAt   DateTime?
   parentId    String?
   description String?
-  // files         File[]
-  // postToAuthors PostToAuthors[]
+  authorId    String
 
   @@map("Posts")
 }

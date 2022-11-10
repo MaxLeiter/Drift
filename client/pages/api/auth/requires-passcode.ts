@@ -1,14 +1,13 @@
 import config from "@lib/config"
 import { NextApiRequest, NextApiResponse } from "next"
 
-
 export const getRequiresPasscode = async () => {
 	const requiresPasscode = Boolean(config.registration_password)
 	return requiresPasscode
 }
 
 const handleRequiresPasscode = async (
-	req: NextApiRequest,
+	_: NextApiRequest,
 	res: NextApiResponse
 ) => {
 	return res.json({ requiresPasscode: await getRequiresPasscode() })

@@ -1,7 +1,8 @@
+"use client"
+
 import { Input, Button, useToasts } from "@geist-ui/core/dist"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
-import Cookies from "js-cookie"
 import { useState } from "react"
 
 const Password = () => {

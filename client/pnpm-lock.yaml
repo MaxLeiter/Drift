@@ -12,6 +12,7 @@ specifiers:
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1
   '@types/react-dom': 18.0.3
+  '@types/showdown': ^2.0.0
   bcrypt: ^5.1.0
   client-zip: 2.2.1
   clsx: ^1.2.1
@@ -36,6 +37,7 @@ specifiers:
   react-hot-toast: ^2.4.0
   react-loading-skeleton: 3.1.0
   sharp: ^0.31.2
+  showdown: ^2.1.0
   swr: 1.3.0
   textarea-markdown-editor: 0.1.13
   typescript: 4.6.4
@@ -63,6 +65,7 @@ dependencies:
   react-dropzone: 14.2.3_react@18.2.0
   react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
   react-loading-skeleton: 3.1.0_react@18.2.0
+  showdown: 2.1.0
   swr: 1.3.0_react@18.2.0
   textarea-markdown-editor: 0.1.13_biqbaboplfbrettd7655fr4n2y
   zod: 3.19.1
@@ -79,6 +82,7 @@ devDependencies:
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1_biqbaboplfbrettd7655fr4n2y
   '@types/react-dom': 18.0.3
+  '@types/showdown': 2.0.0
   cross-env: 7.0.3
   eslint: 8.27.0
   eslint-config-next: 13.0.2_hsmo2rtalirsvadpuxki35bq2i
@@ -467,6 +471,10 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
+
+  /@types/showdown/2.0.0:
+    resolution: {integrity: sha512-70xBJoLv+oXjB5PhtA8vo7erjLDp9/qqI63SRHm4REKrwuPOLs8HhXwlZJBJaB4kC18cCZ1UUZ6Fb/PLFW4TCA==}
     dev: true
 
   /@typescript-eslint/parser/5.42.1_hsmo2rtalirsvadpuxki35bq2i:
@@ -943,6 +951,11 @@ packages:
     resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
     dev: true
+
+  /commander/9.4.1:
+    resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: false
 
   /commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
@@ -3545,6 +3558,13 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
     dev: true
+
+  /showdown/2.1.0:
+    resolution: {integrity: sha512-/6NVYu4U819R2pUIk79n67SYgJHWCce0a5xTP979WbNp0FL9MN1I1QK662IDU1b6JzKTvmhgI7T7JYIxBi3kMQ==}
+    hasBin: true
+    dependencies:
+      commander: 9.4.1
+    dev: false
 
   /side-channel/1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}

@@ -3,7 +3,10 @@ import type { File } from "app/prisma"
 /**
  * returns rendered HTML from a  Drift file
  */
-function getHtmlFromFile({ content, title }: Pick<File, "content" | "title">) {
+export function getHtmlFromFile({
+	content,
+	title
+}: Pick<File, "content" | "title">) {
 	const renderAsMarkdown = [
 		"markdown",
 		"md",
@@ -35,5 +38,3 @@ ${content}
 	const html = markdown(contentToRender)
 	return html
 }
-
-export default getHtmlFromFile

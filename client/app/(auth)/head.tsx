@@ -1,5 +1,5 @@
-import PageSeo from "@components/head"
+import PageSeo from "@components/page-seo"
 
 export default function AuthHead() {
-    return <PageSeo title="Sign In" />
+	return <PageSeo title="Sign In" />
 }

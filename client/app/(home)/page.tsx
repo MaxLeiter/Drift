@@ -1,4 +1,5 @@
 import { getWelcomeContent } from "pages/api/welcome"
+import Home from "./home"
 
 const getWelcomeData = async () => {
 	const welcomeContent = await getWelcomeContent()
@@ -6,7 +7,7 @@ const getWelcomeData = async () => {
 }
 
 export default async function Page() {
-	const welcomeData = await getWelcomeData()
-    
-	return <h1>{JSON.stringify(welcomeData)}</h1>
+	const { content, rendered, title } = await getWelcomeData()
+
+	return <Home rendered={rendered} introContent={content} introTitle={title} />
 }

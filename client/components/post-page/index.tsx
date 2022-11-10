@@ -5,7 +5,13 @@ import styles from "./post-page.module.css"
 import homeStyles from "@styles/Home.module.css"
 
 import type { File, Post, PostVisibility } from "@lib/types"
-import { Page, Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
+import {
+	Page,
+	Button,
+	Text,
+	ButtonGroup,
+	useMediaQuery
+} from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"

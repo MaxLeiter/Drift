@@ -9,11 +9,11 @@ export async function generateAndExpireAccessToken(userId: User["id"]) {
 	await prisma.authTokens.create({
 		data: {
 			userId: userId,
-			token: token,
+			token: token
 		}
 	})
 
-    // TODO: set expiredReason?
+	// TODO: set expiredReason?
 	prisma.authTokens.deleteMany({
 		where: {
 			userId: userId,
