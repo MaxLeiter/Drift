@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
 import { PostWithFiles } from "app/prisma"
+import { USER_COOKIE_NAME } from "@lib/constants"
 
 const emptyDoc = {
 	title: "",
@@ -144,7 +145,7 @@ const Post = ({
 				files: docs,
 				visibility,
 				password,
-				userId: Cookies.get("drift-userid") || "",
+				userId: Cookies.get(USER_COOKIE_NAME) || "",
 				expiresAt: expiresAt || null,
 				parentId: newPostParent
 			})

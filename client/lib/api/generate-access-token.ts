@@ -3,12 +3,12 @@ import { User } from "@prisma/client"
 import prisma from "app/prisma"
 import { sign } from "jsonwebtoken"
 
-export async function generateAccessToken(user: User) {
-	const token = sign({ id: user.id }, config.jwt_secret, { expiresIn: "2d" })
+export async function generateAndExpireAccessToken(userId: User["id"]) {
+	const token = sign({ id: userId }, config.jwt_secret, { expiresIn: "2d" })
 
 	await prisma.authTokens.create({
 		data: {
-			userId: user.id,
+			userId: userId,
 			token: token
 		}
 	})
@@ -16,7 +16,7 @@ export async function generateAccessToken(user: User) {
     // TODO: set expiredReason?
 	prisma.authTokens.deleteMany({
 		where: {
-			userId: user.id,
+			userId: userId,
 			token: {
 				not: token
 			}

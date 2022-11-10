@@ -18,6 +18,7 @@ import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Cookies from "js-cookie"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
+import { USER_COOKIE_NAME } from "@lib/constants"
 
 type Props = {
 	post: Post
@@ -32,7 +33,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [isOwner] = useState(
-		post.users ? post.users[0].id === Cookies.get("drift-userid") : false
+		post.users ? post.users[0].id === Cookies.get(USER_COOKIE_NAME) : false
 	)
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")

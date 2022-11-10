@@ -1,9 +1,7 @@
-import config from "@lib/config"
 import { NextApiRequest, NextApiResponse } from "next"
 import prisma from "app/prisma"
 import bcrypt from "bcrypt"
-import { generateAccessToken } from "@lib/api/generate-access-token"
-import Cookies from "js-cookie"
+import { signin } from "@lib/api/signin"
 
 export default async function handler(
 	req: NextApiRequest,
@@ -29,8 +27,7 @@ export default async function handler(
 		return res.status(401).json({ error: "Unauthorized" })
 	}
 
-	const token = await generateAccessToken(user)
-	Cookies.set("drift-user", user.id, { path: "/" })
-	Cookies.set("drift-token", token, { path: "/" })
+	const token = await signin(user.id, req, res);
+
 	return res.status(201).json({ token: token, userId: user.id })
 }

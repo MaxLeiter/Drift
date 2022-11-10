@@ -2,6 +2,7 @@ import type { GetServerSideProps } from "next"
 
 import type { Post } from "@lib/types"
 import PostPage from "@components/post-page"
+import { USER_COOKIE_NAME } from "@lib/constants"
 
 export type PostProps = {
 	post: Post
@@ -47,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	const json = (await post.json()) as Post
 	const isAuthor = json.users?.find(
-		(user) => user.id === req.cookies["drift-userid"]
+		(user) => user.id === req.cookies[USER_COOKIE_NAME]
 	)
 
 	if (json.visibility === "public" || json.visibility === "unlisted") {

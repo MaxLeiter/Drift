@@ -1,11 +1,12 @@
 import { NextFetchEvent, NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
 
 const PUBLIC_FILE = /\.(.*)$/
 
 export function middleware(req: NextRequest, event: NextFetchEvent) {
 	const pathname = req.nextUrl.pathname
-	const signedIn = req.cookies.get("drift-token")
+	const signedIn = req.cookies.get(TOKEN_COOKIE_NAME)
 	const getURL = (pageName: string) => new URL(`/${pageName}`, req.url).href
 	const isPageRequest =
 		!PUBLIC_FILE.test(pathname) &&
@@ -17,8 +18,8 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
 		// If you're not signed in we redirect to the home page
 		if (signedIn) {
 			const resp = NextResponse.redirect(getURL(""))
-			resp.cookies.delete("drift-token")
-			resp.cookies.delete("drift-userid")
+			resp.cookies.delete(TOKEN_COOKIE_NAME)
+			resp.cookies.delete(USER_COOKIE_NAME)
 			const signoutPromise = new Promise((resolve) => {
 				fetch(`${process.env.API_URL}/auth/signout`, {
 					method: "POST",

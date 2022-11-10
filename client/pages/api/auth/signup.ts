@@ -2,7 +2,7 @@ import config from "@lib/config"
 import { NextApiRequest, NextApiResponse } from "next"
 import prisma from "app/prisma"
 import bcrypt, { genSalt } from "bcrypt"
-import { generateAccessToken } from "@lib/api/generate-access-token"
+import { generateAndExpireAccessToken } from "@lib/api/generate-access-token"
 
 export default async function handler(
 	req: NextApiRequest,
@@ -35,7 +35,7 @@ export default async function handler(
 		},
 	})
 
-	const token = await generateAccessToken(user)
+	const token = await generateAndExpireAccessToken(user)
 
 	return res.status(201).json({ token: token, userId: user.id })
 }
