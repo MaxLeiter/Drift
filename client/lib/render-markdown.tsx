@@ -68,7 +68,7 @@ renderer.listitem = (text, task, checked) => {
 		)
 	}
 
-	return `<li>${text}</li>`
+	return <li>{text}</li>
 }
 
 //@ts-ignore

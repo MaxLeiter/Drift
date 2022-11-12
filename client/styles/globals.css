@@ -99,6 +99,8 @@ body {
 	font-family: var(--font-sans);
 	display: flex;
 	flex-direction: column;
+	/* TODO: this should be unnecessary. Overides the browser background for color-scheme while geist-ui catches up  */
+	background: var(--bg);
 }
 
 p {

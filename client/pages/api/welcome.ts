@@ -8,8 +8,6 @@ export const getWelcomeContent = async () => {
 	const introContent = config.welcome_content
 	const introTitle = config.welcome_title
 	
-
-	console.log(renderMarkdown(introContent))
 	return {
 		title: introTitle,
 		content: introContent,

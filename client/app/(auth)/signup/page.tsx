@@ -1,5 +1,4 @@
 import Auth from "@components/auth"
-import config from "@lib/config"
 import { getRequiresPasscode } from "pages/api/auth/requires-passcode"
 
 const getPasscode = async () => {

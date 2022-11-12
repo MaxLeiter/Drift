@@ -27,10 +27,10 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 			warning: "var(--warning)"
 		},
 		expressiveness: {
-			dropdownBoxShadow: "0 0 0 1px var(--light-gray)",
-			shadowSmall: "0 0 0 1px var(--light-gray)",
-			shadowLarge: "0 0 0 1px var(--light-gray)",
-			shadowMedium: "0 0 0 1px var(--light-gray)"
+			dropdownBoxShadow: "0 0 0 1px var(--lighter-gray)",
+			shadowSmall: "0 0 0 1px var(--lighter-gray)",
+			shadowLarge: "0 0 0 1px var(--lighter-gray)",
+			shadowMedium: "0 0 0 1px var(--lighter-gray)",
 		},
 		layout: {
 			gap: "var(--gap)",

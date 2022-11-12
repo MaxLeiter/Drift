@@ -9,9 +9,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<ServerThemeProvider
-			disableTransitionOnChange
 			cookieName="drift-theme"
+			// disableTransitionOnChange
 			attribute="data-theme"
+			enableColorScheme
 		>
 			<html lang="en">
 				<head>
