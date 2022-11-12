@@ -1,8 +1,5 @@
-import Admin from "@components/admin"
-import { TOKEN_COOKIE_NAME } from "@lib/constants"
-import { isUserAdmin } from "@lib/server/prisma"
+import Admin from "./components/admin"
 import { getCurrentUser } from "@lib/server/session"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 const AdminPage = async () => {

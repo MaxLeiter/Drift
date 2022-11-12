@@ -1,7 +1,7 @@
-import NewPost from "@components/new-post"
+import NewPost from "app/(posts)/new/components/new"
 import { useRouter } from "next/navigation"
 import { getPostWithFiles } from "@lib/server/prisma"
-import Header from "@components/header"
+import Header from "app/components/header"
 
 const NewFromExisting = async ({
 	params

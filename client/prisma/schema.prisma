@@ -113,7 +113,6 @@ model User {
   role     String? @default("user")
   password String? @db.Text
 
-
   @@map("users")
 }
 

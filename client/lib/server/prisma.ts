@@ -4,8 +4,6 @@ declare global {
 
 import config from "@lib/config"
 import { Post, PrismaClient, File, User } from "@prisma/client"
-import { cache } from "react"
-import { generateAndExpireAccessToken } from "./generate-access-token"
 
 const prisma = new PrismaClient()
 
@@ -140,22 +138,10 @@ export const createUser = async (
 		throw new Error("Wrong registration password")
 	}
 
-	// const salt = await genSalt(10)
 
-	// the first user is the admin
 	const isUserAdminByDefault =
 		config.enable_admin && (await prisma.user.count()) === 0
 	const userRole = isUserAdminByDefault ? "admin" : "user"
-
-	// const user = await prisma.user.create({
-	// 	data: {
-	// 		username,
-	// 		password: await bcrypt.hash(password, salt),
-	// 		role: userRole,
-	// 	},
-	// })
-
-	// const token = await generateAndExpireAccessToken(user.id)
 
 	return {
 		// user,

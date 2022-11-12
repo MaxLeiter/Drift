@@ -1,12 +1,12 @@
 import type { GetServerSideProps } from "next"
 
 import type { Post } from "@lib/types"
-import PostPage from "@components/post-page"
+import PostPage from "app/(posts)/post/[id]/components/post-page"
 import { USER_COOKIE_NAME } from "@lib/constants"
 import { notFound } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
 import { getCurrentUser, getSession } from "@lib/server/session"
-import Header from "@components/header"
+import Header from "app/components/header"
 
 export type PostProps = {
 	post: Post

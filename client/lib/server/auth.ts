@@ -1,14 +1,14 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
-import prisma from "lib/server/prisma"
+import prisma from "@lib/server/prisma"
 import config from "@lib/config"
 
 const providers: NextAuthOptions["providers"] = [
 	GitHubProvider({
 		clientId: config.GITHUB_CLIENT_ID,
 		clientSecret: config.GITHUB_CLIENT_SECRET
-	}),
+	})
 ]
 
 export const authOptions: NextAuthOptions = {
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 			})
 
 			if (!dbUser) {
-				// TODO: user should be defined?
+				// TODO: user should be defined? should we invalidate/signout?
 				if (user) {
 					token.id = user.id
 					token.role = "user"
@@ -59,4 +59,3 @@ export const authOptions: NextAuthOptions = {
 		}
 	}
 } as const
-
