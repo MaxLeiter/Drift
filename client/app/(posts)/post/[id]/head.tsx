@@ -5,10 +5,10 @@ export default async function Head({
 	params
 }: {
 	params: {
-		slug: string
+		id: string
 	}
 }) {
-	const post = await getPostById(params.slug)
+	const post = await getPostById(params.id)
 
 	if (!post) {
 		return null
@@ -17,7 +17,7 @@ export default async function Head({
 	return (
 		<PageSeo
 			title={`${post.title} - Drift`}
-			description={post.description}
+			description={post.description || undefined}
 			isPrivate={false}
 		/>
 	)

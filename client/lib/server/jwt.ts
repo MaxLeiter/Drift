@@ -47,11 +47,11 @@ export async function withJwt(
 				select: {
 					id: true,
 					email: true,
-					displayName: true,
-					bio: true,
-					createdAt: true,
-					updatedAt: true,
-					deletedAt: true
+					// displayName: true,
+					// bio: true,
+					// createdAt: true,
+					// updatedAt: true,
+					// deletedAt: true
 				}
 			})
 			if (!userObj) {

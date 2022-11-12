@@ -7,16 +7,9 @@ import { User } from "next-auth"
 import { useEffect, useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
-	const [name, setName] = useState<string>()
-	const [email, setEmail] = useState<string>()
+	const [name, setName] = useState<string>(user.name || "")
+	const [email, setEmail] = useState<string>(user.email || "")
 	const [bio, setBio] = useState<string>()
-
-	useEffect(() => {
-		console.log(user)
-		// if (user?.displayName) setName(user.displayName)
-		if (user?.email) setEmail(user.email)
-		// if (user?.bio) setBio(user.bio)
-	}, [user])
 
 	const { setToast } = useToasts()
 

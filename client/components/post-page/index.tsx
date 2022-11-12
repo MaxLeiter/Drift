@@ -1,56 +1,48 @@
-import PageSeo from "@components/page-seo"
+"use client"
+
 import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from "@components/view-document"
 import styles from "./post-page.module.css"
-import homeStyles from "@styles/Home.module.css"
 
-import type { File, Post, PostVisibility } from "@lib/types"
-import {
-	Page,
-	Button,
-	Text,
-	ButtonGroup,
-	useMediaQuery
-} from "@geist-ui/core/dist"
+import type { PostVisibility } from "@lib/types"
+import { Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import FileDropdown from "@components/file-dropdown"
 import ScrollToTop from "@components/scroll-to-top"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
-import { USER_COOKIE_NAME } from "@lib/constants"
-import { getCookie } from "cookies-next"
+import { File, PostWithFiles } from "@lib/server/prisma"
+import Header from "@components/header"
 
 type Props = {
-	post: Post
+	post: PostWithFiles
 	isProtected?: boolean
+	isAuthor?: boolean
 }
 
-const PostPage = ({ post: initialPost, isProtected }: Props) => {
-	const [post, setPost] = useState<Post>(initialPost)
-	const [visibility, setVisibility] = useState<PostVisibility>(post.visibility)
+const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
+	const [post, setPost] = useState<PostWithFiles>(initialPost)
+	const [visibility, setVisibility] = useState<string>(post.visibility)
 	const [isExpired, setIsExpired] = useState(
 		post.expiresAt ? new Date(post.expiresAt) < new Date() : null
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const [isOwner] = useState(
-		post.users ? post.users[0].id === getCookie(USER_COOKIE_NAME) : false
-	)
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")
 
 	useEffect(() => {
-		if (!isOwner && isExpired) {
+		if (!isAuthor && isExpired) {
 			router.push("/expired")
 		}
 
 		const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
-		if (!isOwner && expirationDate < new Date()) {
+		if (!isAuthor && expirationDate < new Date()) {
 			router.push("/expired")
 		} else {
 			setIsLoading(false)
@@ -66,7 +58,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 		return () => {
 			if (interval) clearInterval(interval)
 		}
-	}, [isExpired, isOwner, post.expiresAt, post.users, router])
+	}, [isExpired, isAuthor, post.expiresAt, router])
 
 	const download = async () => {
 		if (!post.files) return
@@ -92,7 +84,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	}
 
 	const viewParentClick = () => {
-		router.push(`/post/${post.parent!.id}`)
+		router.push(`/post/${post.parentId}`)
 	}
 
 	if (isLoading) {
@@ -103,77 +95,74 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 
 	return (
 		<>
-
 			{!isAvailable && <PasswordModalPage setPost={setPost} />}
-			<Page.Content className={homeStyles.main}>
-				<div className={styles.header}>
-					<span className={styles.buttons}>
-						<ButtonGroup
-							vertical={isMobile}
-							marginLeft={0}
-							marginRight={0}
-							marginTop={1}
-							marginBottom={1}
+			<div className={styles.header}>
+				<span className={styles.buttons}>
+					<ButtonGroup
+						vertical={isMobile}
+						marginLeft={0}
+						marginRight={0}
+						marginTop={1}
+						marginBottom={1}
+					>
+						<Button
+							auto
+							icon={<Edit />}
+							onClick={editACopy}
+							style={{ textTransform: "none" }}
 						>
-							<Button
-								auto
-								icon={<Edit />}
-								onClick={editACopy}
-								style={{ textTransform: "none" }}
-							>
-								Edit a Copy
+							Edit a Copy
+						</Button>
+						{post.parent && (
+							<Button auto icon={<Parent />} onClick={viewParentClick}>
+								View Parent
 							</Button>
-							{post.parent && (
-								<Button auto icon={<Parent />} onClick={viewParentClick}>
-									View Parent
-								</Button>
-							)}
-							<Button
-								auto
-								onClick={download}
-								icon={<Archive />}
-								style={{ textTransform: "none" }}
-							>
-								Download as ZIP Archive
-							</Button>
-							<FileDropdown isMobile={isMobile} files={post.files || []} />
-						</ButtonGroup>
+						)}
+						<Button
+							auto
+							onClick={download}
+							icon={<Archive />}
+							style={{ textTransform: "none" }}
+						>
+							Download as ZIP Archive
+						</Button>
+						<FileDropdown isMobile={isMobile} files={post.files || []} />
+					</ButtonGroup>
+				</span>
+				<span className={styles.title}>
+					<Text h3>{post.title}</Text>
+					<span className={styles.badges}>
+						<VisibilityBadge visibility={visibility} />
+						<CreatedAgoBadge createdAt={post.createdAt} />
+						<ExpirationBadge postExpirationDate={post.expiresAt} />
 					</span>
-					<span className={styles.title}>
-						<Text h3>{post.title}</Text>
-						<span className={styles.badges}>
-							<VisibilityBadge visibility={visibility} />
-							<CreatedAgoBadge createdAt={post.createdAt} />
-							<ExpirationBadge postExpirationDate={post.expiresAt} />
-						</span>
-					</span>
+				</span>
+			</div>
+			{post.description && (
+				<div>
+					<Text p>{post.description}</Text>
 				</div>
-				{post.description && (
-					<div>
-						<Text p>{post.description}</Text>
-					</div>
-				)}
-				{/* {post.files.length > 1 && <FileTree files={post.files} />} */}
-				{post.files?.map(({ id, content, title }: File) => (
-					<DocumentComponent
-						key={id}
-						title={title}
-						initialTab={"preview"}
-						id={id}
-						content={content}
+			)}
+			{/* {post.files.length > 1 && <FileTree files={post.files} />} */}
+			{post.files?.map(({ id, content, title }: File) => (
+				<DocumentComponent
+					key={id}
+					title={title}
+					initialTab={"preview"}
+					id={id}
+					content={content}
+				/>
+			))}
+			{isAuthor && (
+				<span className={styles.controls}>
+					<VisibilityControl
+						postId={post.id}
+						visibility={visibility}
+						setVisibility={setVisibility}
 					/>
-				))}
-				{isOwner && (
-					<span className={styles.controls}>
-						<VisibilityControl
-							postId={post.id}
-							visibility={visibility}
-							setVisibility={setVisibility}
-						/>
-					</span>
-				)}
-				<ScrollToTop />
-			</Page.Content>
+				</span>
+			)}
+			<ScrollToTop />
 		</>
 	)
 }

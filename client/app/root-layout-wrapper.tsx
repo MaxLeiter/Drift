@@ -61,10 +61,7 @@ export function LayoutWrapper({
 					attribute="data-theme"
 				>
 					<CssBaseline />
-					<Page width={"100%"} style={{
-						marginTop: "0 !important",
-						paddingTop: "0 !important"
-					}}>
+					<Page width={"100%"}>
 						{children}
 					</Page>
 				</ThemeProvider>

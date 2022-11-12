@@ -1,5 +1,4 @@
 
-import 'server-only';
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "./auth"
 

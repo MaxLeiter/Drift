@@ -7,8 +7,8 @@ import { useCallback, useState } from "react"
 
 type Props = {
 	postId: string
-	visibility: PostVisibility
-	setVisibility: (visibility: PostVisibility) => void
+	visibility: string
+	setVisibility: (visibility: string) => void
 }
 
 const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
@@ -17,12 +17,11 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 	const { setToast } = useToasts()
 
 	const sendRequest = useCallback(
-		async (visibility: PostVisibility, password?: string) => {
+		async (visibility: string, password?: string) => {
 			const res = await fetch(`/server-api/posts/${postId}`, {
 				method: "PUT",
 				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
+					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({ visibility, password })
 			})
@@ -33,7 +32,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 			} else {
 				const json = await res.json()
 				setToast({
-					text: json.error.message,
+					text: "An error occurred",
 					type: "error"
 				})
 				setPasswordModalVisible(false)
@@ -63,10 +62,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 		setSubmitting(false)
 	}
 
-	const submitPassword = useCallback(
-		(password: string) => onSubmit("protected", password),
-		[onSubmit]
-	)
+	const submitPassword = (password: string) => onSubmit("protected", password)
 
 	return (
 		<>

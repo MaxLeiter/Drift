@@ -161,3 +161,9 @@ code {
 #__next {
 	isolation: isolate;
 }
+
+/* TODO: this should not be necessary. */
+main {
+	margin-top: 0 !important;
+	padding-top: 0 !important;
+}

@@ -1,4 +1,3 @@
-import NextLink from "next/link"
 import VisibilityBadge from "../badges/visibility-badge"
 import {
 	Text,
@@ -13,12 +12,13 @@ import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import Edit from "@geist-ui/icons/edit"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
-import { PostWithFiles, File } from "@lib/server/prisma"
-import { PostVisibility } from "@lib/types"
+import type { PostWithFiles } from "@lib/server/prisma"
+import type { PostVisibility } from "@lib/types"
+import type { File } from "@lib/server/prisma"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -40,6 +40,10 @@ const ListItem = ({
 		router.push(`/post/${post.parentId}`)
 	}
 
+	{
+		console.log(post)
+	}
+
 	return (
 		<FadeIn>
 			<li key={post.id}>
@@ -49,8 +53,7 @@ const ListItem = ({
 							<Link
 								colored
 								style={{ marginRight: "var(--gap)" }}
-								href={`/post/[id]`}
-								as={`/post/${post.id}`}
+								href={`/post/${post.id}`}
 							>
 								{post.title}
 							</Link>
@@ -94,7 +97,7 @@ const ListItem = ({
 					</Card.Body>
 					<Divider h="1px" my={0} />
 					<Card.Content>
-						{post.files?.map((file: File) => {
+						{post?.files?.map((file: File) => {
 							return (
 								<div key={file.id}>
 									<Link colored href={`/post/${post.id}#${file.title}`}>
@@ -105,7 +108,7 @@ const ListItem = ({
 						})}
 					</Card.Content>
 				</Card>
-			</li>{" "}
+			</li>
 		</FadeIn>
 	)
 }

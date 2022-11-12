@@ -57,7 +57,7 @@ model Post {
   parentId    String?
   description String?
   author      User?     @relation(fields: [authorId], references: [id])
-  authorId    String?
+  authorId    String
   files       File[]
 
   @@map("posts")

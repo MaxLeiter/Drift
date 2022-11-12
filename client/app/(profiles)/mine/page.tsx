@@ -1,6 +1,4 @@
-import { USER_COOKIE_NAME } from "@lib/constants"
-import { notFound, redirect, useRouter } from "next/navigation"
-import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import { getPostsByUser } from "@lib/server/prisma"
 import PostList from "@components/post-list"
 import { getCurrentUser } from "@lib/server/session"

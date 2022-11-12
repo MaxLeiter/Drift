@@ -121,6 +121,7 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 					clearable
 					placeholder="Search..."
 					onChange={handleSearchChange}
+					disabled={Boolean(!posts?.length)}
 				/>
 			</div>
 			{!posts && <Text type="error">Failed to load.</Text>}

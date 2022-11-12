@@ -47,7 +47,7 @@ const UserTable = () => {
 			})
 		} else {
 			setToast({
-				text: json.error || "Something went wrong",
+				text:  "Something went wrong",
 				type: "error"
 			})
 		}
@@ -69,7 +69,7 @@ const UserTable = () => {
 			})
 		} else {
 			setToast({
-				text: json.error || "Something went wrong",
+				text: "Something went wrong",
 				type: "error"
 			})
 		}

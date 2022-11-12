@@ -44,6 +44,7 @@ export const authOptions: NextAuthOptions = {
 				// TODO: user should be defined?
 				if (user) {
 					token.id = user.id
+					token.role = "user"
 				}
 				return token
 			}

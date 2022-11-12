@@ -1,21 +1,22 @@
 import PasswordModal from "@components/new-post/password-modal"
-import { Page, useToasts } from "@geist-ui/core/dist"
-import { Post } from "@lib/types"
-import { useRouter } from "next/router"
+import { useToasts } from "@geist-ui/core/dist"
+import { Post } from "@lib/server/prisma"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 type Props = {
 	setPost: (post: Post) => void
+	postId: Post["id"]
 }
 
-const PasswordModalPage = ({ setPost }: Props) => {
+const PasswordModalPage = ({ setPost, postId }: Props) => {
 	const router = useRouter()
 	const { setToast } = useToasts()
 	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(true)
 
 	const onSubmit = async (password: string) => {
 		const res = await fetch(
-			`/server-api/posts/authenticate?id=${router.query.id}&password=${password}`,
+			`/api/posts/authenticate?id=${postId}&password=${password}`,
 			{
 				method: "GET",
 				headers: {

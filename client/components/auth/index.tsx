@@ -18,60 +18,9 @@ const Auth = ({
 	page: "signup" | "signin"
 	requiresServerPassword?: boolean
 }) => {
-	const router = useRouter()
-
-	const [username, setUsername] = useState("")
-	const [password, setPassword] = useState("")
 	const [serverPassword, setServerPassword] = useState("")
 	const [errorMsg, setErrorMsg] = useState("")
 	const signingIn = page === "signin"
-
-	const handleJson = (json: any) => {
-		// setCookie(USER_COOKIE_NAME, json.userId)
-
-		router.push("/new")
-	}
-
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		// if (
-		// 	!signingIn &&
-		// 	(!NO_EMPTY_SPACE_REGEX.test(username) || password.length < 6)
-		// )
-		// 	return setErrorMsg(ERROR_MESSAGE)
-		// if (
-		// 	!signingIn &&
-		// 	requiresServerPassword &&
-		// 	!NO_EMPTY_SPACE_REGEX.test(serverPassword)
-		// )
-		// 	return setErrorMsg(ERROR_MESSAGE)
-		// else setErrorMsg("")
-
-		const reqOpts = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({ username, password, serverPassword })
-		}
-
-		try {
-			// signIn("credentials", {
-			// 	callbackUrl: "/new",
-			// 	redirect: false,
-			// 	username,
-			// 	password,
-			// 	serverPassword
-			// })
-			// const signUrl = signingIn ? "/api/auth/signin" : "/api/auth/signup"
-			// const resp = await fetch(signUrl, reqOpts)
-			// const json = await resp.json()
-			// if (!resp.ok) throw new Error(json.error.message)
-			// handleJson(json)
-		} catch (err: any) {
-			setErrorMsg(err.message ?? "Something went wrong")
-		}
-	}
 
 	return (
 		<div className={styles.container}>
@@ -122,7 +71,7 @@ const Auth = ({
 							auto
 							width="100%"
 							icon={<GithubIcon />}
-							onClick={() => signIn("github")}
+							onClick={() => signIn("github").catch((err) => setErrorMsg(err.message))}
 						>
 							Sign in with GitHub
 						</Button>

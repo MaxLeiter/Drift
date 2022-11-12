@@ -10,7 +10,6 @@ const epochs = [
 	["second", 1]
 ] as const
 
-// Get duration
 const getDuration = (timeAgoInSeconds: number) => {
 	for (let [name, seconds] of epochs) {
 		const interval = Math.floor(timeAgoInSeconds / seconds)

@@ -15,8 +15,6 @@ import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
 import { PostWithFiles } from "@lib/server/prisma"
-import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
-import { getCookie } from "cookies-next"
 
 const emptyDoc = {
 	title: "",
@@ -60,15 +58,13 @@ const Post = ({
 				title?: string
 				files?: DocumentType[]
 				password?: string
-				userId: string
 				parentId?: string
 			}
 		) => {
 			const res = await fetch(url, {
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
+					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
 					title,
@@ -83,8 +79,9 @@ const Post = ({
 				router.push(`/post/${json.id}`)
 			} else {
 				const json = await res.json()
+				console.error(json)
 				setToast({
-					text: json.error.message || "Please fill out all fields",
+					text: "Please fill out all fields",
 					type: "error"
 				})
 				setPasswordModalVisible(false)
@@ -140,13 +137,11 @@ const Post = ({
 				return
 			}
 
-			const cookieName = getCookie(USER_COOKIE_NAME)
-			await sendRequest("/api/posts/create", {
+			await sendRequest("/api/post", {
 				title,
 				files: docs,
 				visibility,
 				password,
-				userId: cookieName ? String(getCookie(USER_COOKIE_NAME)) : "",
 				expiresAt: expiresAt || null,
 				parentId: newPostParent
 			})
@@ -260,6 +255,7 @@ const Post = ({
 	)
 
 	return (
+		// 150 so the post dropdown doesn't overflow
 		<div style={{ paddingBottom: 150 }}>
 			<Title title={title} onChange={onChangeTitle} />
 			<Description description={description} onChange={onChangeDescription} />

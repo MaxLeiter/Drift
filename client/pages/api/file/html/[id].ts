@@ -1,24 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next"
+import prisma from "lib/server/prisma"
+import { parseQueryParam } from "@lib/server/parse-query-param"
 
 const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { id } = req.query
-	const file = await fetch(`${process.env.API_URL}/files/html/${id}`, {
-		headers: {
-			"x-secret-key": process.env.SECRET_KEY || "",
-			Authorization: `Bearer ${req.cookies["drift-token"]}`
+	const file = await prisma.file.findUnique({
+		where: {
+			id: parseQueryParam(req.query.id)
 		}
 	})
-	if (file.ok) {
-		const json = await file.text()
-		const data = json
-		// serve the file raw as plain text
-		res.setHeader("Content-Type", "text/plain; charset=utf-8")
-		res.setHeader("Cache-Control", "s-maxage=86400")
-		res.status(200).write(data, "utf-8")
-		res.end()
-	} else {
-		res.status(404).send("File not found")
+
+	if (!file) {
+		return res.status(404).end()
 	}
+
+	res.setHeader("Content-Type", "text/plain")
+	res.setHeader("Cache-Control", "public, max-age=4800")
+	console.log(file.html)	
+	return res.status(200).write(file.html)
 }
 
 export default getRawFile

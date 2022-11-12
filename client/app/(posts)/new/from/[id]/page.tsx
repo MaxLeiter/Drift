@@ -14,7 +14,8 @@ const NewFromExisting = async ({
 	const router = useRouter()
 
 	if (!id) {
-		return router.push("/new")
+		router.push("/new")
+		return;
 	}
 
 	const post = await getPostWithFiles(id)

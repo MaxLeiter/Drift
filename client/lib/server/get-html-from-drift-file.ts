@@ -28,9 +28,13 @@ export function getHtmlFromFile({
 	let contentToRender: string = content || ""
 
 	if (!renderAsMarkdown.includes(type)) {
-		contentToRender = `~~~${type}
+		contentToRender = `
+		
+~~~${type}
 ${content}
-~~~`
+~~~
+
+`
 	} else {
 		contentToRender = "\n" + content
 	}
