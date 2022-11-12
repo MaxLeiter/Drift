@@ -5,7 +5,7 @@
 // 		})
 
 import { USER_COOKIE_NAME } from "@lib/constants"
-import prisma, { getUserById } from "app/prisma"
+import prisma, { getUserById } from "@lib/server/prisma"
 import { getCookie } from "cookies-next"
 import { NextApiRequest, NextApiResponse } from "next"
 

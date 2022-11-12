@@ -1,16 +1,26 @@
 import { USER_COOKIE_NAME } from "@lib/constants"
-import { notFound, useRouter } from "next/navigation"
+import { notFound, redirect, useRouter } from "next/navigation"
 import { cookies } from "next/headers"
-import { getPostsByUser } from "app/prisma"
+import { getPostsByUser } from "@lib/server/prisma"
 import PostList from "@components/post-list"
+import { getCurrentUser } from "@lib/server/session"
+import Header from "@components/header"
+import { authOptions } from "@lib/server/auth"
 
 export default async function Mine() {
-	const userId = cookies().get(USER_COOKIE_NAME)?.value
+	const userId = (await getCurrentUser())?.id
+
 	if (!userId) {
-		return notFound()
+		redirect(authOptions.pages?.signIn || "/new")
 	}
 
 	const posts = await getPostsByUser(userId, true)
+
 	const hasMore = false
-	return <PostList morePosts={hasMore} initialPosts={posts} />
+	return (
+		<>
+			<Header signedIn />
+			<PostList morePosts={hasMore} initialPosts={posts} />
+		</>
+	)
 }

@@ -1,5 +1,5 @@
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { getPostsByUser } from "app/prisma"
+import { getPostsByUser } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handle(

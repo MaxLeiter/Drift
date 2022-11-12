@@ -2,7 +2,7 @@
 
 import config from "@lib/config"
 import { User } from "@prisma/client"
-import prisma from "app/prisma"
+import prisma from "@lib/server/prisma"
 import * as jwt from "jsonwebtoken"
 import next, { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
 

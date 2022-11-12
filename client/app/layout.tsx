@@ -1,16 +1,17 @@
 import "@styles/globals.css"
 import { ServerThemeProvider } from "next-themes"
 import { LayoutWrapper } from "./root-layout-wrapper"
+import styles from '@styles/Home.module.css';
 
 interface RootLayoutProps {
 	children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {	
 	return (
 		<ServerThemeProvider
 			cookieName="drift-theme"
-			// disableTransitionOnChange
+			disableTransitionOnChange
 			attribute="data-theme"
 			enableColorScheme
 		>
@@ -50,7 +51,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					<meta name="theme-color" content="#ffffff" />
 					<title>Drift</title>
 				</head>
-				<body>
+				<body className={styles.main}>
 					<LayoutWrapper>{children}</LayoutWrapper>
 				</body>
 			</html>

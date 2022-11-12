@@ -1,6 +1,6 @@
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import prisma from "app/prisma"
+import prisma from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handler(

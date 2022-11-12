@@ -10,7 +10,7 @@ import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
-import type { PostWithFiles } from "app/prisma"
+import type { PostWithFiles } from "@lib/server/prisma"
 
 type Props = {
 	initialPosts: PostWithFiles[]

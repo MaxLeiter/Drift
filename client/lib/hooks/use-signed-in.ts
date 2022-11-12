@@ -17,13 +17,13 @@ const useSignedIn = () => {
 		setCookie(TOKEN_COOKIE_NAME, token)
 	}
 
-	useEffect(() => {
-		if (token) {
-			setSignedIn(true)
-		} else {
-			setSignedIn(false)
-		}
-	}, [setSignedIn, token])
+	// useEffect(() => {
+	// 	if (token) {
+	// 		setSignedIn(true)
+	// 	} else {
+	// 		setSignedIn(false)
+	// 	}
+	// }, [setSignedIn, token])
 
 	console.log("signed 	in", signedIn)
 

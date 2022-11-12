@@ -1,5 +1,5 @@
 import { USER_COOKIE_NAME, TOKEN_COOKIE_NAME } from "@lib/constants"
-import { User } from "app/prisma"
+import { User } from "@lib/server/prisma"
 import { setCookie } from "cookies-next"
 import { NextApiRequest, NextApiResponse } from "next"
 import { generateAndExpireAccessToken } from "./generate-access-token"

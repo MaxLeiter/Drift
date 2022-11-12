@@ -102,12 +102,8 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 	const isAvailable = !isExpired && !isProtected && post.title
 
 	return (
-		<Page width={"100%"}>
-			<PageSeo
-				title={`${post.title} - Drift`}
-				description={post.description}
-				isPrivate={false}
-			/>
+		<>
+
 			{!isAvailable && <PasswordModalPage setPost={setPost} />}
 			<Page.Content className={homeStyles.main}>
 				<div className={styles.header}>
@@ -178,7 +174,7 @@ const PostPage = ({ post: initialPost, isProtected }: Props) => {
 				)}
 				<ScrollToTop />
 			</Page.Content>
-		</Page>
+		</>
 	)
 }
 

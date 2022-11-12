@@ -24,6 +24,7 @@ const Home = ({
 						width={48}
 						height={48}
 						alt=""
+						priority
 					/>
 				</ShiftBy>
 				<Spacer />

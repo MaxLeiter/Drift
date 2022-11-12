@@ -17,7 +17,7 @@ import { useRouter } from "next/router"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
-import { PostWithFiles, File } from "app/prisma"
+import { PostWithFiles, File } from "@lib/server/prisma"
 import { PostVisibility } from "@lib/types"
 
 // TODO: isOwner should default to false so this can be used generically

@@ -2,7 +2,7 @@ import React from "react"
 
 type PageSeoProps = {
 	title?: string
-	description?: string
+	description?: string | null
 	isLoading?: boolean
 	isPrivate?: boolean
 }

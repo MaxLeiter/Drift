@@ -1,5 +1,5 @@
 import markdown from "../render-markdown"
-import type { File } from "app/prisma"
+import type { File } from "@lib/server/prisma"
 /**
  * returns rendered HTML from a  Drift file
  */

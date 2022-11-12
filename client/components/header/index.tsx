@@ -11,7 +11,6 @@ import {
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 import styles from "./header.module.css"
-import useSignedIn from "../../lib/hooks/use-signed-in"
 
 import HomeIcon from "@geist-ui/icons/home"
 import MenuIcon from "@geist-ui/icons/menu"
@@ -25,7 +24,7 @@ import MoonIcon from "@geist-ui/icons/moon"
 import SettingsIcon from "@geist-ui/icons/settings"
 import SunIcon from "@geist-ui/icons/sun"
 import { useTheme } from "next-themes"
-import useUserData from "@lib/hooks/use-user-data"
+// import useUserData from "@lib/hooks/use-user-data"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -37,13 +36,13 @@ type Tab = {
 	href?: string
 }
 
-const Header = () => {
+const Header = ({ signedIn = false }) => {
 	const pathname = usePathname()
 	const [expanded, setExpanded] = useState<boolean>(false)
 	const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
 	const isMobile = useMediaQuery("xs", { match: "down" })
-	const { signedIn: isSignedIn } = useSignedIn()
-	const userData = useUserData()
+	// const { status } = useSession()
+	// const signedIn = status === "authenticated"
 	const [pages, setPages] = useState<Tab[]>([])
 	const { setTheme, resolvedTheme } = useTheme()
 
@@ -76,7 +75,7 @@ const Header = () => {
 			}
 		]
 
-		if (isSignedIn)
+		if (signedIn)
 			setPages([
 				{
 					name: "new",
@@ -126,20 +125,20 @@ const Header = () => {
 				},
 				...defaultPages
 			])
-		if (userData?.role === "admin") {
-			setPages((pages) => [
-				...pages,
-				{
-					name: "admin",
-					icon: <SettingsIcon />,
-					value: "admin",
-					href: "/admin"
-				}
-			])
-		}
+		// if (userData?.role === "admin") {
+		// 	setPages((pages) => [
+		// 		...pages,
+		// 		{
+		// 			name: "admin",
+		// 			icon: <SettingsIcon />,
+		// 			value: "admin",
+		// 			href: "/admin"
+		// 		}
+		// 	])
+		// }
 		// TODO: investigate deps causing infinite loop
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isMobile, isSignedIn, resolvedTheme, userData])
+	}, [isMobile, resolvedTheme])
 
 	const onTabChange = useCallback(
 		(tab: string) => {
@@ -172,7 +171,6 @@ const Header = () => {
 				return (
 					<Link key={tab.value} href={tab.href} className={styles.tab}>
 						<Button
-							className={activeStyle}
 							auto={isMobile ? false : true}
 							icon={tab.icon}
 							shadow={false}

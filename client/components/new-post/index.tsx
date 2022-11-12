@@ -14,7 +14,7 @@ import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
-import { PostWithFiles } from "app/prisma"
+import { PostWithFiles } from "@lib/server/prisma"
 import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
 

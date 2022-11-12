@@ -1,4 +1,5 @@
 import Auth from "@components/auth"
+import Header from "@components/header"
 import { getRequiresPasscode } from "pages/api/auth/requires-passcode"
 
 const getPasscode = async () => {
@@ -7,5 +8,10 @@ const getPasscode = async () => {
 
 export default async function SignUpPage() {
 	const requiresPasscode = await getPasscode()
-	return <Auth page="signup" requiresServerPassword={requiresPasscode} />
+	return (
+		<>
+			<Header />
+			<Auth page="signup" requiresServerPassword={requiresPasscode} />
+		</>
+	)
 }

@@ -1,6 +1,6 @@
 import config from "@lib/config"
 import { User } from "@prisma/client"
-import prisma from "app/prisma"
+import prisma from "@lib/server/prisma"
 import { sign } from "jsonwebtoken"
 
 export async function generateAndExpireAccessToken(userId: User["id"]) {

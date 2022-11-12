@@ -1,12 +1,14 @@
 "use client"
 
-import Header from "@components/header"
 import { CssBaseline, GeistProvider, Page, Themes } from "@geist-ui/core/dist"
 import { ThemeProvider } from "next-themes"
 import { SkeletonTheme } from "react-loading-skeleton"
-import styles from "@styles/Home.module.css"
 
-export function LayoutWrapper({ children }: { children: React.ReactNode }) {
+export function LayoutWrapper({
+	children,
+}: {
+	children: React.ReactNode
+}) {
 	const skeletonBaseColor = "var(--light-gray)"
 	const skeletonHighlightColor = "var(--lighter-gray)"
 
@@ -30,7 +32,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 			dropdownBoxShadow: "0 0 0 1px var(--lighter-gray)",
 			shadowSmall: "0 0 0 1px var(--lighter-gray)",
 			shadowLarge: "0 0 0 1px var(--lighter-gray)",
-			shadowMedium: "0 0 0 1px var(--lighter-gray)",
+			shadowMedium: "0 0 0 1px var(--lighter-gray)"
 		},
 		layout: {
 			gap: "var(--gap)",
@@ -59,12 +61,11 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 					attribute="data-theme"
 				>
 					<CssBaseline />
-					<Page width={"100%"}>
-						<Page.Header>
-							<Header />
-						</Page.Header>
-
-						<Page.Content className={styles.main}>{children}</Page.Content>
+					<Page width={"100%"} style={{
+						marginTop: "0 !important",
+						paddingTop: "0 !important"
+					}}>
+						{children}
 					</Page>
 				</ThemeProvider>
 			</SkeletonTheme>

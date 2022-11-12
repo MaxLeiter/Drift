@@ -10,6 +10,8 @@ type Config = {
 	welcome_content: string
 	welcome_title: string
 	url: string
+	GITHUB_CLIENT_ID: string
+	GITHUB_CLIENT_SECRET: string
 }
 
 type EnvironmentValue = string | undefined
@@ -80,7 +82,9 @@ export const config = (env: Environment): Config => {
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT ?? "",
 		welcome_title: env.WELCOME_TITLE ?? "",
-		url: "http://localhost:3000"
+		url: "http://localhost:3000",
+		GITHUB_CLIENT_ID: env.GITHUB_CLIENT_ID ?? "",
+		GITHUB_CLIENT_SECRET: env.GITHUB_CLIENT_SECRET ?? "",
 	}
 	return config
 }

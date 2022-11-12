@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import prisma from "app/prisma"
+import prisma from "@lib/server/prisma"
 import bcrypt from "bcrypt"
 import { signin } from "@lib/server/signin"
+import { setCookie } from "cookies-next"
+import { TOKEN_COOKIE_NAME, USER_COOKIE_NAME } from "@lib/constants"
 
 export default async function handler(
 	req: NextApiRequest,
@@ -18,7 +20,7 @@ export default async function handler(
 		}
 	})
 
-	if (!user) {
+	if (!user || !user.password) {
 		return res.status(401).json({ error: "Unauthorized" })
 	}
 
@@ -27,7 +29,23 @@ export default async function handler(
 		return res.status(401).json({ error: "Unauthorized" })
 	}
 
-	const token = await signin(user.id, req, res);
+	const token = await signin(user.id, req, res)
+	setCookie(TOKEN_COOKIE_NAME, token, {
+		path: "/",
+		maxAge: 60 * 60 * 24 * 7, // 1 week
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		req,
+		res
+	})
+	setCookie(USER_COOKIE_NAME, user.id, {
+		path: "/",
+		maxAge: 60 * 60 * 24 * 7, // 1 week
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		req,
+		res
+	})
 
 	return res.status(201).json({ token: token, userId: user.id })
 }
