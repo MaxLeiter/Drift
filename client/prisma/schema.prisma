@@ -9,21 +9,6 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model AuthTokens {
-  id            String    @default(cuid())
-  token         String
-  expiredReason String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  deletedAt     DateTime?
-  userId        String
-  // TODO: verify this isn't necessary / is replaced by an implicit m-n relation
-  // users         DriftUser[]    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([id, token])
-  // make id and token keys
-  @@unique([id, token])
-}
 
 model SequelizeMeta {
   name String @id
@@ -33,7 +18,7 @@ model File {
   id        String    @id @default(cuid())
   title     String
   content   String
-  sha       String    @unique
+  sha       String 
   html      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

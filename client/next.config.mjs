@@ -25,10 +25,6 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: "/server-api/:path*",
-				destination: `${process.env.API_URL}/:path*`
-			},
-			{
 				source: "/file/raw/:id",
 				destination: `/api/raw/:id`
 			}

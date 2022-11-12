@@ -14,7 +14,7 @@ import {
 	Tooltip,
 	Tag
 } from "@geist-ui/core/dist"
-import HtmlPreview from "app/(posts)/new/components/edit-document-list/edit-document/preview"
+import HtmlPreview from "app/(posts)/components/preview"
 import FadeIn from "@components/fade-in"
 
 // import Link from "next/link"

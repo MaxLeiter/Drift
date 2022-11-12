@@ -12,7 +12,7 @@ import FormattingIcons from "./formatting-icons"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
 import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core/dist"
-import Preview from "./preview"
+import Preview from "../../../../components/preview"
 
 // import Link from "next/link"
 type Props = {

@@ -9,7 +9,7 @@ export default async function Mine() {
 	const userId = (await getCurrentUser())?.id
 
 	if (!userId) {
-		redirect(authOptions.pages?.signIn || "/new")
+		return redirect(authOptions.pages?.signIn || "/new")
 	}
 
 	const posts = await getPostsByUser(userId, true)

@@ -1,14 +1,8 @@
 // nextjs typescript api handler
 
-import { withCurrentUser } from "@lib/api-middleware/with-current-user"
 import { withMethods } from "@lib/api-middleware/with-methods"
-import {
-	NextApiHandlerWithParsedBody,
-	withValidation
-} from "@lib/api-middleware/with-validation"
+
 import { authOptions } from "@lib/server/auth"
-import { CreatePostSchema } from "@lib/validations/post"
-import { Post } from "@prisma/client"
 import prisma, { getPostById } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 import { unstable_getServerSession } from "next-auth/next"

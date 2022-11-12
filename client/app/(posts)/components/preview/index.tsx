@@ -1,5 +1,3 @@
-import { TOKEN_COOKIE_NAME } from "@lib/constants"
-import { getCookie } from "cookies-next"
 import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
 
@@ -30,7 +28,7 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
 					content
 				})
 
-				const resp = await fetch(`/api/files/get-html?${urlQuery}`, {
+				const resp = await fetch(`/api/file/get-html?${urlQuery}`, {
 					method: "GET"
 				})
 

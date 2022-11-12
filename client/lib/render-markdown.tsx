@@ -1,8 +1,6 @@
 import { marked } from "marked"
-// import Highlight, { defaultProps, Language } from "prism-react-renderer"
-import { renderToStaticMarkup } from "react-dom/server"
+import Highlight, { defaultProps, Language } from "prism-react-renderer"
 import Image from "next/image"
-import Link from "next/link"
 
 // // image sizes. DDoS Safe?
 // const imageSizeLink = /^!?\[((?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|[^\[\]\\])*?)\]\(\s*(<(?:\\[<>]?|[^\s<>\\])*>|(?:\\[()]?|\([^\s\x00-\x1f()\\]*\)|[^\s\x00-\x1f()\\])*?(?:\s+=(?:[\w%]+)?x(?:[\w%]+)?)?)(?:\s+("(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)))?\s*\)/;
@@ -14,7 +12,7 @@ import Link from "next/link"
 // Lexer.rules.inline.breaks.link = imageSizeLink;
 
 //@ts-ignore
-// delete defaultProps.theme
+delete defaultProps.theme
 // import linkStyles from '../components/link/link.module.css'
 
 const renderer = new marked.Renderer()
@@ -33,20 +31,18 @@ const renderer = new marked.Renderer()
 // 	)
 // }
 
-// renderer.link = (href, _, text) => {
-//     const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
-//     if (isHrefLocal) {
-//         return renderToStaticMarkup(
-//             <a href={href || ''}>
-//                 {text}
-//             </a>
-//         )
-//     }
+renderer.link = (href, _, text) => {
+    const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
+    if (isHrefLocal) {
+        return <a href={href || ''}>
+                {text}
+            </a>
+    }
 
-//     // dirty hack
-//     // if text contains elements, render as html
-//     return <a href={href || ""} target="_blank" rel="noopener noreferrer" dangerouslySetInnerHTML={{ __html: convertHtmlEntities(text) }} ></a>
-// }
+    // dirty hack
+    // if text contains elements, render as html
+    return <a href={href || ""} target="_blank" rel="noopener noreferrer" dangerouslySetInnerHTML={{ __html: convertHtmlEntities(text) }} ></a>
+}
 
 // @ts-ignore
 renderer.image = function (href, _, text) {
@@ -71,21 +67,20 @@ renderer.listitem = (text, task, checked) => {
 	return <li>{text}</li>
 }
 
-//@ts-ignore
-renderer.code = (code: string, language: string) => {
-	return (
-		<pre>
-			{/* {title && <code>{title} </code>} */}
-			{/* {language && title && <code style={{}}> {language} </code>} */}
-			<Code
-				language={language}
-				// title={title}
-				code={code}
-				// highlight={highlight}
-			/>
-		</pre>
-	)
-}
+// //@ts-ignore
+// renderer.code = (code: string, language: string) => {
+// 	return (<pre>
+// 			{/* {title && <code>{title} </code>} */}
+// 			{/* {language && title && <code style={{}}> {language} </code>} */}
+// 			<Code
+// 				language={language}
+// 				// title={title}
+// 				code={code}
+// 				// highlight={highlight}
+// 			/>
+// 		</pre>
+// 	)
+// }
 
 marked.setOptions({
 	gfm: true,
@@ -136,7 +131,7 @@ const Code = ({
 	// https://mdxjs.com/guides/syntax-harkedighlighting#all-together
 	return (
 		<>
-			{/* <Highlight
+			<Highlight
 				{...defaultProps}
 				code={code.trim()}
 				language={language as Language}
@@ -177,7 +172,7 @@ const Code = ({
 						))}
 					</code>
 				)}
-			</Highlight> */}
+			</Highlight>
 			<>
 				<code {...props} dangerouslySetInnerHTML={{ __html: code }} />
 			</>

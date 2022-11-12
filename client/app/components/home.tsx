@@ -4,7 +4,7 @@ import { Spacer, Tabs, Card, Textarea, Text } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
 // TODO:components/new-post/ move these styles
-import markdownStyles from "app/(posts)/new/components/edit-document-list/edit-document/preview/preview.module.css";
+import markdownStyles from "app/(posts)/components/preview/preview.module.css";
 const Home = ({
 	introTitle,
 	introContent,

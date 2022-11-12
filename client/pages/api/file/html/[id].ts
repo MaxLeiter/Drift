@@ -9,6 +9,8 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	})
 
+	console.log("file", file, "id", req.query.id)
+
 	if (!file) {
 		return res.status(404).end()
 	}
