@@ -1,4 +1,4 @@
-import Header from "app/components/header"
+import Header from "@components/header"
 import NewPost from "app/(posts)/new/components/new"
 import "@styles/react-datepicker.css"
 

@@ -2,10 +2,10 @@ import { File } from "@lib/types"
 import FileIcon from "@geist-ui/icons/fileText"
 import CodeIcon from "@geist-ui/icons/fileLambda"
 import styles from "./file-tree.module.css"
-import ShiftBy from "app/components/shift-by"
+import ShiftBy from "@components/shift-by"
 import { useEffect, useState } from "react"
 import { codeFileExtensions } from "@lib/constants"
-import Link from "app/components/link"
+import Link from "@components/link"
 
 type Item = File & {
 	icon: JSX.Element

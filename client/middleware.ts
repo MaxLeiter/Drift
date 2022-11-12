@@ -41,6 +41,5 @@ export const config = {
 		"/signin",
 		"/signup",
 		"/new",
-		"/private/:path*"
 	]
 }

@@ -15,7 +15,7 @@ import {
 	Tag
 } from "@geist-ui/core/dist"
 import HtmlPreview from "app/(posts)/new/components/edit-document-list/edit-document/preview"
-import FadeIn from "app/components/fade-in"
+import FadeIn from "@components/fade-in"
 
 // import Link from "next/link"
 type Props = {

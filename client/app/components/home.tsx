@@ -1,9 +1,10 @@
 "use client"
-import ShiftBy from "app/components/shift-by"
+import ShiftBy from "@components/shift-by"
 import { Spacer, Tabs, Card, Textarea, Text } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
-import markdownStyles from "@components/preview/preview.module.css"
+// TODO:components/new-post/ move these styles
+import markdownStyles from "app/(posts)/new/components/edit-document-list/edit-document/preview/preview.module.css";
 const Home = ({
 	introTitle,
 	introContent,

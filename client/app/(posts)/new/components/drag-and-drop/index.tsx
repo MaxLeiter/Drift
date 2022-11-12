@@ -114,4 +114,4 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 	)
 }
 
-export default memo(FileDropzone)
+export default FileDropzone

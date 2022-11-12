@@ -1,5 +1,5 @@
 import Auth from "../components"
-import Header from "app/components/header"
+import Header from "@components/header"
 import { getRequiresPasscode } from "pages/api/auth/requires-passcode"
 
 const getPasscode = async () => {

@@ -1,7 +1,7 @@
-import NewPost from "app/(posts)/new/components/new"
+import NewPost from "../../components/new"
 import { useRouter } from "next/navigation"
-import { getPostWithFiles } from "@lib/server/prisma"
-import Header from "app/components/header"
+import Header from "@components/header"
+import { getPostById } from "@lib/server/prisma"
 
 const NewFromExisting = async ({
 	params
@@ -18,7 +18,7 @@ const NewFromExisting = async ({
 		return;
 	}
 
-	const post = await getPostWithFiles(id)
+	const post = await getPostById(id, true)
 
 	return (
 		<>

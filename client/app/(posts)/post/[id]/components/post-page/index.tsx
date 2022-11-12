@@ -1,24 +1,22 @@
 "use client"
 
-import VisibilityBadge from "app/components/badges/visibility-badge"
+import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from "./view-document"
 import styles from "./post-page.module.css"
 
-import type { PostVisibility } from "@lib/types"
 import { Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"
 import Parent from "@geist-ui/icons/arrowUpCircle"
 import FileDropdown from "app/(posts)/components/file-dropdown"
-import ScrollToTop from "app/components/scroll-to-top"
+import ScrollToTop from "@components/scroll-to-top"
 import { useRouter } from "next/navigation"
-import ExpirationBadge from "app/components/badges/expiration-badge"
-import CreatedAgoBadge from "app/components/badges/created-ago-badge"
+import ExpirationBadge from "@components/badges/expiration-badge"
+import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import PasswordModalPage from "./password-modal-wrapper"
-import VisibilityControl from "app/components/badges/visibility-control"
+import VisibilityControl from "@components/badges/visibility-control"
 import { File, PostWithFiles } from "@lib/server/prisma"
-import Header from "app/components/header"
 
 type Props = {
 	post: PostWithFiles
@@ -95,7 +93,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 
 	return (
 		<>
-			{!isAvailable && <PasswordModalPage setPost={setPost} />}
+			{!isAvailable && <PasswordModalPage setPost={setPost} postId={post.id} />}
 			<div className={styles.header}>
 				<span className={styles.buttons}>
 					<ButtonGroup
@@ -113,7 +111,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 						>
 							Edit a Copy
 						</Button>
-						{post.parent && (
+						{post.parentId && (
 							<Button auto icon={<Parent />} onClick={viewParentClick}>
 								View Parent
 							</Button>

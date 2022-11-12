@@ -71,7 +71,12 @@ const Auth = ({
 							auto
 							width="100%"
 							icon={<GithubIcon />}
-							onClick={() => signIn("github").catch((err) => setErrorMsg(err.message))}
+							onClick={(e) => {
+								e.preventDefault()
+								signIn("github", {
+									callbackUrl: "/",
+								})
+							}}
 						>
 							Sign in with GitHub
 						</Button>

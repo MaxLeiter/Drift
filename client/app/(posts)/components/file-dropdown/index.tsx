@@ -1,10 +1,10 @@
-import ShiftBy from "app/components/shift-by"
+import ShiftBy from "@components/shift-by"
 import { Button, Popover } from "@geist-ui/core/dist"
 import ChevronDown from "@geist-ui/icons/chevronDown"
 import CodeIcon from "@geist-ui/icons/fileFunction"
 import FileIcon from "@geist-ui/icons/fileText"
 import { codeFileExtensions } from "@lib/constants"
-import type { File } from "@lib/types"
+import type { File } from "lib/server/prisma"
 import { useCallback, useEffect, useState } from "react"
 import styles from "./dropdown.module.css"
 

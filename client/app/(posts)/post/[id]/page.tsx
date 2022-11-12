@@ -6,7 +6,7 @@ import { USER_COOKIE_NAME } from "@lib/constants"
 import { notFound } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
 import { getCurrentUser, getSession } from "@lib/server/session"
-import Header from "app/components/header"
+import Header from "@components/header"
 
 export type PostProps = {
 	post: Post
@@ -17,6 +17,7 @@ const getPost = async (id: string) => {
 	const post = await getPostById(id, true)
 	const user = await getCurrentUser()
 
+	console.log("my post", post)
 	if (!post) {
 		return notFound()
 	}
@@ -39,7 +40,9 @@ const getPost = async (id: string) => {
 		return notFound()
 	}
 
+	console.log("HERE", post.visibility, isAuthor)
 	if (post.visibility === "protected" && !isAuthor) {
+		console.log("HERE2")
 		return {
 			post,
 			isProtected: true,
@@ -55,14 +58,13 @@ const PostView = async ({
 	params
 }: {
 	params: {
-		id: string,
-		signedIn?: boolean
+		id: string
 	}
 }) => {
-	const { post, isProtected, isAuthor } = await getPost(params.id)
+	const { post, isProtected, isAuthor, signedIn } = await getPost(params.id)
 	return (
 		<>
-			<Header signedIn />
+			<Header signedIn={signedIn} />
 			<PostPage isAuthor={isAuthor} isProtected={isProtected} post={post} />
 		</>
 	)

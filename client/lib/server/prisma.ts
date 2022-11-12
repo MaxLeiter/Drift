@@ -160,5 +160,5 @@ export const getPostById = async (postId: Post["id"], withFiles = false) => {
 		}
 	})
 
-	return post
+	return post as PostWithFiles
 }

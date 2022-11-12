@@ -1,4 +1,4 @@
-import Header from "app/components/header"
+import Header from "@components/header"
 import { getCurrentUser } from "@lib/server/session"
 import { getWelcomeContent } from "pages/api/welcome"
 import Home from "./components/home"

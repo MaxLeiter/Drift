@@ -1,4 +1,4 @@
-import PageSeo from "app/components/page-seo"
+import PageSeo from "@components/page-seo"
 import { getPostById } from "@lib/server/prisma"
 
 export default async function Head({

@@ -3,8 +3,8 @@ import { User } from "@lib/types"
 import { useEffect, useMemo, useState } from "react"
 import { adminFetcher } from "./admin"
 import Table from "rc-table"
-import SettingsGroup from "@components/settings-group"
 import ActionDropdown from "./action-dropdown"
+import SettingsGroup from "@components/settings-group"
 
 const UserTable = () => {
 	const [users, setUsers] = useState<User[]>()

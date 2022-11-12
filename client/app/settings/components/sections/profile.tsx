@@ -4,7 +4,7 @@ import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import { getCookie } from "cookies-next"
 import { User } from "next-auth"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
 	const [name, setName] = useState<string>(user.name || "")

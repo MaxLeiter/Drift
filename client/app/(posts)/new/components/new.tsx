@@ -12,9 +12,9 @@ import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
 import { PostWithFiles } from "@lib/server/prisma"
-import PasswordModal from "./password-modal"
+import PasswordModal from "../../../components/password-modal"
 import Title from "./title"
-
+import FileDropzone from "./drag-and-drop"
 const emptyDoc = {
 	title: "",
 	content: "",

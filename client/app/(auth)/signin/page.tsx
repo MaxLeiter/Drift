@@ -1,5 +1,5 @@
 import Auth from "../components"
-import Header from "app/components/header"
+import Header from "@components/header"
 
 export default function SignInPage() {
 	return (
