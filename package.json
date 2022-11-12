@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"next": "^13.0.3",
+		"eslint-config-next": "^13.0.3"
+	}
+}
