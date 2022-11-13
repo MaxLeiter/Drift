@@ -1,7 +1,4 @@
-import dotenv from "dotenv"
 import bundleAnalyzer from "@next/bundle-analyzer"
-
-dotenv.config()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

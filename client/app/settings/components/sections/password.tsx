@@ -2,7 +2,6 @@
 
 import { Input, Button, useToasts } from "@geist-ui/core/dist"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
-import { getCookie } from "cookies-next"
 import { useState } from "react"
 
 const Password = () => {
@@ -46,7 +45,6 @@ const Password = () => {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 			},
 			body: JSON.stringify({
 				oldPassword: password,

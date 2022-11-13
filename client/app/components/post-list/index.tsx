@@ -9,7 +9,6 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
-import { getCookie } from "cookies-next"
 import type { PostWithFiles } from "@lib/server/prisma"
 
 type Props = {
@@ -34,7 +33,6 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`,
 							"x-page": `${posts.length / 10 + 1}`
 						}
 					})
@@ -63,7 +61,6 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
-							Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 							// "tok": process.env.SECRET_KEY || ''
 						}
 					}
@@ -99,7 +96,6 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${getCookie(TOKEN_COOKIE_NAME)}`
 				}
 			})
 
