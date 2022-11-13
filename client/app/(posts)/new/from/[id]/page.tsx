@@ -1,7 +1,6 @@
 import NewPost from "../../components/new"
 import { notFound } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
-import PageWrapper from "@components/page-wrapper"
 
 const NewFromExisting = async ({
 	params
@@ -18,11 +17,7 @@ const NewFromExisting = async ({
 
 	const post = await getPostById(id, true)
 
-	return (
-		<PageWrapper signedIn>
-			<NewPost initialPost={post} newPostParent={id} />
-		</PageWrapper>
-	)
+	return <NewPost initialPost={post} newPostParent={id} />
 }
 
 export default NewFromExisting

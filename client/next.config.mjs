@@ -24,6 +24,10 @@ const nextConfig = {
 			{
 				source: "/file/raw/:id",
 				destination: `/api/raw/:id`
+			},
+			{
+				source: "/home",
+				destination: "/",
 			}
 		]
 	}

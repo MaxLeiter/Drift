@@ -11,11 +11,11 @@ import {
 	Spacer,
 	Tabs,
 	Textarea,
-	Tooltip,
 	Tag
 } from "@geist-ui/core/dist"
 import { StaticPreview } from "app/(posts)/components/preview"
 import FadeIn from "@components/fade-in"
+import Tooltip from "@components/tooltip"
 
 // import Link from "next/link"
 type Props = {
@@ -31,7 +31,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 	return (
 		<div className={styles.actionWrapper}>
 			<ButtonGroup className={styles.actions}>
-				<Tooltip hideArrow text="Download">
+				<Tooltip content="Download">
 					<Link
 						href={`${rawLink}?download=true`}
 						target="_blank"
@@ -46,7 +46,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 						/>
 					</Link>
 				</Tooltip>
-				<Tooltip hideArrow text="Open raw in new tab">
+				<Tooltip content="Open raw in new tab">
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
 							scale={2 / 3}

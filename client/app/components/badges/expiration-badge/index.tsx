@@ -1,6 +1,7 @@
-import { Badge, Tooltip } from "@geist-ui/core/dist"
+import Tooltip from "@components/tooltip"
+import { Badge } from "@geist-ui/core/dist"
 import { timeUntil } from "@lib/time-ago"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const ExpirationBadge = ({
 	postExpirationDate
@@ -54,10 +55,9 @@ const ExpirationBadge = ({
 	return (
 		<Badge type={isExpired ? "error" : "warning"}>
 			<Tooltip
-				hideArrow
-				text={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}
+				content={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}
 			>
-				{isExpired ? "Expired" : `Expires ${timeUntilString}`}
+				<>{isExpired ? "Expired" : `Expires ${timeUntilString}`}</>
 			</Tooltip>
 		</Badge>
 	)

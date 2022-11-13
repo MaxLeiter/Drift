@@ -1,13 +1,17 @@
 "use client"
 
+import Header from "@components/header"
 import { CssBaseline, GeistProvider, Page, Themes } from "@geist-ui/core/dist"
 import { ThemeProvider } from "next-themes"
 import { SkeletonTheme } from "react-loading-skeleton"
+import * as RadixTooltip from "@radix-ui/react-tooltip"
 
 export function LayoutWrapper({
 	children,
+	signedIn
 }: {
 	children: React.ReactNode
+	signedIn?: boolean
 }) {
 	const skeletonBaseColor = "var(--light-gray)"
 	const skeletonHighlightColor = "var(--lighter-gray)"
@@ -50,22 +54,27 @@ export function LayoutWrapper({
 	})
 
 	return (
-		<GeistProvider themes={[customTheme]} themeType={"custom"}>
-			<SkeletonTheme
-				baseColor={skeletonBaseColor}
-				highlightColor={skeletonHighlightColor}
-			>
-				<ThemeProvider
-					disableTransitionOnChange
-					cookieName="drift-theme"
-					attribute="data-theme"
+		<RadixTooltip.Provider delayDuration={200}>
+			<GeistProvider themes={[customTheme]} themeType={"custom"}>
+				<SkeletonTheme
+					baseColor={skeletonBaseColor}
+					highlightColor={skeletonHighlightColor}
 				>
-					<CssBaseline />
-					<Page width={"100%"}>
-						{children}
-					</Page>
-				</ThemeProvider>
-			</SkeletonTheme>
-		</GeistProvider>
+					<ThemeProvider
+						disableTransitionOnChange
+						cookieName="drift-theme"
+						attribute="data-theme"
+					>
+						<CssBaseline />
+						<Page width={"100%"}>
+							<Page.Header>
+								<Header signedIn={signedIn} />
+							</Page.Header>
+							{children}
+						</Page>
+					</ThemeProvider>
+				</SkeletonTheme>
+			</GeistProvider>
+		</RadixTooltip.Provider>
 	)
 }

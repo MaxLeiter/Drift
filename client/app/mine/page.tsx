@@ -3,7 +3,6 @@ import { getPostsByUser } from "@lib/server/prisma"
 import PostList from "@components/post-list"
 import { getCurrentUser } from "@lib/server/session"
 import { authOptions } from "@lib/server/auth"
-import PageWrapper from "@components/page-wrapper"
 
 export default async function Mine() {
 	const userId = (await getCurrentUser())?.id
@@ -15,9 +14,5 @@ export default async function Mine() {
 	const posts = await getPostsByUser(userId, true)
 
 	const hasMore = false
-	return (
-		<PageWrapper signedIn>
-			<PostList morePosts={hasMore} initialPosts={posts} />
-		</PageWrapper>
-	)
+	return <PostList morePosts={hasMore} initialPosts={posts} />
 }

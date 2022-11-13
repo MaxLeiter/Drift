@@ -2,12 +2,15 @@ import "@styles/globals.css"
 import { ServerThemeProvider } from "next-themes"
 import { LayoutWrapper } from "./root-layout-wrapper"
 import styles from '@styles/Home.module.css';
+import { cookies } from "next/headers";
 
 interface RootLayoutProps {
 	children: React.ReactNode
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {	
+	const cookiesList = cookies();
+	const hasNextAuth = cookiesList.get("next-auth.session-token") !== undefined;
 	return (
 		<ServerThemeProvider
 			cookieName="drift-theme"
@@ -52,7 +55,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 					<title>Drift</title>
 				</head>
 				<body className={styles.main}>
-					<LayoutWrapper>{children}</LayoutWrapper>
+					<LayoutWrapper signedIn={hasNextAuth}>{children}</LayoutWrapper>
 				</body>
 			</html>
 		</ServerThemeProvider>

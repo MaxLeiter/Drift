@@ -2,22 +2,27 @@ import type { GetServerSideProps } from "next"
 
 import type { Post } from "@lib/types"
 import PostPage from "app/(posts)/post/[id]/components/post-page"
-import { USER_COOKIE_NAME } from "@lib/constants"
 import { notFound } from "next/navigation"
-import { getPostById } from "@lib/server/prisma"
+import { getAllPosts, getPostById } from "@lib/server/prisma"
 import { getCurrentUser, getSession } from "@lib/server/session"
-import Header from "@components/header"
-import PageWrapper from "@components/page-wrapper"
 
 export type PostProps = {
 	post: Post
 	isProtected?: boolean
 }
 
+export async function generateStaticParams() {
+	const posts = await getAllPosts()
+
+	return posts.map((post) => ({
+		id: post.id
+	}))
+}
+
 const getPost = async (id: string) => {
 	const post = await getPostById(id, true)
 	const user = await getCurrentUser()
-	
+
 	if (!post) {
 		return notFound()
 	}
@@ -60,11 +65,7 @@ const PostView = async ({
 	}
 }) => {
 	const { post, isProtected, isAuthor, signedIn } = await getPost(params.id)
-	return (
-		<PageWrapper signedIn={signedIn}>
-			<PostPage isAuthor={isAuthor} isProtected={isProtected} post={post} />
-		</PageWrapper>
-	)
+	return <PostPage isAuthor={isAuthor} isProtected={isProtected} post={post} />
 }
 
 // export const getServerSideProps: GetServerSideProps = async ({

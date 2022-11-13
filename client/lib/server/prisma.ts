@@ -34,7 +34,6 @@ const updateDates = (input: any) => {
 	}
 }
 
-
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
@@ -81,6 +80,9 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 		},
 		include: {
 			files: withFiles
+		},
+		orderBy: {
+			createdAt: "desc"
 		}
 	})
 
@@ -155,4 +157,16 @@ export const getPostById = async (postId: Post["id"], withFiles = false) => {
 	})
 
 	return post as PostWithFiles
+}
+
+export const getAllPosts = async (withFiles = false) => {
+	const posts = await prisma.post.findMany({
+		include: {
+			files: withFiles
+		},
+		// TODO: optimize which to grab
+		take: 100
+	})
+
+	return posts as PostWithFiles[]
 }

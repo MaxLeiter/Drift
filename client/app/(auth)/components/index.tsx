@@ -1,15 +1,11 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { useState } from "react"
 import styles from "./auth.module.css"
-import { useRouter } from "next/navigation"
 import Link from "../../components/link"
 import { Button, Input, Note } from "@geist-ui/core/dist"
 import { signIn } from "next-auth/react"
 import { Github as GithubIcon } from "@geist-ui/icons"
-const NO_EMPTY_SPACE_REGEX = /^\S*$/
-const ERROR_MESSAGE =
-	"Provide a non empty username and a password with at least 6 characters"
 
 const Auth = ({
 	page,

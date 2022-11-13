@@ -1,4 +1,5 @@
-import { Tooltip, Button, Spacer } from "@geist-ui/core/dist"
+import Tooltip from "@components/tooltip"
+import { Button, Spacer } from "@geist-ui/core/dist"
 import ChevronUp from "@geist-ui/icons/chevronUpCircleFill"
 import { useEffect, useState } from "react"
 import styles from "./scroll.module.css"
@@ -35,8 +36,7 @@ const ScrollToTop = () => {
 			}}
 		>
 			<Tooltip
-				hideArrow
-				text="Scroll to Top"
+				content="Scroll to Top"
 				className={`${styles["scroll-up"]} ${
 					shouldShow ? styles["scroll-up-shown"] : ""
 				}`}

@@ -7,8 +7,9 @@ import List from "@geist-ui/icons/list"
 import ImageIcon from "@geist-ui/icons/image"
 import { RefObject, useMemo } from "react"
 import styles from "../document.module.css"
-import { Button, ButtonGroup, Tooltip } from "@geist-ui/core/dist"
+import { Button, ButtonGroup } from "@geist-ui/core/dist"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
+import Tooltip from "@components/tooltip"
 
 // TODO: clean up
 
@@ -64,7 +65,7 @@ const FormattingIcons = ({
 			<ButtonGroup className={styles.actions}>
 				{formattingActions.map(({ icon, name, action }) => (
 					<Tooltip
-						text={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
+						content={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
 						key={name}
 					>
 						<Button

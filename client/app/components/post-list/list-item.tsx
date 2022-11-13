@@ -2,7 +2,6 @@ import VisibilityBadge from "../badges/visibility-badge"
 import {
 	Text,
 	Card,
-	Tooltip,
 	Divider,
 	Badge,
 	Button
@@ -19,6 +18,7 @@ import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
 import type { PostVisibility } from "@lib/types"
 import type { File } from "@lib/server/prisma"
+import Tooltip from "@components/tooltip"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -56,7 +56,7 @@ const ListItem = ({
 							{isOwner && (
 								<span className={styles.buttons}>
 									{post.parentId && (
-										<Tooltip text={"View parent"} hideArrow>
+										<Tooltip content={"View parent"}>
 											<Button
 												auto
 												icon={<Parent />}
@@ -64,10 +64,10 @@ const ListItem = ({
 											/>
 										</Tooltip>
 									)}
-									<Tooltip text={"Make a copy"} hideArrow>
+									<Tooltip content={"Make a copy"}>
 										<Button auto iconRight={<Edit />} onClick={editACopy} />
 									</Tooltip>
-									<Tooltip text={"Delete"} hideArrow>
+									<Tooltip content={"Delete"}>
 										<Button iconRight={<Trash />} onClick={deletePost} auto />
 									</Tooltip>
 								</span>

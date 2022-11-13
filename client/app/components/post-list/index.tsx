@@ -10,6 +10,8 @@ import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
 import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import type { PostWithFiles } from "@lib/server/prisma"
+import DriftTooltip from "@components/tooltip"
+import { Search } from "@geist-ui/icons"
 
 type Props = {
 	initialPosts: PostWithFiles[]
@@ -60,7 +62,7 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 					{
 						method: "GET",
 						headers: {
-							"Content-Type": "application/json",
+							"Content-Type": "application/json"
 							// "tok": process.env.SECRET_KEY || ''
 						}
 					}
@@ -95,7 +97,7 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 			const res = await fetch(`/server-api/posts/${postId}`, {
 				method: "DELETE",
 				headers: {
-					"Content-Type": "application/json",
+					"Content-Type": "application/json"
 				}
 			})
 

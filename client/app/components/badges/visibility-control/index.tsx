@@ -1,5 +1,4 @@
 import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core/dist"
-import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import type { PostVisibility } from "@lib/types"
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
