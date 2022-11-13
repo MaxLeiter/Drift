@@ -5,17 +5,17 @@ import Profile from "app/settings/components/sections/profile"
 import { authOptions } from "@lib/server/auth"
 import { getCurrentUser } from "@lib/server/session"
 import { redirect } from "next/navigation"
+import PageWrapper from "@components/page-wrapper"
 
 export default async function SettingsPage() {
 	const user = await getCurrentUser()
 
 	if (!user) {
-		redirect(authOptions.pages?.signIn || "/new")
+		return redirect(authOptions.pages?.signIn || "/new")
 	}
 
 	return (
-		<>
-			<Header signedIn />
+		<PageWrapper signedIn>
 			<div
 				style={{
 					display: "flex",
@@ -32,6 +32,6 @@ export default async function SettingsPage() {
 					<Password />
 				</SettingsGroup>
 			</div>
-		</>
+		</PageWrapper>
 	)
 }

@@ -1,7 +1,6 @@
 import { marked } from "marked"
-import Highlight, { defaultProps, Language } from "prism-react-renderer"
 import Image from "next/image"
-
+import Highlight, { defaultProps, Language } from "prism-react-renderer"
 // // image sizes. DDoS Safe?
 // const imageSizeLink = /^!?\[((?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|[^\[\]\\])*?)\]\(\s*(<(?:\\[<>]?|[^\s<>\\])*>|(?:\\[()]?|\([^\s\x00-\x1f()\\]*\)|[^\s\x00-\x1f()\\])*?(?:\s+=(?:[\w%]+)?x(?:[\w%]+)?)?)(?:\s+("(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)))?\s*\)/;
 // //@ts-ignore
@@ -31,25 +30,30 @@ const renderer = new marked.Renderer()
 // 	)
 // }
 
-renderer.link = (href, _, text) => {
-    const isHrefLocal = href?.startsWith('/') || href?.startsWith('#')
-    if (isHrefLocal) {
-        return <a href={href || ''}>
-                {text}
-            </a>
-    }
+// renderer.link = (href, _, text) => {
+// 	const isHrefLocal = href?.startsWith("/") || href?.startsWith("#")
+// 	if (isHrefLocal) {
+// 		return <a href={href || ""}>{text}</a>
+// 	}
 
-    // dirty hack
-    // if text contains elements, render as html
-    return <a href={href || ""} target="_blank" rel="noopener noreferrer" dangerouslySetInnerHTML={{ __html: convertHtmlEntities(text) }} ></a>
-}
+// 	// dirty hack
+// 	// if text contains elements, render as html
+// 	return (
+// 		<a
+// 			href={href || ""}
+// 			target="_blank"
+// 			rel="noopener noreferrer"
+// 			dangerouslySetInnerHTML={{ __html: convertHtmlEntities(text) }}
+// 		></a>
+// 	)
+// }
 
 // @ts-ignore
 renderer.image = function (href, _, text) {
 	return <Image loading="lazy" src="${href}" alt="${text}" layout="fill" />
 }
 
-renderer.checkbox = () => ""
+// renderer.checkbox = () => ""
 // @ts-ignore
 renderer.listitem = (text, task, checked) => {
 	if (task) {
@@ -63,24 +67,24 @@ renderer.listitem = (text, task, checked) => {
 			</li>
 		)
 	}
-
 	return <li>{text}</li>
 }
 
-// //@ts-ignore
-// renderer.code = (code: string, language: string) => {
-// 	return (<pre>
-// 			{/* {title && <code>{title} </code>} */}
-// 			{/* {language && title && <code style={{}}> {language} </code>} */}
-// 			<Code
-// 				language={language}
-// 				// title={title}
-// 				code={code}
-// 				// highlight={highlight}
-// 			/>
-// 		</pre>
-// 	)
-// }
+// @ts-ignore
+renderer.code = (code: string, language: string) => {
+	const component = 
+		<pre>
+			<Code
+				language={language}
+				// title={title}
+				code={code}
+				// highlight={highlight}
+			/>
+			)
+		</pre>
+
+	return component
+}
 
 marked.setOptions({
 	gfm: true,

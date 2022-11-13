@@ -5,7 +5,7 @@
 // 		})
 
 import { USER_COOKIE_NAME } from "@lib/constants"
-import prisma, { getUserById } from "@lib/server/prisma"
+import { getUserById } from "@lib/server/prisma"
 import { getCookie } from "cookies-next"
 import { NextApiRequest, NextApiResponse } from "next"
 
@@ -37,17 +37,20 @@ export default async function handler(
 			message: "Unauthorized"
 		})
 
-    const userId = String(getCookie(USER_COOKIE_NAME, {
-        req, res
-    }))
+	const userId = String(
+		getCookie(USER_COOKIE_NAME, {
+			req,
+			res
+		})
+	)
 
-    if (!userId) {
-        return error()
-    }
+	if (!userId) {
+		return error()
+	}
 
 	try {
-        const user = await getUserById(userId);
-        
+		const user = await getUserById(userId)
+
 		if (!user) {
 			return error()
 		}

@@ -14,7 +14,7 @@ import {
 	Tooltip,
 	Tag
 } from "@geist-ui/core/dist"
-import HtmlPreview from "app/(posts)/components/preview"
+import { StaticPreview } from "app/(posts)/components/preview"
 import FadeIn from "@components/fade-in"
 
 // import Link from "next/link"
@@ -24,6 +24,7 @@ type Props = {
 	skeleton?: boolean
 	id: string
 	content: string
+	preview: string
 }
 
 const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
@@ -63,6 +64,7 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 
 const Document = ({
 	content,
+	preview,
 	title,
 	initialTab = "edit",
 	skeleton,
@@ -150,11 +152,11 @@ const Document = ({
 						</Tabs.Item>
 						<Tabs.Item label="Preview" value="preview">
 							<div style={{ marginTop: "var(--gap-half)" }}>
-								<HtmlPreview
+								<StaticPreview
 									height={height}
-									fileId={id}
-									content={content}
-									title={title}
+									// fileId={id}
+									content={preview}
+									// title={title}
 								/>
 							</div>
 						</Tabs.Item>

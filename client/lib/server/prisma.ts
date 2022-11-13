@@ -5,8 +5,6 @@ declare global {
 import config from "@lib/config"
 import { Post, PrismaClient, File, User } from "@prisma/client"
 
-const prisma = new PrismaClient()
-
 // we want to update iff they exist the createdAt/updated/expired/deleted items
 // the input could be an array, in which case we'd check each item in the array
 // if it's an object, we'd check that object
@@ -36,18 +34,16 @@ const updateDates = (input: any) => {
 	}
 }
 
-prisma.$use(async (params, next) => {
-	const result = await next(params)
-	return updateDates(result)
-})
 
-export default prisma
+export const prisma =
+	global.prisma ||
+	new PrismaClient({
+		log: ["query"]
+	})
 
-// https://next-auth.js.org/adapters/prisma
-const client = globalThis.prisma || prisma
-if (process.env.NODE_ENV !== "production") globalThis.prisma = client
+if (process.env.NODE_ENV !== "production") global.prisma = prisma
 
-export type { User, AuthTokens, File, Post } from "@prisma/client"
+export type { User, File, Post } from "@prisma/client"
 
 export type PostWithFiles = Post & {
 	files: File[]
@@ -138,7 +134,6 @@ export const createUser = async (
 		throw new Error("Wrong registration password")
 	}
 
-
 	const isUserAdminByDefault =
 		config.enable_admin && (await prisma.user.count()) === 0
 	const userRole = isUserAdminByDefault ? "admin" : "user"
@@ -150,7 +145,6 @@ export const createUser = async (
 }
 
 export const getPostById = async (postId: Post["id"], withFiles = false) => {
-	console.log("getPostById", postId)
 	const post = await prisma.post.findUnique({
 		where: {
 			id: postId

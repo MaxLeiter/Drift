@@ -142,13 +142,14 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 				</div>
 			)}
 			{/* {post.files.length > 1 && <FileTree files={post.files} />} */}
-			{post.files?.map(({ id, content, title }: File) => (
+			{post.files?.map(({ id, content, title, html }: File) => (
 				<DocumentComponent
 					key={id}
 					title={title}
 					initialTab={"preview"}
 					id={id}
 					content={content}
+					preview={html}
 				/>
 			))}
 			{isAuthor && (

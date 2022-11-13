@@ -1,11 +1,10 @@
 import Auth from "../components"
-import Header from "@components/header"
+import PageWrapper from "@components/page-wrapper"
 
 export default function SignInPage() {
 	return (
-		<>
-			<Header />
+		<PageWrapper>
 			<Auth page="signin" />
-		</>
+		</PageWrapper>
 	)
 }

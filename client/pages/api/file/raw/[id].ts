@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import prisma from "lib/server/prisma"
+import {prisma} from "lib/server/prisma"
 import { parseQueryParam } from "@lib/server/parse-query-param"
 
 const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {

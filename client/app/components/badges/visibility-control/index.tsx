@@ -18,7 +18,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 
 	const sendRequest = useCallback(
 		async (visibility: string, password?: string) => {
-			const res = await fetch(`/server-api/posts/${postId}`, {
+			const res = await fetch(`/api/post/${postId}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json"
@@ -30,7 +30,6 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 				const json = await res.json()
 				setVisibility(json.visibility)
 			} else {
-				const json = await res.json()
 				setToast({
 					text: "An error occurred",
 					type: "error"

@@ -1,5 +1,7 @@
 import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
+import "@styles/markdown.css"
+import "./marked.css"
 
 type Props = {
 	height?: number | string
@@ -8,8 +10,13 @@ type Props = {
 	title?: string
 }
 
-const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
-	const [preview, setPreview] = useState<string>(content || "")
+const MarkdownPreview = ({
+	height = 500,
+	fileId,
+	content: initial = "",
+	title
+}: Props) => {
+	const [content, setPreview] = useState<string>(initial)
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
 		async function fetchPost() {
@@ -47,16 +54,28 @@ const MarkdownPreview = ({ height = 500, fileId, content, title }: Props) => {
 			{isLoading ? (
 				<div>Loading...</div>
 			) : (
-				<article
-					className={styles.markdownPreview}
-					dangerouslySetInnerHTML={{ __html: preview }}
-					style={{
-						height
-					}}
-				/>
+				<StaticPreview content={content} height={height} />
 			)}
 		</>
 	)
 }
 
-export default memo(MarkdownPreview)
+export default MarkdownPreview
+
+export const StaticPreview = ({
+	content,
+	height = 500
+}: {
+	content: string
+	height: string | number
+}) => {
+	return (
+		<article
+			className={styles.markdownPreview}
+			dangerouslySetInnerHTML={{ __html: content }}
+			style={{
+				height
+			}}
+		/>
+	)
+}

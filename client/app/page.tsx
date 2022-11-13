@@ -1,4 +1,5 @@
 import Header from "@components/header"
+import PageWrapper from "@components/page-wrapper"
 import { getCurrentUser } from "@lib/server/session"
 import { getWelcomeContent } from "pages/api/welcome"
 import Home from "./components/home"
@@ -13,9 +14,8 @@ export default async function Page() {
 	const authed = await getCurrentUser();
 
 	return (
-		<>
-			<Header signedIn={Boolean(authed)}/>
-			<Home rendered={rendered} introContent={content} introTitle={title} />
-		</>
+		<PageWrapper signedIn={Boolean(authed)}>
+			<Home rendered={rendered as string} introContent={content} introTitle={title} />
+		</PageWrapper>
 	)
 }

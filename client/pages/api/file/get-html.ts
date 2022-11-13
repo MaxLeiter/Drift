@@ -1,7 +1,7 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import prisma from "@lib/server/prisma"
+import { prisma } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default withMethods(
@@ -10,7 +10,7 @@ export default withMethods(
 		const query = req.query
 		const fileId = parseQueryParam(query.fileId)
 		const content = parseQueryParam(query.content)
-		const title = parseQueryParam(query.title)
+		const title = parseQueryParam(query.title) || "Untitled"
 
 		if (fileId && (content || title)) {
 			return res.status(400).json({ error: "Too many arguments" })
@@ -33,7 +33,7 @@ export default withMethods(
 				return res.status(400).json({ error: "Missing arguments" })
 			}
 
-			const renderedHTML = getHtmlFromFile({
+			const renderedHTML = await getHtmlFromFile({
 				title,
 				content
 			})

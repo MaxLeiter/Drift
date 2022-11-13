@@ -7,6 +7,7 @@ import { notFound } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
 import { getCurrentUser, getSession } from "@lib/server/session"
 import Header from "@components/header"
+import PageWrapper from "@components/page-wrapper"
 
 export type PostProps = {
 	post: Post
@@ -16,8 +17,8 @@ export type PostProps = {
 const getPost = async (id: string) => {
 	const post = await getPostById(id, true)
 	const user = await getCurrentUser()
-
-	console.log("my post", post)
+	
+	console.log("post is", post)
 	if (!post) {
 		return notFound()
 	}
@@ -40,9 +41,7 @@ const getPost = async (id: string) => {
 		return notFound()
 	}
 
-	console.log("HERE", post.visibility, isAuthor)
 	if (post.visibility === "protected" && !isAuthor) {
-		console.log("HERE2")
 		return {
 			post,
 			isProtected: true,
@@ -63,10 +62,9 @@ const PostView = async ({
 }) => {
 	const { post, isProtected, isAuthor, signedIn } = await getPost(params.id)
 	return (
-		<>
-			<Header signedIn={signedIn} />
+		<PageWrapper signedIn={signedIn}>
 			<PostPage isAuthor={isAuthor} isProtected={isProtected} post={post} />
-		</>
+		</PageWrapper>
 	)
 }
 

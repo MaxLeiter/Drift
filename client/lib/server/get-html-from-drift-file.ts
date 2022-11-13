@@ -1,9 +1,9 @@
-import markdown from "../render-markdown"
 import type { File } from "@lib/server/prisma"
+import markdown from "@wcj/markdown-to-html"
 /**
  * returns rendered HTML from a  Drift file
  */
-export function getHtmlFromFile({
+export async function getHtmlFromFile({
 	content,
 	title
 }: Pick<File, "content" | "title">) {
@@ -39,6 +39,7 @@ ${content}
 		contentToRender = "\n" + content
 	}
 
-	const html = markdown(contentToRender)
+	const html = markdown(contentToRender, {
+	})
 	return html
 }

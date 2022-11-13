@@ -2,8 +2,8 @@ import { redirect } from "next/navigation"
 import { getPostsByUser } from "@lib/server/prisma"
 import PostList from "@components/post-list"
 import { getCurrentUser } from "@lib/server/session"
-import Header from "@components/header"
 import { authOptions } from "@lib/server/auth"
+import PageWrapper from "@components/page-wrapper"
 
 export default async function Mine() {
 	const userId = (await getCurrentUser())?.id
@@ -16,9 +16,8 @@ export default async function Mine() {
 
 	const hasMore = false
 	return (
-		<>
-			<Header signedIn />
+		<PageWrapper signedIn>
 			<PostList morePosts={hasMore} initialPosts={posts} />
-		</>
+		</PageWrapper>
 	)
 }

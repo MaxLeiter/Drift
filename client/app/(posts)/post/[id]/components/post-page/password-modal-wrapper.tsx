@@ -15,15 +15,12 @@ const PasswordModalPage = ({ setPost, postId }: Props) => {
 	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(true)
 
 	const onSubmit = async (password: string) => {
-		const res = await fetch(
-			`/api/posts/authenticate?id=${postId}&password=${password}`,
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json"
-				}
+		const res = await fetch(`/api/post/${postId}?password=${password}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
 			}
-		)
+		})
 
 		if (!res.ok) {
 			setToast({

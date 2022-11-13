@@ -1,7 +1,7 @@
 import NewPost from "../../components/new"
-import { useRouter } from "next/navigation"
-import Header from "@components/header"
+import { notFound } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
+import PageWrapper from "@components/page-wrapper"
 
 const NewFromExisting = async ({
 	params
@@ -11,20 +11,17 @@ const NewFromExisting = async ({
 	}
 }) => {
 	const { id } = params
-	const router = useRouter()
 
 	if (!id) {
-		router.push("/new")
-		return;
+		return notFound()
 	}
 
 	const post = await getPostById(id, true)
 
 	return (
-		<>
-			<Header signedIn />
+		<PageWrapper signedIn>
 			<NewPost initialPost={post} newPostParent={id} />
-		</>
+		</PageWrapper>
 	)
 }
 
