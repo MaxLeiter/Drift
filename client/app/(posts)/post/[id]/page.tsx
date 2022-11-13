@@ -18,7 +18,6 @@ const getPost = async (id: string) => {
 	const post = await getPostById(id, true)
 	const user = await getCurrentUser()
 	
-	console.log("post is", post)
 	if (!post) {
 		return notFound()
 	}

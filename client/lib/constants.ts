@@ -70,6 +70,8 @@ export const codeFileExtensions = [
 	"cxx",
 	"go",
 	"h",
+	"m",
+	"ha",
 	"hpp",
 	"htm",
 	"html",
@@ -93,6 +95,7 @@ export const codeFileExtensions = [
 	"rb",
 	"rs",
 	"s",
+	"sh",
 	"sass",
 	"scala",
 	"scss",
@@ -109,7 +112,8 @@ export const codeFileExtensions = [
 	"xml",
 	"y",
 	"yaml",
-	"zig"
+	"fish",
+
 ]
 
 export const allowedFileExtensions = [

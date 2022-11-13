@@ -17,7 +17,6 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 	const id = parseQueryParam(req.query.id)
 	const files = req.query.files ? parseQueryParam(req.query.files) : true
 
-	console.log("post id is", id)
 	if (!id) {
 		return res.status(400).json({ error: "Missing id" })
 	}

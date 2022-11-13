@@ -26,20 +26,16 @@ export async function getHtmlFromFile({
 	}
 	const type = fileType()
 	let contentToRender: string = content || ""
-
 	if (!renderAsMarkdown.includes(type)) {
 		contentToRender = `
-		
 ~~~${type}
 ${content}
 ~~~
-
 `
 	} else {
 		contentToRender = "\n" + content
 	}
 
-	const html = markdown(contentToRender, {
-	})
+	const html = markdown(contentToRender)
 	return html
 }

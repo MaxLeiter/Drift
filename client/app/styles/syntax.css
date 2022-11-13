@@ -1,15 +1,19 @@
 .keyword {
   font-weight: bold;
-  color: var(--keyword);
+  color: var(--darker-gray);
 }
 
 .token.operator,
 .token.punctuation,
-.token.string,
-.token.number,
 .token.builtin,
 .token.variable {
   color: var(--token);
+}
+
+.token.string,
+.token.number,
+.token.boolean {
+  color: var(--darker-gray);
 }
 
 .token.comment {
@@ -22,3 +26,4 @@
 .token.attr-name {
   color: var(--name);
 }
+

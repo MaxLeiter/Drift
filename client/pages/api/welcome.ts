@@ -1,9 +1,7 @@
 // a nextjs api handerl
 
 import config from "@lib/config"
-import { getHtmlFromMarkdown } from "@lib/remark-plugins"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
-import markdown from "@wcj/markdown-to-html"
 
 import { NextApiRequest, NextApiResponse } from "next"
 

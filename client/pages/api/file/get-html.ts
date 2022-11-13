@@ -1,47 +1,28 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { prisma } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default withMethods(
-	["GET"],
+	["POST"],
 	async (req: NextApiRequest, res: NextApiResponse) => {
-		const query = req.query
-		const fileId = parseQueryParam(query.fileId)
-		const content = parseQueryParam(query.content)
-		const title = parseQueryParam(query.title) || "Untitled"
+		const body = req.body
+		const content = parseQueryParam(body.content)
+		const title = parseQueryParam(body.title) || "Untitled"
 
-		if (fileId && (content || title)) {
-			return res.status(400).json({ error: "Too many arguments" })
+		if (!content || !title) {
+			return res.status(400).json({ error: "Missing arguments" })
 		}
 
-		if (fileId) {
-			const file = await prisma.file.findUnique({
-				where: {
-					id: fileId
-				}
-			})
+		const renderedHTML = await getHtmlFromFile({
+			title,
+			content
+		})
 
-			if (!file) {
-				return res.status(404).json({ error: "File not found" })
-			}
-
-			return res.json(file.html)
-		} else {
-			if (!content || !title) {
-				return res.status(400).json({ error: "Missing arguments" })
-			}
-
-			const renderedHTML = await getHtmlFromFile({
-				title,
-				content
-			})
-
-			res.setHeader("Content-Type", "text/plain")
-			res.status(200).write(renderedHTML)
-			res.end()
-			return
-		}
+		res.setHeader("Content-Type", "text/plain")
+		res.setHeader("Cache-Control", "public, max-age=4800")
+		res.status(200).write(renderedHTML)
+		res.end()
+		return
 	}
 )

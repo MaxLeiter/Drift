@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
 import "@styles/markdown.css"
-import "./marked.css"
+import "@styles/syntax.css"
 
 type Props = {
 	height?: number | string
@@ -20,35 +20,34 @@ const MarkdownPreview = ({
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
 		async function fetchPost() {
-			if (fileId) {
-				const resp = await fetch(`/api/file/html/${fileId}`, {
-					method: "GET"
-				})
-				if (resp.ok) {
-					const res = await resp.text()
-					setPreview(res)
-					setIsLoading(false)
-				}
-			} else if (content) {
-				const urlQuery = new URLSearchParams({
-					title: title || "",
-					content
-				})
+			// POST to avoid query string length limit
+			const method = fileId ? "GET" : "POST"
+			const path = fileId ? `/api/file/html/${fileId}` : "/api/file/get-html"
+			const body = fileId
+				? undefined
+				: JSON.stringify({
+						title: title || "",
+						content: initial
+				  })
 
-				const resp = await fetch(`/api/file/get-html?${urlQuery}`, {
-					method: "GET"
-				})
+			const resp = await fetch(path, {
+				method: method,
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body
+			})
 
-				if (resp.ok) {
-					const res = await resp.text()
-					setPreview(res)
-					setIsLoading(false)
-				}
+			if (resp.ok) {
+				const res = await resp.text()
+				setPreview(res)
 			}
+
 			setIsLoading(false)
 		}
 		fetchPost()
-	}, [content, fileId, title])
+	}, [initial, fileId, title])
+	
 	return (
 		<>
 			{isLoading ? (
@@ -60,7 +59,7 @@ const MarkdownPreview = ({
 	)
 }
 
-export default MarkdownPreview
+export default memo(MarkdownPreview)
 
 export const StaticPreview = ({
 	content,
