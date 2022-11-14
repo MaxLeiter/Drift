@@ -284,31 +284,24 @@ const Post = ({
 					Add a File
 				</Button>
 				<div className={styles.rightButtons}>
-					{
-						<DatePicker
-							onChange={onChangeExpiration}
-							customInput={
-								<Input
-									label="Expires at"
-									clearable
-									width="100%"
-									height="40px"
-								/>
-							}
-							placeholderText="Won't expire"
-							selected={expiresAt}
-							showTimeInput={true}
-							// @ts-ignore
-							customTimeInput={<CustomTimeInput />}
-							timeInputLabel="Time:"
-							dateFormat="MM/dd/yyyy h:mm aa"
-							className={styles.datePicker}
-							clearButtonTitle={"Clear"}
-							// TODO: investigate why this causes margin shift if true
-							enableTabLoop={false}
-							minDate={new Date()}
-						/>
-					}
+					<DatePicker
+						onChange={onChangeExpiration}
+						customInput={
+							<Input label="Expires at" clearable width="100%" height="40px" />
+						}
+						placeholderText="Won't expire"
+						selected={expiresAt}
+						showTimeInput={true}
+						// @ts-ignore
+						customTimeInput={<CustomTimeInput />}
+						timeInputLabel="Time:"
+						dateFormat="MM/dd/yyyy h:mm aa"
+						className={styles.datePicker}
+						clearButtonTitle={"Clear"}
+						// TODO: investigate why this causes margin shift if true
+						enableTabLoop={false}
+						minDate={new Date()}
+					/>
 					<ButtonDropdown loading={isSubmitting} type="success">
 						<ButtonDropdown.Item main onClick={() => onSubmit("unlisted")}>
 							Create Unlisted

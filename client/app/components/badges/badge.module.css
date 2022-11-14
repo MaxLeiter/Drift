@@ -1,0 +1,39 @@
+.container {
+	display: inline-block;
+}
+
+.badge {
+	display: inline-block;
+	padding: .25em .5em;
+	border-radius: var(--radius);
+	background-color: var(--light-gray);
+	font-size: .85em;
+}
+
+.badgeText {
+	font-size: var(--font-size-1);
+	font-weight: var(--font-weight-bold);
+}
+
+.primary {
+    background-color: var(--fg);
+    color: var(--bg);
+}
+
+.primary::selection {
+	background-color: var(--bg);
+	color: var(--fg);
+}
+
+.secondary {
+    background-color: var(--light-gray);
+}
+
+.warning {
+    background-color: var(--warning);
+	color: var(--bg);
+}
+
+.error {
+    background-color: red;
+}

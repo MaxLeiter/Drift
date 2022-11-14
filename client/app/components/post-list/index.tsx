@@ -8,19 +8,25 @@ import ListItem from "./list-item"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
-import { TOKEN_COOKIE_NAME } from "@lib/constants"
 import type { PostWithFiles } from "@lib/server/prisma"
-import DriftTooltip from "@components/tooltip"
-import { Search } from "@geist-ui/icons"
 
 type Props = {
-	initialPosts: PostWithFiles[]
+	initialPosts: string | PostWithFiles[]
 	morePosts: boolean
+	userId?: string
 }
 
-const PostList = ({ morePosts, initialPosts }: Props) => {
+const PostList = ({
+	morePosts,
+	initialPosts: initialPostsMaybeJSON,
+	userId
+}: Props) => {
+	const initialPosts =
+		typeof initialPostsMaybeJSON === "string"
+			? JSON.parse(initialPostsMaybeJSON)
+			: initialPostsMaybeJSON
 	const [search, setSearchValue] = useState("")
-	const [posts, setPosts] = useState(initialPosts)
+	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
 	const [searching, setSearching] = useState(false)
 	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
 
@@ -51,54 +57,39 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 	// update posts on search
 	useEffect(() => {
 		if (debouncedSearchValue) {
-			// fetch results from /server-api/posts/search
-			const fetchResults = async () => {
-				setSearching(true)
-				//encode search
+			setSearching(true)
+			async function fetchPosts() {
 				const res = await fetch(
-					`/server-api/posts/search?q=${encodeURIComponent(
+					`/api/post/search?q=${encodeURIComponent(
 						debouncedSearchValue
-					)}`,
+					)}&userId=${userId}`,
 					{
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json"
-							// "tok": process.env.SECRET_KEY || ''
 						}
 					}
 				)
-				const data = await res.json()
-				setPosts(data)
+				const json = await res.json()
+				setPosts(json.posts)
 				setSearching(false)
 			}
-			fetchResults()
+			fetchPosts()
 		} else {
 			setPosts(initialPosts)
 		}
-	}, [initialPosts, debouncedSearchValue])
+		// TODO: fix cyclical dependency issue
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debouncedSearchValue, userId])
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
 	}
 
-	// const debouncedSearchHandler = useMemo(
-	// 	() => debounce(handleSearchChange, 300),
-	// 	[]
-	// )
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		debouncedSearchHandler.cancel()
-	// 	}
-	// }, [debouncedSearchHandler])
-
 	const deletePost = useCallback(
 		(postId: string) => async () => {
-			const res = await fetch(`/server-api/posts/${postId}`, {
+			const res = await fetch(`/api/post/${postId}`, {
 				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json"
-				}
 			})
 
 			if (!res.ok) {
@@ -116,14 +107,13 @@ const PostList = ({ morePosts, initialPosts }: Props) => {
 			<div className={styles.searchContainer}>
 				<Input
 					scale={3 / 2}
-					clearable
 					placeholder="Search..."
 					onChange={handleSearchChange}
 					disabled={Boolean(!posts?.length)}
 				/>
 			</div>
 			{!posts && <Text type="error">Failed to load.</Text>}
-			{!posts.length && searching && (
+			{!posts?.length && searching && (
 				<ul>
 					<li>
 						<ListItemSkeleton />

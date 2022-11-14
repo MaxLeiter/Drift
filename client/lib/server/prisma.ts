@@ -3,7 +3,7 @@ declare global {
 }
 
 import config from "@lib/config"
-import { Post, PrismaClient, File, User } from "@prisma/client"
+import { Post, PrismaClient, File, User, Prisma } from "@prisma/client"
 
 // we want to update iff they exist the createdAt/updated/expired/deleted items
 // the input could be an array, in which case we'd check each item in the array
@@ -12,16 +12,16 @@ import { Post, PrismaClient, File, User } from "@prisma/client"
 
 const updateDateForItem = (item: any) => {
 	if (item.createdAt) {
-		item.createdAt = item.createdAt.toISOString()
+		item.createdAt = item.createdAt.toString()
 	}
 	if (item.updatedAt) {
-		item.updatedAt = item.updatedAt.toISOString()
+		item.updatedAt = item.updatedAt.toString()
 	}
 	if (item.expiresAt) {
-		item.expiresAt = item.expiresAt.toISOString()
+		item.expiresAt = item.expiresAt.toString()
 	}
 	if (item.deletedAt) {
-		item.deletedAt = item.deletedAt.toISOString()
+		item.deletedAt = item.deletedAt.toString()
 	}
 	return item
 }
@@ -39,6 +39,11 @@ export const prisma =
 	new PrismaClient({
 		log: ["query"]
 	})
+
+// prisma.$use(async (params, next) => {
+// 	const result = await next(params)
+// 	return updateDates(result)
+// })
 
 if (process.env.NODE_ENV !== "production") global.prisma = prisma
 
@@ -159,13 +164,59 @@ export const getPostById = async (postId: Post["id"], withFiles = false) => {
 	return post as PostWithFiles
 }
 
-export const getAllPosts = async (withFiles = false) => {
+export const getAllPosts = async ({
+	withFiles = false,
+	take = 100,
+	...rest
+}: {
+	withFiles?: boolean
+} & Prisma.PostFindManyArgs = {}) => {
 	const posts = await prisma.post.findMany({
 		include: {
 			files: withFiles
 		},
 		// TODO: optimize which to grab
-		take: 100
+		take,
+		...rest
+	})
+
+	return posts as PostWithFiles[]
+}
+
+export const searchPosts = async (
+	query: string,
+	{
+		withFiles = false,
+		userId,
+	}: {
+		withFiles?: boolean
+		userId?: User["id"]
+	} = {}
+): Promise<PostWithFiles[]> => {
+	const posts = await prisma.post.findMany({
+		where: {
+			OR: [
+				{
+					title: {
+						search: query
+					},
+					authorId: userId
+				},
+				{
+					files: {
+						some: {
+							content: {
+								search: query
+							},
+							userId: userId
+						}
+					}
+				}
+			]
+		},
+		include: {
+			files: withFiles
+		}
 	})
 
 	return posts as PostWithFiles[]

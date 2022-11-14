@@ -19,13 +19,13 @@ import VisibilityControl from "@components/badges/visibility-control"
 import { File, PostWithFiles } from "@lib/server/prisma"
 
 type Props = {
-	post: PostWithFiles
+	post: string | PostWithFiles
 	isProtected?: boolean
 	isAuthor?: boolean
 }
 
 const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
-	const [post, setPost] = useState<PostWithFiles>(initialPost)
+	const [post, setPost] = useState<PostWithFiles>(typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost)
 	const [visibility, setVisibility] = useState<string>(post.visibility)
 	const [isExpired, setIsExpired] = useState(
 		post.expiresAt ? new Date(post.expiresAt) < new Date() : null
@@ -50,7 +50,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 		if (post.expiresAt) {
 			interval = setInterval(() => {
 				const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
-				setIsExpired(expirationDate < new Date())
+				if (expirationDate < new Date()) setIsExpired(true)
 			}, 4000)
 		}
 		return () => {
@@ -128,7 +128,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 					</ButtonGroup>
 				</span>
 				<span className={styles.title}>
-					<Text h3>{post.title}</Text>
+					<h3>{post.title}</h3>
 					<span className={styles.badges}>
 						<VisibilityBadge visibility={visibility} />
 						<CreatedAgoBadge createdAt={post.createdAt} />
@@ -138,7 +138,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 			</div>
 			{post.description && (
 				<div>
-					<Text p>{post.description}</Text>
+					<p>{post.description}</p>
 				</div>
 			)}
 			{/* {post.files.length > 1 && <FileTree files={post.files} />} */}

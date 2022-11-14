@@ -1,8 +1,3 @@
-.keyword {
-  font-weight: bold;
-  color: var(--darker-gray);
-}
-
 .token.operator,
 .token.punctuation,
 .token.builtin,
@@ -10,6 +5,7 @@
   color: var(--token);
 }
 
+.token.keyword,
 .token.string,
 .token.number,
 .token.boolean {

@@ -14,5 +14,6 @@ export default async function Mine() {
 	const posts = await getPostsByUser(userId, true)
 
 	const hasMore = false
-	return <PostList morePosts={hasMore} initialPosts={posts} />
+	const stringifiedPosts = JSON.stringify(posts)
+	return <PostList userId={userId} morePosts={hasMore} initialPosts={stringifiedPosts} />
 }

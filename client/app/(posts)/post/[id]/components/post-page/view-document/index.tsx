@@ -1,8 +1,8 @@
-import { memo, useRef, useState } from "react"
+import { memo, useRef } from "react"
 import styles from "./document.module.css"
 import Download from "@geist-ui/icons/download"
 import ExternalLink from "@geist-ui/icons/externalLink"
-import Skeleton from "react-loading-skeleton"
+import Skeleton from "@components/skeleton"
 import Link from "next/link"
 
 import {
@@ -71,15 +71,12 @@ const Document = ({
 	id
 }: Props) => {
 	const codeEditorRef = useRef<HTMLTextAreaElement>(null)
-	const [tab, setTab] = useState(initialTab)
-	// const height = editable ? "500px" : '100%'
 	const height = "100%"
 
 	const handleTabChange = (newTab: string) => {
 		if (newTab === "edit") {
 			codeEditorRef.current?.focus()
 		}
-		setTab(newTab as "edit" | "preview")
 	}
 
 	const rawLink = () => {

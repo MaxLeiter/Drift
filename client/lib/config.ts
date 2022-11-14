@@ -30,21 +30,25 @@ export const config = (env: Environment): Config => {
 		}
 	}
 
-	const throwIfUndefined = (str: EnvironmentValue, name: string): string => {
-		if (str === undefined) {
-			throw new Error(`Missing environment variable: ${name}`)
+	// TODO: improve `key` type
+	const throwIfUndefined = (key: keyof Environment): string => {
+		const value = env[key]
+		if (value === undefined) {
+			throw new Error(`Missing environment variable: ${key}`)
 		}
-		return str
+
+		return value
 	}
 
 	const defaultIfUndefined = (
-		str: EnvironmentValue,
+		str: string,
 		defaultValue: string
 	): string => {
-		if (str === undefined) {
+		const value = env[str]
+		if (value === undefined) {
 			return defaultValue
 		}
-		return str
+		return value
 	}
 
 	const validNodeEnvs = (str: EnvironmentValue) => {
@@ -61,12 +65,11 @@ export const config = (env: Environment): Config => {
 	const is_production = env.NODE_ENV === "production"
 
 	const developmentDefault = (
-		str: EnvironmentValue,
 		name: string,
 		defaultValue: string
 	): string => {
-		if (is_production) return throwIfUndefined(str, name)
-		return defaultIfUndefined(str, defaultValue)
+		if (is_production) return throwIfUndefined(name)
+		return defaultIfUndefined(name, defaultValue)
 	}
 
 	validNodeEnvs(env.NODE_ENV)
@@ -78,11 +81,11 @@ export const config = (env: Environment): Config => {
 		is_production,
 		memory_db: stringToBoolean(env.MEMORY_DB),
 		enable_admin: stringToBoolean(env.ENABLE_ADMIN),
-		secret_key: developmentDefault(env.SECRET_KEY, "SECRET_KEY", "secret"),
+		secret_key: developmentDefault("SECRET_KEY", "secret"),
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT ?? "",
 		welcome_title: env.WELCOME_TITLE ?? "",
-		url: "http://localhost:3000",
+		url: throwIfUndefined("DRIFT_URL"),
 		GITHUB_CLIENT_ID: env.GITHUB_CLIENT_ID ?? "",
 		GITHUB_CLIENT_SECRET: env.GITHUB_CLIENT_SECRET ?? "",
 	}

@@ -88,7 +88,6 @@ const Document = ({
 
 	return (
 		<>
-			<Spacer height={1} />
 			<div className={styles.card}>
 				<div className={styles.fileNameContainer}>
 					<Input

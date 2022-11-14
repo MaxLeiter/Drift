@@ -1,23 +1,25 @@
-import type { GetServerSideProps } from "next"
-
 import type { Post } from "@lib/types"
 import PostPage from "app/(posts)/post/[id]/components/post-page"
 import { notFound } from "next/navigation"
 import { getAllPosts, getPostById } from "@lib/server/prisma"
-import { getCurrentUser, getSession } from "@lib/server/session"
+import { getCurrentUser } from "@lib/server/session"
 
 export type PostProps = {
 	post: Post
 	isProtected?: boolean
 }
 
-export async function generateStaticParams() {
-	const posts = await getAllPosts()
+// export async function generateStaticParams() {
+// 	const posts = await getAllPosts({
+// 		where: {
+// 			visibility: "public"
+// 		}
+// 	})
 
-	return posts.map((post) => ({
-		id: post.id
-	}))
-}
+// 	return posts.map((post) => ({
+// 		id: post.id
+// 	}))
+// }
 
 const getPost = async (id: string) => {
 	const post = await getPostById(id, true)
@@ -30,7 +32,7 @@ const getPost = async (id: string) => {
 	const isAuthor = user?.id === post?.authorId
 
 	if (post.visibility === "public") {
-		return { post, isAuthor, signedIn: Boolean(user) }
+		return { post, isAuthor }
 	}
 
 	// must be authed to see unlisted/private
@@ -49,12 +51,11 @@ const getPost = async (id: string) => {
 		return {
 			post,
 			isProtected: true,
-			isAuthor,
-			signedIn: Boolean(user)
+			isAuthor
 		}
 	}
 
-	return { post, isAuthor, signedIn: Boolean(user) }
+	return { post, isAuthor }
 }
 
 const PostView = async ({
@@ -64,8 +65,10 @@ const PostView = async ({
 		id: string
 	}
 }) => {
-	const { post, isProtected, isAuthor, signedIn } = await getPost(params.id)
-	return <PostPage isAuthor={isAuthor} isProtected={isProtected} post={post} />
+	const { post, isProtected, isAuthor } = await getPost(params.id)
+	// TODO: serialize dates in prisma middleware instead of passing as JSON
+	const stringifiedPost = JSON.stringify(post);
+	return <PostPage isAuthor={isAuthor} isProtected={isProtected} post={stringifiedPost} />
 }
 
 // export const getServerSideProps: GetServerSideProps = async ({

@@ -7,7 +7,6 @@ import {  useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
 	const [name, setName] = useState<string>(user.name || "")
-	const [email, setEmail] = useState<string>(user.email || "")
 	const [bio, setBio] = useState<string>()
 
 	const { setToast } = useToasts()
@@ -16,17 +15,13 @@ const Profile = ({ user }: { user: User }) => {
 		setName(e.target.value)
 	}
 
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value)
-	}
-
 	const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setBio(e.target.value)
 	}
 
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (!name && !email && !bio) {
+		if (!name && !bio) {
 			setToast({
 				text: "Please fill out at least one field",
 				type: "error"
@@ -36,7 +31,6 @@ const Profile = ({ user }: { user: User }) => {
 
 		const data = {
 			displayName: name,
-			email,
 			bio
 		}
 
@@ -92,8 +86,8 @@ const Profile = ({ user }: { user: User }) => {
 						htmlType="email"
 						width={"100%"}
 						placeholder="my@email.io"
-						value={email || ""}
-						onChange={handleEmailChange}
+						value={user.email || undefined}
+						disabled
 					/>
 				</div>
 				<div>

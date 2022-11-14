@@ -1,7 +1,7 @@
 import Tooltip from "@components/tooltip"
-import { Badge } from "@geist-ui/core/dist"
 import { timeUntil } from "@lib/time-ago"
 import { useEffect, useMemo, useState } from "react"
+import Badge from "../badge"
 
 const ExpirationBadge = ({
 	postExpirationDate
@@ -36,7 +36,7 @@ const ExpirationBadge = ({
 	}, [expirationDate])
 
 	const isExpired = useMemo(() => {
-		return timeUntilString && timeUntilString === "in 0 seconds"
+		return timeUntilString === "in 0 seconds"
 	}, [timeUntilString])
 
 	// useEffect(() => {

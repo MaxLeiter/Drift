@@ -3,7 +3,6 @@
 import Header from "@components/header"
 import { CssBaseline, GeistProvider, Page, Themes } from "@geist-ui/core/dist"
 import { ThemeProvider } from "next-themes"
-import { SkeletonTheme } from "react-loading-skeleton"
 import * as RadixTooltip from "@radix-ui/react-tooltip"
 
 export function LayoutWrapper({
@@ -56,24 +55,19 @@ export function LayoutWrapper({
 	return (
 		<RadixTooltip.Provider delayDuration={200}>
 			<GeistProvider themes={[customTheme]} themeType={"custom"}>
-				<SkeletonTheme
-					baseColor={skeletonBaseColor}
-					highlightColor={skeletonHighlightColor}
+				<ThemeProvider
+					disableTransitionOnChange
+					cookieName="drift-theme"
+					attribute="data-theme"
 				>
-					<ThemeProvider
-						disableTransitionOnChange
-						cookieName="drift-theme"
-						attribute="data-theme"
-					>
-						<CssBaseline />
-						<Page width={"100%"}>
-							<Page.Header>
-								<Header signedIn={signedIn} />
-							</Page.Header>
-							{children}
-						</Page>
-					</ThemeProvider>
-				</SkeletonTheme>
+					<CssBaseline />
+					<Page width={"100%"}>
+						<Page.Header>
+							<Header signedIn={signedIn} />
+						</Page.Header>
+						{children}
+					</Page>
+				</ThemeProvider>
 			</GeistProvider>
 		</RadixTooltip.Provider>
 	)

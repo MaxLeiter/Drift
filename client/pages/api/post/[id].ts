@@ -9,9 +9,10 @@ import * as crypto from "crypto"
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === "GET") return handleGet(req, res)
 	else if (req.method === "PUT") return handlePut(req, res)
+	else if (req.method === "DELETE") return handleDelete(req, res)
 }
 
-export default withMethods(["GET", "PUT"], handler)
+export default withMethods(["GET", "PUT", "DELETE"], handler)
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 	const id = parseQueryParam(req.query.id)
@@ -113,4 +114,35 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse<any>) {
 		id: updatedPost.id,
 		visibility: updatedPost.visibility
 	})
+}
+
+async function handleDelete(req: NextApiRequest, res: NextApiResponse<any>) {
+	const id = parseQueryParam(req.query.id)
+
+	if (!id) {
+		return res.status(400).json({ error: "Missing id" })
+	}
+
+	const post = await getPostById(id, false)
+
+	if (!post) {
+		return res.status(404).json({ message: "Post not found" })
+	}
+
+	const session = await getSession({ req })
+
+	const isAuthor = session?.user.id === post.authorId
+	const isAdmin = session?.user.role === "admin"
+
+	if (!isAuthor && !isAdmin) {
+		return res.status(403).json({ message: "Unauthorized" })
+	}
+
+	await prisma.post.delete({
+		where: {
+			id
+		}
+	})
+
+	res.json({ message: "Post deleted" })
 }

@@ -1,11 +1,5 @@
 import VisibilityBadge from "../badges/visibility-badge"
-import {
-	Text,
-	Card,
-	Divider,
-	Badge,
-	Button
-} from "@geist-ui/core/dist"
+import { Text, Card, Divider, Button } from "@geist-ui/core/dist"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
@@ -19,6 +13,7 @@ import type { PostWithFiles } from "@lib/server/prisma"
 import type { PostVisibility } from "@lib/types"
 import type { File } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
+import Badge from "@components/badges/badge"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -45,14 +40,16 @@ const ListItem = ({
 			<li key={post.id}>
 				<Card style={{ overflowY: "scroll" }}>
 					<Card.Body>
-						<Text h3 className={styles.title}>
-							<Link
-								colored
-								style={{ marginRight: "var(--gap)" }}
-								href={`/post/${post.id}`}
-							>
-								{post.title}
-							</Link>
+						<div className={styles.title}>
+							<h3 style={{ display: "inline-block" }}>
+								<Link
+									colored
+									style={{ marginRight: "var(--gap)" }}
+									href={`/post/${post.id}`}
+								>
+									{post.title}
+								</Link>
+							</h3>
 							{isOwner && (
 								<span className={styles.buttons}>
 									{post.parentId && (
@@ -72,22 +69,20 @@ const ListItem = ({
 									</Tooltip>
 								</span>
 							)}
-						</Text>
+						</div>
 
 						{post.description && (
-							<Text p className={styles.oneline}>
-								{post.description}
-							</Text>
+							<p className={styles.oneline}>{post.description}</p>
 						)}
 
 						<div className={styles.badges}>
 							<VisibilityBadge visibility={post.visibility as PostVisibility} />
-							<CreatedAgoBadge createdAt={post.createdAt} />
 							<Badge type="secondary">
 								{post.files?.length === 1
 									? "1 file"
 									: `${post.files?.length || 0} files`}
 							</Badge>
+							<CreatedAgoBadge createdAt={post.createdAt} />
 							<ExpirationBadge postExpirationDate={post.expiresAt} />
 						</div>
 					</Card.Body>

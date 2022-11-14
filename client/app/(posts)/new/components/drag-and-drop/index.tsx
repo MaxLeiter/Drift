@@ -99,7 +99,7 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 			>
 				<input {...getInputProps()} />
 				{!isDragActive && (
-					<Text p>Drag some files here, or {verb} to select files</Text>
+					<p style={{color: "var(--gray)"}}>Drag some files here, or {verb} to select files</p>
 				)}
 				{isDragActive && <Text p>Release to drop the files here</Text>}
 			</div>

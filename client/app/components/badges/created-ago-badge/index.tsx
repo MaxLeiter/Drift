@@ -1,7 +1,7 @@
 import Tooltip from "@components/tooltip"
-import { Badge } from "@geist-ui/core/dist"
 import { timeAgo } from "@lib/time-ago"
 import { useMemo, useState, useEffect } from "react"
+import Badge from "../badge"
 
 const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 	const createdDate = useMemo(() => new Date(createdAt), [createdAt])
@@ -19,7 +19,7 @@ const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 		<Badge type="secondary">
 			{" "}
 			<Tooltip content={formattedTime}>
-				<>Created {time}</>
+				<>{time}</>
 			</Tooltip>
 		</Badge>
 	)

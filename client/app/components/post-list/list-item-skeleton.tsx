@@ -1,4 +1,4 @@
-import Skeleton from "react-loading-skeleton"
+import Skeleton from "@components/skeleton"
 import { Card, Divider, Grid, Spacer } from "@geist-ui/core/dist"
 
 const ListItemSkeleton = () => (

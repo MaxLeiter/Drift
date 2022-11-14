@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export default withAuth(
 	async function middleware(req) {
-		console.log("middleware")
 		const token = await getToken({ req })
+
 		const isAuth = !!token
 		const isAuthPage =
 			req.nextUrl.pathname.startsWith("/signup") ||
