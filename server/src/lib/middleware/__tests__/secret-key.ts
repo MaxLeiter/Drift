@@ -1,7 +1,7 @@
 // import * as request from 'supertest'
 // import { app } from '../../../app'
 import { NextFunction, Response } from "express"
-import { UserJwtRequest } from "@lib/middleware/jwt"
+import { UserJwtRequest } from "@lib/middleware/is-signed-in"
 import secretKey from "@lib/middleware/secret-key"
 import config from "@lib/config"
 

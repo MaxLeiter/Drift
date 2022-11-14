@@ -4,7 +4,7 @@ import { User } from "@lib/models/User"
 import { AuthToken } from "@lib/models/AuthToken"
 import { sign, verify } from "jsonwebtoken"
 import config from "@lib/config"
-import jwt, { UserJwtRequest } from "@lib/middleware/jwt"
+import jwt, { UserJwtRequest } from "@lib/middleware/is-signed-in"
 import { celebrate, Joi } from "celebrate"
 import secretKey from "@lib/middleware/secret-key"
 
@@ -94,7 +94,7 @@ auth.post(
 			serverPassword: Joi.string().required().allow("", null)
 		}
 	}),
-	async (req, res, next) => {
+	async (req, res) => {
 		const error = "User does not exist or password is incorrect"
 		const errorToThrow = new Error(error)
 		try {
@@ -147,7 +147,7 @@ function generateAccessToken(user: User) {
 	return token
 }
 
-auth.get("/verify-token", jwt, async (req, res, next) => {
+auth.get("/verify-signed-in", jwt, async (req, res, next) => {
 	try {
 		res.status(200).json({
 			message: "You are authenticated"
