@@ -141,6 +141,9 @@ async function handleDelete(req: NextApiRequest, res: NextApiResponse<any>) {
 	await prisma.post.delete({
 		where: {
 			id
+		},
+		include: {
+			files: true
 		}
 	})
 

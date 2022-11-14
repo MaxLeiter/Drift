@@ -29,10 +29,10 @@ const getPost = async (id: string) => {
 		return notFound()
 	}
 
-	const isAuthor = user?.id === post?.authorId
+	const isAuthorOrAdmin = user?.id === post?.authorId || user?.role === "admin"
 
 	if (post.visibility === "public") {
-		return { post, isAuthor }
+		return { post, isAuthor: isAuthorOrAdmin }
 	}
 
 	// must be authed to see unlisted/private
@@ -43,19 +43,19 @@ const getPost = async (id: string) => {
 		return notFound()
 	}
 
-	if (post.visibility === "private" && !isAuthor) {
+	if (post.visibility === "private" && !isAuthorOrAdmin) {
 		return notFound()
 	}
 
-	if (post.visibility === "protected" && !isAuthor) {
+	if (post.visibility === "protected" && !isAuthorOrAdmin) {
 		return {
 			post,
 			isProtected: true,
-			isAuthor
+			isAuthor: isAuthorOrAdmin
 		}
 	}
 
-	return { post, isAuthor }
+	return { post, isAuthor: isAuthorOrAdmin }
 }
 
 const PostView = async ({
@@ -67,8 +67,14 @@ const PostView = async ({
 }) => {
 	const { post, isProtected, isAuthor } = await getPost(params.id)
 	// TODO: serialize dates in prisma middleware instead of passing as JSON
-	const stringifiedPost = JSON.stringify(post);
-	return <PostPage isAuthor={isAuthor} isProtected={isProtected} post={stringifiedPost} />
+	const stringifiedPost = JSON.stringify(post)
+	return (
+		<PostPage
+			isAuthor={isAuthor}
+			isProtected={isProtected}
+			post={stringifiedPost}
+		/>
+	)
 }
 
 // export const getServerSideProps: GetServerSideProps = async ({

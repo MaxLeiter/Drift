@@ -26,9 +26,9 @@ export default async function SettingsPage() {
 			<SettingsGroup title="Profile">
 				<Profile user={user} />
 			</SettingsGroup>
-			<SettingsGroup title="Password">
+			{/* <SettingsGroup title="Password">
 				<Password />
-			</SettingsGroup>
+			</SettingsGroup> */}
 		</div>
 	)
 }

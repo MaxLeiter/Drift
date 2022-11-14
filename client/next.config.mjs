@@ -23,7 +23,7 @@ const nextConfig = {
 		return [
 			{
 				source: "/file/raw/:id",
-				destination: `/api/raw/:id`
+				destination: `/api/file/raw/:id`
 			},
 			{
 				source: "/home",

@@ -24,10 +24,7 @@
 	.badges {
 		flex-direction: column;
 		align-items: flex-start;
-	}
-
-	.badges > * {
-		width: min-content;
+		margin-top: var(--gap-half);
 	}
 
 	.title {
