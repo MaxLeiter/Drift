@@ -1,11 +1,11 @@
 import { getAllPosts, getAllUsers } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 import { notFound } from "next/navigation"
-import styles from "./admin.module.css"
-import PostTable from "./post-table"
-import UserTable from "./user-table"
+import styles from "./components/admin.module.css"
+import PostTable from "./components/post-table"
+import UserTable from "./components/user-table"
 
-const Admin = async () => {
+const AdminPage = async () => {
 	const user = await getCurrentUser()
 	if (!user) {
 		return notFound()
@@ -36,4 +36,4 @@ const Admin = async () => {
 	)
 }
 
-export default Admin
+export default AdminPage
