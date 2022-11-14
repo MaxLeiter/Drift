@@ -21,8 +21,7 @@ export default withMethods(["POST"], handler)
 async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 	try {
 		const session = await unstable_getServerSession(req, res, authOptions)
-		if (!session) {
-			console.log("no session")
+		if (!session || !session.user.id) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
 
@@ -53,12 +52,8 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 				password: hashedPassword,
 				expiresAt: req.body.expiresAt,
 				parentId: req.body.parentId,
-				// authorId: session?.user.id,
-				author: {
-					connect: {
-						id: session?.user.id
-					}
-				}
+				authorId: session.user.id,
+			
 				// files: {
 				// 	connectOrCreate: postFiles.map((file) => ({
 				// 		where: {

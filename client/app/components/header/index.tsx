@@ -37,14 +37,13 @@ type Tab = {
 	href?: string
 }
 
-const Header = ({ signedIn = false }) => {
+const Header = ({ signedIn = false, isAdmin = false }) => {
 	const pathname = usePathname()
 	const [expanded, setExpanded] = useState<boolean>(false)
 	const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
 	const isMobile = useMediaQuery("xs", { match: "down" })
 	// const { status } = useSession()
 	// const signedIn = status === "authenticated"
-	const [pages, setPages] = useState<Tab[]>([])
 	const { setTheme, resolvedTheme } = useTheme()
 
 	useEffect(() => {
@@ -57,7 +56,7 @@ const Header = ({ signedIn = false }) => {
 		}
 	}, [isMobile])
 
-	useEffect(() => {
+	const getPages = () => {
 		const defaultPages: Tab[] = [
 			{
 				name: isMobile ? "GitHub" : "",
@@ -76,8 +75,17 @@ const Header = ({ signedIn = false }) => {
 			}
 		]
 
+		if (isAdmin) {
+			defaultPages.push({
+				name: "admin",
+				icon: <SettingsIcon />,
+				value: "admin",
+				href: "/admin"
+			})
+		}
+
 		if (signedIn)
-			setPages([
+			return [
 				{
 					name: "new",
 					icon: <NewIcon />,
@@ -103,9 +111,9 @@ const Header = ({ signedIn = false }) => {
 					onClick: () => signOut()
 				},
 				...defaultPages
-			])
+			]
 		else
-			setPages([
+			return [
 				{
 					name: "home",
 					icon: <HomeIcon />,
@@ -125,67 +133,46 @@ const Header = ({ signedIn = false }) => {
 					href: "/signup"
 				},
 				...defaultPages
-			])
-		// if (userData?.role === "admin") {
-		// 	setPages((pages) => [
-		// 		...pages,
-		// 		{
-		// 			name: "admin",
-		// 			icon: <SettingsIcon />,
-		// 			value: "admin",
-		// 			href: "/admin"
-		// 		}
-		// 	])
-		// }
-		// TODO: investigate deps causing infinite loop
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isMobile, resolvedTheme])
+			]
+	}
 
-	const onTabChange = useCallback(
-		(tab: string) => {
-			if (typeof window === "undefined") return
-			const match = pages.find((page) => page.value === tab)
-			if (match?.onClick) {
-				match.onClick()
-			}
-		},
-		[pages]
-	)
+	const pages = getPages()
 
-	const getButton = useCallback(
-		(tab: Tab) => {
-			const activeStyle = pathname === tab.href ? styles.active : ""
-			if (tab.onClick) {
-				return (
-					<Button
-						auto={isMobile ? false : true}
-						key={tab.value}
-						icon={tab.icon}
-						onClick={() => onTabChange(tab.value)}
-						className={`${styles.tab} ${activeStyle}`}
-						shadow={false}
-					>
+	const onTabChange = (tab: string) => {
+		if (typeof window === "undefined") return
+		const match = pages.find((page) => page.value === tab)
+		if (match?.onClick) {
+			match.onClick()
+		}
+	}
+
+	const getButton = (tab: Tab) => {
+		const activeStyle = pathname === tab.href ? styles.active : ""
+		if (tab.onClick) {
+			return (
+				<Button
+					auto={isMobile ? false : true}
+					key={tab.value}
+					icon={tab.icon}
+					onClick={() => onTabChange(tab.value)}
+					className={`${styles.tab} ${activeStyle}`}
+					shadow={false}
+				>
+					{tab.name ? tab.name : undefined}
+				</Button>
+			)
+		} else if (tab.href) {
+			return (
+				<Link key={tab.value} href={tab.href} className={styles.tab}>
+					<Button auto={isMobile ? false : true} icon={tab.icon} shadow={false}>
 						{tab.name ? tab.name : undefined}
 					</Button>
-				)
-			} else if (tab.href) {
-				return (
-					<Link key={tab.value} href={tab.href} className={styles.tab}>
-						<Button
-							auto={isMobile ? false : true}
-							icon={tab.icon}
-							shadow={false}
-						>
-							{tab.name ? tab.name : undefined}
-						</Button>
-					</Link>
-				)
-			}
-		},
-		[isMobile, onTabChange, pathname]
-	)
+				</Link>
+			)
+		}
+	}
 
-	const buttons = useMemo(() => pages.map(getButton), [pages, getButton])
+	const buttons = pages.map(getButton)
 
 	return (
 		<Page.Header>

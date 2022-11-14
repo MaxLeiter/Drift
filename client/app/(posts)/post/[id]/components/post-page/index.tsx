@@ -4,7 +4,7 @@ import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from "./view-document"
 import styles from "./post-page.module.css"
 
-import { Button, Text, ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
+import { Button,  ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"
@@ -16,47 +16,54 @@ import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
-import { File, PostWithFiles } from "@lib/server/prisma"
+import { File, PostWithFilesAndAuthor } from "@lib/server/prisma"
 
 type Props = {
-	post: string | PostWithFiles
+	post: string | PostWithFilesAndAuthor
 	isProtected?: boolean
 	isAuthor?: boolean
 }
 
 const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
-	const [post, setPost] = useState<PostWithFiles>(typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost)
-	const [visibility, setVisibility] = useState<string>(post.visibility)
-	const [isExpired, setIsExpired] = useState(
-		post.expiresAt ? new Date(post.expiresAt) < new Date() : null
+	const [post, setPost] = useState<PostWithFilesAndAuthor>(
+		typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost
 	)
-	const [isLoading, setIsLoading] = useState(true)
+	const [visibility, setVisibility] = useState<string>(post.visibility)
 	const router = useRouter()
 	const isMobile = useMediaQuery("mobile")
 
 	useEffect(() => {
-		if (!isAuthor && isExpired) {
-			router.push("/expired")
-		}
-
-		const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
-		if (!isAuthor && expirationDate < new Date()) {
-			router.push("/expired")
-		} else {
-			setIsLoading(false)
-		}
-
-		let interval: NodeJS.Timer | null = null
 		if (post.expiresAt) {
-			interval = setInterval(() => {
+			if (new Date(post.expiresAt) < new Date()) {
+				if (!isAuthor) {
+					router.push("/expired")
+				}
+
 				const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
-				if (expirationDate < new Date()) setIsExpired(true)
-			}, 4000)
+				if (!isAuthor && expirationDate < new Date()) {
+					router.push("/expired")
+				}
+
+				let interval: NodeJS.Timer | null = null
+				if (post.expiresAt) {
+					interval = setInterval(() => {
+						const expirationDate = new Date(
+							post.expiresAt ? post.expiresAt : ""
+						)
+						if (expirationDate < new Date()) {
+							if (!isAuthor) {
+								router.push("/expired")
+							}
+							clearInterval(interval!)
+						}
+					}, 4000)
+				}
+				return () => {
+					if (interval) clearInterval(interval)
+				}
+			}
 		}
-		return () => {
-			if (interval) clearInterval(interval)
-		}
-	}, [isExpired, isAuthor, post.expiresAt, router])
+	}, [isAuthor, post.expiresAt, router])
 
 	const download = async () => {
 		if (!post.files) return
@@ -85,11 +92,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 		router.push(`/post/${post.parentId}`)
 	}
 
-	if (isLoading) {
-		return <></>
-	}
-
-	const isAvailable = !isExpired && !isProtected && post.title
+	const isAvailable = !isProtected && post.title
 
 	return (
 		<>
@@ -128,7 +131,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 					</ButtonGroup>
 				</span>
 				<span className={styles.title}>
-					<h3>{post.title}</h3>
+					<h3>{post.title} <span style={{color: 'var(--gray)'}}>by {post.author?.displayName}</span></h3>
 					<span className={styles.badges}>
 						<VisibilityBadge visibility={visibility} />
 						<CreatedAgoBadge createdAt={post.createdAt} />

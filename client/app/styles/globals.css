@@ -1,5 +1,3 @@
-@import "./inter.css";
-
 :root {
 	/* Spacing */
 	--gap-quarter: 0.25rem;
@@ -163,7 +161,7 @@ code {
 	isolation: isolate;
 }
 
-/* TODO: this should not be necessary. */
+/* TODO: these should not be necessary. */
 main {
 	margin-top: 0 !important;
 	padding-top: 0 !important;

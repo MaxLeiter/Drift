@@ -1,25 +1,17 @@
+'use client';
 import SettingsGroup from "@components/settings-group"
 import { Fieldset, useToasts } from "@geist-ui/core/dist"
 import byteToMB from "@lib/byte-to-mb"
-import { Post } from "@lib/types"
+import { Post } from "@lib/server/prisma";
 import Table from "rc-table"
 import { useEffect, useMemo, useState } from "react"
-import { adminFetcher } from "./admin"
 import ActionDropdown from "./action-dropdown"
 
-const PostTable = () => {
-	const [posts, setPosts] = useState<Post[]>()
-	const { setToast } = useToasts()
-
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const res = await adminFetcher("/posts")
-			const data = await res.json()
-			setPosts(data)
-		}
-		fetchPosts()
-	}, [])
-
+const PostTable = ({ 
+	  posts,
+}: {
+	  posts: Post[]
+}) => {
 	const tablePosts = useMemo(
 		() =>
 			posts?.map((post) => {

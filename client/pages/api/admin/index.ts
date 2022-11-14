@@ -27,7 +27,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const session = await getSession({ req })
 	const id = session?.user?.id
-	// get admin from db
 
 	const isAdmin = await prisma.user
 		.findUnique({

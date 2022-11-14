@@ -34,7 +34,7 @@ const Profile = ({ user }: { user: User }) => {
 			bio
 		}
 
-		const res = await fetch("/server-api/user/profile", {
+		const res = await fetch(`/api/user/${user.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",

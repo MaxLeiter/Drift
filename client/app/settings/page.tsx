@@ -1,6 +1,4 @@
-import Header from "@components/header"
 import SettingsGroup from "../components/settings-group"
-import Password from "app/settings/components/sections/password"
 import Profile from "app/settings/components/sections/profile"
 import { authOptions } from "@lib/server/auth"
 import { getCurrentUser } from "@lib/server/session"

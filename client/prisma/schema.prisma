@@ -88,15 +88,16 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
   accounts Account[]
   sessions Session[]
 
   // custom fields
   posts    Post[]
-  username String? @unique
   role     String? @default("user")
-  password String? @db.Text
+  displayName String?
 
   @@map("users")
 }

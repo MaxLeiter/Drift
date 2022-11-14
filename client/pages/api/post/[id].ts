@@ -22,7 +22,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 		return res.status(400).json({ error: "Missing id" })
 	}
 
-	const post = await getPostById(id, Boolean(files))
+	const post = await getPostById(id, {
+		withFiles: Boolean(files),
+		withAuthor: true
+	})
 
 	if (!post) {
 		return res.status(404).json({ message: "Post not found" })

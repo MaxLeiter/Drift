@@ -1,28 +1,23 @@
+"use client"
 import { Fieldset, useToasts } from "@geist-ui/core/dist"
-import { User } from "@lib/types"
-import { useEffect, useMemo, useState } from "react"
-import { adminFetcher } from "./admin"
 import Table from "rc-table"
 import ActionDropdown from "./action-dropdown"
 import SettingsGroup from "@components/settings-group"
+import type { User, UserWithPosts } from "@lib/server/prisma"
+import { useState } from "react"
 
-const UserTable = () => {
-	const [users, setUsers] = useState<User[]>()
+const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
+	const [users, setUsers] = useState(initial)
 	const { setToast } = useToasts()
 
-	useEffect(() => {
-		const fetchUsers = async () => {
-			const res = await adminFetcher("/users")
-			const data = await res.json()
-			setUsers(data)
-		}
-		fetchUsers()
-	}, [])
-
+	console.log(initial)
 	const toggleRole = async (id: string, role: "admin" | "user") => {
-		const res = await adminFetcher("/users/toggle-role", {
+		const res = await fetch("/api/admin?action=toggle-role", {
 			method: "POST",
-			body: { id, role }
+			body: JSON.stringify({
+				userId: id,
+				role
+			})
 		})
 
 		const json = await res.json()
@@ -47,7 +42,7 @@ const UserTable = () => {
 			})
 		} else {
 			setToast({
-				text:  "Something went wrong",
+				text: "Something went wrong",
 				type: "error"
 			})
 		}
@@ -56,11 +51,20 @@ const UserTable = () => {
 	const deleteUser = async (id: string) => {
 		const confirm = window.confirm("Are you sure you want to delete this user?")
 		if (!confirm) return
-		const res = await adminFetcher(`/users/${id}`, {
-			method: "DELETE"
+		// const res = await adminFetcher(`/users/${id}`, {
+		// 	method: "DELETE"
+		// })
+		const res = await fetch("/api/admin?action=delete-user", {
+			method: "POST",
+			body: JSON.stringify({
+				userId: id
+			})
 		})
 
-		const json = await res.json()
+		setUsers((users) => {
+			const newUsers = users?.filter((user) => user.id !== id)
+			return newUsers
+		})
 
 		if (res.status === 200) {
 			setToast({
@@ -75,30 +79,24 @@ const UserTable = () => {
 		}
 	}
 
-	const tableUsers = useMemo(
-		() =>
-			users?.map((user) => {
-				return {
-					id: user.id,
-					username: user.username,
-					posts: user.posts?.length || 0,
-					createdAt: `${new Date(
-						user.createdAt
-					).toLocaleDateString()} ${new Date(
-						user.createdAt
-					).toLocaleTimeString()}`,
-					role: user.role,
-					actions: ""
-				}
-			}),
-		[users]
-	)
+	const tableUsers = users?.map((user) => {
+		return {
+			id: user.id,
+			displayName: user.displayName,
+			posts: user.posts?.length || 0,
+			createdAt: `${new Date(user.createdAt)} ${new Date(
+				user.createdAt
+			).toLocaleTimeString()}`,
+			role: user.role,
+			actions: ""
+		}
+	})
 
 	const usernameColumns = [
 		{
-			title: "Username",
-			dataIndex: "username",
-			key: "username",
+			title: "Name",
+			dataIndex: "displayName",
+			key: "displayName",
 			width: 50
 		},
 		{

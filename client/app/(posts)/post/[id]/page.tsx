@@ -22,7 +22,10 @@ export type PostProps = {
 // }
 
 const getPost = async (id: string) => {
-	const post = await getPostById(id, true)
+	const post = await getPostById(id, {
+		withFiles: true,
+		withAuthor: true,
+	})
 	const user = await getCurrentUser()
 
 	if (!post) {
@@ -49,9 +52,18 @@ const getPost = async (id: string) => {
 
 	if (post.visibility === "protected" && !isAuthorOrAdmin) {
 		return {
-			post,
+			// post,
 			isProtected: true,
 			isAuthor: isAuthorOrAdmin
+		}
+	}
+
+
+	// if expired
+	if (post.expiresAt && !isAuthorOrAdmin) {
+		const expirationDate = new Date(post.expiresAt)
+		if (expirationDate < new Date()) {
+			return notFound()
 		}
 	}
 

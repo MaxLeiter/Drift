@@ -7,14 +7,13 @@ import * as RadixTooltip from "@radix-ui/react-tooltip"
 
 export function LayoutWrapper({
 	children,
-	signedIn
+	signedIn,
+	isAdmin,
 }: {
 	children: React.ReactNode
 	signedIn?: boolean
+	isAdmin?: boolean
 }) {
-	const skeletonBaseColor = "var(--light-gray)"
-	const skeletonHighlightColor = "var(--lighter-gray)"
-
 	const customTheme = Themes.createFromLight({
 		type: "custom",
 		palette: {
@@ -63,7 +62,7 @@ export function LayoutWrapper({
 					<CssBaseline />
 					<Page width={"100%"}>
 						<Page.Header>
-							<Header signedIn={signedIn} />
+							<Header isAdmin={isAdmin} signedIn={signedIn} />
 						</Page.Header>
 						{children}
 					</Page>

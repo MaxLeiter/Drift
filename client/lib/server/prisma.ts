@@ -4,6 +4,7 @@ declare global {
 
 import config from "@lib/config"
 import { Post, PrismaClient, File, User, Prisma } from "@prisma/client"
+export type { User, File, Post } from "@prisma/client"
 
 // we want to update iff they exist the createdAt/updated/expired/deleted items
 // the input could be an array, in which case we'd check each item in the array
@@ -34,11 +35,27 @@ const updateDates = (input: any) => {
 	}
 }
 
+
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
 		log: ["query"]
 	})
+
+// a prisma middleware for capturing the first user and making them an admin
+prisma.$use(async (params, next) => {
+	const result = await next(params)
+	if (params.model === "User" && params.action === "create") {
+		const users = await prisma.user.findMany()
+		if (users.length === 1) {
+			await prisma.user.update({  
+				where: { id: users[0].id },
+				data: { role: "admin" }
+			})
+		}
+	}
+	return result
+})
 
 // prisma.$use(async (params, next) => {
 // 	const result = await next(params)
@@ -47,10 +64,12 @@ export const prisma =
 
 if (process.env.NODE_ENV !== "production") global.prisma = prisma
 
-export type { User, File, Post } from "@prisma/client"
-
 export type PostWithFiles = Post & {
 	files: File[]
+}
+
+export type PostWithFilesAndAuthor = PostWithFiles & {
+	author: User
 }
 
 export const getFilesForPost = async (postId: string) => {
@@ -104,7 +123,7 @@ export const getUserById = async (userId: User["id"]) => {
 			email: true,
 			// displayName: true,
 			role: true,
-			username: true
+			displayName: true,
 		}
 	})
 
@@ -151,13 +170,29 @@ export const createUser = async (
 	}
 }
 
-export const getPostById = async (postId: Post["id"], withFiles = false) => {
+type GetPostByIdOptions = {
+	withFiles: boolean
+	withAuthor: boolean
+}
+
+export const getPostById = async (
+	postId: Post["id"],
+	options?: GetPostByIdOptions
+) => {
 	const post = await prisma.post.findUnique({
 		where: {
 			id: postId
 		},
 		include: {
-			files: withFiles
+			files: options?.withFiles,
+			author: options?.withAuthor
+				? {
+						select: {
+							id: true,
+							displayName: true,
+						}
+				  }
+				: false
 		}
 	})
 
@@ -183,11 +218,29 @@ export const getAllPosts = async ({
 	return posts as PostWithFiles[]
 }
 
+export type UserWithPosts = User & {
+	posts: Post[]
+}
+
+export const getAllUsers = async () => {
+	const users = await prisma.user.findMany({
+		select: {
+			id: true,
+			email: true,
+			// displayName: true,
+			role: true,
+			posts: true,
+		},
+	})
+
+	return users as UserWithPosts[]
+}
+
 export const searchPosts = async (
 	query: string,
 	{
 		withFiles = false,
-		userId,
+		userId
 	}: {
 		withFiles?: boolean
 		userId?: User["id"]
