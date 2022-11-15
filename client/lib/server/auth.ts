@@ -6,8 +6,8 @@ import config from "@lib/config"
 
 const providers: NextAuthOptions["providers"] = [
 	GitHubProvider({
-		clientId: config.GITHUB_CLIENT_ID,
-		clientSecret: config.GITHUB_CLIENT_SECRET
+		clientId: config.github_client_id,
+		clientSecret: config.github_client_secret
 	})
 ]
 

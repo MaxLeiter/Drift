@@ -1,17 +1,12 @@
 type Config = {
-	// port: number
-	jwt_secret: string
-	drift_home: string
 	is_production: boolean
-	memory_db: boolean
 	enable_admin: boolean
-	secret_key: string
 	registration_password: string
 	welcome_content: string
 	welcome_title: string
 	url: string
-	GITHUB_CLIENT_ID: string
-	GITHUB_CLIENT_SECRET: string
+	github_client_id: string
+	github_client_secret: string
 }
 
 type EnvironmentValue = string | undefined
@@ -75,19 +70,14 @@ export const config = (env: Environment): Config => {
 	validNodeEnvs(env.NODE_ENV)
 
 	const config: Config = {
-		// port: env.PORT ? parseInt(env.PORT) : 3000,
-		jwt_secret: env.JWT_SECRET || "myjwtsecret",
-		drift_home: env.DRIFT_HOME || "~/.drift",
 		is_production,
-		memory_db: stringToBoolean(env.MEMORY_DB),
 		enable_admin: stringToBoolean(env.ENABLE_ADMIN),
-		secret_key: developmentDefault("SECRET_KEY", "secret"),
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT ?? "",
 		welcome_title: env.WELCOME_TITLE ?? "",
-		url: throwIfUndefined("DRIFT_URL"),
-		GITHUB_CLIENT_ID: env.GITHUB_CLIENT_ID ?? "",
-		GITHUB_CLIENT_SECRET: env.GITHUB_CLIENT_SECRET ?? "",
+		url: process.env.VERCEL_URL ?? throwIfUndefined("DRIFT_URL"),
+		github_client_id: env.GITHUB_CLIENT_ID ?? "",
+		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
 	}
 	return config
 }
