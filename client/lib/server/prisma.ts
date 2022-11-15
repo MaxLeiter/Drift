@@ -35,27 +35,28 @@ const updateDates = (input: any) => {
 	}
 }
 
-
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
 		log: ["query"]
 	})
 
-// a prisma middleware for capturing the first user and making them an admin
-prisma.$use(async (params, next) => {
-	const result = await next(params)
-	if (params.model === "User" && params.action === "create") {
-		const users = await prisma.user.findMany()
-		if (users.length === 1) {
-			await prisma.user.update({  
-				where: { id: users[0].id },
-				data: { role: "admin" }
-			})
+if (config.enable_admin) {
+	// a prisma middleware for capturing the first user and making them an admin
+	prisma.$use(async (params, next) => {
+		const result = await next(params)
+		if (params.model === "User" && params.action === "create") {
+			const users = await prisma.user.findMany()
+			if (users.length === 1) {
+				await prisma.user.update({
+					where: { id: users[0].id },
+					data: { role: "admin" }
+				})
+			}
 		}
-	}
-	return result
-})
+		return result
+	})
+}
 
 // prisma.$use(async (params, next) => {
 // 	const result = await next(params)
@@ -123,7 +124,7 @@ export const getUserById = async (userId: User["id"]) => {
 			email: true,
 			// displayName: true,
 			role: true,
-			displayName: true,
+			displayName: true
 		}
 	})
 
@@ -160,10 +161,6 @@ export const createUser = async (
 		throw new Error("Wrong registration password")
 	}
 
-	const isUserAdminByDefault =
-		config.enable_admin && (await prisma.user.count()) === 0
-	const userRole = isUserAdminByDefault ? "admin" : "user"
-
 	return {
 		// user,
 		// token
@@ -189,7 +186,7 @@ export const getPostById = async (
 				? {
 						select: {
 							id: true,
-							displayName: true,
+							displayName: true
 						}
 				  }
 				: false
@@ -230,8 +227,8 @@ export const getAllUsers = async () => {
 			role: true,
 			displayName: true,
 			posts: true,
-			createdAt: true,
-		},
+			createdAt: true
+		}
 	})
 
 	return users as UserWithPosts[]
