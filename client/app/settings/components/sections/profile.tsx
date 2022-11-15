@@ -1,11 +1,11 @@
 "use client"
 
 import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
-import { TOKEN_COOKIE_NAME } from "@lib/constants"
-import { User } from "next-auth"
+import { User } from "@lib/server/prisma"
 import {  useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
+	// TODO: make this displayName, requires fetching user from DB as session doesnt have it
 	const [name, setName] = useState<string>(user.name || "")
 	const [bio, setBio] = useState<string>()
 

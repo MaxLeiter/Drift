@@ -126,5 +126,3 @@ export const allowedFileExtensions = [
 	...codeFileExtensions
 ]
 
-export const TOKEN_COOKIE_NAME = "drift-token"
-export const USER_COOKIE_NAME = "drift-userid"
