@@ -9,7 +9,7 @@ type Props = {
 
 const SettingsGroup = ({ title, children }: Props) => {
 	return (
-		<Fieldset>
+		<Fieldset width={'100%'}>
 			<Fieldset.Content>
 				<Text h4>{title}</Text>
 			</Fieldset.Content>

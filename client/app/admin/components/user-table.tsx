@@ -10,7 +10,6 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 	const [users, setUsers] = useState(initial)
 	const { setToast } = useToasts()
 
-	console.log(initial)
 	const toggleRole = async (id: string, role: "admin" | "user") => {
 		const res = await fetch("/api/admin?action=toggle-role", {
 			method: "POST",
@@ -19,8 +18,6 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 				role
 			})
 		})
-
-		const json = await res.json()
 
 		if (res.status === 200) {
 			setToast({
@@ -84,7 +81,7 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 			id: user.id,
 			displayName: user.displayName,
 			posts: user.posts?.length || 0,
-			createdAt: `${new Date(user.createdAt)} ${new Date(
+			createdAt: `${new Date(user.createdAt).toLocaleDateString()} ${new Date(
 				user.createdAt
 			).toLocaleTimeString()}`,
 			role: user.role,

@@ -227,9 +227,10 @@ export const getAllUsers = async () => {
 		select: {
 			id: true,
 			email: true,
-			// displayName: true,
 			role: true,
+			displayName: true,
 			posts: true,
+			createdAt: true,
 		},
 	})
 
