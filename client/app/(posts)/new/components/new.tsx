@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
 import styles from "./post.module.css"
-import type { PostVisibility, Document as DocumentType } from "@lib/types"
 import EditDocumentList from "./edit-document-list"
 import { ChangeEvent } from "react"
 import DatePicker from "react-datepicker"
@@ -19,6 +18,12 @@ const emptyDoc = {
 	title: "",
 	content: "",
 	id: generateUUID()
+}
+
+export type Document = {
+	title: string
+	content: string
+	id: string
 }
 
 const Post = ({
@@ -36,7 +41,7 @@ const Post = ({
 	const [description, setDescription] = useState(initialPost?.description || "")
 	const [expiresAt, setExpiresAt] = useState(initialPost?.expiresAt)
 
-	const defaultDocs: DocumentType[] = initialPost
+	const defaultDocs: Document[] = initialPost
 		? initialPost.files?.map((doc) => ({
 				title: doc.title,
 				content: doc.content,
@@ -53,9 +58,9 @@ const Post = ({
 			url: string,
 			data: {
 				expiresAt: Date | null
-				visibility?: PostVisibility
+				visibility?: string
 				title?: string
-				files?: DocumentType[]
+				files?: Document[]
 				password?: string
 				parentId?: string
 			}
@@ -93,7 +98,7 @@ const Post = ({
 	const [isSubmitting, setSubmitting] = useState(false)
 
 	const onSubmit = useCallback(
-		async (visibility: PostVisibility, password?: string) => {
+		async (visibility: string, password?: string) => {
 			if (visibility === "protected" && !password) {
 				setPasswordModalVisible(true)
 				return
@@ -155,30 +160,23 @@ const Post = ({
 
 	const submitPassword = (password: string) => onSubmit("protected", password)
 
-	const onChangeExpiration = useCallback((date: Date) => setExpiresAt(date), [])
+	const onChangeExpiration = (date: Date) => setExpiresAt(date)
 
-	const onChangeTitle = useCallback(
+	const onChangeTitle = 
 		(e: ChangeEvent<HTMLInputElement>) => {
 			setTitle(e.target.value)
-		},
-		[setTitle]
-	)
+		}
 
-	const onChangeDescription = useCallback(
+	const onChangeDescription = 
 		(e: ChangeEvent<HTMLInputElement>) => {
 			setDescription(e.target.value)
-		},
-		[setDescription]
-	)
+		}
 
-	const updateDocTitle = useCallback(
-		(i: number) => (title: string) => {
+	const updateDocTitle = (i: number) => (title: string) => {
 			setDocs((docs) =>
 				docs.map((doc, index) => (i === index ? { ...doc, title } : doc))
 			)
-		},
-		[setDocs]
-	)
+		}
 
 	const updateDocContent = (i: number) => (content: string) => {
 		setDocs((docs) =>
@@ -190,7 +188,7 @@ const Post = ({
 		setDocs((docs) => docs.filter((_, index) => i !== index))
 	}
 
-	const uploadDocs = (files: DocumentType[]) => {
+	const uploadDocs = (files: Document[]) => {
 		// if no title is set and the only document is empty,
 		const isFirstDocEmpty =
 			docs.length <= 1 && (docs.length ? docs[0].title === "" : true)

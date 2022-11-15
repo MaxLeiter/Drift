@@ -1,4 +1,4 @@
-import type { Document } from "@lib/types"
+import type { Document } from "../new"
 import DocumentComponent from "./edit-document"
 import { ChangeEvent, memo, useCallback } from "react"
 

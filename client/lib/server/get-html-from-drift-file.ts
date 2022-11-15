@@ -36,6 +36,8 @@ ${content}
 		contentToRender = "\n" + content
 	}
 
-	const html = markdown(contentToRender)
+	const html = markdown(contentToRender, {
+		showLineNumbers: false
+	})
 	return html
 }

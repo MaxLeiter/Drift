@@ -1,7 +1,6 @@
-import type { Post } from "@lib/types"
 import PostPage from "app/(posts)/post/[id]/components/post-page"
 import { notFound } from "next/navigation"
-import { getAllPosts, getPostById } from "@lib/server/prisma"
+import { getPostById, Post } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 
 export type PostProps = {
@@ -24,7 +23,7 @@ export type PostProps = {
 const getPost = async (id: string) => {
 	const post = await getPostById(id, {
 		withFiles: true,
-		withAuthor: true,
+		withAuthor: true
 	})
 	const user = await getCurrentUser()
 
@@ -57,7 +56,6 @@ const getPost = async (id: string) => {
 			isAuthor: isAuthorOrAdmin
 		}
 	}
-
 
 	// if expired
 	if (post.expiresAt && !isAuthorOrAdmin) {

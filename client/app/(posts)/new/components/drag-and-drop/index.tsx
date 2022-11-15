@@ -1,8 +1,6 @@
 import { Text, useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
-import { memo } from "react"
 import { useDropzone } from "react-dropzone"
 import styles from "./drag-and-drop.module.css"
-import type { Document } from "@lib/types"
 import generateUUID from "@lib/generate-uuid"
 import {
 	allowedFileTypes,
@@ -10,6 +8,7 @@ import {
 	allowedFileExtensions
 } from "@lib/constants"
 import byteToMB from "@lib/byte-to-mb"
+import type { Document } from "../new"
 
 function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 	const { palette } = useTheme()

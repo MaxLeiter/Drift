@@ -1,12 +1,12 @@
 import { useToasts } from "@geist-ui/core/dist"
-import { PostWithFiles } from "@lib/server/prisma"
+import { Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import PasswordModal from "@components/password-modal"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 type Props = {
-	setPost: (post: PostWithFiles) => void
-	postId: PostWithFiles["id"]
+	setPost: (post: PostWithFilesAndAuthor) => void
+	postId: Post["id"]
 }
 
 const PasswordModalPage = ({ setPost, postId }: Props) => {

@@ -79,7 +79,7 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse<any>) {
 		return res.status(400).json({ error: "Missing id" })
 	}
 
-	const post = await getPostById(id, false)
+	const post = await getPostById(id)
 
 	if (!post) {
 		return res.status(404).json({ message: "Post not found" })
@@ -126,7 +126,7 @@ async function handleDelete(req: NextApiRequest, res: NextApiResponse<any>) {
 		return res.status(400).json({ error: "Missing id" })
 	}
 
-	const post = await getPostById(id, false)
+	const post = await getPostById(id)
 
 	if (!post) {
 		return res.status(404).json({ message: "Post not found" })

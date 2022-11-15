@@ -17,6 +17,7 @@ const NewFromExisting = async ({
 
 	const post = await getPostById(id, {
 		withFiles: true,
+		withAuthor: false
 	})
 
 	return <NewPost initialPost={post} newPostParent={id} />

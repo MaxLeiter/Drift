@@ -2,7 +2,6 @@ import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
 import "@styles/markdown.css"
 import "@styles/syntax.css"
-import Skeleton from "@components/skeleton"
 import { Spinner } from "@geist-ui/core/dist"
 
 type Props = {

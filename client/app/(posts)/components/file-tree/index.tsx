@@ -1,4 +1,4 @@
-import { File } from "@lib/types"
+import { File } from "@lib/server/prisma"
 import FileIcon from "@geist-ui/icons/fileText"
 import CodeIcon from "@geist-ui/icons/fileLambda"
 import styles from "./file-tree.module.css"
