@@ -36,7 +36,7 @@ export default withAuth(
 )
 
 export const config = {
-	match: [
+	matcher: [
 		// "/signout",
 		// "/",
 		"/signin",

@@ -1,10 +1,7 @@
-import type { PostVisibility } from "@lib/types"
 import Badge from "../badge"
 
-type CastPostVisibility = PostVisibility | string
-
 type Props = {
-	visibility: CastPostVisibility
+	visibility: string
 }
 
 const VisibilityBadge = ({ visibility }: Props) => {

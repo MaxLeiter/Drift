@@ -10,7 +10,6 @@ import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
-import type { PostVisibility } from "@lib/types"
 import type { File } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
@@ -76,7 +75,7 @@ const ListItem = ({
 						)}
 
 						<div className={styles.badges}>
-							<VisibilityBadge visibility={post.visibility as PostVisibility} />
+							<VisibilityBadge visibility={post.visibility} />
 							<Badge type="secondary">
 								{post.files?.length === 1
 									? "1 file"

@@ -2,15 +2,15 @@
 import SettingsGroup from "@components/settings-group"
 import { Fieldset, useToasts } from "@geist-ui/core/dist"
 import byteToMB from "@lib/byte-to-mb"
-import { Post } from "@lib/server/prisma";
+import {  PostWithFiles } from "@lib/server/prisma";
 import Table from "rc-table"
-import { useEffect, useMemo, useState } from "react"
+import {  useMemo } from "react"
 import ActionDropdown from "./action-dropdown"
 
 const PostTable = ({ 
 	  posts,
 }: {
-	  posts: Post[]
+	  posts: PostWithFiles[]
 }) => {
 	const tablePosts = useMemo(
 		() =>

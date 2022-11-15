@@ -37,10 +37,9 @@ const getPost = async (id: string) => {
 		return { post, isAuthor: isAuthorOrAdmin }
 	}
 
-	// must be authed to see unlisted/private
 	if (
-		(post.visibility === "unlisted" || post.visibility === "private") &&
-		!user
+		(post.visibility === "private") &&
+		!isAuthorOrAdmin
 	) {
 		return notFound()
 	}

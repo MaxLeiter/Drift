@@ -1,5 +1,4 @@
 import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core/dist"
-import type { PostVisibility } from "@lib/types"
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
 
@@ -39,7 +38,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 	)
 
 	const onSubmit = useCallback(
-		async (visibility: PostVisibility, password?: string) => {
+		async (visibility: string, password?: string) => {
 			if (visibility === "protected" && !password) {
 				setPasswordModalVisible(true)
 				return

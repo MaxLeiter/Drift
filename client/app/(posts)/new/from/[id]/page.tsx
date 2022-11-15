@@ -1,6 +1,7 @@
 import NewPost from "../../components/new"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
+import { getSession } from "@lib/server/session"
 
 const NewFromExisting = async ({
 	params
@@ -9,6 +10,11 @@ const NewFromExisting = async ({
 		id: string
 	}
 }) => {
+	const session = await getSession()
+	if (!session?.user) {
+		return redirect("/signin")
+	}
+
 	const { id } = params
 
 	if (!id) {

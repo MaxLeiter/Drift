@@ -1,7 +1,7 @@
 "use client"
 
 import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
-import { User } from "@lib/server/prisma"
+import { User } from "next-auth"
 import {  useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
