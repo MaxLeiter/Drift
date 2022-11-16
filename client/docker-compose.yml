@@ -1,0 +1,34 @@
+services:
+  drift:
+    build:
+      context: ./
+    container_name: drift
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - WELCOME_CONTENT="## Drift is a self-hostable clone of GitHub Gist. \nIt is a simple way to share code and text snippets with your friends, with support for the following:\n  \n  - Render GitHub Extended Markdown (including images)\n  - User authentication\n  - Private, public, and password protected posts\n  - Markdown is rendered and stored on the server\n  - Syntax highlighting and automatic language detection\n  - Drag-and-drop file uploading\n\n  If you want to signup, you can join at [/signup](/signup) as long as you have a passcode provided by the administrator (which you don\'t need for this demo). **This demo is on a memory-only database, so accounts and pastes can be deleted at any time.** \n\nYou can find the source code on [GitHub](https://github.com/MaxLeiter/drift)."
+      - WELCOME_TITLE="Drift"
+      - REGISTRATION_PASSWORD=""
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=secret
+      - GITHUB_CLIENT_ID=64100c941c2474a5698a
+      - GITHUB_CLIENT_SECRET=cf4c1d510741a439c77d0593e36469d234eca894
+      - DATABASE_URL=postgressql://maxleiter:wHaQdWJcZz2pWd0@postgres:5432/postgres
+      - DRIFT_URL=http://localhost:3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./drift:/app
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      - POSTGRES_PASSWORD=wHaQdWJcZz2pWd0
+      - POSTGRES_USER=maxleiter
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres:/var/lib/postgresql/data

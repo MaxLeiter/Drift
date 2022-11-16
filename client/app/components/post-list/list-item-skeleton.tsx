@@ -1,5 +1,6 @@
+import Card from "@components/card"
 import Skeleton from "@components/skeleton"
-import { Card, Divider, Grid, Spacer } from "@geist-ui/core/dist"
+import { Divider, Grid, Spacer } from "@geist-ui/core/dist"
 
 const ListItemSkeleton = () => (
 	<Card>
@@ -17,10 +18,7 @@ const ListItemSkeleton = () => (
 		</Grid.Container>
 
 		<Divider h="1px" my={0} />
-
-		<Card.Content>
-			<Skeleton width={200} />
-		</Card.Content>
+		<Skeleton width={200} />
 	</Card>
 )
 

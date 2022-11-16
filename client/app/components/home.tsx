@@ -1,10 +1,11 @@
 "use client"
 import ShiftBy from "@components/shift-by"
-import { Spacer, Tabs, Card, Textarea, Text } from "@geist-ui/core/dist"
+import { Spacer, Tabs, Textarea, Text } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
 // TODO:components/new-post/ move these styles
 import markdownStyles from "app/(posts)/components/preview/preview.module.css";
+import Card from "./card"
 const Home = ({
 	introTitle,
 	introContent,
@@ -39,7 +40,7 @@ const Home = ({
 						{/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
 						<div
 							style={{
-								marginTop: "var(--gap-half)",
+								marginTop: "var(--gap)",
 								display: "flex",
 								flexDirection: "column"
 							}}
@@ -56,7 +57,7 @@ const Home = ({
 						</div>
 					</Tabs.Item>
 					<Tabs.Item label="Preview" value="preview">
-						<div style={{ marginTop: "var(--gap-half)" }}>
+						<div>
 							<article
 								className={markdownStyles.markdownPreview}
 								dangerouslySetInnerHTML={{ __html: rendered }}

@@ -1,0 +1,15 @@
+.card {
+	background: var(--bg);
+	border-radius: var(--radius);
+	color: var(--fg);
+	border: 1px solid var(--light-gray);
+	width: auto;
+	height: auto;
+}
+
+
+.card .content {
+    padding: var(--gap);
+    width: 100%;
+    height: auto;
+}

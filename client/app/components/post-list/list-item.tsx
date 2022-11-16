@@ -1,5 +1,5 @@
 import VisibilityBadge from "../badges/visibility-badge"
-import { Text, Card, Divider, Button } from "@geist-ui/core/dist"
+import {  Divider, Button } from "@geist-ui/core/dist"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
@@ -13,6 +13,7 @@ import type { PostWithFiles } from "@lib/server/prisma"
 import type { File } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
+import Card from "@components/card"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -38,7 +39,7 @@ const ListItem = ({
 		<FadeIn>
 			<li key={post.id}>
 				<Card style={{ overflowY: "scroll" }}>
-					<Card.Body>
+					<>
 						<div className={styles.title}>
 							<h3 style={{ display: "inline-block" }}>
 								<Link
@@ -84,9 +85,9 @@ const ListItem = ({
 							<CreatedAgoBadge createdAt={post.createdAt} />
 							<ExpirationBadge postExpirationDate={post.expiresAt} />
 						</div>
-					</Card.Body>
-					<Divider h="1px" my={0} />
-					<Card.Content>
+					</>
+					<Divider h="1px" my={2} />
+					<>
 						{post?.files?.map((file: File) => {
 							return (
 								<div key={file.id}>
@@ -96,7 +97,7 @@ const ListItem = ({
 								</div>
 							)
 						})}
-					</Card.Content>
+					</>
 				</Card>
 			</li>
 		</FadeIn>

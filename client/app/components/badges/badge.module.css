@@ -8,11 +8,13 @@
 	border-radius: var(--radius);
 	background-color: var(--light-gray);
 	font-size: .85em;
+	line-height: 1;
 }
 
 .badgeText {
 	font-size: var(--font-size-1);
 	font-weight: var(--font-weight-bold);
+	line-height: .5;
 }
 
 .primary {
@@ -31,7 +33,7 @@
 
 .warning {
     background-color: var(--warning);
-	color: var(--bg);
+	color: var(--fg);
 }
 
 .error {

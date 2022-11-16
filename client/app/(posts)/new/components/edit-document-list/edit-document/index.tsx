@@ -125,7 +125,7 @@ const Document = ({
 							{/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
 							<div
 								style={{
-									marginTop: "var(--gap-half)",
+									marginTop: 6,
 									display: "flex",
 									flexDirection: "column"
 								}}
@@ -147,7 +147,7 @@ const Document = ({
 							</div>
 						</Tabs.Item>
 						<Tabs.Item label="Preview" value="preview">
-							<div style={{ marginTop: "var(--gap-half)" }}>
+							<div>
 								<Preview height={height} title={title} content={content} />
 							</div>
 						</Tabs.Item>
