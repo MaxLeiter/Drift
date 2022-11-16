@@ -8,6 +8,7 @@
 .header .title .badges {
 	display: flex;
 	gap: var(--gap-half);
+	flex-wrap: wrap;
 }
 
 .header .title h3 {
@@ -41,8 +42,8 @@
 	}
 
 	.header .title .badges {
-		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 	}
 
 	.header .buttons {

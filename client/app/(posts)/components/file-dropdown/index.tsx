@@ -1,55 +1,39 @@
+import Button from "@components/button"
+import { Popover } from "@components/popover"
 import ShiftBy from "@components/shift-by"
-import { Button, Popover } from "@geist-ui/core/dist"
 import ChevronDown from "@geist-ui/icons/chevronDown"
 import CodeIcon from "@geist-ui/icons/fileFunction"
 import FileIcon from "@geist-ui/icons/fileText"
 import { codeFileExtensions } from "@lib/constants"
+import clsx from "clsx"
 import type { File } from "lib/server/prisma"
-import { useCallback, useEffect, useState } from "react"
 import styles from "./dropdown.module.css"
+import buttonStyles from "@components/button/button.module.css"
 
 type Item = File & {
 	icon: JSX.Element
 }
 
-const FileDropdown = ({
-	files,
-	isMobile
-}: {
-	files: File[]
-	isMobile: boolean
-}) => {
-	const [expanded, setExpanded] = useState(false)
-	const [items, setItems] = useState<Item[]>([])
-	const changeHandler = (next: boolean) => {
-		setExpanded(next)
-	}
-
-	const onOpen = () => setExpanded(true)
-	const onClose = useCallback(() => setExpanded(false), [setExpanded])
-
-	useEffect(() => {
-		const newItems = files.map((file) => {
-			const extension = file.title.split(".").pop()
-			if (codeFileExtensions.includes(extension || "")) {
-				return {
-					...file,
-					icon: <CodeIcon />
-				}
-			} else {
-				return {
-					...file,
-					icon: <FileIcon />
-				}
+const FileDropdown = ({ files }: { files: File[] }) => {
+	const items = files.map((file) => {
+		const extension = file.title.split(".").pop()
+		if (codeFileExtensions.includes(extension || "")) {
+			return {
+				...file,
+				icon: <CodeIcon />
 			}
-		})
-		setItems(newItems)
-	}, [files])
+		} else {
+			return {
+				...file,
+				icon: <FileIcon />
+			}
+		}
+	})
 
 	const content = (
 		<ul className={styles.content}>
 			{items.map((item) => (
-				<li key={item.id} onClick={onClose}>
+				<li key={item.id}>
 					<a href={`#${item.title}`}>
 						<ShiftBy y={5}>
 							<span className={styles.fileIcon}>{item.icon}</span>
@@ -63,29 +47,16 @@ const FileDropdown = ({
 		</ul>
 	)
 
-	// a list of files with an icon and a title
 	return (
-		<>
-			<Button
-				auto
-				onClick={onOpen}
-				className={styles.button}
-				iconRight={<ChevronDown />}
-				style={{ textTransform: "none" }}
-			>
-				Jump to {files.length} {files.length === 1 ? "file" : "files"}
-			</Button>
-			<Popover
-				style={{
-					transform: isMobile ? "translateX(110px)" : "translateX(-75px)"
-				}}
-				onVisibleChange={changeHandler}
-				content={content}
-				visible={expanded}
-				hideArrow={true}
-				onClick={onClose}
-			/>
-		</>
+		<Popover>
+			<Popover.Trigger className={clsx(buttonStyles.button)}>
+				<div className={buttonStyles.icon}>
+					<ChevronDown />
+				</div>
+				<span>Jump to {files.length} {files.length === 1 ? "file" : "files"}</span>
+			</Popover.Trigger>
+			<Popover.Content>{content}</Popover.Content>
+		</Popover>
 	)
 }
 

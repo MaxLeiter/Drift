@@ -69,7 +69,6 @@ export const StaticPreview = ({
 	preview: string
 	height: string | number
 }) => {
-	console.log("content", preview)
 	return (
 		<article
 			className={styles.markdownPreview}

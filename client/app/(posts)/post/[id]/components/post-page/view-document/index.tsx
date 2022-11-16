@@ -1,17 +1,15 @@
-import { memo, useRef } from "react"
+import { memo } from "react"
 import styles from "./document.module.css"
 import Download from "@geist-ui/icons/download"
 import ExternalLink from "@geist-ui/icons/externalLink"
 import Skeleton from "@components/skeleton"
 import Link from "next/link"
 
-import { Tabs, Textarea, Tag, Spacer } from "@geist-ui/core/dist"
-import { StaticPreview } from "app/(posts)/components/preview"
-import FadeIn from "@components/fade-in"
 import Tooltip from "@components/tooltip"
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
 import DocumentTabs from "app/(posts)/components/tabs"
+import Input from "@components/input"
 
 // import Link from "next/link"
 type Props = {
@@ -66,7 +64,6 @@ const Document = ({
 	if (skeleton) {
 		return (
 			<>
-				<Spacer height={1} />
 				<div className={styles.card}>
 					<div className={styles.fileNameContainer}>
 						<Skeleton width={275} height={36} />
@@ -86,14 +83,14 @@ const Document = ({
 		<>
 			<div className={styles.card}>
 				<Link href={`#${title}`} className={styles.fileNameContainer}>
-					<Tag
-						height={"100%"}
+					<Input
 						id={`${title}`}
 						width={"100%"}
+						height={'2rem'}
 						style={{ borderRadius: 0 }}
-					>
-						{title || "Untitled"}
-					</Tag>
+						value={title || "Untitled"}
+						disabled
+					/>
 				</Link>
 				<div className={styles.descriptionContainer}>
 					<DownloadButton rawLink={rawLink()} />

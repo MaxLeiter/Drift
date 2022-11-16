@@ -49,7 +49,7 @@ export default function DocumentTabs({
 				</RadixTabs.Trigger>
 			</RadixTabs.List>
 			<RadixTabs.Content value="edit">
-				<FormattingIcons textareaRef={codeEditorRef} />
+				{isEditing && <FormattingIcons textareaRef={codeEditorRef} />}
 				<div
 					style={{
 						marginTop: 6,

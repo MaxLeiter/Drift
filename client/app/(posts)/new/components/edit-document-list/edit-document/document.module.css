@@ -28,21 +28,3 @@
 .textarea {
 	height: 100%;
 }
-
-.actionWrapper {
-	position: relative;
-	z-index: 1;
-}
-
-.actionWrapper .actions {
-	position: absolute;
-	right: 0;
-	top: 4px;
-}
-
-@media (max-width: 768px) {
-	.actionWrapper .actions {
-		position: relative;
-		margin-left: 0 !important;
-	}
-}

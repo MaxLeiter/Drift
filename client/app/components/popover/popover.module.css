@@ -1,0 +1,25 @@
+.root {
+	overflow: hidden;
+	border-radius: 0.375rem;
+	border: 1px solid var(--border);
+	background-color: var(--bg);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	animation: slide-in-from-top 0.1s cubic-bezier(0.4, 0, 1, 1) 0.1s;
+	animation-fill-mode: both;
+    width: 100%;
+}
+
+@keyframes slide-in-from-top {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+

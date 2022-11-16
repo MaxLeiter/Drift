@@ -3,8 +3,6 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: stretch;
-    align-content: stretch;
 }
 
 .button-group > * {
@@ -12,8 +10,20 @@
     margin: 0;
 }
 
-/* all buttons on the inside should have no border radius */
-
-.button-group :global(button) {
+.button-group > * {
     border-radius: 0 !important;
+}
+
+.button-group > button:first-of-type {
+    border-top-left-radius: var(--radius) !important;
+    border-bottom-left-radius: var(--radius) !important;
+}
+
+.button-group > button:last-of-type {
+    border-top-right-radius: var(--radius) !important;
+    border-bottom-right-radius: var(--radius) !important;
+}
+
+.vertical {
+    flex-direction: column;
 }

@@ -1,8 +1,3 @@
-.button:root {
-	--hover: var(--bg);
-	--hover-bg: var(--fg);
-}
-
 .button {
 	user-select: none;
 	cursor: pointer;
@@ -14,8 +9,8 @@
 
 .button:hover,
 .button:focus {
-	color: var(--hover);
-	background: var(--hover-bg);
+	color: var(--fg);
+	background: var(--bg);
 	border: 1px solid var(--darker-gray);
 }
 
@@ -23,6 +18,11 @@
 	cursor: not-allowed;
 	background: var(--lighter-gray);
 	color: var(--gray);
+}
+
+.button[disabled]:hover,
+.button[disabled]:focus {
+	border: 1px solid currentColor;
 }
 
 .secondary {

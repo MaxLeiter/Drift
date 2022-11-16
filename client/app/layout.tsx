@@ -25,7 +25,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 									.find(row => row.startsWith('${THEME_COOKIE_NAME}='))
 									.split('=')[1];
 								document.documentElement.setAttribute('data-theme', theme);
-								console.log("theme on load", theme)
 							})();
 						`,
 					}}

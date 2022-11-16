@@ -2,17 +2,9 @@ import {
 	ChangeEvent,
 	memo,
 	useCallback,
-	useMemo,
-	useRef,
-	useState
 } from "react"
 import styles from "./document.module.css"
 import Trash from "@geist-ui/icons/trash"
-import FormattingIcons from "./formatting-icons"
-import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
-
-import { Tabs } from "@geist-ui/core/dist"
-import Preview from "../../../../components/preview"
 import Button from "@components/button"
 import Input from "@components/input"
 import DocumentTabs from "app/(posts)/components/tabs"

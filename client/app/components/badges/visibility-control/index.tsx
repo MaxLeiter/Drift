@@ -1,6 +1,8 @@
-import { Button, ButtonGroup, Loading, useToasts } from "@geist-ui/core/dist"
+import { Loading, useToasts } from "@geist-ui/core/dist"
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
+import ButtonGroup from "@components/button-group"
+import Button from "@components/button"
 
 type Props = {
 	postId: string
@@ -65,12 +67,12 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 			{isSubmitting ? (
 				<Loading />
 			) : (
-				<ButtonGroup margin={0}>
+				<ButtonGroup>
 					<Button
 						disabled={visibility === "private"}
 						onClick={() => onSubmit("private")}
 					>
-						Make private
+						Make Private
 					</Button>
 					<Button
 						disabled={visibility === "public"}
@@ -87,7 +89,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 					<Button onClick={() => onSubmit("protected")}>
 						{visibility === "protected"
 							? "Change Password"
-							: "Protect with password"}
+							: "Protect with Password"}
 					</Button>
 				</ButtonGroup>
 			)}

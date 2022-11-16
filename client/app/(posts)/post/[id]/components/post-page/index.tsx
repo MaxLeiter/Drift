@@ -4,7 +4,7 @@ import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from "./view-document"
 import styles from "./post-page.module.css"
 
-import { Button,  ButtonGroup, useMediaQuery } from "@geist-ui/core/dist"
+import { useMediaQuery } from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"
@@ -17,6 +17,8 @@ import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import PasswordModalPage from "./password-modal-wrapper"
 import VisibilityControl from "@components/badges/visibility-control"
 import { File, PostWithFilesAndAuthor } from "@lib/server/prisma"
+import ButtonGroup from "@components/button-group"
+import Button from "@components/button"
 
 type Props = {
 	post: string | PostWithFilesAndAuthor
@@ -99,39 +101,36 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 			{!isAvailable && <PasswordModalPage setPost={setPost} postId={post.id} />}
 			<div className={styles.header}>
 				<span className={styles.buttons}>
-					<ButtonGroup
-						vertical={isMobile}
-						marginLeft={0}
-						marginRight={0}
-						marginTop={1}
-						marginBottom={1}
-					>
+					<ButtonGroup vertical={isMobile}>
 						<Button
-							auto
-							icon={<Edit />}
+							iconLeft={<Edit />}
 							onClick={editACopy}
 							style={{ textTransform: "none" }}
 						>
 							Edit a Copy
 						</Button>
 						{post.parentId && (
-							<Button auto icon={<Parent />} onClick={viewParentClick}>
+							<Button iconLeft={<Parent />} onClick={viewParentClick}>
 								View Parent
 							</Button>
 						)}
 						<Button
-							auto
 							onClick={download}
-							icon={<Archive />}
+							iconLeft={<Archive />}
 							style={{ textTransform: "none" }}
 						>
 							Download as ZIP Archive
 						</Button>
-						<FileDropdown isMobile={isMobile} files={post.files || []} />
+						<FileDropdown files={post.files || []} />
 					</ButtonGroup>
 				</span>
 				<span className={styles.title}>
-					<h3>{post.title} <span style={{color: 'var(--gray)'}}>by {post.author?.displayName}</span></h3>
+					<h3>
+						{post.title}{" "}
+						<span style={{ color: "var(--gray)" }}>
+							by {post.author?.displayName}
+						</span>
+					</h3>
 					<span className={styles.badges}>
 						<VisibilityBadge visibility={visibility} />
 						<CreatedAgoBadge createdAt={post.createdAt} />

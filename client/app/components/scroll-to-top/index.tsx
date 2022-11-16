@@ -1,6 +1,6 @@
+import Button from "@components/button"
 import Tooltip from "@components/tooltip"
-import { Button, Spacer } from "@geist-ui/core/dist"
-import ChevronUp from "@geist-ui/icons/chevronUpCircleFill"
+import ChevronUp from "@geist-ui/icons/chevronUp"
 import { useEffect, useState } from "react"
 import styles from "./scroll.module.css"
 
@@ -26,15 +26,7 @@ const ScrollToTop = () => {
 	}
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "row",
-				width: "100%",
-				height: 24,
-				justifyContent: "flex-end"
-			}}
-		>
+		<div className={styles.root}>
 			<Tooltip
 				content="Scroll to Top"
 				className={`${styles["scroll-up"]} ${
@@ -44,12 +36,8 @@ const ScrollToTop = () => {
 				<Button
 					aria-label="Scroll to Top"
 					onClick={onClick}
-					style={{ background: "var(--light-gray)" }}
-					auto
-				>
-					<Spacer height={2 / 3} inline width={0} />
-					<ChevronUp />
-				</Button>
+					iconLeft={<ChevronUp />}
+				/>
 			</Tooltip>
 		</div>
 	)

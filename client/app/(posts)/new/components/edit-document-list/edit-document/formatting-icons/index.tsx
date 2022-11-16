@@ -6,16 +6,15 @@ import List from "@geist-ui/icons/list"
 
 import ImageIcon from "@geist-ui/icons/image"
 import { RefObject, useMemo } from "react"
-import styles from "../document.module.css"
+import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Tooltip from "@components/tooltip"
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
-
 // TODO: clean up
 
 const FormattingIcons = ({
-	textareaRef
+	textareaRef,
 }: {
 	textareaRef?: RefObject<TextareaMarkdownRef>
 }) => {
