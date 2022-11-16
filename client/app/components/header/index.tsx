@@ -1,15 +1,12 @@
 "use client"
 
 import {
-	ButtonGroup,
-	Button,
 	Page,
-	Spacer,
 	useBodyScroll,
 	useMediaQuery
 } from "@geist-ui/core/dist"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./header.module.css"
 
 import HomeIcon from "@geist-ui/icons/home"
@@ -23,11 +20,12 @@ import YourIcon from "@geist-ui/icons/list"
 import MoonIcon from "@geist-ui/icons/moon"
 import SettingsIcon from "@geist-ui/icons/settings"
 import SunIcon from "@geist-ui/icons/sun"
-import { useTheme } from "next-themes"
 // import useUserData from "@lib/hooks/use-user-data"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
+import { useTheme } from "@components/theme/ThemeClientContextProvider"
+import Button from "@components/button"
 
 type Tab = {
 	name: string
@@ -44,8 +42,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 	const isMobile = useMediaQuery("xs", { match: "down" })
 	// const { status } = useSession()
 	// const signedIn = status === "authenticated"
-	const { setTheme, resolvedTheme } = useTheme()
-
+	const { setTheme, theme } = useTheme()
 	useEffect(() => {
 		setBodyHidden(expanded)
 	}, [expanded, setBodyHidden])
@@ -68,16 +65,16 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 				name: isMobile ? "Change theme" : "",
 				onClick: function () {
 					if (typeof window !== "undefined")
-						setTheme(resolvedTheme === "light" ? "dark" : "light")
+						setTheme(theme === "light" ? "dark" : "light")
 				},
-				icon: resolvedTheme === "light" ? <MoonIcon /> : <SunIcon />,
+				icon: theme === "light" ? <MoonIcon /> : <SunIcon />,
 				value: "theme"
 			}
 		]
 
 		if (isAdmin) {
 			defaultPages.push({
-				name: "admin",
+				name: "Admin",
 				icon: <SettingsIcon />,
 				value: "admin",
 				href: "/admin"
@@ -87,25 +84,25 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 		if (signedIn)
 			return [
 				{
-					name: "new",
+					name: "New",
 					icon: <NewIcon />,
 					value: "new",
 					href: "/new"
 				},
 				{
-					name: "yours",
+					name: "Yours",
 					icon: <YourIcon />,
 					value: "yours",
 					href: "/mine"
 				},
 				{
-					name: "settings",
+					name: "Settings",
 					icon: <SettingsIcon />,
 					value: "settings",
 					href: "/settings"
 				},
 				{
-					name: "sign out",
+					name: "Sign Out",
 					icon: <SignOutIcon />,
 					value: "signout",
 					onClick: () => signOut()
@@ -115,7 +112,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 		else
 			return [
 				{
-					name: "home",
+					name: "Home",
 					icon: <HomeIcon />,
 					value: "home",
 					href: "/"
@@ -147,26 +144,29 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 	}
 
 	const getButton = (tab: Tab) => {
-		const activeStyle = pathname === tab.href ? styles.active : ""
+		const isActive = pathname === tab.href
+		const activeStyle = isActive ? styles.active : ""
 		if (tab.onClick) {
 			return (
 				<Button
-					auto={isMobile ? false : true}
 					key={tab.value}
-					icon={tab.icon}
+					iconLeft={tab.icon}
 					onClick={() => onTabChange(tab.value)}
 					className={`${styles.tab} ${activeStyle}`}
-					shadow={false}
+					aria-label={tab.name}
+					aria-current={isActive ? "page" : undefined}
 				>
 					{tab.name ? tab.name : undefined}
 				</Button>
 			)
 		} else if (tab.href) {
 			return (
-				<Link key={tab.value} href={tab.href} className={styles.tab}>
-					<Button auto={isMobile ? false : true} icon={tab.icon} shadow={false}>
-						{tab.name ? tab.name : undefined}
-					</Button>
+				<Link
+					key={tab.value}
+					href={tab.href}
+					className={`${styles.tab} ${activeStyle}`}
+				>
+					<Button iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
 				</Link>
 			)
 		}
@@ -180,28 +180,14 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 				<div className={styles.buttons}>{buttons}</div>
 			</div>
 			<div className={styles.controls}>
-				<Button
-					effect={false}
-					auto
-					type="abort"
-					onClick={() => setExpanded(!expanded)}
-					aria-label="Menu"
-				>
-					<Spacer height={5 / 6} width={0} />
+				<Button onClick={() => setExpanded(!expanded)} aria-label="Menu">
 					<MenuIcon />
 				</Button>
 			</div>
 			{/* setExpanded should occur elsewhere; we don't want to close if they change themes */}
 			{isMobile && expanded && (
 				<div className={styles.mobile} onClick={() => setExpanded(!expanded)}>
-					<ButtonGroup
-						vertical
-						style={{
-							background: "var(--bg)"
-						}}
-					>
-						{buttons}
-					</ButtonGroup>
+					{buttons}
 				</div>
 			)}
 		</Page.Header>

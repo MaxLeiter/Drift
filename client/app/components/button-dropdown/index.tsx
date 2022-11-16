@@ -79,7 +79,7 @@ const ButtonDropdown: React.FC<
 
 	return (
 		<div
-			className={`${styles.main} ${className}`}
+			className={`${styles.main} ${className || ""}`}
 			onMouseDown={onMouseDown}
 			onMouseUp={onMouseUp}
 			onMouseLeave={onMouseLeave}

@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react"
 import MoonIcon from "@geist-ui/icons/moon"
 import SunIcon from "@geist-ui/icons/sun"
-// import { useAllThemes, useTheme } from '@geist-ui/core'
 import styles from "./header.module.css"
 import { Select } from "@geist-ui/core/dist"
-import { useTheme } from "next-themes"
+import { useTheme } from "@components/theme/ThemeClientContextProvider"
 
 const Controls = () => {
-	const [mounted, setMounted] = useState(false)
-	const { resolvedTheme, setTheme } = useTheme()
-	useEffect(() => setMounted(true), [])
-	if (!mounted) return null
+	const { theme, setTheme } = useTheme()
 	const switchThemes = () => {
-		if (resolvedTheme === "dark") {
+		if (theme === "dark") {
 			setTheme("light")
 		} else {
 			setTheme("dark")
@@ -26,7 +22,7 @@ const Controls = () => {
 				h="28px"
 				pure
 				onChange={switchThemes}
-				value={resolvedTheme}
+				value={theme}
 			>
 				<Select.Option value="light">
 					<span className={styles.selectContent}>

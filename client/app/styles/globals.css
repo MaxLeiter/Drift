@@ -47,6 +47,7 @@
 	--border: var(--lighter-gray);
 	--warning: rgb(27, 134, 23);
 	--link: #3291ff;
+	color-scheme: dark;
 }
 
 [data-theme="light"] {
@@ -69,7 +70,9 @@
 	--header-bg: rgba(255, 255, 255, 0.8);
 	--gray-alpha: rgba(19, 20, 21, 0.5);
 	--selection: var(0, 0, 0, .6);
+	color-scheme: light;
 }
+
 
 * {
 	box-sizing: border-box;
@@ -96,7 +99,6 @@ body {
 	font-family: var(--font-sans);
 	display: flex;
 	flex-direction: column;
-	/* TODO: this should be unnecessary. Overides the browser background for color-scheme while geist-ui catches up  */
 	background: var(--bg);
 }
 
@@ -129,6 +131,12 @@ a.reset {
 pre,
 code {
 	font-family: var(--font-mono) !important;
+}
+
+hr {
+	border: 0;
+	border-bottom: 1px solid var(--light-gray);
+	margin: var(--gap) 0;
 }
 
 @media print {
@@ -166,3 +174,4 @@ main {
 	margin-top: 0 !important;
 	padding-top: 0 !important;
 }
+

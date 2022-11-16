@@ -46,8 +46,13 @@
 	margin-left: var(--gap-half);
 }
 
+.iconLeft {
+	margin-right: var(--gap-half);
+}
+
 .icon svg {
 	display: block;
 	width: 100%;
 	height: 100%;
+	transform: scale(1.2) translateY(-0.05em);
 }

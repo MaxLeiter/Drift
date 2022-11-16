@@ -1,5 +1,5 @@
-'use client';
-import { Fieldset, Text, Divider } from "@geist-ui/core/dist"
+"use client"
+import Card from "@components/card"
 import styles from "./settings-group.module.css"
 
 type Props = {
@@ -9,13 +9,11 @@ type Props = {
 
 const SettingsGroup = ({ title, children }: Props) => {
 	return (
-		<Fieldset width={'100%'}>
-			<Fieldset.Content>
-				<Text h4>{title}</Text>
-			</Fieldset.Content>
-			<Divider />
-			<Fieldset.Content className={styles.content}>{children}</Fieldset.Content>
-		</Fieldset>
+		<Card>
+			<h4>{title}</h4>
+			<hr />
+			<div className={styles.content}>{children}</div>
+		</Card>
 	)
 }
 

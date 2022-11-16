@@ -1,6 +1,4 @@
-"use client"
-
-import { Card } from "@geist-ui/core/dist"
+import Card from "@components/card"
 import * as RadixTooltip from "@radix-ui/react-tooltip"
 import "./tooltip.css"
 
@@ -16,14 +14,12 @@ const Tooltip = ({
 } & RadixTooltip.TooltipProps) => {
 	return (
 		<RadixTooltip.Root {...props}>
-			<RadixTooltip.Trigger asChild className={className}>{children}</RadixTooltip.Trigger>
+			<RadixTooltip.Trigger asChild className={className}>
+				{children}
+			</RadixTooltip.Trigger>
 
 			<RadixTooltip.Content>
-				<Card className="tooltip">
-					<Card.Body margin={0} padding={1 / 2}>
-						{content}
-					</Card.Body>
-				</Card>
+				<Card className="tooltip">{content}</Card>
 			</RadixTooltip.Content>
 		</RadixTooltip.Root>
 	)

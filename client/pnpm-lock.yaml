@@ -25,7 +25,7 @@ specifiers:
   katex: ^0.16.3
   next: 13.0.3
   next-auth: ^4.16.4
-  next-themes: npm:@wits/next-themes@0.2.7
+  next-themes: ^0.2.1
   next-unused: 0.0.6
   prettier: 2.6.2
   prisma: ^4.6.1
@@ -58,7 +58,7 @@ dependencies:
   jest: 29.3.1_@types+node@17.0.23
   next: 13.0.3_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.16.4_ogpkrxaz2lg6nectum6dl66tn4
-  next-themes: /@wits/next-themes/0.2.7_ogpkrxaz2lg6nectum6dl66tn4
+  next-themes: 0.2.1_ogpkrxaz2lg6nectum6dl66tn4
   rc-table: 7.24.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
@@ -1592,18 +1592,6 @@ packages:
       vfile: 5.3.5
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@wits/next-themes/0.2.7_ogpkrxaz2lg6nectum6dl66tn4:
-    resolution: {integrity: sha512-CpmNH3RRqf2w0i1Xbrz5GKNE/d5gMq1oBlGpofY9LWcjH225nUgrxP15wKRITRAbn68ERDbsBGEBiaRECTmQag==}
-    peerDependencies:
-      next: '*'
-      react: '*'
-      react-dom: '*'
-    dependencies:
-      next: 13.0.3_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /abbrev/1.1.1:
@@ -5127,6 +5115,18 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       uuid: 8.3.2
+    dev: false
+
+  /next-themes/0.2.1_ogpkrxaz2lg6nectum6dl66tn4:
+    resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 13.0.3_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /next-unused/0.0.6:

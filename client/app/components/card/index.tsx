@@ -9,7 +9,7 @@ export default function Card({
 	className?: string
 } & React.ComponentProps<"div">) {
 	return (
-		<div className={`${styles.card} ${className}`} {...props}>
+		<div className={`${styles.card} ${className || ""}`} {...props}>
 			<div className={styles.content}>{children}</div>
 		</div>
 	)
