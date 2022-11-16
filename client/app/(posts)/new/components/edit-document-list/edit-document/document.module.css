@@ -37,6 +37,7 @@
 .actionWrapper .actions {
 	position: absolute;
 	right: 0;
+	top: 4px;
 }
 
 @media (max-width: 768px) {

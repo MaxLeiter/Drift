@@ -11,8 +11,9 @@ import Trash from "@geist-ui/icons/trash"
 import FormattingIcons from "./formatting-icons"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
-import { Button, Input, Spacer, Tabs, Textarea } from "@geist-ui/core/dist"
+import { Input, Tabs, Textarea } from "@geist-ui/core/dist"
 import Preview from "../../../../components/preview"
+import Button from "@components/button"
 
 // import Link from "next/link"
 type Props = {
@@ -103,12 +104,11 @@ const Document = ({
 					/>
 					{remove && (
 						<Button
-							type="abort"
-							ghost
-							icon={<Trash />}
-							auto
+							iconLeft={<Trash />}
 							height={"36px"}
-							width={"36px"}
+							width={"48px"}
+							padding={0}
+							margin={0}
 							onClick={() => removeFile(remove)}
 						/>
 					)}

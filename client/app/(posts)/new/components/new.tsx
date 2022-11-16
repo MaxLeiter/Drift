@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, useToasts, Input, ButtonDropdown } from "@geist-ui/core/dist"
+import { useToasts, Input, ButtonDropdown } from "@geist-ui/core/dist"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
@@ -14,6 +14,7 @@ import { PostWithFiles } from "@lib/server/prisma"
 import PasswordModal from "../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
+import Button from "@components/button"
 const emptyDoc = {
 	title: "",
 	content: "",
@@ -162,21 +163,19 @@ const Post = ({
 
 	const onChangeExpiration = (date: Date) => setExpiresAt(date)
 
-	const onChangeTitle = 
-		(e: ChangeEvent<HTMLInputElement>) => {
-			setTitle(e.target.value)
-		}
+	const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+		setTitle(e.target.value)
+	}
 
-	const onChangeDescription = 
-		(e: ChangeEvent<HTMLInputElement>) => {
-			setDescription(e.target.value)
-		}
+	const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+		setDescription(e.target.value)
+	}
 
 	const updateDocTitle = (i: number) => (title: string) => {
-			setDocs((docs) =>
-				docs.map((doc, index) => (i === index ? { ...doc, title } : doc))
-			)
-		}
+		setDocs((docs) =>
+			docs.map((doc, index) => (i === index ? { ...doc, title } : doc))
+		)
+	}
 
 	const updateDocContent = (i: number) => (content: string) => {
 		setDocs((docs) =>
@@ -278,6 +277,9 @@ const Post = ({
 						])
 					}}
 					type="default"
+					style={{
+						flex: 1
+					}}
 				>
 					Add a File
 				</Button>

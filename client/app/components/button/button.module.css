@@ -9,14 +9,14 @@
 	border-radius: var(--radius);
 	border: 1px solid var(--border);
 	padding: var(--gap-half) var(--gap);
+	color: var(--darker-gray);
 }
 
 .button:hover,
 .button:focus {
-	outline: none;
 	color: var(--hover);
 	background: var(--hover-bg);
-	border: var(--);
+	border: 1px solid var(--darker-gray);
 }
 
 .button[disabled] {

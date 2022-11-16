@@ -1,5 +1,4 @@
 import VisibilityBadge from "../badges/visibility-badge"
-import {  Divider, Button } from "@geist-ui/core/dist"
 import FadeIn from "@components/fade-in"
 import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
@@ -14,6 +13,7 @@ import type { File } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
 import Card from "@components/card"
+import Button from "@components/button"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -41,7 +41,7 @@ const ListItem = ({
 				<Card style={{ overflowY: "scroll" }}>
 					<>
 						<div className={styles.title}>
-							<h3 style={{ display: "inline-block" }}>
+							<h3 style={{ display: "inline-block", margin: 0 }}>
 								<Link
 									colored
 									style={{ marginRight: "var(--gap)" }}
@@ -55,17 +55,17 @@ const ListItem = ({
 									{post.parentId && (
 										<Tooltip content={"View parent"}>
 											<Button
-												auto
-												icon={<Parent />}
+												iconRight={<Parent />}
 												onClick={viewParentClick}
+												height={38}
 											/>
 										</Tooltip>
 									)}
 									<Tooltip content={"Make a copy"}>
-										<Button auto iconRight={<Edit />} onClick={editACopy} />
+										<Button iconRight={<Edit />} onClick={editACopy} height={38} />
 									</Tooltip>
 									<Tooltip content={"Delete"}>
-										<Button iconRight={<Trash />} onClick={deletePost} auto />
+										<Button iconRight={<Trash />} onClick={deletePost} height={38} />
 									</Tooltip>
 								</span>
 							)}
@@ -86,7 +86,7 @@ const ListItem = ({
 							<ExpirationBadge postExpirationDate={post.expiresAt} />
 						</div>
 					</>
-					<Divider h="1px" my={2} />
+					<hr />
 					<>
 						{post?.files?.map((file: File) => {
 							return (

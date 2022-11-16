@@ -18,18 +18,16 @@
 	background: var(--bg);
 }
 
-.tabs .buttons > a:hover,
-.tabs .buttons > button:hover {
-	color: var(--fg);
-	box-shadow: inset 0 -1px 0 var(--fg);
-	transition: box-shadow 0.2s ease-in-out;
+.tabs button,
+.tabs a {
+	color: var(--darker-gray);
+	transition: color, box-shadow 0.2s ease-in-out;
 }
 
-.tabs a:active,
-.tabs a:focus,
-.tabs button:active,
-.tabs button:focus {
-	color: var(--darker-gray);
+.tabs .buttons a:hover,
+.tabs .buttons button:hover {
+	color: var(--fg);
+	box-shadow: inset 0 -1px 0 var(--fg);
 }
 
 .mobile {

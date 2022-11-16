@@ -1,4 +1,4 @@
-import { Text, useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
+import {  useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
 import { useDropzone } from "react-dropzone"
 import styles from "./drag-and-drop.module.css"
 import generateUUID from "@lib/generate-uuid"
@@ -79,7 +79,7 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 			<ul>
 				{errors.map((e) => (
 					<li key={e.code}>
-						<Text>{e.message}</Text>
+						{e.message}
 					</li>
 				))}
 			</ul>
@@ -100,12 +100,12 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 				{!isDragActive && (
 					<p style={{color: "var(--gray)"}}>Drag some files here, or {verb} to select files</p>
 				)}
-				{isDragActive && <Text p>Release to drop the files here</Text>}
+				{isDragActive && <p>Release to drop the files here</p>}
 			</div>
 			{fileRejections.length > 0 && (
 				<ul className={styles.error}>
 					{/* <Button style={{ float: 'right' }} type="abort" onClick={() => fileRejections.splice(0, fileRejections.length)} auto iconRight={<XCircle />}></Button> */}
-					<Text h5>There was a problem with one or more of your files.</Text>
+					<p>There was a problem with one or more of your files.</p>
 					{fileRejectionItems}
 				</ul>
 			)}

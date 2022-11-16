@@ -1,7 +1,5 @@
 "use client"
 
-import { Button, Input, Text } from "@geist-ui/core/dist"
-
 import styles from "./post-list.module.css"
 import ListItemSkeleton from "./list-item-skeleton"
 import ListItem from "./list-item"
@@ -9,6 +7,8 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
+import Input from "@components/input"
+import Button from "@components/button"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
@@ -106,13 +106,13 @@ const PostList = ({
 		<div className={styles.container}>
 			<div className={styles.searchContainer}>
 				<Input
-					scale={3 / 2}
 					placeholder="Search..."
 					onChange={handleSearchChange}
 					disabled={Boolean(!posts?.length)}
+					style={{ maxWidth: 300 }}
 				/>
 			</div>
-			{!posts && <Text type="error">Failed to load.</Text>}
+			{!posts && <p style={{color: 'var(--warning)'}}>Failed to load.</p>}
 			{!posts?.length && searching && (
 				<ul>
 					<li>
@@ -124,13 +124,13 @@ const PostList = ({
 				</ul>
 			)}
 			{posts?.length === 0 && posts && (
-				<Text type="secondary">
+				<p>
 					No posts found. Create one{" "}
 					<Link colored href="/new">
 						here
 					</Link>
 					.
-				</Text>
+				</p>
 			)}
 			{posts?.length > 0 && (
 				<div>

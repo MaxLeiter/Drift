@@ -7,9 +7,10 @@ import List from "@geist-ui/icons/list"
 import ImageIcon from "@geist-ui/icons/image"
 import { RefObject, useMemo } from "react"
 import styles from "../document.module.css"
-import { Button, ButtonGroup } from "@geist-ui/core/dist"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Tooltip from "@components/tooltip"
+import Button from "@components/button"
+import ButtonGroup from "@components/button-group"
 
 // TODO: clean up
 
@@ -69,11 +70,8 @@ const FormattingIcons = ({
 						key={name}
 					>
 						<Button
-							auto
-							scale={2 / 3}
-							px={0.6}
 							aria-label={name}
-							icon={icon}
+							iconRight={icon}
 							onMouseDown={(e) => e.preventDefault()}
 							onClick={action}
 						/>
