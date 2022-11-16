@@ -1,6 +1,6 @@
 "use client"
 
-import { useToasts, Input, ButtonDropdown } from "@geist-ui/core/dist"
+import { useToasts, ButtonDropdown } from "@geist-ui/core/dist"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
@@ -15,6 +15,7 @@ import PasswordModal from "../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
 import Button from "@components/button"
+import Input from "@components/input"
 const emptyDoc = {
 	title: "",
 	content: "",
@@ -287,7 +288,7 @@ const Post = ({
 					<DatePicker
 						onChange={onChangeExpiration}
 						customInput={
-							<Input label="Expires at" clearable width="100%" height="40px" />
+							<Input label="Expires at" width="100%" height="40px" />
 						}
 						placeholderText="Won't expire"
 						selected={expiresAt}

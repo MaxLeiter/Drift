@@ -78,6 +78,10 @@
 	box-sizing: border-box;
 }
 
+*:focus-visible {
+	outline: 1px solid var(--gray);
+}
+
 ::selection {
 	text-shadow: none;
 	background: var(--fg) !important;
@@ -111,7 +115,7 @@ input,
 button,
 textarea,
 select {
-	border: var(--border);
+	border: none;
 	font-size: 1rem;
 	background: var(--bg);
 }
@@ -173,5 +177,19 @@ hr {
 main {
 	margin-top: 0 !important;
 	padding-top: 0 !important;
+}
+
+
+textarea {
+	resize: vertical;
+	border: 1px solid var(--border);
+	font-family: var(--font-sans);
+	padding: var(--gap-half);
+	border-radius: var(--radius);
+}
+
+textarea:focus {
+	outline: none;
+	border-color: var(--fg);
 }
 

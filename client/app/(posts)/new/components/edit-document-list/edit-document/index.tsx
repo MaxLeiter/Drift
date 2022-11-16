@@ -11,9 +11,11 @@ import Trash from "@geist-ui/icons/trash"
 import FormattingIcons from "./formatting-icons"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 
-import { Input, Tabs, Textarea } from "@geist-ui/core/dist"
+import { Tabs } from "@geist-ui/core/dist"
 import Preview from "../../../../components/preview"
 import Button from "@components/button"
+import Input from "@components/input"
+import DocumentTabs from "app/(posts)/components/tabs"
 
 // import Link from "next/link"
 type Props = {
@@ -35,17 +37,8 @@ const Document = ({
 	initialTab = "edit",
 	handleOnContentChange
 }: Props) => {
-	const codeEditorRef = useRef<TextareaMarkdownRef>(null)
-	const [tab, setTab] = useState(initialTab)
 	// const height = editable ? "500px" : '100%'
 	const height = "100%"
-
-	const handleTabChange = (newTab: string) => {
-		if (newTab === "edit") {
-			codeEditorRef.current?.focus()
-		}
-		setTab(newTab as "edit" | "preview")
-	}
 
 	const onTitleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) =>
@@ -71,22 +64,6 @@ const Document = ({
 		[content]
 	)
 
-	// if (skeleton) {
-	//     return <>
-	//         <Spacer height={1} />
-	//         <div className={styles.card}>
-	//             <div className={styles.fileNameContainer}>
-	//                 <Skeleton width={275} height={36} />
-	//                 {remove && <Skeleton width={36} height={36} />}
-	//             </div>
-	//             <div className={styles.descriptionContainer}>
-	//                 <div style={{ flexDirection: 'row', display: 'flex' }}><Skeleton width={125} height={36} /></div>
-	//                 <Skeleton width={'100%'} height={350} />
-	//             </div >
-	//         </div>
-	//     </>
-	// }
-
 	return (
 		<>
 			<div className={styles.card}>
@@ -95,63 +72,38 @@ const Document = ({
 						placeholder="MyFile.md"
 						value={title}
 						onChange={onTitleChange}
-						marginTop="var(--gap-double)"
-						size={1.2}
-						font={1.2}
 						label="Filename"
 						width={"100%"}
 						id={title}
+						style={{
+							borderTopRightRadius: remove ? 0 : "var(--radius)",
+							borderBottomRightRadius: remove ? 0 : "var(--radius)"
+						}}
 					/>
 					{remove && (
 						<Button
 							iconLeft={<Trash />}
-							height={"36px"}
+							height={"39px"}
 							width={"48px"}
 							padding={0}
 							margin={0}
 							onClick={() => removeFile(remove)}
+							style={{
+								borderTopLeftRadius: 0,
+								borderBottomLeftRadius: 0
+							}}
 						/>
 					)}
 				</div>
 				<div className={styles.descriptionContainer}>
-					{tab === "edit" && <FormattingIcons textareaRef={codeEditorRef} />}
-					<Tabs
-						onChange={handleTabChange}
-						initialValue={initialTab}
-						hideDivider
-						leftSpace={0}
-					>
-						<Tabs.Item label={"Edit"} value="edit">
-							{/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-							<div
-								style={{
-									marginTop: 6,
-									display: "flex",
-									flexDirection: "column"
-								}}
-							>
-								<TextareaMarkdown.Wrapper ref={codeEditorRef}>
-									<Textarea
-										onPaste={onPaste ? onPaste : undefined}
-										ref={codeEditorRef}
-										placeholder=""
-										value={content}
-										onChange={handleOnContentChange}
-										width="100%"
-										// TODO: Textarea should grow to fill parent if height == 100%
-										style={{ flex: 1, minHeight: 350 }}
-										resize="vertical"
-										className={styles.textarea}
-									/>
-								</TextareaMarkdown.Wrapper>
-							</div>
-						</Tabs.Item>
-						<Tabs.Item label="Preview" value="preview">
-							<div>
-								<Preview height={height} title={title} content={content} />
-							</div>
-						</Tabs.Item>
-					</Tabs>
+					<DocumentTabs
+						isEditing={true}
+						defaultTab={"edit"}
+						handleOnContentChange={handleOnContentChange}
+						onPaste={onPaste}
+						title={title}
+						content={content}
+					/>
 				</div>
 			</div>
 		</>

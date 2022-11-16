@@ -1,9 +1,8 @@
 import { ChangeEvent, memo, useEffect, useState } from "react"
-import { Text } from "@geist-ui/core/dist"
 
 import ShiftBy from "@components/shift-by"
 import styles from "../post.module.css"
-import { Input } from "@geist-ui/core/dist"
+import Input from "@components/input"
 
 const titlePlaceholders = [
 	"How to...",
@@ -30,20 +29,15 @@ const Title = ({ onChange, title }: props) => {
 	}, [])
 	return (
 		<div className={styles.title}>
-			<Text h1 width={"150px"} className={styles.drift}>
-				Drift
-			</Text>
-			<ShiftBy y={-3}>
-				<Input
-					placeholder={placeholder}
-					value={title || ""}
-					onChange={onChange}
-					height={"55px"}
-					font={1.5}
-					label="Post title"
-					style={{ width: "100%" }}
-				/>
-			</ShiftBy>
+			<h1 className={styles.drift}>Drift</h1>
+			<Input
+				placeholder={placeholder}
+				value={title || ""}
+				onChange={onChange}
+				height={"55px"}
+				label="Post title"
+				style={{ width: "100%", fontSize: 18 }}
+			/>
 		</div>
 	)
 }

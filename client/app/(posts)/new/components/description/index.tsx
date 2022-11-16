@@ -1,5 +1,5 @@
+import Input from "@components/input"
 import { ChangeEvent, memo } from "react"
-import { Input } from "@geist-ui/core/dist"
 
 import styles from "../post.module.css"
 

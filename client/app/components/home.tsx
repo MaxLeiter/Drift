@@ -1,10 +1,9 @@
 "use client"
-import ShiftBy from "@components/shift-by"
-import { Spacer, Tabs, Textarea, Text } from "@geist-ui/core/dist"
+import {  Tabs, Textarea } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
 // TODO:components/new-post/ move these styles
-import markdownStyles from "app/(posts)/components/preview/preview.module.css";
+import markdownStyles from "app/(posts)/components/preview/preview.module.css"
 import Card from "./card"
 const Home = ({
 	introTitle,
@@ -20,19 +19,14 @@ const Home = ({
 			<div
 				style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
 			>
-				<ShiftBy y={-2}>
-					<Image
-						src={"/assets/logo-optimized.svg"}
-						width={48}
-						height={48}
-						alt=""
-						priority
-					/>
-				</ShiftBy>
-				<Spacer />
-				<Text style={{ display: "inline" }} h1>
-					{introTitle}
-				</Text>
+				<Image
+					src={"/assets/logo-optimized.svg"}
+					width={48}
+					height={48}
+					alt=""
+					priority
+				/>
+				<h1 style={{ marginLeft: "var(--gap)" }}>{introTitle}</h1>
 			</div>
 			<Card>
 				<Tabs initialValue={"preview"} hideDivider leftSpace={0}>
@@ -45,13 +39,11 @@ const Home = ({
 								flexDirection: "column"
 							}}
 						>
-							<Textarea
+							<textarea
 								readOnly
 								value={introContent}
-								width="100%"
 								// TODO: Textarea should grow to fill parent if height == 100%
 								style={{ flex: 1, minHeight: 350 }}
-								resize="vertical"
 								className={styles.textarea}
 							/>
 						</div>

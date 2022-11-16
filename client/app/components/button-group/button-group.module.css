@@ -11,3 +11,9 @@
     flex: 1 1 auto;
     margin: 0;
 }
+
+/* all buttons on the inside should have no border radius */
+
+.button-group :global(button) {
+    border-radius: 0 !important;
+}

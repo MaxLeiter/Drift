@@ -5,17 +5,13 @@ import ExternalLink from "@geist-ui/icons/externalLink"
 import Skeleton from "@components/skeleton"
 import Link from "next/link"
 
-import {
-	Button,
-	ButtonGroup,
-	Spacer,
-	Tabs,
-	Textarea,
-	Tag
-} from "@geist-ui/core/dist"
+import { Tabs, Textarea, Tag, Spacer } from "@geist-ui/core/dist"
 import { StaticPreview } from "app/(posts)/components/preview"
 import FadeIn from "@components/fade-in"
 import Tooltip from "@components/tooltip"
+import Button from "@components/button"
+import ButtonGroup from "@components/button-group"
+import DocumentTabs from "app/(posts)/components/tabs"
 
 // import Link from "next/link"
 type Props = {
@@ -37,22 +33,13 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<Button
-							scale={2 / 3}
-							px={0.6}
-							icon={<Download />}
-							auto
-							aria-label="Download"
-						/>
+						<Button iconRight={<Download />} aria-label="Download" />
 					</Link>
 				</Tooltip>
 				<Tooltip content="Open raw in new tab">
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							scale={2 / 3}
-							px={0.6}
-							icon={<ExternalLink />}
-							auto
+							iconRight={<ExternalLink />}
 							aria-label="Open raw file in new tab"
 						/>
 					</Link>
@@ -70,15 +57,6 @@ const Document = ({
 	skeleton,
 	id
 }: Props) => {
-	const codeEditorRef = useRef<HTMLTextAreaElement>(null)
-	const height = "100%"
-
-	const handleTabChange = (newTab: string) => {
-		if (newTab === "edit") {
-			codeEditorRef.current?.focus()
-		}
-	}
-
 	const rawLink = () => {
 		if (id) {
 			return `/file/raw/${id}`
@@ -105,8 +83,7 @@ const Document = ({
 	}
 
 	return (
-		<FadeIn>
-			<Spacer height={1} />
+		<>
 			<div className={styles.card}>
 				<Link href={`#${title}`} className={styles.fileNameContainer}>
 					<Tag
@@ -120,47 +97,15 @@ const Document = ({
 				</Link>
 				<div className={styles.descriptionContainer}>
 					<DownloadButton rawLink={rawLink()} />
-					<Tabs
-						onChange={handleTabChange}
-						initialValue={initialTab}
-						hideDivider
-						leftSpace={0}
-					>
-						<Tabs.Item label={"Raw"} value="edit">
-							{/* <textarea className={styles.lineCounter} wrap='off' readOnly ref={lineNumberRef}>1.</textarea> */}
-							<div
-								style={{
-									marginTop: 6,
-									display: "flex",
-									flexDirection: "column"
-								}}
-							>
-								<Textarea
-									readOnly
-									ref={codeEditorRef}
-									value={content}
-									width="100%"
-									// TODO: Textarea should grow to fill parent if height == 100%
-									style={{ flex: 1, minHeight: 350 }}
-									resize="vertical"
-									className={styles.textarea}
-								/>
-							</div>
-						</Tabs.Item>
-						<Tabs.Item label="Preview" value="preview">
-							<div>
-								<StaticPreview
-									height={height}
-									// fileId={id}
-									content={preview}
-									// title={title}
-								/>
-							</div>
-						</Tabs.Item>
-					</Tabs>
+					<DocumentTabs
+						defaultTab={initialTab}
+						preview={preview}
+						content={content}
+						isEditing={false}
+					/>
 				</div>
 			</div>
-		</FadeIn>
+		</>
 	)
 }
 
