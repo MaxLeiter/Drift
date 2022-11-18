@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import React from "react"
 import styles from "./input.module.css"
 
@@ -5,12 +6,12 @@ type Props = React.HTMLProps<HTMLInputElement> & {
 	label?: string
 	width?: number | string
 	height?: number | string
+	labelClassName?: string
 }
 
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, Props>(
-	({ label, className, width, height, ...props }, ref) => {
-		const classes = [styles.input, styles.withLabel, className].join(" ")
+	({ label, className, width, height, labelClassName, ...props }, ref) => {
 		return (
 			<div
 				className={styles.wrapper}
@@ -19,10 +20,18 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 					height
 				}}
 			>
-				{label && <label className={styles.label}>{label}</label>}
+				{label && (
+					<label
+						aria-labelledby={label}
+						className={clsx(styles.label, labelClassName)}
+					>
+						{label}
+					</label>
+				)}
 				<input
 					ref={ref}
-					className={classes}
+					id={label}
+					className={clsx(styles.input, styles.withLabel, className)}
 					{...props}
 					style={{
 						width,

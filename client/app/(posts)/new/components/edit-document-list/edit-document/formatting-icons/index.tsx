@@ -14,7 +14,7 @@ import ButtonGroup from "@components/button-group"
 // TODO: clean up
 
 const FormattingIcons = ({
-	textareaRef,
+	textareaRef
 }: {
 	textareaRef?: RefObject<TextareaMarkdownRef>
 }) => {

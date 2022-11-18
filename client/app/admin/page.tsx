@@ -26,7 +26,7 @@ const AdminPage = async () => {
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
-					gap: "var(--gap)",
+					gap: "var(--gap)"
 				}}
 			>
 				<UserTable users={users} />

@@ -89,7 +89,7 @@ const PostList = ({
 	const deletePost = useCallback(
 		(postId: string) => async () => {
 			const res = await fetch(`/api/post/${postId}`, {
-				method: "DELETE",
+				method: "DELETE"
 			})
 
 			if (!res.ok) {
@@ -112,7 +112,7 @@ const PostList = ({
 					style={{ maxWidth: 300 }}
 				/>
 			</div>
-			{!posts && <p style={{color: 'var(--warning)'}}>Failed to load.</p>}
+			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
 			{!posts?.length && searching && (
 				<ul>
 					<li>

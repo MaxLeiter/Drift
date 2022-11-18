@@ -48,7 +48,11 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 						{iconLeft}
 					</span>
 				)}
-				{children ? children : <span className={`${styles.icon}`}>{iconLeft || iconRight}</span>}
+				{children ? (
+					children
+				) : (
+					<span className={`${styles.icon}`}>{iconLeft || iconRight}</span>
+				)}
 				{children && iconRight && (
 					<span className={`${styles.icon} ${styles.iconRight}`}>
 						{iconRight}

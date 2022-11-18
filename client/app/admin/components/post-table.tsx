@@ -1,17 +1,13 @@
-'use client';
+"use client"
 import SettingsGroup from "@components/settings-group"
 import { Fieldset, useToasts } from "@geist-ui/core/dist"
 import byteToMB from "@lib/byte-to-mb"
-import {  PostWithFiles } from "@lib/server/prisma";
+import { PostWithFiles } from "@lib/server/prisma"
 import Table from "rc-table"
-import {  useMemo } from "react"
+import { useMemo } from "react"
 import ActionDropdown from "./action-dropdown"
 
-const PostTable = ({ 
-	  posts,
-}: {
-	  posts: PostWithFiles[]
-}) => {
+const PostTable = ({ posts }: { posts: PostWithFiles[] }) => {
 	const tablePosts = useMemo(
 		() =>
 			posts?.map((post) => {

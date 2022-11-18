@@ -1,8 +1,4 @@
-import {
-	ChangeEvent,
-	memo,
-	useCallback,
-} from "react"
+import { ChangeEvent, memo, useCallback } from "react"
 import styles from "./document.module.css"
 import Trash from "@geist-ui/icons/trash"
 import Button from "@components/button"

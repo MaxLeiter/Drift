@@ -1,5 +1,5 @@
 "use client"
-import {  Tabs, Textarea } from "@geist-ui/core/dist"
+import { Tabs, Textarea } from "@geist-ui/core/dist"
 import Image from "next/image"
 import styles from "./home.module.css"
 // TODO:components/new-post/ move these styles

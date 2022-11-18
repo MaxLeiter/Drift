@@ -37,10 +37,7 @@ const getPost = async (id: string) => {
 		return { post, isAuthor: isAuthorOrAdmin }
 	}
 
-	if (
-		(post.visibility === "private") &&
-		!isAuthorOrAdmin
-	) {
+	if (post.visibility === "private" && !isAuthorOrAdmin) {
 		return notFound()
 	}
 

@@ -35,10 +35,7 @@ export const config = (env: Environment): Config => {
 		return value
 	}
 
-	const defaultIfUndefined = (
-		str: string,
-		defaultValue: string
-	): string => {
+	const defaultIfUndefined = (str: string, defaultValue: string): string => {
 		const value = env[str]
 		if (value === undefined) {
 			return defaultValue
@@ -59,10 +56,7 @@ export const config = (env: Environment): Config => {
 
 	const is_production = env.NODE_ENV === "production"
 
-	const developmentDefault = (
-		name: string,
-		defaultValue: string
-	): string => {
+	const developmentDefault = (name: string, defaultValue: string): string => {
 		if (is_production) return throwIfUndefined(name)
 		return defaultIfUndefined(name, defaultValue)
 	}
@@ -77,7 +71,7 @@ export const config = (env: Environment): Config => {
 		welcome_title: env.WELCOME_TITLE ?? "",
 		url: process.env.VERCEL_URL ?? throwIfUndefined("DRIFT_URL"),
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
-		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
+		github_client_secret: env.GITHUB_CLIENT_SECRET ?? ""
 	}
 	return config
 }

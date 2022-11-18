@@ -86,7 +86,7 @@ const Document = ({
 					<Input
 						id={`${title}`}
 						width={"100%"}
-						height={'2rem'}
+						height={"2rem"}
 						style={{ borderRadius: 0 }}
 						value={title || "Untitled"}
 						disabled

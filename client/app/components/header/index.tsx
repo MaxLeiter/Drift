@@ -1,10 +1,6 @@
 "use client"
 
-import {
-	Page,
-	useBodyScroll,
-	useMediaQuery
-} from "@geist-ui/core/dist"
+import { Page, useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
 
 import { useEffect, useState } from "react"
 import styles from "./header.module.css"

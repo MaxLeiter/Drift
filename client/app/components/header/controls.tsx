@@ -17,13 +17,7 @@ const Controls = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			<Select
-				scale={0.5}
-				h="28px"
-				pure
-				onChange={switchThemes}
-				value={theme}
-			>
+			<Select scale={0.5} h="28px" pure onChange={switchThemes} value={theme}>
 				<Select.Option value="light">
 					<span className={styles.selectContent}>
 						<SunIcon size={14} /> Light

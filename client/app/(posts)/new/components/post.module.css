@@ -17,26 +17,12 @@
 	flex: 1;
 }
 
-.title {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: var(--gap);
-}
-
 .description {
 	width: 100%;
 	margin-bottom: var(--gap);
 }
 
-
 @media screen and (max-width: 650px) {
-	.title {
-		align-items: flex-start;
-		flex-direction: column;
-	}
-
 	.buttons {
 		flex-direction: column;
 		margin: 0;

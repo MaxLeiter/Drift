@@ -2,7 +2,7 @@
 
 import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
 import { User } from "next-auth"
-import {  useState } from "react"
+import { useState } from "react"
 
 const Profile = ({ user }: { user: User }) => {
 	// TODO: make this displayName, requires fetching user from DB as session doesnt have it
@@ -37,7 +37,7 @@ const Profile = ({ user }: { user: User }) => {
 		const res = await fetch(`/api/user/${user.id}`, {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(data)
 		})

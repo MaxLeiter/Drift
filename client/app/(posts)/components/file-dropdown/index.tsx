@@ -53,7 +53,9 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 				<div className={buttonStyles.icon}>
 					<ChevronDown />
 				</div>
-				<span>Jump to {files.length} {files.length === 1 ? "file" : "files"}</span>
+				<span>
+					Jump to {files.length} {files.length === 1 ? "file" : "files"}
+				</span>
 			</Popover.Trigger>
 			<Popover.Content>{content}</Popover.Content>
 		</Popover>

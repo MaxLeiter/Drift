@@ -112,8 +112,7 @@ export const codeFileExtensions = [
 	"xml",
 	"y",
 	"yaml",
-	"fish",
-
+	"fish"
 ]
 
 export const allowedFileExtensions = [
@@ -125,4 +124,3 @@ export const allowedFileExtensions = [
 	"log",
 	...codeFileExtensions
 ]
-

@@ -15,5 +15,11 @@ export default async function Mine() {
 
 	const hasMore = false
 	const stringifiedPosts = JSON.stringify(posts)
-	return <PostList userId={userId} morePosts={hasMore} initialPosts={stringifiedPosts} />
+	return (
+		<PostList
+			userId={userId}
+			morePosts={hasMore}
+			initialPosts={stringifiedPosts}
+		/>
+	)
 }

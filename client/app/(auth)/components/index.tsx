@@ -70,7 +70,7 @@ const Auth = ({
 							onClick={(e) => {
 								e.preventDefault()
 								signIn("github", {
-									callbackUrl: "/",
+									callbackUrl: "/"
 								})
 							}}
 						>

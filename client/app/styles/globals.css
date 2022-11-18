@@ -92,7 +92,6 @@ html,
 body {
 	padding: 0;
 	margin: 0;
-	font-size: 15px;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -173,13 +172,6 @@ hr {
 	isolation: isolate;
 }
 
-/* TODO: these should not be necessary. */
-main {
-	margin-top: 0 !important;
-	padding-top: 0 !important;
-}
-
-
 textarea {
 	resize: vertical;
 	border: 1px solid var(--border);
@@ -192,4 +184,5 @@ textarea:focus {
 	outline: none;
 	border-color: var(--fg);
 }
+
 

@@ -52,7 +52,9 @@ const MarkdownPreview = ({
 	return (
 		<>
 			{isLoading ? (
-				<><Spinner /></>
+				<>
+					<Spinner />
+				</>
 			) : (
 				<StaticPreview preview={preview} height={height} />
 			)}

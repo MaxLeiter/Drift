@@ -7,5 +7,5 @@ const getPasscode = async () => {
 
 export default async function SignUpPage() {
 	const requiresPasscode = await getPasscode()
-	return (<Auth page="signup" requiresServerPassword={requiresPasscode} />)
+	return <Auth page="signup" requiresServerPassword={requiresPasscode} />
 }

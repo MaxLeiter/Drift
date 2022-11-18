@@ -62,10 +62,18 @@ const ListItem = ({
 										</Tooltip>
 									)}
 									<Tooltip content={"Make a copy"}>
-										<Button iconRight={<Edit />} onClick={editACopy} height={38} />
+										<Button
+											iconRight={<Edit />}
+											onClick={editACopy}
+											height={38}
+										/>
 									</Tooltip>
 									<Tooltip content={"Delete"}>
-										<Button iconRight={<Trash />} onClick={deletePost} height={38} />
+										<Button
+											iconRight={<Trash />}
+											onClick={deletePost}
+											height={38}
+										/>
 									</Tooltip>
 								</span>
 							)}

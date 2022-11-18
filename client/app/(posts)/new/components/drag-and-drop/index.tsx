@@ -1,4 +1,4 @@
-import {  useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
+import { useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
 import { useDropzone } from "react-dropzone"
 import styles from "./drag-and-drop.module.css"
 import generateUUID from "@lib/generate-uuid"
@@ -78,9 +78,7 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 			{file.name}:
 			<ul>
 				{errors.map((e) => (
-					<li key={e.code}>
-						{e.message}
-					</li>
+					<li key={e.code}>{e.message}</li>
 				))}
 			</ul>
 		</li>
@@ -98,7 +96,9 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 			>
 				<input {...getInputProps()} />
 				{!isDragActive && (
-					<p style={{color: "var(--gray)"}}>Drag some files here, or {verb} to select files</p>
+					<p style={{ color: "var(--gray)" }}>
+						Drag some files here, or {verb} to select files
+					</p>
 				)}
 				{isDragActive && <p>Release to drop the files here</p>}
 			</div>

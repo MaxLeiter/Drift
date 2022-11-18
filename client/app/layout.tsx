@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 									.split('=')[1];
 								document.documentElement.setAttribute('data-theme', theme);
 							})();
-						`,
+						`
 					}}
 				/>
 			</head>
