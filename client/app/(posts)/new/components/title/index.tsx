@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react"
+import { ChangeEvent, memo } from "react"
 
 import Input from "@components/input"
 import styles from "./title.module.css"
@@ -37,4 +37,4 @@ const Title = ({ onChange, title }: props) => {
 	)
 }
 
-export default Title
+export default memo(Title)

@@ -6,8 +6,16 @@
 .actionWrapper .actions {
 	position: absolute;
 	right: 0;
-	top: 4px;
+	top: -34px;
 }
+
+/* small screens, top: 0 */
+@media (max-width: 767px) {
+	.actionWrapper .actions {
+		top: 0;
+	}
+}
+
 
 @media (max-width: 768px) {
 	.actionWrapper .actions {

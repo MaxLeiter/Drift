@@ -164,13 +164,18 @@ const Post = ({
 
 	const onChangeExpiration = (date: Date) => setExpiresAt(date)
 
-	const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+	const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault()
 		setTitle(e.target.value)
-	}
+	}, [])
 
-	const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
-		setDescription(e.target.value)
-	}
+	const onChangeDescription = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			e.preventDefault()
+			setDescription(e.target.value)
+		},
+		[]
+	)
 
 	const updateDocTitle = (i: number) => (title: string) => {
 		setDocs((docs) =>

@@ -37,6 +37,7 @@
 .actionWrapper {
 	position: relative;
 	z-index: 1;
+	padding-top: 4px;
 }
 
 .actionWrapper .actions {

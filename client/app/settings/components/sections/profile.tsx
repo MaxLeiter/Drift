@@ -1,6 +1,9 @@
 "use client"
 
-import { Note, Input, Textarea, Button, useToasts } from "@geist-ui/core/dist"
+import Button from "@components/button"
+import Input from "@components/input"
+import Note from "@components/note"
+import { useToasts } from "@geist-ui/core/dist"
 import { User } from "next-auth"
 import { useState } from "react"
 
@@ -57,7 +60,7 @@ const Profile = ({ user }: { user: User }) => {
 
 	return (
 		<>
-			<Note type="warning" marginBottom={"var(--gap)"}>
+			<Note type="warning">
 				This information will be publicly available on your profile
 			</Note>
 			<form
@@ -83,7 +86,7 @@ const Profile = ({ user }: { user: User }) => {
 					<label htmlFor="email">Email</label>
 					<Input
 						id="email"
-						htmlType="email"
+						type="email"
 						width={"100%"}
 						placeholder="my@email.io"
 						value={user.email || undefined}
@@ -92,12 +95,12 @@ const Profile = ({ user }: { user: User }) => {
 				</div>
 				<div>
 					<label htmlFor="bio">Biography (max 250 characters)</label>
-					<Textarea
+					<textarea
 						id="bio"
-						width="100%"
+						style={{ width: "100%" }}
 						maxLength={250}
 						placeholder="I enjoy..."
-						value={bio || ""}
+						value={bio}
 						onChange={handleBioChange}
 					/>
 				</div>

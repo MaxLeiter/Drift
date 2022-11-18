@@ -1,11 +1,11 @@
 "use client"
 
-import { Note, Text } from "@geist-ui/core/dist"
+import Note from "@components/note"
 
 export default function ExpiredPage() {
 	return (
-		<Note type="error" label={false}>
-			<h2>Error: The Drift you&apos;re trying to view has expired.</h2>
+		<Note type="error">
+			<strong>Error:</strong> The Drift you&apos;re trying to view has expired.
 		</Note>
 	)
 }

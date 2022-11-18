@@ -179,10 +179,3 @@ textarea {
 	padding: var(--gap-half);
 	border-radius: var(--radius);
 }
-
-textarea:focus {
-	outline: none;
-	border-color: var(--fg);
-}
-
-

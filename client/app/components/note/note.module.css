@@ -1,5 +1,4 @@
 .note {
-	font-size: 0.8em;
 	color: var(--fg);
 	margin: 0;
 	padding: var(--gap);
@@ -20,8 +19,14 @@
 	background: #f33;
 }
 
+[data-theme="light"] .warning,
+[data-theme="light"] .error {
+	color: var(--bg);
+}
+
 .type {
 	color: var(--fg);
 	margin-right: 0.5em;
+	font-size: initial;
 	text-transform: capitalize;
 }

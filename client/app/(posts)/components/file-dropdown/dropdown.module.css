@@ -59,14 +59,10 @@
 	margin: 0;
 }
 
-.cardContent {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: var(--gap-half);
-	padding-top: 200px;
+.chevron {
+	transition: transform 0.2s ease-in-out;
 }
 
-@media screen and (max-width: 82rem) {
+[data-state="open"] .chevron {
+	transform: rotate(180deg);
 }

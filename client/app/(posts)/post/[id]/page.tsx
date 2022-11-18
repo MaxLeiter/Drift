@@ -1,5 +1,5 @@
 import PostPage from "app/(posts)/post/[id]/components/post-page"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { getPostById, Post } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 
@@ -57,7 +57,7 @@ const getPost = async (id: string) => {
 	if (post.expiresAt && !isAuthorOrAdmin) {
 		const expirationDate = new Date(post.expiresAt)
 		if (expirationDate < new Date()) {
-			return notFound()
+			return redirect("/expired")
 		}
 	}
 

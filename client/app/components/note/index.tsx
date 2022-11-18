@@ -9,7 +9,6 @@ const Note = ({
 	children: React.ReactNode
 } & React.ComponentProps<"div">) => (
 	<div className={`${styles.note} ${styles[type]}`} {...props}>
-		<strong className={styles.type}>{type}:</strong>
 		{children}
 	</div>
 )

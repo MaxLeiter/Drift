@@ -23,4 +23,4 @@ const Description = ({ onChange, description }: props) => {
 	)
 }
 
-export default memo(Description)
+export default Description

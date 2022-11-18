@@ -41,4 +41,4 @@ const DocumentList = ({
 	)
 }
 
-export default memo(DocumentList)
+export default DocumentList

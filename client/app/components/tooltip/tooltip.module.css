@@ -1,0 +1,24 @@
+.tooltip {
+    animation: fadein 300ms;
+}
+
+[data-side='top'] .tooltip{
+    margin-bottom: var(--gap);
+}
+
+.tooltip[data-side='bottom'] {
+    margin-top: var(--gap);
+}
+
+.tooltip[data-side='left'] {
+    margin-right: var(--gap);
+}
+
+.tooltip[data-side='right'] {
+    margin-left: var(--gap);
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

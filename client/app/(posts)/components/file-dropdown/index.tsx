@@ -49,8 +49,11 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 
 	return (
 		<Popover>
-			<Popover.Trigger className={clsx(buttonStyles.button)}>
-				<div className={buttonStyles.icon}>
+			<Popover.Trigger className={buttonStyles.button}>
+				<div
+					className={clsx(buttonStyles.icon, styles.chevron)}
+					style={{ marginRight: 6 }}
+				>
 					<ChevronDown />
 				</div>
 				<span>
