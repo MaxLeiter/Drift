@@ -36,7 +36,7 @@
 	color: var(--fg);
 }
 
-/* when data-theme on html is light, change font color */
+[data-theme="light"] .error,
 [data-theme="light"] .warning {
 	color: var(--bg);
 }
