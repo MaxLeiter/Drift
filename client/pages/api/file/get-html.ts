@@ -10,8 +10,8 @@ export default withMethods(
 		const content = parseQueryParam(body.content)
 		const title = parseQueryParam(body.title) || "Untitled"
 
-		if (!content || !title) {
-			return res.status(400).json({ error: "Missing arguments" })
+		if (!content) {
+			return res.status(400).json({ error: "Missing content" })
 		}
 
 		const renderedHTML = await getHtmlFromFile({

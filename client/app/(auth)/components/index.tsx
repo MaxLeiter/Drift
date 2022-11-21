@@ -3,9 +3,11 @@
 import { useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
-import { Button, Input, Note } from "@geist-ui/core/dist"
 import { signIn } from "next-auth/react"
 import { Github as GithubIcon } from "@geist-ui/icons"
+import Input from "@components/input"
+import Button from "@components/button"
+import Note from "@components/note"
 
 const Auth = ({
 	page,
@@ -50,7 +52,7 @@ const Auth = ({
 						{/* sign in with github */}
 						{requiresServerPassword && (
 							<Input
-								htmlType="password"
+								type="password"
 								id="server-password"
 								value={serverPassword}
 								onChange={(event) =>
@@ -62,11 +64,13 @@ const Auth = ({
 							/>
 						)}
 						<Button
-							htmlType="submit"
-							type="success-light"
-							auto
+							type="submit"
+							buttonType="primary"
 							width="100%"
-							icon={<GithubIcon />}
+							style={{
+								color: 'var(--fg)'
+							}}
+							iconLeft={<GithubIcon />}
 							onClick={(e) => {
 								e.preventDefault()
 								signIn("github", {

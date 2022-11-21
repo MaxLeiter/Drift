@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 				<input
 					ref={ref}
 					id={label}
-					className={clsx(styles.input, styles.withLabel, className)}
+					className={clsx(styles.input, label && styles.withLabel, className)}
 					{...props}
 					style={{
 						width,

@@ -1,5 +1,6 @@
 import styles from "./button.module.css"
 import { forwardRef, Ref } from "react"
+import clsx from "clsx"
 
 type Props = React.HTMLProps<HTMLButtonElement> & {
 	children?: React.ReactNode
@@ -44,17 +45,15 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 				{...props}
 			>
 				{children && iconLeft && (
-					<span className={`${styles.icon} ${styles.iconLeft}`}>
-						{iconLeft}
-					</span>
+					<span className={clsx(styles.icon, styles.iconLeft)}>{iconLeft}</span>
 				)}
 				{children ? (
 					children
 				) : (
-					<span className={`${styles.icon}`}>{iconLeft || iconRight}</span>
+					<span className={styles.icon}>{iconLeft || iconRight}</span>
 				)}
 				{children && iconRight && (
-					<span className={`${styles.icon} ${styles.iconRight}`}>
+					<span className={clsx(styles.icon, styles.iconRight)}>
 						{iconRight}
 					</span>
 				)}

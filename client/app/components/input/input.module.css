@@ -28,10 +28,6 @@
 	border-bottom-left-radius: 0;
 }
 
-.input::placeholder {
-	/* font-size: 1rem; */
-}
-
 .input:focus {
 	border-color: var(--light-gray);
 }

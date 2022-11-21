@@ -76,3 +76,8 @@
 	justify-content: space-between;
 	align-items: center;
 }
+
+.active a,
+.active button {
+	color: var(--fg);
+}

@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { useTheme } from "@components/theme/ThemeClientContextProvider"
 import Button from "@components/button"
+import clsx from "clsx"
 
 type Tab = {
 	name: string
@@ -101,7 +102,9 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					name: "Sign Out",
 					icon: <SignOutIcon />,
 					value: "signout",
-					onClick: () => signOut()
+					onClick: () => signOut({
+						callbackUrl: "/",
+					})
 				},
 				...defaultPages
 			]
@@ -148,7 +151,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					key={tab.value}
 					iconLeft={tab.icon}
 					onClick={() => onTabChange(tab.value)}
-					className={`${styles.tab} ${activeStyle}`}
+					className={clsx(styles.tab, activeStyle)}
 					aria-label={tab.name}
 					aria-current={isActive ? "page" : undefined}
 				>
@@ -160,7 +163,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 				<Link
 					key={tab.value}
 					href={tab.href}
-					className={`${styles.tab} ${activeStyle}`}
+					className={clsx(styles.tab, activeStyle)}
 				>
 					<Button iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
 				</Link>
