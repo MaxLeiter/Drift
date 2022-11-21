@@ -26,7 +26,7 @@ const Title = ({ onChange, title }: props) => {
 			<h1>Drift</h1>
 			<Input
 				placeholder={placeholder}
-				value={title || ""}
+				value={title}
 				onChange={onChange}
 				label="Title"
 				className={styles.labelAndInput}

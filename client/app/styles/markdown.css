@@ -4,10 +4,6 @@ article {
 	line-height: 1.9;
 }
 
-article > * + * {
-	margin-top: 2em;
-}
-
 article video,
 article img {
 	max-width: 100%;
@@ -113,7 +109,6 @@ article pre {
 	padding: 1rem;
 	font-size: 0.875rem;
 }
-
 
 table {
 	border-collapse: collapse;
