@@ -5,13 +5,12 @@ import Button from "@components/button"
 import Input from "@components/input"
 import DocumentTabs from "app/(posts)/components/tabs"
 
-// import Link from "next/link"
 type Props = {
 	title?: string
 	content?: string
 	setTitle?: (title: string) => void
 	handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
-	initialTab?: "edit" | "preview"
+	defaultTab?: "edit" | "preview"
 	remove?: () => void
 	onPaste?: (e: any) => void
 }
@@ -22,7 +21,7 @@ const Document = ({
 	title,
 	content,
 	setTitle,
-	initialTab = "edit",
+	defaultTab = "edit",
 	handleOnContentChange
 }: Props) => {
 	// const height = editable ? "500px" : '100%'
@@ -86,7 +85,7 @@ const Document = ({
 				<div className={styles.descriptionContainer}>
 					<DocumentTabs
 						isEditing={true}
-						defaultTab={"edit"}
+						defaultTab={defaultTab}
 						handleOnContentChange={handleOnContentChange}
 						onPaste={onPaste}
 						title={title}
@@ -98,4 +97,4 @@ const Document = ({
 	)
 }
 
-export default memo(Document)
+export default Document

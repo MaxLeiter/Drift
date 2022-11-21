@@ -90,6 +90,7 @@ const Document = ({
 						style={{ borderRadius: 0 }}
 						value={title || "Untitled"}
 						disabled
+						aria-label="Document title"
 					/>
 				</Link>
 				<div className={styles.descriptionContainer}>

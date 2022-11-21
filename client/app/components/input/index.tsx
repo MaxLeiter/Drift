@@ -2,6 +2,15 @@ import clsx from "clsx"
 import React from "react"
 import styles from "./input.module.css"
 
+type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
+	T,
+	Exclude<keyof T, Keys>
+> &
+	{
+		[K in Keys]-?: Required<Pick<T, K>> &
+			Partial<Record<Exclude<Keys, K>, undefined>>
+	}[Keys]
+
 type Props = React.HTMLProps<HTMLInputElement> & {
 	label?: string
 	width?: number | string
@@ -9,8 +18,10 @@ type Props = React.HTMLProps<HTMLInputElement> & {
 	labelClassName?: string
 }
 
+type InputProps = RequireOnlyOne<Props, "label" | "aria-label">
+
 // eslint-disable-next-line react/display-name
-const Input = React.forwardRef<HTMLInputElement, Props>(
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	({ label, className, width, height, labelClassName, ...props }, ref) => {
 		return (
 			<div
