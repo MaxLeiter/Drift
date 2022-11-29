@@ -2,8 +2,6 @@ services:
   server:
     build:
       context: ./server
-      args:
-        - NODE_ENV=production
     container_name: server
     restart: unless-stopped
     user: 1000:1000
@@ -17,8 +15,8 @@ services:
       - WELCOME_TITLE
       - ENABLE_ADMIN
       - DRIFT_HOME
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000" # only expose if needed
   client:
     build:
       context: ./client
