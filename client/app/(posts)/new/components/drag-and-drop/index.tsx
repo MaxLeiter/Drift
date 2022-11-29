@@ -1,4 +1,3 @@
-import { useMediaQuery, useTheme, useToasts } from "@geist-ui/core/dist"
 import { useDropzone } from "react-dropzone"
 import styles from "./drag-and-drop.module.css"
 import generateUUID from "@lib/generate-uuid"
@@ -9,13 +8,10 @@ import {
 } from "@lib/constants"
 import byteToMB from "@lib/byte-to-mb"
 import type { Document } from "../new"
+import { useToasts } from "@components/toasts"
 
 function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
-	const { palette } = useTheme()
 	const { setToast } = useToasts()
-	const isMobile = useMediaQuery("xs", {
-		match: "down"
-	})
 	const onDrop = async (acceptedFiles: File[]) => {
 		const newDocs = await Promise.all(
 			acceptedFiles.map((file) => {
@@ -23,9 +19,9 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 					const reader = new FileReader()
 
 					reader.onabort = () =>
-						setToast({ text: "File reading was aborted", type: "error" })
+						setToast({ message: "File reading was aborted", type: "error" })
 					reader.onerror = () =>
-						setToast({ text: "File reading failed", type: "error" })
+						setToast({ message: "File reading failed", type: "error" })
 					reader.onload = () => {
 						const content = reader.result as string
 						resolve({
@@ -84,20 +80,13 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 		</li>
 	))
 
-	const verb = isMobile ? "tap" : "click"
 	return (
 		<div className={styles.container}>
-			<div
-				{...getRootProps()}
-				className={styles.dropzone}
-				style={{
-					borderColor: palette.accents_3
-				}}
-			>
+			<div {...getRootProps()} className={styles.dropzone}>
 				<input {...getInputProps()} />
 				{!isDragActive && (
 					<p style={{ color: "var(--gray)" }}>
-						Drag some files here, or {verb} to select files
+						Drag some files here, or <span className={styles.verb} /> to select files
 					</p>
 				)}
 				{isDragActive && <p>Release to drop the files here</p>}

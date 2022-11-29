@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "./post-list.module.css"
-import ListItemSkeleton from "./list-item-skeleton"
+import { ListItemSkeleton } from "./list-item-skeleton"
 import ListItem from "./list-item"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
@@ -9,6 +9,7 @@ import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
 import Input from "@components/input"
 import Button from "@components/button"
+import { useToasts } from "@components/toasts"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
@@ -29,6 +30,7 @@ const PostList = ({
 	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
 	const [searching, setSearching] = useState(false)
 	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
+	const { setToast } = useToasts()
 
 	const debouncedSearchValue = useDebounce(search, 200)
 
@@ -71,7 +73,7 @@ const PostList = ({
 					}
 				)
 				const json = await res.json()
-				setPosts(json.posts)
+				setPosts(json)
 				setSearching(false)
 			}
 			fetchPosts()
@@ -97,9 +99,13 @@ const PostList = ({
 				return
 			} else {
 				setPosts((posts) => posts.filter((post) => post.id !== postId))
+				setToast({
+					message: "Post deleted",
+					type: "success"
+				})
 			}
 		},
-		[]
+		[setToast]
 	)
 
 	return (
@@ -108,21 +114,18 @@ const PostList = ({
 				<Input
 					placeholder="Search..."
 					onChange={handleSearchChange}
-					disabled={Boolean(!posts?.length)}
+					disabled={!posts}
 					style={{ maxWidth: 300 }}
+					aria-label="Search"
 				/>
 			</div>
 			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
-			{!posts?.length && searching && (
+			{/* {!posts?.length && (
 				<ul>
-					<li>
-						<ListItemSkeleton />
-					</li>
-					<li>
-						<ListItemSkeleton />
-					</li>
+					<ListItemSkeleton />
+					<ListItemSkeleton />
 				</ul>
-			)}
+			)} */}
 			{posts?.length === 0 && posts && (
 				<p>
 					No posts found. Create one{" "}

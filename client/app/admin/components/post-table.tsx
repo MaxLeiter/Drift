@@ -1,6 +1,6 @@
 "use client"
 import SettingsGroup from "@components/settings-group"
-import { Fieldset, useToasts } from "@geist-ui/core/dist"
+import { Fieldset } from "@geist-ui/core/dist"
 import byteToMB from "@lib/byte-to-mb"
 import { PostWithFiles } from "@lib/server/prisma"
 import Table from "rc-table"

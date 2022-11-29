@@ -4,7 +4,6 @@ import styles from "@styles/Home.module.css"
 import { getSession } from "@lib/server/session"
 import ThemeProvider from "@components/theme/ThemeProvider"
 import { THEME_COOKIE_NAME } from "@components/theme/theme"
-import { useServerTheme } from "@components/theme/ThemeServerContextProvider"
 
 interface RootLayoutProps {
 	children: React.ReactNode

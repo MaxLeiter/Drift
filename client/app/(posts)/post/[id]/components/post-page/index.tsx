@@ -4,7 +4,6 @@ import VisibilityBadge from "@components/badges/visibility-badge"
 import DocumentComponent from "./view-document"
 import styles from "./post-page.module.css"
 
-import { useMediaQuery } from "@geist-ui/core/dist"
 import { useEffect, useState } from "react"
 import Archive from "@geist-ui/icons/archive"
 import Edit from "@geist-ui/icons/edit"
@@ -32,7 +31,6 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 	)
 	const [visibility, setVisibility] = useState<string>(post.visibility)
 	const router = useRouter()
-	const isMobile = useMediaQuery("mobile")
 
 	useEffect(() => {
 		if (post.expiresAt) {
@@ -101,7 +99,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 			{!isAvailable && <PasswordModalPage setPost={setPost} postId={post.id} />}
 			<div className={styles.header}>
 				<span className={styles.buttons}>
-					<ButtonGroup vertical={isMobile}>
+					<ButtonGroup verticalIfMobile>
 						<Button
 							iconLeft={<Edit />}
 							onClick={editACopy}

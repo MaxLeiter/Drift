@@ -13,14 +13,14 @@ const titlePlaceholders = [
 	"I'm thinking about ..."
 ]
 
+const placeholder = titlePlaceholders[3]
+
 type props = {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
 	title?: string
 }
 
 const Title = ({ onChange, title }: props) => {
-	const placeholder =
-		titlePlaceholders[Math.floor(Math.random() * titlePlaceholders.length)]
 	return (
 		<div className={styles.title}>
 			<h1>Drift</h1>

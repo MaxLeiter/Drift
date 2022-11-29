@@ -1,6 +1,6 @@
 "use client"
 
-import { Page, useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
+import {  useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
 
 import { useEffect, useState } from "react"
 import styles from "./header.module.css"
@@ -174,7 +174,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 	const buttons = pages.map(getButton)
 
 	return (
-		<Page.Header>
+		<header>
 			<div className={styles.tabs}>
 				<div className={styles.buttons}>{buttons}</div>
 			</div>
@@ -189,7 +189,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					{buttons}
 				</div>
 			)}
-		</Page.Header>
+		</header>
 	)
 }
 

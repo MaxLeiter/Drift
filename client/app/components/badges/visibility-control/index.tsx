@@ -1,8 +1,9 @@
-import { Loading, useToasts } from "@geist-ui/core/dist"
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
 import ButtonGroup from "@components/button-group"
 import Button from "@components/button"
+import { useToasts } from "@components/toasts"
+import { Spinner } from "@components/spinner"
 
 type Props = {
 	postId: string
@@ -30,7 +31,7 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 				setVisibility(json.visibility)
 			} else {
 				setToast({
-					text: "An error occurred",
+					message: "An error occurred",
 					type: "error"
 				})
 				setPasswordModalVisible(false)
@@ -65,9 +66,9 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 	return (
 		<>
 			{isSubmitting ? (
-				<Loading />
+				<Spinner />
 			) : (
-				<ButtonGroup>
+				<ButtonGroup verticalIfMobile>
 					<Button
 						disabled={visibility === "private"}
 						onClick={() => onSubmit("private")}

@@ -1,6 +1,5 @@
 "use client"
 
-import { useToasts, ButtonDropdown } from "@geist-ui/core/dist"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import generateUUID from "@lib/generate-uuid"
@@ -16,6 +15,8 @@ import Title from "./title"
 import FileDropzone from "./drag-and-drop"
 import Button from "@components/button"
 import Input from "@components/input"
+import ButtonDropdown from "@components/button-dropdown"
+import { useToasts } from "@components/toasts"
 const emptyDoc = {
 	title: "",
 	content: "",
@@ -87,7 +88,8 @@ const Post = ({
 				const json = await res.json()
 				console.error(json)
 				setToast({
-					text: "Please fill out all fields",
+					id: "error",
+					message: "Please fill out all fields",
 					type: "error"
 				})
 				setPasswordModalVisible(false)
@@ -114,7 +116,7 @@ const Post = ({
 
 			if (!title) {
 				setToast({
-					text: "Please fill out the post title",
+					message: "Please fill out the post title",
 					type: "error"
 				})
 				hasErrored = true
@@ -122,7 +124,7 @@ const Post = ({
 
 			if (!docs.length) {
 				setToast({
-					text: "Please add at least one document",
+					message: "Please add at least one document",
 					type: "error"
 				})
 				hasErrored = true
@@ -131,7 +133,7 @@ const Post = ({
 			for (const doc of docs) {
 				if (!doc.title) {
 					setToast({
-						text: "Please fill out all the document titles",
+						message: "Please fill out all the document titles",
 						type: "error"
 					})
 					hasErrored = true
@@ -308,19 +310,27 @@ const Post = ({
 						enableTabLoop={false}
 						minDate={new Date()}
 					/>
-					<ButtonDropdown loading={isSubmitting} type="success">
-						<ButtonDropdown.Item main onClick={() => onSubmit("unlisted")}>
+					<ButtonDropdown iconHeight={40}>
+						<Button
+							height={40}
+							width={251}
+							onClick={() => onSubmit("unlisted")}
+						>
 							Create Unlisted
-						</ButtonDropdown.Item>
-						<ButtonDropdown.Item onClick={() => onSubmit("private")}>
+						</Button>
+						<Button height={40} width={300} onClick={() => onSubmit("private")}>
 							Create Private
-						</ButtonDropdown.Item>
-						<ButtonDropdown.Item onClick={() => onSubmit("public")}>
+						</Button>
+						<Button height={40} width={300} onClick={() => onSubmit("public")}>
 							Create Public
-						</ButtonDropdown.Item>
-						<ButtonDropdown.Item onClick={() => onSubmit("protected")}>
+						</Button>
+						<Button
+							height={40}
+							width={300}
+							onClick={() => onSubmit("protected")}
+						>
 							Create with Password
-						</ButtonDropdown.Item>
+						</Button>
 					</ButtonDropdown>
 				</div>
 			</div>

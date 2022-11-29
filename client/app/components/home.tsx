@@ -1,9 +1,4 @@
-"use client"
-import { Tabs, Textarea } from "@geist-ui/core/dist"
 import Image from "next/image"
-import styles from "./home.module.css"
-// TODO:components/new-post/ move these styles
-import markdownStyles from "app/(posts)/components/preview/preview.module.css"
 import Card from "./card"
 import DocumentTabs from "app/(posts)/components/tabs"
 const Home = ({

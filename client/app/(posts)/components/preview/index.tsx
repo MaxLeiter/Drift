@@ -2,7 +2,8 @@ import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
 import "@styles/markdown.css"
 import "@styles/syntax.css"
-import { Spinner } from "@geist-ui/core/dist"
+import Skeleton from "@components/skeleton"
+import { Spinner } from "@components/spinner"
 
 type Props = {
 	height?: number | string
@@ -52,9 +53,7 @@ const MarkdownPreview = ({
 	return (
 		<>
 			{isLoading ? (
-				<>
-					<Spinner />
-				</>
+				<Spinner />
 			) : (
 				<StaticPreview preview={preview} height={height} />
 			)}

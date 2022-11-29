@@ -1,8 +1,8 @@
-import { useToasts } from "@geist-ui/core/dist"
 import { Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import PasswordModal from "@components/password-modal"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useToasts } from "@components/toasts"
 
 type Props = {
 	setPost: (post: PostWithFilesAndAuthor) => void
@@ -25,7 +25,7 @@ const PasswordModalPage = ({ setPost, postId }: Props) => {
 		if (!res.ok) {
 			setToast({
 				type: "error",
-				text: "Wrong password"
+				message: "Wrong password"
 			})
 			return
 		}
@@ -34,7 +34,7 @@ const PasswordModalPage = ({ setPost, postId }: Props) => {
 		if (data) {
 			if (data.error) {
 				setToast({
-					text: data.error,
+					message: data.error,
 					type: "error"
 				})
 			} else {

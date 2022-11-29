@@ -17,7 +17,7 @@
   border-radius: 2px;
   border: 2px dashed var(--border) !important;
   outline: none;
-  transition: all 0.24s ease-in-out;
+  transition: all 0.14s ease-in-out;
   cursor: pointer;
 }
 
@@ -32,7 +32,7 @@
 .error {
   color: red;
   font-size: 0.8rem;
-  transition: border 0.24s ease-in-out;
+  transition: border 0.14s ease-in-out;
   border: 2px solid red;
   border-radius: 2px;
   padding: 20px;
@@ -41,4 +41,14 @@
 .error ul {
   margin: 0;
   padding-left: var(--gap-double);
+}
+
+.verb:after {
+  content: "click";
+}
+
+@media (hover: none) {
+  .verb:after {
+    content: "tap";
+  }
 }

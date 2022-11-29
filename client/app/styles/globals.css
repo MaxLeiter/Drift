@@ -45,7 +45,7 @@
 	--gray-alpha: rgba(255, 255, 255, 0.5);
 	--selection: rgba(255, 255, 255, 0.99);
 	--border: var(--lighter-gray);
-	--warning: rgb(27, 134, 23);
+	--warning: #ff6700;
 	--link: #3291ff;
 	color-scheme: dark;
 }
@@ -78,8 +78,9 @@
 	box-sizing: border-box;
 }
 
+// TODO: replace this with an accessible alternative
 *:focus-visible {
-	outline: 1px solid var(--gray);
+	outline: none;
 }
 
 ::selection {
@@ -178,4 +179,9 @@ textarea {
 	font-family: var(--font-sans);
 	padding: var(--gap-half);
 	border-radius: var(--radius);
+}
+
+textarea:focus {
+	border-color: var(--light-gray);
+	outline: none;
 }

@@ -1,29 +1,45 @@
 .button-group {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
 }
 
 .button-group > * {
-    flex: 1 1 auto;
-    margin: 0;
+	flex: 1 1 auto;
+	margin: 0;
 }
 
 .button-group > * {
-    border-radius: 0 !important;
+	border-radius: 0 !important;
 }
 
 .button-group > button:first-of-type {
-    border-top-left-radius: var(--radius) !important;
-    border-bottom-left-radius: var(--radius) !important;
+	border-top-left-radius: var(--radius) !important;
+	border-bottom-left-radius: var(--radius) !important;
 }
 
 .button-group > button:last-of-type {
-    border-top-right-radius: var(--radius) !important;
-    border-bottom-right-radius: var(--radius) !important;
+	border-top-right-radius: var(--radius) !important;
+	border-bottom-right-radius: var(--radius) !important;
 }
 
-.vertical {
-    flex-direction: column;
+@media screen and (max-width: 768px) {
+	.verticalIfMobile {
+		flex-direction: column;
+	}
+
+	.verticalIfMobile.button-group > button:first-of-type {
+		border-top-left-radius: var(--radius) !important;
+		border-top-right-radius: var(--radius) !important;
+		border-bottom-left-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+	}
+
+	.verticalIfMobile.button-group > button:last-of-type {
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+		border-bottom-left-radius: var(--radius) !important;
+		border-bottom-right-radius: var(--radius) !important;
+	}
 }

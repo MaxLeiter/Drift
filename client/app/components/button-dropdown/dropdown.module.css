@@ -1,26 +1,27 @@
-.main {
-  margin-bottom: 2rem;
-}
-
 .dropdown {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-  padding: 0;
-  border: 0;
-  background: transparent;
+	display: flex;
+	align-items: stretch;
 }
 
-.dropdownContent {
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+.dropdown > button:first-child {
+	border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown > button:last-child {
+	border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  /* if we draw bother borders it will be 2 thick */
+  border-left: 0;
+}
+
+.dropdown > button:last-child:hover {
+  /* because we removed the left border we need to mock it */
+  outline: 1px solid var(--darker-gray);
 }
 
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

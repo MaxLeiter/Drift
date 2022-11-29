@@ -12,7 +12,8 @@
 }
 
 .warning {
-	background: #f33;
+	background: var(--warning);
+	color: var(--bg);
 }
 
 .error {
@@ -21,7 +22,7 @@
 
 [data-theme="light"] .warning,
 [data-theme="light"] .error {
-	color: var(--bg);
+	color: var(--fg);
 }
 
 .type {

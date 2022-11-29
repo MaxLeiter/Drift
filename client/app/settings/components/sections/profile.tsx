@@ -93,7 +93,7 @@ const Profile = ({ user }: { user: User }) => {
 						disabled
 					/>
 				</div>
-				<div>
+				{/* <div>
 					<label htmlFor="bio">Biography (max 250 characters)</label>
 					<textarea
 						id="bio"
@@ -103,8 +103,8 @@ const Profile = ({ user }: { user: User }) => {
 						value={bio}
 						onChange={handleBioChange}
 					/>
-				</div>
-				<Button htmlType="submit" auto>
+				</div> */}
+				<Button type="submit">
 					Submit
 				</Button>
 			</form>

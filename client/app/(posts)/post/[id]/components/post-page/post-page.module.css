@@ -35,7 +35,7 @@
 	}
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.header .title {
 		flex-direction: column;
 		gap: var(--gap-half);
@@ -48,6 +48,10 @@
 
 	.header .buttons {
 		display: flex;
+		justify-content: center;
+	}
+
+	.controls {
 		justify-content: center;
 	}
 }

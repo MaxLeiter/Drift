@@ -1,10 +1,11 @@
 "use client"
-import { Fieldset, useToasts } from "@geist-ui/core/dist"
+import { Fieldset } from "@geist-ui/core/dist"
 import Table from "rc-table"
 import ActionDropdown from "./action-dropdown"
 import SettingsGroup from "@components/settings-group"
 import type { User, UserWithPosts } from "@lib/server/prisma"
 import { useState } from "react"
+import { useToasts } from "@components/toasts"
 
 const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 	const [users, setUsers] = useState(initial)
@@ -21,7 +22,7 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 
 		if (res.status === 200) {
 			setToast({
-				text: "Role updated",
+				message: "Role updated",
 				type: "success"
 			})
 
@@ -39,7 +40,7 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 			})
 		} else {
 			setToast({
-				text: "Something went wrong",
+				message: "Something went wrong",
 				type: "error"
 			})
 		}
