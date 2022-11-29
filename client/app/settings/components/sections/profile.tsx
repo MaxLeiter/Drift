@@ -3,7 +3,7 @@
 import Button from "@components/button"
 import Input from "@components/input"
 import Note from "@components/note"
-import { useToasts } from "@geist-ui/core/dist"
+import { useToasts } from "@components/toasts"
 import { User } from "next-auth"
 import { useState } from "react"
 
@@ -26,7 +26,7 @@ const Profile = ({ user }: { user: User }) => {
 		e.preventDefault()
 		if (!name && !bio) {
 			setToast({
-				text: "Please fill out at least one field",
+				message: "Please fill out at least one field",
 				type: "error"
 			})
 			return
@@ -47,12 +47,12 @@ const Profile = ({ user }: { user: User }) => {
 
 		if (res.status === 200) {
 			setToast({
-				text: "Profile updated",
+				message: "Profile updated",
 				type: "success"
 			})
 		} else {
 			setToast({
-				text: "Something went wrong updating your profile",
+				message: "Something went wrong updating your profile",
 				type: "error"
 			})
 		}
@@ -80,6 +80,7 @@ const Profile = ({ user }: { user: User }) => {
 						placeholder="my name"
 						value={name || ""}
 						onChange={handleNameChange}
+						aria-label="Display name"
 					/>
 				</div>
 				<div>
@@ -91,6 +92,7 @@ const Profile = ({ user }: { user: User }) => {
 						placeholder="my@email.io"
 						value={user.email || undefined}
 						disabled
+						aria-label="Email"
 					/>
 				</div>
 				{/* <div>

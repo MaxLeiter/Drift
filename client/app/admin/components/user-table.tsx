@@ -66,12 +66,12 @@ const UserTable = ({ users: initial }: { users: UserWithPosts[] }) => {
 
 		if (res.status === 200) {
 			setToast({
-				text: "User deleted",
+				message: "User deleted",
 				type: "success"
 			})
 		} else {
 			setToast({
-				text: "Something went wrong",
+				message: "Something went wrong",
 				type: "error"
 			})
 		}

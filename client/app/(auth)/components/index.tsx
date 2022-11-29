@@ -61,6 +61,7 @@ const Auth = ({
 								placeholder="Server Password"
 								required
 								width="100%"
+								aria-label="Server Password"
 							/>
 						)}
 						<Button
