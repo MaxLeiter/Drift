@@ -62,6 +62,7 @@ dependencies:
   jest: 29.3.1_@types+node@17.0.23
   next: 13.0.6-canary.1_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.17.0_cejjzyjft5qpe7pbv5t5jzassa
+  prisma: 4.6.1
   rc-table: 7.24.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
@@ -90,7 +91,6 @@ devDependencies:
   katex: 0.16.3
   next-unused: 0.0.6
   prettier: 2.6.2
-  prisma: 4.6.1
   typescript: 4.6.4
   typescript-plugin-css-modules: 3.4.0_typescript@4.6.4
 
@@ -1017,6 +1017,7 @@ packages:
   /@prisma/engines/4.6.1:
     resolution: {integrity: sha512-3u2/XxvxB+Q7cMXHnKU0CpBiUK1QWqpgiBv28YDo1zOIJE3FCF8DI2vrp6vuwjGt5h0JGXDSvmSf4D4maVjJdw==}
     requiresBuild: true
+    dev: false
 
   /@radix-ui/primitive/1.0.0:
     resolution: {integrity: sha512-3e7rn8FDMin4CgeL7Z/49smCA3rFYY3Ha2rUQ7HRWFadS5iCRw08ZgVT1LaNTCNqgvrUiyczLflrVrF0SRQtNA==}
@@ -5838,6 +5839,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.6.1
+    dev: false
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
