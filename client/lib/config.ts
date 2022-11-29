@@ -63,6 +63,8 @@ export const config = (env: Environment): Config => {
 
 	validNodeEnvs(env.NODE_ENV)
 
+	throwIfUndefined("DATABASE_URL");
+
 	const config: Config = {
 		is_production,
 		enable_admin: stringToBoolean(env.ENABLE_ADMIN),

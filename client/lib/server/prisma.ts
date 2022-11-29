@@ -6,35 +6,6 @@ import config from "@lib/config"
 import { Post, PrismaClient, File, User, Prisma } from "@prisma/client"
 export type { User, File, Post } from "@prisma/client"
 
-// we want to update iff they exist the createdAt/updated/expired/deleted items
-// the input could be an array, in which case we'd check each item in the array
-// if it's an object, we'd check that object
-// then we return the changed object or array
-
-const updateDateForItem = (item: any) => {
-	if (item.createdAt) {
-		item.createdAt = item.createdAt.toString()
-	}
-	if (item.updatedAt) {
-		item.updatedAt = item.updatedAt.toString()
-	}
-	if (item.expiresAt) {
-		item.expiresAt = item.expiresAt.toString()
-	}
-	if (item.deletedAt) {
-		item.deletedAt = item.deletedAt.toString()
-	}
-	return item
-}
-
-const updateDates = (input: any) => {
-	if (Array.isArray(input)) {
-		return input.map((item) => updateDateForItem(item))
-	} else {
-		return updateDateForItem(input)
-	}
-}
-
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
