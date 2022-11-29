@@ -1,9 +1,8 @@
 import Button from "@components/button"
-import React, { useCallback, useEffect } from "react"
-import { useState } from "react"
+import React from "react"
 import styles from "./dropdown.module.css"
-import DownIcon from "@geist-ui/icons/arrowDown"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import { ArrowDown } from "react-feather"
 type Props = {
 	type?: "primary" | "secondary"
 	loading?: boolean
@@ -35,7 +34,7 @@ const ButtonDropdown: React.FC<
 					asChild
 				>
 					<Button
-						iconLeft={<DownIcon />}
+						iconLeft={<ArrowDown />}
 						type={type}
 						className={styles.icon}
 					/>

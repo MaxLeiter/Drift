@@ -2,8 +2,6 @@
 	color: var(--fg);
 	margin: 0;
 	padding: var(--gap);
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
 	border-radius: var(--radius);
 }
 

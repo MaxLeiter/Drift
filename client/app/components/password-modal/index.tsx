@@ -1,5 +1,9 @@
-import { Modal, Note, Spacer, Input } from "@geist-ui/core/dist"
+import Button from "@components/button"
+import Input from "@components/input"
+import Note from "@components/note"
+import * as Dialog from "@radix-ui/react-dialog"
 import { useState } from "react"
+import styles from "./modal.module.css"
 
 type Props = {
 	creating: boolean
@@ -34,47 +38,60 @@ const PasswordModal = ({
 
 	return (
 		<>
-			{/* TODO: investigate disableBackdropClick not updating state? */}
-
 			{
-				<Modal visible={isOpen} disableBackdropClick={false}>
-					<Modal.Title>Enter a password</Modal.Title>
-					<Modal.Content>
-						{!error && creating && (
-							<Note type="warning" label="Warning">
-								This doesn&apos;t protect your post from the server
-								administrator.
-							</Note>
-						)}
-						{error && (
-							<Note type="error" label="Error">
-								{error}
-							</Note>
-						)}
-						<Spacer />
-						<Input
-							width={"100%"}
-							label="Password"
-							marginBottom={1}
-							htmlType="password"
-							placeholder="Password"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						{creating && (
-							<Input
-								width={"100%"}
-								label="Confirm"
-								htmlType="password"
-								placeholder="Confirm Password"
-								onChange={(e) => setConfirmPassword(e.target.value)}
-							/>
-						)}
-					</Modal.Content>
-					<Modal.Action passive onClick={onClose}>
-						Cancel
-					</Modal.Action>
-					<Modal.Action onClick={onSubmit}>Submit</Modal.Action>
-				</Modal>
+				<Dialog.Root
+					open={isOpen}
+					onOpenChange={(open) => {
+						if (!open) onClose()
+					}}
+				>
+					{/* <Dialog.Trigger asChild>Enter a password</Dialog.Trigger> */}
+					<Dialog.Portal>
+						<Dialog.Overlay className={styles.overlay} />
+						<Dialog.Content
+							className={styles.content}
+							onEscapeKeyDown={onClose}
+						>
+							<Dialog.Title>
+								{creating ? "Create a password" : "Enter password"}
+							</Dialog.Title>
+							<Dialog.Description>
+								{creating
+									? "Enter a password to protect your post"
+									: "Enter the password to access the post"}
+							</Dialog.Description>
+							<fieldset className={styles.fieldset}>
+								{error && <Note type="error">{error}</Note>}
+								<Input
+									width={"100%"}
+									label="Password"
+									type="password"
+									placeholder="Password"
+									onChange={(e) => setPassword(e.currentTarget.value)}
+								/>
+								{creating && (
+									<Input
+										width={"100%"}
+										label="Confirm"
+										type="password"
+										placeholder="Confirm Password"
+										onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+									/>
+								)}
+								{!error && creating && (
+									<Note type="warning">
+										This doesn&apos;t protect your post from the server
+										administrator.
+									</Note>
+								)}
+							</fieldset>
+							<Dialog.Close className={styles.close}>
+								<Button onClick={onSubmit}>Submit</Button>
+								<Button>Cancel</Button>
+							</Dialog.Close>
+						</Dialog.Content>
+					</Dialog.Portal>
+				</Dialog.Root>
 			}
 		</>
 	)

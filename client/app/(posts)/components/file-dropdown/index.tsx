@@ -1,14 +1,12 @@
 import Button from "@components/button"
 import { Popover } from "@components/popover"
 import ShiftBy from "@components/shift-by"
-import ChevronDown from "@geist-ui/icons/chevronDown"
-import CodeIcon from "@geist-ui/icons/fileFunction"
-import FileIcon from "@geist-ui/icons/fileText"
 import { codeFileExtensions } from "@lib/constants"
 import clsx from "clsx"
 import type { File } from "lib/server/prisma"
 import styles from "./dropdown.module.css"
 import buttonStyles from "@components/button/button.module.css"
+import { ChevronDown, Code, File as FileIcon } from "react-feather"
 
 type Item = File & {
 	icon: JSX.Element
@@ -20,7 +18,7 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 		if (codeFileExtensions.includes(extension || "")) {
 			return {
 				...file,
-				icon: <CodeIcon />
+				icon: <Code />
 			}
 		} else {
 			return {
@@ -60,7 +58,7 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 					Jump to {files.length} {files.length === 1 ? "file" : "files"}
 				</span>
 			</Popover.Trigger>
-			<Popover.Content>{content}</Popover.Content>
+			<Popover.Content className={styles.contentWrapper}>{content}</Popover.Content>
 		</Popover>
 	)
 }

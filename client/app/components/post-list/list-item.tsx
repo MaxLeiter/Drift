@@ -1,11 +1,8 @@
 import VisibilityBadge from "../badges/visibility-badge"
 import FadeIn from "@components/fade-in"
-import Trash from "@geist-ui/icons/trash"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
-import Edit from "@geist-ui/icons/edit"
 import { useRouter } from "next/navigation"
-import Parent from "@geist-ui/icons/arrowUpCircle"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
@@ -14,6 +11,7 @@ import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
 import Card from "@components/card"
 import Button from "@components/button"
+import { ArrowUpCircle, Edit, Trash } from "react-feather"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -55,7 +53,7 @@ const ListItem = ({
 									{post.parentId && (
 										<Tooltip content={"View parent"}>
 											<Button
-												iconRight={<Parent />}
+												iconRight={<ArrowUpCircle />}
 												onClick={viewParentClick}
 												height={38}
 											/>

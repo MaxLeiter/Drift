@@ -35,6 +35,11 @@
 	z-index: 1000;
 	display: flex;
 	flex-direction: column;
+	background: var(--bg);
+	width: 100%;
+	height: 100%;
+	top: 70px;
+	left: 0;
 }
 
 .mobile button {

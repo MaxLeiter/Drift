@@ -12,6 +12,11 @@
 	width: 100%;
 }
 
+.contentWrapper {
+	z-index: 1000;
+
+}
+
 .content {
 	list-style: none;
 	width: 100%;

@@ -1,7 +1,7 @@
 import Button from "@components/button"
 import Tooltip from "@components/tooltip"
-import ChevronUp from "@geist-ui/icons/chevronUp"
 import { useEffect, useState } from "react"
+import { ChevronUp } from "react-feather"
 import styles from "./scroll.module.css"
 
 const ScrollToTop = () => {

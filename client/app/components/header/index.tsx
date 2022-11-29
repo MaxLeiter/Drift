@@ -1,28 +1,28 @@
 "use client"
-
-import {  useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
+import { useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
 
 import { useEffect, useState } from "react"
 import styles from "./header.module.css"
 
-import HomeIcon from "@geist-ui/icons/home"
-import MenuIcon from "@geist-ui/icons/menu"
-import GitHubIcon from "@geist-ui/icons/github"
-import SignOutIcon from "@geist-ui/icons/userX"
-import SignInIcon from "@geist-ui/icons/user"
-import SignUpIcon from "@geist-ui/icons/userPlus"
-import NewIcon from "@geist-ui/icons/plusCircle"
-import YourIcon from "@geist-ui/icons/list"
-import MoonIcon from "@geist-ui/icons/moon"
-import SettingsIcon from "@geist-ui/icons/settings"
-import SunIcon from "@geist-ui/icons/sun"
 // import useUserData from "@lib/hooks/use-user-data"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
-import { useTheme } from "@components/theme/ThemeClientContextProvider"
 import Button from "@components/button"
 import clsx from "clsx"
+import { useTheme } from "@wits/next-themes"
+import {
+	GitHub,
+	Home,
+	Menu,
+	Moon,
+	PlusCircle,
+	Settings,
+	Sun,
+	User,
+	UserPlus,
+	UserX
+} from "react-feather"
 
 type Tab = {
 	name: string
@@ -55,7 +55,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			{
 				name: isMobile ? "GitHub" : "",
 				href: "https://github.com/maxleiter/drift",
-				icon: <GitHubIcon />,
+				icon: <GitHub />,
 				value: "github"
 			},
 			{
@@ -64,7 +64,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					if (typeof window !== "undefined")
 						setTheme(theme === "light" ? "dark" : "light")
 				},
-				icon: theme === "light" ? <MoonIcon /> : <SunIcon />,
+				icon: theme === "light" ? <Moon /> : <Sun />,
 				value: "theme"
 			}
 		]
@@ -72,7 +72,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 		if (isAdmin) {
 			defaultPages.push({
 				name: "Admin",
-				icon: <SettingsIcon />,
+				icon: <Settings />,
 				value: "admin",
 				href: "/admin"
 			})
@@ -82,29 +82,30 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			return [
 				{
 					name: "New",
-					icon: <NewIcon />,
+					icon: <PlusCircle />,
 					value: "new",
 					href: "/new"
 				},
 				{
 					name: "Yours",
-					icon: <YourIcon />,
+					icon: <User />,
 					value: "yours",
 					href: "/mine"
 				},
 				{
 					name: "Settings",
-					icon: <SettingsIcon />,
+					icon: <Settings />,
 					value: "settings",
 					href: "/settings"
 				},
 				{
 					name: "Sign Out",
-					icon: <SignOutIcon />,
+					icon: <UserX />,
 					value: "signout",
-					onClick: () => signOut({
-						callbackUrl: "/",
-					})
+					onClick: () =>
+						signOut({
+							callbackUrl: "/"
+						})
 				},
 				...defaultPages
 			]
@@ -112,19 +113,19 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			return [
 				{
 					name: "Home",
-					icon: <HomeIcon />,
+					icon: <Home />,
 					value: "home",
 					href: "/"
 				},
 				{
 					name: "Sign in",
-					icon: <SignInIcon />,
+					icon: <User />,
 					value: "signin",
 					href: "/signin"
 				},
 				{
 					name: "Sign up",
-					icon: <SignUpIcon />,
+					icon: <UserPlus />,
 					value: "signup",
 					href: "/signup"
 				},
@@ -180,7 +181,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			</div>
 			<div className={styles.controls}>
 				<Button onClick={() => setExpanded(!expanded)} aria-label="Menu">
-					<MenuIcon />
+					<Menu />
 				</Button>
 			</div>
 			{/* setExpanded should occur elsewhere; we don't want to close if they change themes */}

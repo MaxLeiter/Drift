@@ -5,9 +5,6 @@ import DocumentComponent from "./view-document"
 import styles from "./post-page.module.css"
 
 import { useEffect, useState } from "react"
-import Archive from "@geist-ui/icons/archive"
-import Edit from "@geist-ui/icons/edit"
-import Parent from "@geist-ui/icons/arrowUpCircle"
 import FileDropdown from "app/(posts)/components/file-dropdown"
 import ScrollToTop from "@components/scroll-to-top"
 import { useRouter } from "next/navigation"
@@ -18,6 +15,7 @@ import VisibilityControl from "@components/badges/visibility-control"
 import { File, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import ButtonGroup from "@components/button-group"
 import Button from "@components/button"
+import { Archive, ArrowUpCircle, Edit } from "react-feather"
 
 type Props = {
 	post: string | PostWithFilesAndAuthor
@@ -108,7 +106,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 							Edit a Copy
 						</Button>
 						{post.parentId && (
-							<Button iconLeft={<Parent />} onClick={viewParentClick}>
+							<Button iconLeft={<ArrowUpCircle />} onClick={viewParentClick}>
 								View Parent
 							</Button>
 						)}

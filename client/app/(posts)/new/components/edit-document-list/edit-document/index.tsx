@@ -1,9 +1,9 @@
-import { ChangeEvent, memo, useCallback } from "react"
+import { ChangeEvent, useCallback } from "react"
 import styles from "./document.module.css"
-import Trash from "@geist-ui/icons/trash"
 import Button from "@components/button"
 import Input from "@components/input"
 import DocumentTabs from "app/(posts)/components/tabs"
+import { Trash } from "react-feather"
 
 type Props = {
 	title?: string

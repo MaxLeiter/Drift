@@ -1,7 +1,5 @@
 import { memo } from "react"
 import styles from "./document.module.css"
-import Download from "@geist-ui/icons/download"
-import ExternalLink from "@geist-ui/icons/externalLink"
 import Skeleton from "@components/skeleton"
 import Link from "next/link"
 
@@ -10,6 +8,7 @@ import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
 import DocumentTabs from "app/(posts)/components/tabs"
 import Input from "@components/input"
+import { Download, ExternalLink } from "react-feather"
 
 // import Link from "next/link"
 type Props = {

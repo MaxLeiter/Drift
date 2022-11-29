@@ -4,11 +4,10 @@ import { useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
 import { signIn } from "next-auth/react"
-import { Github as GithubIcon } from "@geist-ui/icons"
 import Input from "@components/input"
 import Button from "@components/button"
 import Note from "@components/note"
-
+import { GitHub } from 'react-feather'
 const Auth = ({
 	page,
 	requiresServerPassword
@@ -71,7 +70,7 @@ const Auth = ({
 							style={{
 								color: 'var(--fg)'
 							}}
-							iconLeft={<GithubIcon />}
+							iconLeft={<GitHub />}
 							onClick={(e) => {
 								e.preventDefault()
 								signIn("github", {

@@ -1,10 +1,4 @@
-import Bold from "@geist-ui/icons/bold"
-import Italic from "@geist-ui/icons/italic"
-import Link from "@geist-ui/icons/link"
-import Code from "@geist-ui/icons/code"
-import List from "@geist-ui/icons/list"
-
-import ImageIcon from "@geist-ui/icons/image"
+import { Bold, Code, Image as ImageIcon, Italic, Link, List } from "react-feather"
 import { RefObject, useMemo } from "react"
 import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
