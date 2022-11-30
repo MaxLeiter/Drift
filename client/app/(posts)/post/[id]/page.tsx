@@ -1,6 +1,6 @@
 import PostPage from "app/(posts)/post/[id]/components/post-page"
 import { notFound, redirect } from "next/navigation"
-import { getPostById, Post } from "@lib/server/prisma"
+import { getAllPosts, getPostById, Post } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 
 export type PostProps = {
@@ -10,9 +10,11 @@ export type PostProps = {
 
 // export async function generateStaticParams() {
 // 	const posts = await getAllPosts({
-// 		where: {
-// 			visibility: "public"
-// 		}
+// 		 where: {
+// 			visibility: {
+// 				in: ["public", "unlisted"]
+// 			}
+// 		 }
 // 	})
 
 // 	return posts.map((post) => ({
@@ -25,12 +27,12 @@ const getPost = async (id: string) => {
 		withFiles: true,
 		withAuthor: true
 	})
-	const user = await getCurrentUser()
 
 	if (!post) {
 		return notFound()
 	}
-
+	
+	const user = await getCurrentUser()
 	const isAuthorOrAdmin = user?.id === post?.authorId || user?.role === "admin"
 
 	if (post.visibility === "public") {
