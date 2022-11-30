@@ -53,7 +53,7 @@ const PasswordModal = ({
 							onEscapeKeyDown={onClose}
 						>
 							<Dialog.Title>
-								{creating ? "Create a password" : "Enter password"}
+								{creating ? "Add a password" : "Enter password"}
 							</Dialog.Title>
 							<Dialog.Description>
 								{creating

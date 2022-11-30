@@ -36,12 +36,15 @@
 	background-color: var(--lighter-gray);
 }
 
-.content li a {
+.content .listItem {
 	display: flex;
 	align-items: center;
-	text-align: center;
-	padding: var(--gap-half) var(--gap);
+	justify-content: space-between;
 	color: var(--dark-gray);
+	text-decoration: none;
+	/* vertical alignment */
+	padding: var(--gap-quarter) 0;
+	
 }
 
 .button {

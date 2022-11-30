@@ -5,7 +5,6 @@ import Page from "@components/page"
 import { Toasts } from "@components/toasts"
 import * as RadixTooltip from "@radix-ui/react-tooltip"
 import { ThemeProvider } from "@wits/next-themes"
-import { Toaster } from "react-hot-toast"
 
 export function LayoutWrapper({
 	children,

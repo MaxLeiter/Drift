@@ -44,7 +44,7 @@
 	--header-bg: rgba(19, 20, 21, 0.45);
 	--gray-alpha: rgba(255, 255, 255, 0.5);
 	--selection: rgba(255, 255, 255, 0.99);
-	--border: var(--lighter-gray);
+	--border: var(--light-gray);
 	--warning: #ff6700;
 	--link: #3291ff;
 	color-scheme: dark;
@@ -62,7 +62,7 @@
 	--gray: #888;
 
 	--light-gray: #dedede;
-	--lighter-gray: #f5f5f5;
+	--lighter-gray: #f2f2f2;
 	--lightest-gray: #fafafa;
 	--darker-gray: #555;
 	--darkest-gray: #222;
@@ -80,7 +80,7 @@
 
 // TODO: replace this with an accessible alternative
 *:focus-visible {
-	outline: none;
+	outline: none !important;
 }
 
 ::selection {

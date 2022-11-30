@@ -1,4 +1,5 @@
-import Tooltip from "@components/tooltip"
+'use client'
+// import Tooltip from "@components/tooltip"
 import { timeAgo } from "@lib/time-ago"
 import { useMemo, useState, useEffect } from "react"
 import Badge from "../badge"
@@ -14,14 +15,15 @@ const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 		return () => clearInterval(interval)
 	}, [createdDate])
 
-	const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
+	// const formattedTime = `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString()}`
 	return (
-		<Badge type="secondary">
-			{" "}
-			<Tooltip content={formattedTime}>
+		// TODO: investigate tooltip
+		// <Tooltip content={formattedTime}>
+			<Badge type="secondary">
+				{" "}
 				<>{time}</>
-			</Tooltip>
-		</Badge>
+			</Badge>
+		// </Tooltip>
 	)
 }
 

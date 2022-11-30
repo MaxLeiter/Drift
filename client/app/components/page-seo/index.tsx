@@ -9,13 +9,14 @@ type PageSeoProps = {
 }
 
 const PageSeo = ({
-	title = "Drift",
+	title: pageTitle,
 	description = "A self-hostable clone of GitHub Gist",
 	isPrivate = false
 }: PageSeoProps) => {
+	const title = `Drift${pageTitle ? ` - ${pageTitle}` : ""}`
 	return (
 		<>
-			<title>Drift{title ? ` - ${title}` : ""}</title>
+			<title>{title}</title>
 			<meta charSet="utf-8" />
 			{!isPrivate && <meta name="description" content={description} />}
 			{isPrivate && <meta name="robots" content="noindex" />}

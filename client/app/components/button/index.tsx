@@ -1,6 +1,7 @@
 import styles from "./button.module.css"
 import { forwardRef, Ref } from "react"
 import clsx from "clsx"
+import { Spinner } from "@components/spinner"
 
 type Props = React.HTMLProps<HTMLButtonElement> & {
 	children?: React.ReactNode
@@ -13,6 +14,7 @@ type Props = React.HTMLProps<HTMLButtonElement> & {
 	width?: string | number
 	padding?: string | number
 	margin?: string | number
+	loading?: boolean
 }
 
 // eslint-disable-next-line react/display-name
@@ -31,6 +33,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			width,
 			padding,
 			margin,
+			loading,
 			...props
 		},
 		ref
@@ -39,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			<button
 				ref={ref}
 				className={`${styles.button} ${styles[type]} ${className || ""}`}
-				disabled={disabled}
+				disabled={disabled || loading}
 				onClick={onClick}
 				style={{ height, width, margin, padding }}
 				{...props}
@@ -47,10 +50,22 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 				{children && iconLeft && (
 					<span className={clsx(styles.icon, styles.iconLeft)}>{iconLeft}</span>
 				)}
-				{children ? (
-					children
-				) : (
-					<span className={styles.icon}>{iconLeft || iconRight}</span>
+				{!loading &&
+					(children ? (
+						children
+					) : (
+						<span className={styles.icon}>{iconLeft || iconRight}</span>
+					))}
+				{loading && (
+					<span
+						style={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "center"
+						}}
+					>
+						<Spinner />
+					</span>
 				)}
 				{children && iconRight && (
 					<span className={clsx(styles.icon, styles.iconRight)}>

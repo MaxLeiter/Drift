@@ -25,8 +25,10 @@ const NewFromExisting = async ({
 		withFiles: true,
 		withAuthor: false
 	})
+	
+	const serialized = JSON.stringify(post)
 
-	return <NewPost initialPost={post} newPostParent={id} />
+	return <NewPost initialPost={serialized} newPostParent={id} />
 }
 
 export default NewFromExisting

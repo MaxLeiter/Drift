@@ -12,7 +12,7 @@ type Props = {
 }
 
 const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
-	const [isSubmitting, setSubmitting] = useState(false)
+	const [isSubmitting, setSubmitting] = useState<string | null>()
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 	const { setToast } = useToasts()
 
@@ -47,53 +47,53 @@ const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
 				return
 			}
 			setPasswordModalVisible(false)
-			const timeout = setTimeout(() => setSubmitting(true), 100)
+			const timeout = setTimeout(() => setSubmitting(visibility), 100)
 
 			await sendRequest(visibility, password)
 			clearTimeout(timeout)
-			setSubmitting(false)
+			setSubmitting(null)
 		},
 		[sendRequest]
 	)
 
 	const onClosePasswordModal = () => {
 		setPasswordModalVisible(false)
-		setSubmitting(false)
+		setSubmitting(null)
 	}
 
 	const submitPassword = (password: string) => onSubmit("protected", password)
 
 	return (
 		<>
-			{isSubmitting ? (
-				<Spinner />
-			) : (
-				<ButtonGroup verticalIfMobile>
-					<Button
-						disabled={visibility === "private"}
-						onClick={() => onSubmit("private")}
-					>
-						Make Private
-					</Button>
-					<Button
-						disabled={visibility === "public"}
-						onClick={() => onSubmit("public")}
-					>
-						Make Public
-					</Button>
-					<Button
-						disabled={visibility === "unlisted"}
-						onClick={() => onSubmit("unlisted")}
-					>
-						Unlist
-					</Button>
-					<Button onClick={() => onSubmit("protected")}>
-						{visibility === "protected"
-							? "Change Password"
-							: "Protect with Password"}
-					</Button>
-				</ButtonGroup>
-			)}
+			<ButtonGroup verticalIfMobile>
+				<Button
+					disabled={visibility === "private"}
+					onClick={() => onSubmit("private")}
+				>
+					{isSubmitting === "private" ? <Spinner /> : "Make Private"}
+				</Button>
+				<Button
+					disabled={visibility === "public"}
+					onClick={() => onSubmit("public")}
+				>
+					{isSubmitting === "public" ? <Spinner /> : "Make Public"}
+				</Button>
+				<Button
+					disabled={visibility === "unlisted"}
+					onClick={() => onSubmit("unlisted")}
+				>
+					{isSubmitting === "unlisted" ? <Spinner /> : "Make Unlisted"}
+				</Button>
+				<Button onClick={() => onSubmit("protected")}>
+					{isSubmitting === "protected" ? (
+						<Spinner />
+					) : visibility === "protected" ? (
+						"Change Password"
+					) : (
+						"Protect with Password"
+					)}
+				</Button>
+			</ButtonGroup>
 			<PasswordModal
 				creating={true}
 				isOpen={passwordModalVisible}

@@ -17,6 +17,7 @@ import Button from "@components/button"
 import Input from "@components/input"
 import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
+
 const emptyDoc = {
 	title: "",
 	content: "",
@@ -30,19 +31,20 @@ export type Document = {
 }
 
 const Post = ({
-	initialPost,
+	initialPost: stringifiedInitialPost,
 	newPostParent
 }: {
-	initialPost?: PostWithFiles
+	initialPost?: string
 	newPostParent?: string
 }) => {
+	const initialPost = JSON.parse(stringifiedInitialPost || "{}") as PostWithFiles
 	const { setToast } = useToasts()
 	const router = useRouter()
 	const [title, setTitle] = useState(
 		getTitleForPostCopy(initialPost?.title) || ""
 	)
 	const [description, setDescription] = useState(initialPost?.description || "")
-	const [expiresAt, setExpiresAt] = useState(initialPost?.expiresAt)
+	const [expiresAt, setExpiresAt] = useState<Date>()
 
 	const defaultDocs: Document[] = initialPost
 		? initialPost.files?.map((doc) => ({
@@ -212,16 +214,6 @@ const Post = ({
 		else setDocs((docs) => [...docs, ...files])
 	}
 
-	// pasted files
-	// const files = e.clipboardData.files as File[]
-	// if (files.length) {
-	//     const docs = Array.from(files).map((file) => ({
-	//         title: file.name,
-	//         content: '',
-	//         id: generateUUID()
-	//     }))
-	// }
-
 	const onPaste = (e: ClipboardEvent) => {
 		const pastedText = e.clipboardData?.getData("text")
 
@@ -259,8 +251,7 @@ const Post = ({
 	)
 
 	return (
-		// 150 so the post dropdown doesn't overflow
-		<div style={{ paddingBottom: 150 }}>
+		<div style={{ paddingBottom: 200 }}>
 			<Title title={title} onChange={onChangeTitle} />
 			<Description description={description} onChange={onChangeDescription} />
 			<FileDropzone setDocs={uploadDocs} />
@@ -315,6 +306,7 @@ const Post = ({
 							height={40}
 							width={251}
 							onClick={() => onSubmit("unlisted")}
+							loading={isSubmitting}
 						>
 							Create Unlisted
 						</Button>

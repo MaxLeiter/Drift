@@ -27,6 +27,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 	const [post, setPost] = useState<PostWithFilesAndAuthor>(
 		typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost
 	)
+
 	const [visibility, setVisibility] = useState<string>(post.visibility)
 	const router = useRouter()
 
@@ -63,6 +64,10 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 		}
 	}, [isAuthor, post.expiresAt, router])
 
+	if (isProtected) {
+		return <PasswordModalPage setPost={setPost} postId={post.id} />
+	}
+
 	const download = async () => {
 		if (!post.files) return
 		const downloadZip = (await import("client-zip")).downloadZip
@@ -89,12 +94,9 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 	const viewParentClick = () => {
 		router.push(`/post/${post.parentId}`)
 	}
-
-	const isAvailable = !isProtected && post.title
-
+	
 	return (
 		<>
-			{!isAvailable && <PasswordModalPage setPost={setPost} postId={post.id} />}
 			<div className={styles.header}>
 				<span className={styles.buttons}>
 					<ButtonGroup verticalIfMobile>

@@ -6,6 +6,7 @@ import Note from "@components/note"
 import { useToasts } from "@components/toasts"
 import { User } from "next-auth"
 import { useState } from "react"
+import styles from "./profile.module.css"
 
 const Profile = ({ user }: { user: User }) => {
 	// TODO: make this displayName, requires fetching user from DB as session doesnt have it
@@ -63,15 +64,7 @@ const Profile = ({ user }: { user: User }) => {
 			<Note type="warning">
 				This information will be publicly available on your profile
 			</Note>
-			<form
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					gap: "var(--gap)",
-					maxWidth: "300px"
-				}}
-				onSubmit={onSubmit}
-			>
+			<form onSubmit={onSubmit} className={styles.form}>
 				<div>
 					<label htmlFor="displayName">Display name</label>
 					<Input
@@ -81,6 +74,8 @@ const Profile = ({ user }: { user: User }) => {
 						value={name || ""}
 						onChange={handleNameChange}
 						aria-label="Display name"
+						minLength={1}
+						maxLength={32}
 					/>
 				</div>
 				<div>
@@ -95,20 +90,7 @@ const Profile = ({ user }: { user: User }) => {
 						aria-label="Email"
 					/>
 				</div>
-				{/* <div>
-					<label htmlFor="bio">Biography (max 250 characters)</label>
-					<textarea
-						id="bio"
-						style={{ width: "100%" }}
-						maxLength={250}
-						placeholder="I enjoy..."
-						value={bio}
-						onChange={handleBioChange}
-					/>
-				</div> */}
-				<Button type="submit">
-					Submit
-				</Button>
+				<Button type="submit">Submit</Button>
 			</form>
 		</>
 	)

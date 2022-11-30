@@ -1,6 +1,5 @@
 import "@styles/globals.css"
 import { LayoutWrapper } from "./root-layout-wrapper"
-import styles from "@styles/Home.module.css"
 import { getSession } from "@lib/server/session"
 import { ServerThemeProvider } from "@wits/next-themes"
 
@@ -14,7 +13,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<ServerThemeProvider
 			enableSystem={true}
-			defaultTheme="dark"
 			disableTransitionOnChange
 			cookieName={"drift-theme"}
 			attribute="data-theme"
@@ -22,7 +20,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 		>
 			<html lang="en">
 				<head />
-				<body className={styles.main}>
+				<body>
 					<LayoutWrapper
 						signedIn={Boolean(session?.user)}
 						isAdmin={session?.user.role === "admin"}

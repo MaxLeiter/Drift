@@ -11,9 +11,9 @@ export default function ButtonGroup({
 	return (
 		<div
 			className={clsx(
-				props.className,
 				styles["button-group"],
-				verticalIfMobile && styles.verticalIfMobile
+				verticalIfMobile && styles.verticalIfMobile,
+				props.className
 			)}
 			{...props}
 		>

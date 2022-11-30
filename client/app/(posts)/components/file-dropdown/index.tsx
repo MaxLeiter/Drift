@@ -1,6 +1,4 @@
-import Button from "@components/button"
 import { Popover } from "@components/popover"
-import ShiftBy from "@components/shift-by"
 import { codeFileExtensions } from "@lib/constants"
 import clsx from "clsx"
 import type { File } from "lib/server/prisma"
@@ -32,10 +30,8 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 		<ul className={styles.content}>
 			{items.map((item) => (
 				<li key={item.id}>
-					<a href={`#${item.title}`}>
-						<ShiftBy y={5}>
-							<span className={styles.fileIcon}>{item.icon}</span>
-						</ShiftBy>
+					<a href={`#${item.title}`} className={styles.listItem}>
+						<span className={styles.fileIcon}>{item.icon}</span>
 						<span className={styles.fileTitle}>
 							{item.title ? item.title : "Untitled"}
 						</span>
@@ -58,7 +54,9 @@ const FileDropdown = ({ files }: { files: File[] }) => {
 					Jump to {files.length} {files.length === 1 ? "file" : "files"}
 				</span>
 			</Popover.Trigger>
-			<Popover.Content className={styles.contentWrapper}>{content}</Popover.Content>
+			<Popover.Content className={styles.contentWrapper}>
+				{content}
+			</Popover.Content>
 		</Popover>
 	)
 }

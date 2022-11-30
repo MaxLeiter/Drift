@@ -30,44 +30,6 @@
 	box-shadow: inset 0 -1px 0 var(--fg);
 }
 
-.mobile {
-	position: absolute;
-	z-index: 1000;
-	display: flex;
-	flex-direction: column;
-	background: var(--bg);
-	width: 100%;
-	height: 100%;
-	top: 70px;
-	left: 0;
-}
-
-.mobile button {
-	z-index: 1000;
-	width: 100%;
-}
-
-.controls {
-	margin-top: var(--gap);
-	display: none !important;
-}
-
-@media only screen and (max-width: 650px) {
-	.tabs {
-		display: none;
-	}
-
-	.controls {
-		display: block !important;
-	}
-}
-
-.controls button:active,
-.controls button:focus,
-.controls button:hover {
-	outline: 1px solid rgba(0, 0, 0, 0.2);
-}
-
 .wrapper {
 	display: flex;
 	align-items: center;
@@ -85,4 +47,34 @@
 .active a,
 .active button {
 	color: var(--fg);
+}
+
+.buttonGroup,
+.mobile {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.wrapper [data-tab="github"] {
+		display: none;
+	}
+
+	.mobile {
+		margin-top: var(--gap);
+		display: flex;
+	}
+
+	.buttonGroup {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.dropdownItem a,
+	.dropdownItem button {
+		width: 100%;
+	}
+
+	.tabs {
+		display: none;
+	}
 }

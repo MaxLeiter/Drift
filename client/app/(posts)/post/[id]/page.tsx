@@ -47,7 +47,10 @@ const getPost = async (id: string) => {
 
 	if (post.visibility === "protected" && !isAuthorOrAdmin) {
 		return {
-			// post,
+			post: {
+				visibility: "protected",
+				id: post.id
+			},
 			isProtected: true,
 			isAuthor: isAuthorOrAdmin
 		}

@@ -30,14 +30,19 @@ const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<Button iconRight={<Download />} aria-label="Download" />
+						<Button
+							iconRight={<Download />}
+							aria-label="Download"
+							style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
+						/>
 					</Link>
 				</Tooltip>
 				<Tooltip content="Open raw in new tab">
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							iconRight={<ExternalLink />}
+							iconLeft={<ExternalLink />}
 							aria-label="Open raw file in new tab"
+							style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
 						/>
 					</Link>
 				</Tooltip>

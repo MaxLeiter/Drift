@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 768px) {
 	.verticalIfMobile {
-		flex-direction: column;
+		flex-direction: column !important;
 	}
 
 	.verticalIfMobile.button-group > button:first-of-type {

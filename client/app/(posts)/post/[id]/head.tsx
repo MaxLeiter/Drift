@@ -16,7 +16,7 @@ export default async function Head({
 
 	return (
 		<PageSeo
-			title={`${post.title} - Drift`}
+			title={post.title}
 			description={post.description || undefined}
 			isPrivate={false}
 		/>

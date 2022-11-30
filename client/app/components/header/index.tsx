@@ -1,11 +1,8 @@
 "use client"
-import { useBodyScroll, useMediaQuery } from "@geist-ui/core/dist"
-
-import { useEffect, useState } from "react"
 import styles from "./header.module.css"
 
 // import useUserData from "@lib/hooks/use-user-data"
-import Link from "next/link"
+import Link from "@components/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 import Button from "@components/button"
@@ -23,6 +20,11 @@ import {
 	UserPlus,
 	UserX
 } from "react-feather"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import buttonStyles from "@components/button/button.module.css"
+import ButtonGroup from "@components/button-group"
+import { useEffect, useMemo, useState } from "react"
+import Skeleton from "@components/skeleton"
 
 type Tab = {
 	name: string
@@ -34,38 +36,52 @@ type Tab = {
 
 const Header = ({ signedIn = false, isAdmin = false }) => {
 	const pathname = usePathname()
-	const [expanded, setExpanded] = useState<boolean>(false)
-	const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true })
-	const isMobile = useMediaQuery("xs", { match: "down" })
-	// const { status } = useSession()
-	// const signedIn = status === "authenticated"
-	const { setTheme, theme } = useTheme()
-	useEffect(() => {
-		setBodyHidden(expanded)
-	}, [expanded, setBodyHidden])
+	// wait to mount before rendering
+	const [isHydrated, setHydrated] = useState(false)
+	const { setTheme, resolvedTheme } = useTheme()
 
 	useEffect(() => {
-		if (!isMobile) {
-			setExpanded(false)
+		setHydrated(true)
+	}, [])
+
+	const getButton = (tab: Tab) => {
+		const isActive = pathname === tab.href
+		const activeStyle = isActive ? styles.active : ""
+		if (tab.onClick) {
+			return (
+				<Button
+					key={tab.value}
+					iconLeft={tab.icon}
+					onClick={tab.onClick}
+					className={clsx(styles.tab, activeStyle)}
+					aria-label={tab.name}
+					aria-current={isActive ? "page" : undefined}
+					data-tab={tab.value}
+				>
+					{tab.name ? tab.name : undefined}
+				</Button>
+			)
+		} else if (tab.href) {
+			return (
+				<Link
+					key={tab.value}
+					href={tab.href}
+					className={clsx(styles.tab, activeStyle)}
+					data-tab={tab.value}
+				>
+					<Button iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
+				</Link>
+			)
 		}
-	}, [isMobile])
+	}
 
-	const getPages = () => {
+	const pages = useMemo(() => {
 		const defaultPages: Tab[] = [
 			{
-				name: isMobile ? "GitHub" : "",
+				name: "GitHub",
 				href: "https://github.com/maxleiter/drift",
 				icon: <GitHub />,
 				value: "github"
-			},
-			{
-				name: isMobile ? "Change theme" : "",
-				onClick: function () {
-					if (typeof window !== "undefined")
-						setTheme(theme === "light" ? "dark" : "light")
-				},
-				icon: theme === "light" ? <Moon /> : <Sun />,
-				value: "theme"
 			}
 		]
 
@@ -77,6 +93,15 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 				href: "/admin"
 			})
 		}
+
+		defaultPages.push({
+			name: "Theme",
+			onClick: function () {
+				setTheme(resolvedTheme === "light" ? "dark" : "light")
+			},
+			icon: isHydrated ? (resolvedTheme === "light" ? <Moon /> : <Sun />) : <></>,
+			value: "theme"
+		})
 
 		if (signedIn)
 			return [
@@ -131,46 +156,16 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 				},
 				...defaultPages
 			]
-	}
+	}, [isAdmin, isHydrated, resolvedTheme, signedIn, setTheme])
 
-	const pages = getPages()
-
-	const onTabChange = (tab: string) => {
-		if (typeof window === "undefined") return
-		const match = pages.find((page) => page.value === tab)
-		if (match?.onClick) {
-			match.onClick()
-		}
-	}
-
-	const getButton = (tab: Tab) => {
-		const isActive = pathname === tab.href
-		const activeStyle = isActive ? styles.active : ""
-		if (tab.onClick) {
-			return (
-				<Button
-					key={tab.value}
-					iconLeft={tab.icon}
-					onClick={() => onTabChange(tab.value)}
-					className={clsx(styles.tab, activeStyle)}
-					aria-label={tab.name}
-					aria-current={isActive ? "page" : undefined}
-				>
-					{tab.name ? tab.name : undefined}
-				</Button>
-			)
-		} else if (tab.href) {
-			return (
-				<Link
-					key={tab.value}
-					href={tab.href}
-					className={clsx(styles.tab, activeStyle)}
-				>
-					<Button iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
-				</Link>
-			)
-		}
-	}
+	// // TODO: this should not be necessary.
+	// if (!clientHydrated) {
+	// 	return (
+	// 		<header>
+	// 			<div className={styles.tabs}>{getPages(true).map(getButton)}</div>
+	// 		</header>
+	// 	)
+	// }
 
 	const buttons = pages.map(getButton)
 
@@ -179,17 +174,28 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			<div className={styles.tabs}>
 				<div className={styles.buttons}>{buttons}</div>
 			</div>
-			<div className={styles.controls}>
-				<Button onClick={() => setExpanded(!expanded)} aria-label="Menu">
-					<Menu />
-				</Button>
-			</div>
-			{/* setExpanded should occur elsewhere; we don't want to close if they change themes */}
-			{isMobile && expanded && (
-				<div className={styles.mobile} onClick={() => setExpanded(!expanded)}>
-					{buttons}
-				</div>
-			)}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger
+					className={clsx(buttonStyles.button, styles.mobile)}
+					asChild
+				>
+					<Button aria-label="Menu">
+						<Menu />
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Portal>
+					<DropdownMenu.Content className={styles.contentWrapper}>
+						{buttons.map((button) => (
+							<DropdownMenu.Item
+								key={button?.key}
+								className={styles.dropdownItem}
+							>
+								{button}
+							</DropdownMenu.Item>
+						))}
+					</DropdownMenu.Content>
+				</DropdownMenu.Portal>
+			</DropdownMenu.Root>
 		</header>
 	)
 }
