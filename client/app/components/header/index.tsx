@@ -4,7 +4,7 @@ import styles from "./header.module.css"
 // import useUserData from "@lib/hooks/use-user-data"
 import Link from "@components/link"
 import { usePathname } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import Button from "@components/button"
 import clsx from "clsx"
 import { useTheme } from "@wits/next-themes"
@@ -22,9 +22,7 @@ import {
 } from "react-feather"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import buttonStyles from "@components/button/button.module.css"
-import ButtonGroup from "@components/button-group"
 import { useEffect, useMemo, useState } from "react"
-import Skeleton from "@components/skeleton"
 
 type Tab = {
 	name: string
@@ -34,15 +32,12 @@ type Tab = {
 	href?: string
 }
 
-const Header = ({ signedIn = false, isAdmin = false }) => {
+const Header = () => {
+	const session = useSession()
+	const signedIn = session?.status === "authenticated"
+	const isAdmin = session?.data?.user?.role === "admin"
 	const pathname = usePathname()
-	// wait to mount before rendering
-	const [isHydrated, setHydrated] = useState(false)
 	const { setTheme, resolvedTheme } = useTheme()
-
-	useEffect(() => {
-		setHydrated(true)
-	}, [])
 
 	const getButton = (tab: Tab) => {
 		const isActive = pathname === tab.href
@@ -99,7 +94,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 			onClick: function () {
 				setTheme(resolvedTheme === "light" ? "dark" : "light")
 			},
-			icon: isHydrated ? (resolvedTheme === "light" ? <Moon /> : <Sun />) : <></>,
+			icon: resolvedTheme === "light" ? <Moon /> : <Sun />,
 			value: "theme"
 		})
 
@@ -123,6 +118,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					value: "settings",
 					href: "/settings"
 				},
+				...defaultPages,
 				{
 					name: "Sign Out",
 					icon: <UserX />,
@@ -131,8 +127,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 						signOut({
 							callbackUrl: "/"
 						})
-				},
-				...defaultPages
+				}
 			]
 		else
 			return [
@@ -142,6 +137,7 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					value: "home",
 					href: "/"
 				},
+				...defaultPages,
 				{
 					name: "Sign in",
 					icon: <User />,
@@ -153,10 +149,9 @@ const Header = ({ signedIn = false, isAdmin = false }) => {
 					icon: <UserPlus />,
 					value: "signup",
 					href: "/signup"
-				},
-				...defaultPages
+				}
 			]
-	}, [isAdmin, isHydrated, resolvedTheme, signedIn, setTheme])
+	}, [isAdmin, resolvedTheme, signedIn, setTheme])
 
 	// // TODO: this should not be necessary.
 	// if (!clientHydrated) {

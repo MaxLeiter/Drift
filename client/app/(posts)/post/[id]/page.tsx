@@ -8,19 +8,19 @@ export type PostProps = {
 	isProtected?: boolean
 }
 
-// export async function generateStaticParams() {
-// 	const posts = await getAllPosts({
-// 		 where: {
-// 			visibility: {
-// 				in: ["public", "unlisted"]
-// 			}
-// 		 }
-// 	})
+export async function generateStaticParams() {
+	const posts = await getAllPosts({
+		 where: {
+			visibility: {
+				equals: "public"
+			}
+		 }
+	})
 
-// 	return posts.map((post) => ({
-// 		id: post.id
-// 	}))
-// }
+	return posts.map((post) => ({
+		id: post.id
+	}))
+}
 
 const getPost = async (id: string) => {
 	const post = await getPostById(id, {
@@ -30,6 +30,10 @@ const getPost = async (id: string) => {
 
 	if (!post) {
 		return notFound()
+	}
+
+	if (post.visibility === "public") {
+		return { post }
 	}
 	
 	const user = await getCurrentUser()

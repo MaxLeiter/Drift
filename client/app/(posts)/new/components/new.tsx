@@ -48,7 +48,7 @@ const Post = ({
 	const [expiresAt, setExpiresAt] = useState<Date>()
 
 	const defaultDocs: Document[] = initialPost
-		? initialPost.files?.map((doc) => ({
+		? initialPost.files?.map((doc: PostWithFiles["files"][0]) => ({
 				title: doc.title,
 				content: doc.content,
 				id: doc.id

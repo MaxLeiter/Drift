@@ -8,8 +8,6 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-	// TODO: this opts out of SSG
-	const session = await getSession()
 	return (
 		<ServerThemeProvider
 			enableSystem={true}
@@ -21,10 +19,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 			<html lang="en">
 				<head />
 				<body>
-					<LayoutWrapper
-						signedIn={Boolean(session?.user)}
-						isAdmin={session?.user.role === "admin"}
-					>
+					<LayoutWrapper>
 						{children}
 					</LayoutWrapper>
 				</body>

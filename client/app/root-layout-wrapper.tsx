@@ -5,32 +5,27 @@ import Page from "@components/page"
 import { Toasts } from "@components/toasts"
 import * as RadixTooltip from "@radix-ui/react-tooltip"
 import { ThemeProvider } from "@wits/next-themes"
+import { SessionProvider } from "next-auth/react"
 
-export function LayoutWrapper({
-	children,
-	signedIn,
-	isAdmin
-}: {
-	children: React.ReactNode
-	signedIn?: boolean
-	isAdmin?: boolean
-}) {
+export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 	return (
-		<RadixTooltip.Provider delayDuration={200}>
-			<Toasts />
-			<Page>
-				<ThemeProvider
-					enableSystem={true}
-					defaultTheme="dark"
-					disableTransitionOnChange
-					cookieName={"drift-theme"}
-					attribute="data-theme"
-					enableColorScheme={true}
-				>
-					<Header isAdmin={isAdmin} signedIn={signedIn} />
-				</ThemeProvider>
-				{children}
-			</Page>
-		</RadixTooltip.Provider>
+		<SessionProvider>
+			<RadixTooltip.Provider delayDuration={200}>
+				<Toasts />
+				<Page>
+					<ThemeProvider
+						enableSystem={true}
+						defaultTheme="dark"
+						disableTransitionOnChange
+						cookieName={"drift-theme"}
+						attribute="data-theme"
+						enableColorScheme={true}
+					>
+						<Header />
+					</ThemeProvider>
+					{children}
+				</Page>
+			</RadixTooltip.Provider>
+		</SessionProvider>
 	)
 }
