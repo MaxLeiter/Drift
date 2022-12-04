@@ -1,41 +1,45 @@
-import PostPage from "app/(posts)/post/[id]/components/post-page"
+import PostPage from "./components/post-page"
 import { notFound, redirect } from "next/navigation"
-import { getAllPosts, getPostById, Post } from "@lib/server/prisma"
+import { getPostById, Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
+import ScrollToTop from "@components/scroll-to-top"
+import { title } from "process"
+import { PostButtons } from "./components/header/post-buttons"
+import styles from "./styles.module.css"
+import { PostTitle } from "./components/header/title"
+import VisibilityControl from "@components/badges/visibility-control"
 
 export type PostProps = {
 	post: Post
 	isProtected?: boolean
 }
 
-export async function generateStaticParams() {
-	const posts = await getAllPosts({
-		 where: {
-			visibility: {
-				equals: "public"
-			}
-		 }
-	})
+// export async function generateStaticParams() {
+// 	const posts = await getAllPosts({
+// 		 where: {
+// 			visibility: {
+// 				equals: "public"
+// 			}
+// 		 }
+// 	})
 
-	return posts.map((post) => ({
-		id: post.id
-	}))
+// 	return posts.map((post) => ({
+// 		id: post.id
+// 	}))
+// }
+
+const fetchOptions = {
+	withFiles: true,
+	withAuthor: true
 }
 
 const getPost = async (id: string) => {
-	const post = await getPostById(id, {
-		withFiles: true,
-		withAuthor: true
-	})
+	const post = (await getPostById(id, fetchOptions)) as PostWithFilesAndAuthor
 
 	if (!post) {
 		return notFound()
 	}
 
-	if (post.visibility === "public") {
-		return { post }
-	}
-	
 	const user = await getCurrentUser()
 	const isAuthorOrAdmin = user?.id === post?.authorId || user?.role === "admin"
 
@@ -55,7 +59,15 @@ const getPost = async (id: string) => {
 		return {
 			post: {
 				visibility: "protected",
-				id: post.id
+				id: post.id,
+				files: [],
+				parentId: "",
+				title: "",
+				createdAt: new Date("1970-01-01"),
+				author: {
+					displayName: ""
+				},
+				description: ""
 			},
 			isProtected: true,
 			isAuthor: isAuthorOrAdmin
@@ -83,12 +95,40 @@ const PostView = async ({
 	const { post, isProtected, isAuthor } = await getPost(params.id)
 	// TODO: serialize dates in prisma middleware instead of passing as JSON
 	const stringifiedPost = JSON.stringify(post)
+
 	return (
-		<PostPage
-			isAuthor={isAuthor}
-			isProtected={isProtected}
-			post={stringifiedPost}
-		/>
+		<>
+			<div className={styles.header}>
+				<PostButtons
+					parentId={post.parentId || undefined}
+					postId={post.id}
+					files={post.files}
+					title={title}
+				/>
+				<PostTitle
+					title={post.title}
+					createdAt={post.createdAt}
+					displayName={post.author?.displayName || ""}
+					visibility={post.visibility}
+				/>
+			</div>
+			{post.description && (
+				<div>
+					<p>{post.description}</p>
+				</div>
+			)}
+			<PostPage
+				isAuthor={isAuthor}
+				isProtected={isProtected}
+				post={stringifiedPost}
+			/>
+			{isAuthor && (
+				<span className={styles.controls}>
+					<VisibilityControl postId={post.id} visibility={post.visibility} />
+				</span>
+			)}
+			<ScrollToTop />
+		</>
 	)
 }
 

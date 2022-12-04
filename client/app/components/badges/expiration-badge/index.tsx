@@ -1,3 +1,5 @@
+"use client"
+
 import Tooltip from "@components/tooltip"
 import { timeUntil } from "@lib/time-ago"
 import { useEffect, useMemo, useState } from "react"
@@ -5,8 +7,7 @@ import Badge from "../badge"
 
 const ExpirationBadge = ({
 	postExpirationDate
-}: // onExpires
-{
+}: {
 	postExpirationDate: Date | string | null
 	onExpires?: () => void
 }) => {
@@ -38,15 +39,6 @@ const ExpirationBadge = ({
 	const isExpired = useMemo(() => {
 		return timeUntilString === "in 0 seconds"
 	}, [timeUntilString])
-
-	// useEffect(() => {
-	//     // check if expired every
-	//     if (isExpired) {
-	//         if (onExpires) {
-	//             onExpires();
-	//         }
-	//     }
-	// }, [isExpired, onExpires])
 
 	if (!expirationDate) {
 		return null

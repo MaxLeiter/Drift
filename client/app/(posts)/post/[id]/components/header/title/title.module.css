@@ -1,0 +1,35 @@
+.title {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title .badges {
+	display: flex;
+	gap: var(--gap-half);
+	flex-wrap: wrap;
+}
+
+.title h3 {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+	.title {
+		flex-direction: column;
+		gap: var(--gap-half);
+	}
+
+	.title .badges {
+		align-items: center;
+		justify-content: center;
+	}
+
+	.buttons {
+		display: flex;
+		justify-content: center;
+	}
+}

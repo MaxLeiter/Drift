@@ -1,5 +1,3 @@
-// ts nextjs api handler
-
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
 import { NextApiRequest, NextApiResponse } from "next"

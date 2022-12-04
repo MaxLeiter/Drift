@@ -45,6 +45,7 @@
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
+	gap: var(--gap-half);
 }
 
 @keyframes overlayShow {

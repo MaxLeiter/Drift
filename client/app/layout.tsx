@@ -1,6 +1,5 @@
 import "@styles/globals.css"
 import { LayoutWrapper } from "./root-layout-wrapper"
-import { getSession } from "@lib/server/session"
 import { ServerThemeProvider } from "@wits/next-themes"
 
 interface RootLayoutProps {

@@ -1,3 +1,5 @@
+'use client';
+
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
 import ButtonGroup from "@components/button-group"
@@ -8,10 +10,11 @@ import { Spinner } from "@components/spinner"
 type Props = {
 	postId: string
 	visibility: string
-	setVisibility: (visibility: string) => void
 }
 
-const VisibilityControl = ({ postId, visibility, setVisibility }: Props) => {
+const VisibilityControl = ({ postId, visibility: postVisibility }: Props) => {
+	const [visibility, setVisibility] = useState<string>(postVisibility)
+
 	const [isSubmitting, setSubmitting] = useState<string | null>()
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 	const { setToast } = useToasts()

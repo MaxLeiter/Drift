@@ -1,3 +1,5 @@
+'use client';
+
 import Button from "@components/button"
 import Tooltip from "@components/tooltip"
 import { useEffect, useState } from "react"

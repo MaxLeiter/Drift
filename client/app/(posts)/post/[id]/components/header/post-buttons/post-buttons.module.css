@@ -1,0 +1,12 @@
+.buttons {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: var(--gap);
+}
+
+@media screen and (max-width: 768px) {
+	.buttons {
+		display: flex;
+		justify-content: center;
+	}
+}

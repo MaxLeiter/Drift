@@ -45,7 +45,6 @@ const PasswordModal = ({
 						if (!open) onClose()
 					}}
 				>
-					{/* <Dialog.Trigger asChild>Enter a password</Dialog.Trigger> */}
 					<Dialog.Portal>
 						<Dialog.Overlay className={styles.overlay} />
 						<Dialog.Content
@@ -85,10 +84,8 @@ const PasswordModal = ({
 									</Note>
 								)}
 							</fieldset>
-							<Dialog.Close className={styles.close}>
-								<Button onClick={onSubmit}>Submit</Button>
-								<Button>Cancel</Button>
-							</Dialog.Close>
+							<Button onClick={onClose}>Cancel</Button>
+							<Button onClick={onSubmit}>Submit</Button>
 						</Dialog.Content>
 					</Dialog.Portal>
 				</Dialog.Root>

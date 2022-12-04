@@ -1,0 +1,9 @@
+.table {
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+}
+
+.table thead th {
+	font-weight: bold;
+}

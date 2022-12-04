@@ -1,3 +1,5 @@
+'use client';
+
 import { Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import PasswordModal from "@components/password-modal"
 import { useRouter } from "next/navigation"

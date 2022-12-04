@@ -5,12 +5,17 @@ import type { File } from "lib/server/prisma"
 import styles from "./dropdown.module.css"
 import buttonStyles from "@components/button/button.module.css"
 import { ChevronDown, Code, File as FileIcon } from "react-feather"
+import { Spinner } from "@components/spinner"
 
 type Item = File & {
 	icon: JSX.Element
 }
 
-const FileDropdown = ({ files }: { files: File[] }) => {
+const FileDropdown = ({ files, loading }: { files: File[], loading?: boolean }) => {
+	if (loading) {
+		return <Spinner />
+	}
+
 	const items = files.map((file) => {
 		const extension = file.title.split(".").pop()
 		if (codeFileExtensions.includes(extension || "")) {

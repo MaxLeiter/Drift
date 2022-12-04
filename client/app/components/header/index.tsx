@@ -34,8 +34,10 @@ type Tab = {
 
 const Header = () => {
 	const session = useSession()
-	const signedIn = session?.status === "authenticated"
+	const isSignedIn = session?.status === "authenticated"
 	const isAdmin = session?.data?.user?.role === "admin"
+	const isLoading = session?.status === "loading"
+
 	const pathname = usePathname()
 	const { setTheme, resolvedTheme } = useTheme()
 
@@ -98,7 +100,7 @@ const Header = () => {
 			value: "theme"
 		})
 
-		if (signedIn)
+		if (isSignedIn)
 			return [
 				{
 					name: "New",
@@ -151,7 +153,7 @@ const Header = () => {
 					href: "/signup"
 				}
 			]
-	}, [isAdmin, resolvedTheme, signedIn, setTheme])
+	}, [isAdmin, resolvedTheme, isSignedIn, setTheme])
 
 	// // TODO: this should not be necessary.
 	// if (!clientHydrated) {
@@ -165,7 +167,9 @@ const Header = () => {
 	const buttons = pages.map(getButton)
 
 	return (
-		<header>
+		<header className={clsx(styles.header, {
+			[styles.loading]: isLoading,
+		})}>
 			<div className={styles.tabs}>
 				<div className={styles.buttons}>{buttons}</div>
 			</div>

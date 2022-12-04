@@ -146,7 +146,7 @@ type GetPostByIdOptions = {
 export const getPostById = async (
 	postId: Post["id"],
 	options?: GetPostByIdOptions
-) => {
+): Promise<Post | PostWithFiles | PostWithFilesAndAuthor | null> => {
 	const post = await prisma.post.findUnique({
 		where: {
 			id: postId
@@ -164,26 +164,35 @@ export const getPostById = async (
 		}
 	})
 
-	return post as PostWithFiles
+	return post
 }
 
 export const getAllPosts = async ({
 	withFiles = false,
+	withAuthor = false,
 	take = 100,
 	...rest
 }: {
 	withFiles?: boolean
-} & Prisma.PostFindManyArgs = {}) => {
+	withAuthor?: boolean
+} & Prisma.PostFindManyArgs = {}): Promise<
+	Post[] | PostWithFiles[] | PostWithFilesAndAuthor[]
+> => {
 	const posts = await prisma.post.findMany({
 		include: {
-			files: withFiles
+			files: withFiles,
+			author: withAuthor
 		},
 		// TODO: optimize which to grab
 		take,
 		...rest
 	})
 
-	return posts as PostWithFiles[]
+	return posts as typeof withFiles extends true
+		? typeof withAuthor extends true
+			? PostWithFilesAndAuthor[]
+			: PostWithFiles[]
+		: Post[]
 }
 
 export type UserWithPosts = User & {

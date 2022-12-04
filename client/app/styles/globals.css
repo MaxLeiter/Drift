@@ -78,11 +78,6 @@
 	box-sizing: border-box;
 }
 
-// TODO: replace this with an accessible alternative
-*:focus-visible {
-	outline: none !important;
-}
-
 ::selection {
 	text-shadow: none;
 	background: var(--fg) !important;
