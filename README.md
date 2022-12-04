@@ -1,5 +1,8 @@
 # <img src="client/public/assets/logo.png" height="32px" alt="" /> Drift
 
+> **Note:** This branch is where all work is being done, refactoring to the Next.js 13 app directory and React Server Components.
+
+
 Drift is a self-hostable Gist clone. It's in beta, but is completely functional.
 
 You can try a demo at https://drift.lol. The demo is built on main but has no database, so files and accounts can be wiped at any time.
