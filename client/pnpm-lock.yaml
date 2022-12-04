@@ -16,7 +16,7 @@ specifiers:
   '@types/react-datepicker': 4.4.1
   '@types/react-dom': 18.0.3
   '@wcj/markdown-to-html': ^2.1.2
-  '@wits/next-themes': 0.2.12
+  '@wits/next-themes': 0.2.14
   bcrypt: ^5.1.0
   client-zip: 2.2.1
   clsx: ^1.2.1
@@ -29,7 +29,7 @@ specifiers:
   next-auth: ^4.18.0
   next-unused: 0.0.6
   prettier: 2.6.2
-  prisma: ^4.6.1
+  prisma: ^4.7.1
   react: 18.2.0
   react-datepicker: 4.8.0
   react-dom: 18.2.0
@@ -45,20 +45,20 @@ specifiers:
 dependencies:
   '@next-auth/prisma-adapter': 1.0.5_qwexivae5olc6wqfcmxswm7qjy
   '@next/eslint-plugin-next': 13.0.5-canary.3
-  '@prisma/client': 4.6.1_prisma@4.6.1
+  '@prisma/client': 4.6.1_prisma@4.7.1
   '@radix-ui/react-dialog': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-dropdown-menu': 2.0.1_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-popover': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-tabs': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-tooltip': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@wcj/markdown-to-html': 2.1.2
-  '@wits/next-themes': 0.2.12_ihvxcpofhpc4k2aqfys2drrlkq
+  '@wits/next-themes': 0.2.14_ihvxcpofhpc4k2aqfys2drrlkq
   bcrypt: 5.1.0
   client-zip: 2.2.1
   jest: 29.3.1_@types+node@17.0.23
   next: 13.0.7-canary.1_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.18.0_ihvxcpofhpc4k2aqfys2drrlkq
-  prisma: 4.6.1
+  prisma: 4.7.1
   react: 18.2.0
   react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
@@ -791,7 +791,7 @@ packages:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
-      '@prisma/client': 4.6.1_prisma@4.6.1
+      '@prisma/client': 4.6.1_prisma@4.7.1
       next-auth: 4.18.0_ihvxcpofhpc4k2aqfys2drrlkq
     dev: false
 
@@ -969,7 +969,7 @@ packages:
   /@popperjs/core/2.11.6:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
 
-  /@prisma/client/4.6.1_prisma@4.6.1:
+  /@prisma/client/4.6.1_prisma@4.7.1:
     resolution: {integrity: sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==}
     engines: {node: '>=14.17'}
     requiresBuild: true
@@ -980,15 +980,15 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32
-      prisma: 4.6.1
+      prisma: 4.7.1
     dev: false
 
   /@prisma/engines-version/4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32:
     resolution: {integrity: sha512-HUCmkXAU2jqp2O1RvNtbE+seLGLyJGEABZS/R38rZjSAafAy0WzBuHq+tbZMnD+b5OSCsTVtIPVcuvx1ySxcWQ==}
     dev: false
 
-  /@prisma/engines/4.6.1:
-    resolution: {integrity: sha512-3u2/XxvxB+Q7cMXHnKU0CpBiUK1QWqpgiBv28YDo1zOIJE3FCF8DI2vrp6vuwjGt5h0JGXDSvmSf4D4maVjJdw==}
+  /@prisma/engines/4.7.1:
+    resolution: {integrity: sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==}
     requiresBuild: true
     dev: false
 
@@ -1711,8 +1711,8 @@ packages:
       - supports-color
     dev: false
 
-  /@wits/next-themes/0.2.12_ihvxcpofhpc4k2aqfys2drrlkq:
-    resolution: {integrity: sha512-P/qtLW68n4xBLT8UfLkCD/0jmF0yWxdf3xpGCDbfR6WuvK2brJDQ0DhPbhsucGkJ42ArA6ItKqcIo7/cnKzhGg==}
+  /@wits/next-themes/0.2.14_ihvxcpofhpc4k2aqfys2drrlkq:
+    resolution: {integrity: sha512-fHKb/tRcWbYNblGHZtfvAQztDhzUB9d7ZkYOny0BisSPh6EABcsqxKB48ABUQztcmKywlp2zEMkLcSRj/PQBSw==}
     peerDependencies:
       next: '*'
       react: '*'
@@ -5819,13 +5819,13 @@ packages:
       parse-ms: 2.1.0
     dev: true
 
-  /prisma/4.6.1:
-    resolution: {integrity: sha512-BR4itMCuzrDV4tn3e2TF+nh1zIX/RVU0isKtKoN28ADeoJ9nYaMhiuRRkFd2TZN8+l/XfYzoRKyHzUFXLQhmBQ==}
+  /prisma/4.7.1:
+    resolution: {integrity: sha512-CCQP+m+1qZOGIZlvnL6T3ZwaU0LAleIHYFPN9tFSzjs/KL6vH9rlYbGOkTuG9Q1s6Ki5D0LJlYlW18Z9EBUpGg==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.6.1
+      '@prisma/engines': 4.7.1
     dev: false
 
   /process-nextick-args/2.0.1:
