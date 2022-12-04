@@ -65,9 +65,10 @@ const getPost = async (id: string) => {
 				title: "",
 				createdAt: new Date("1970-01-01"),
 				author: {
-					displayName: ""
+					displayName: "",
 				},
-				description: ""
+				description: "",
+				authorId: "",
 			},
 			isProtected: true,
 			isAuthor: isAuthorOrAdmin
@@ -110,6 +111,7 @@ const PostView = async ({
 					createdAt={post.createdAt}
 					displayName={post.author?.displayName || ""}
 					visibility={post.visibility}
+					authorId={post.authorId}
 				/>
 			</div>
 			{post.description && (

@@ -1,7 +1,6 @@
 "use client"
 
 import styles from "./post-list.module.css"
-import { ListItemSkeleton } from "./list-item-skeleton"
 import ListItem from "./list-item"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import useDebounce from "@lib/hooks/use-debounce"
@@ -10,10 +9,11 @@ import type { PostWithFiles } from "@lib/server/prisma"
 import Input from "@components/input"
 import Button from "@components/button"
 import { useToasts } from "@components/toasts"
+import { ListItemSkeleton } from "./list-item-skeleton"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
-	morePosts: boolean
+	morePosts?: boolean
 	userId?: string
 }
 
@@ -120,12 +120,12 @@ const PostList = ({
 				/>
 			</div>
 			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
-			{/* {!posts?.length && (
+			{!posts?.length && (
 				<ul>
 					<ListItemSkeleton />
 					<ListItemSkeleton />
 				</ul>
-			)} */}
+			)}
 			{posts?.length === 0 && posts && (
 				<p>
 					No posts found. Create one{" "}

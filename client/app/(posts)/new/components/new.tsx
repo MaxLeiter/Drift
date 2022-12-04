@@ -37,7 +37,7 @@ const Post = ({
 	initialPost?: string
 	newPostParent?: string
 }) => {
-	const parsedPost = JSON.parse(stringifiedInitialPost || "{}") 
+	const parsedPost = JSON.parse(stringifiedInitialPost || "{}")
 	const initialPost = parsedPost?.id ? parsedPost : null
 	const { setToast } = useToasts()
 	const router = useRouter()

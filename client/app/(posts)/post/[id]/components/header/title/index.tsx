@@ -1,8 +1,9 @@
-import CreatedAgoBadge from '@components/badges/created-ago-badge'
-import ExpirationBadge from '@components/badges/expiration-badge'
-import VisibilityBadge from '@components/badges/visibility-badge'
-import Skeleton from '@components/skeleton'
-import styles from './title.module.css'
+import CreatedAgoBadge from "@components/badges/created-ago-badge"
+import ExpirationBadge from "@components/badges/expiration-badge"
+import VisibilityBadge from "@components/badges/visibility-badge"
+import Link from "@components/link"
+import Skeleton from "@components/skeleton"
+import styles from "./title.module.css"
 
 type TitleProps = {
 	title: string
@@ -11,22 +12,25 @@ type TitleProps = {
 	visibility?: string
 	createdAt?: Date
 	expiresAt?: Date
+	authorId?: string
 }
 
 export const PostTitle = ({
-    title,
-    displayName,
-    visibility,
-    createdAt,
-    expiresAt,
-    loading
+	title,
+	displayName,
+	visibility,
+	createdAt,
+	expiresAt,
+	loading,
+	authorId
 }: TitleProps) => {
 	return (
 		<span className={styles.title}>
 			<h3>
 				{title}{" "}
 				<span style={{ color: "var(--gray)" }}>
-					by {displayName || "anonymous"}
+					by{" "}
+					<Link href={`/author/${authorId}`}>{displayName || "anonymous"}</Link>
 				</span>
 			</h3>
 			{!loading && (

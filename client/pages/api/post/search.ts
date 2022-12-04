@@ -1,10 +1,13 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { searchPosts } from "@lib/server/prisma"
+import { PostWithFiles, searchPosts } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
+import { getSession } from "next-auth/react"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { q, userId } = req.query
+
+	const session = await getSession()
 
 	const query = parseQueryParam(q)
 	if (!query) {
@@ -13,9 +16,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	try {
-		const posts = await searchPosts(query, {
-            userId: parseQueryParam(userId),
-        })
+		let posts: PostWithFiles[]
+		if (session?.user.id === userId || session?.user.role === "admin") {
+			posts = await searchPosts(query, {
+				userId: parseQueryParam(userId),
+				publicOnly: true
+			})
+		} else {
+			posts = await searchPosts(query, {
+				userId: parseQueryParam(userId),
+				publicOnly: true
+			})
+		}
 
 		res.status(200).json(posts)
 	} catch (err) {

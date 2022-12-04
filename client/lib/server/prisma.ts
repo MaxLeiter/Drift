@@ -218,10 +218,12 @@ export const searchPosts = async (
 	query: string,
 	{
 		withFiles = false,
-		userId
+		userId,
+		publicOnly
 	}: {
 		withFiles?: boolean
 		userId?: User["id"]
+		publicOnly?: boolean
 	} = {}
 ): Promise<PostWithFiles[]> => {
 	const posts = await prisma.post.findMany({
@@ -231,7 +233,8 @@ export const searchPosts = async (
 					title: {
 						search: query
 					},
-					authorId: userId
+					authorId: userId,
+					visibility: publicOnly ? "public" : undefined
 				},
 				{
 					files: {
@@ -241,7 +244,8 @@ export const searchPosts = async (
 							},
 							userId: userId
 						}
-					}
+					},
+					visibility: publicOnly ? "public" : undefined
 				}
 			]
 		},
