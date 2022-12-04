@@ -3,7 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: var(--gap);
+	gap: inherit;
 }
 
 @media screen and (max-width: 650px) {

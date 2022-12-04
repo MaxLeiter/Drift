@@ -252,7 +252,7 @@ const Post = ({
 	)
 
 	return (
-		<div style={{ paddingBottom: 200 }}>
+		<div className={styles.root}>
 			<Title title={title} onChange={onChangeTitle} />
 			<Description description={description} onChange={onChangeDescription} />
 			<FileDropzone setDocs={uploadDocs} />

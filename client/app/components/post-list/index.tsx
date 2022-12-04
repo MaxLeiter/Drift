@@ -2,14 +2,20 @@
 
 import styles from "./post-list.module.css"
 import ListItem from "./list-item"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
-import useDebounce from "@lib/hooks/use-debounce"
+import {
+	ChangeEvent,
+	useCallback,
+	useDeferredValue,
+	useEffect,
+	useState
+} from "react"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
 import Input from "@components/input"
 import Button from "@components/button"
 import { useToasts } from "@components/toasts"
 import { ListItemSkeleton } from "./list-item-skeleton"
+import debounce from "lodash.debounce"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
@@ -31,8 +37,6 @@ const PostList = ({
 	const [searching, setSearching] = useState(false)
 	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
 	const { setToast } = useToasts()
-
-	const debouncedSearchValue = useDebounce(search, 200)
 
 	const loadMoreClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,36 +60,30 @@ const PostList = ({
 		[posts, hasMorePosts]
 	)
 
-	// update posts on search
-	useEffect(() => {
-		if (debouncedSearchValue) {
-			setSearching(true)
-			async function fetchPosts() {
-				const res = await fetch(
-					`/api/post/search?q=${encodeURIComponent(
-						debouncedSearchValue
-					)}&userId=${userId}`,
-					{
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json"
-						}
+	const onSearch = (query: string) => {
+		setSearching(true)
+		async function fetchPosts() {
+			const res = await fetch(
+				`/api/post/search?q=${encodeURIComponent(query)}&userId=${userId}`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
 					}
-				)
-				const json = await res.json()
-				setPosts(json)
-				setSearching(false)
-			}
-			fetchPosts()
-		} else {
-			setPosts(initialPosts)
+				}
+			)
+			const json = await res.json()
+			setPosts(json)
+			setSearching(false)
 		}
-		// TODO: fix cyclical dependency issue
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [debouncedSearchValue, userId])
+		fetchPosts()
+	}
+
+	const debouncedSearch = debounce(onSearch, 500)
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
+		debouncedSearch(e.target.value)
 	}
 
 	const deletePost = useCallback(
@@ -117,10 +115,11 @@ const PostList = ({
 					disabled={!posts}
 					style={{ maxWidth: 300 }}
 					aria-label="Search"
+					value={search}
 				/>
 			</div>
 			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
-			{!posts?.length && (
+			{searching && (
 				<ul>
 					<ListItemSkeleton />
 					<ListItemSkeleton />

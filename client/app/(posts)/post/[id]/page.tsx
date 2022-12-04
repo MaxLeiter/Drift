@@ -57,6 +57,7 @@ const getPost = async (id: string) => {
 
 	if (post.visibility === "protected" && !isAuthorOrAdmin) {
 		return {
+			// TODO: remove this. It's temporary to appease typescript
 			post: {
 				visibility: "protected",
 				id: post.id,
@@ -64,6 +65,7 @@ const getPost = async (id: string) => {
 				parentId: "",
 				title: "",
 				createdAt: new Date("1970-01-01"),
+				expiresAt: new Date("1970-01-01"),
 				author: {
 					displayName: "",
 				},
@@ -108,7 +110,8 @@ const PostView = async ({
 				/>
 				<PostTitle
 					title={post.title}
-					createdAt={post.createdAt}
+					createdAt={post.createdAt.toString()}
+					expiresAt={post.expiresAt?.toString()}
 					displayName={post.author?.displayName || ""}
 					visibility={post.visibility}
 					authorId={post.authorId}

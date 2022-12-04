@@ -1,5 +1,4 @@
 .card {
-	margin: var(--gap) auto;
 	padding: var(--gap);
 	border: 1px solid var(--lighter-gray);
 	border-radius: var(--radius);

@@ -23,7 +23,7 @@ type props = {
 const Title = ({ onChange, title }: props) => {
 	return (
 		<div className={styles.title}>
-			<h1>Drift</h1>
+			<h1 style={{ margin: 0, padding: 0 }}>Drift</h1>
 			<Input
 				placeholder={placeholder}
 				value={title}

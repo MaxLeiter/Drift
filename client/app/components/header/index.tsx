@@ -22,7 +22,7 @@ import {
 } from "react-feather"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import buttonStyles from "@components/button/button.module.css"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 
 type Tab = {
 	name: string
@@ -155,16 +155,12 @@ const Header = () => {
 			]
 	}, [isAdmin, resolvedTheme, isSignedIn, setTheme])
 
-	// // TODO: this should not be necessary.
-	// if (!clientHydrated) {
-	// 	return (
-	// 		<header>
-	// 			<div className={styles.tabs}>{getPages(true).map(getButton)}</div>
-	// 		</header>
-	// 	)
-	// }
-
 	const buttons = pages.map(getButton)
+
+	// TODO: this is a hack to close the radix ui menu when a next link is clicked
+	const onClick = () => {
+		document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+	}
 
 	return (
 		<header className={clsx(styles.header, {
@@ -188,6 +184,7 @@ const Header = () => {
 							<DropdownMenu.Item
 								key={button?.key}
 								className={styles.dropdownItem}
+								onClick={onClick}
 							>
 								{button}
 							</DropdownMenu.Item>

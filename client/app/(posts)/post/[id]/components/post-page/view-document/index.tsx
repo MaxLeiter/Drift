@@ -20,7 +20,7 @@ type Props = {
 	preview: string
 }
 
-const DownloadButton = ({ rawLink }: { rawLink?: string }) => {
+const DownloadButtons = ({ rawLink }: { rawLink?: string }) => {
 	return (
 		<div className={styles.actionWrapper}>
 			<ButtonGroup className={styles.actions}>
@@ -59,12 +59,6 @@ const Document = ({
 	skeleton,
 	id
 }: Props) => {
-	const rawLink = () => {
-		if (id) {
-			return `/file/raw/${id}`
-		}
-	}
-
 	if (skeleton) {
 		return (
 			<>
@@ -98,7 +92,7 @@ const Document = ({
 					/>
 				</Link>
 				<div className={styles.descriptionContainer}>
-					<DownloadButton rawLink={rawLink()} />
+					<DownloadButtons rawLink={`/api/file/raw/${id}`} />
 					<DocumentTabs
 						defaultTab={initialTab}
 						preview={preview}

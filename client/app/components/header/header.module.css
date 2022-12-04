@@ -45,7 +45,6 @@
 	opacity: 1;
 }
 
-
 .selectContent {
 	width: auto;
 	height: 18px;
@@ -64,6 +63,10 @@
 	display: none;
 }
 
+.contentWrapper {
+	background: var(--bg);
+}
+
 @media only screen and (max-width: 768px) {
 	.wrapper [data-tab="github"] {
 		display: none;
@@ -71,12 +74,30 @@
 
 	.mobile {
 		margin-top: var(--gap);
+		margin-bottom: var(--gap);
 		display: flex;
 	}
 
 	.buttonGroup {
 		display: flex;
 		flex-direction: column;
+	}
+
+	.dropdownItem:not(:first-child):not(:last-child) :global(button) {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.dropdownItem:first-child :global(button) {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.dropdownItem:last-child :global(button) {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
 	}
 
 	.dropdownItem a,

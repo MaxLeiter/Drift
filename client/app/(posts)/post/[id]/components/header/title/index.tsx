@@ -10,8 +10,8 @@ type TitleProps = {
 	loading?: boolean
 	displayName?: string
 	visibility?: string
-	createdAt?: Date
-	expiresAt?: Date
+	createdAt?: string
+	expiresAt?: string
 	authorId?: string
 }
 

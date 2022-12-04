@@ -1,14 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity", "fullTextSearch"]
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider             = "postgresql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
-
 
 model SequelizeMeta {
   name String @id
@@ -18,7 +17,7 @@ model File {
   id        String    @id @default(cuid())
   title     String
   content   String
-  sha       String 
+  sha       String
   html      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -27,6 +26,7 @@ model File {
   postId    String
   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
 
+  @@index([postId, userId, id])
   @@map("files")
 }
 
@@ -41,37 +41,35 @@ model Post {
   expiresAt   DateTime?
   parentId    String?
   description String?
-  author      User?     @relation(fields: [authorId], references: [id])
   authorId    String
   files       File[]
+  author      User?     @relation(fields: [authorId], references: [id])
 
+  @@index([authorId, id])
   @@map("posts")
 }
 
-// Next auth stuff, from https://next-auth.js.org/adapters/prisma
-
 model Account {
-  id                String   @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now()) @map(name: "created_at")
-  updatedAt         DateTime @default(now()) @map(name: "updated_at")
-  // https://next-auth.js.org/providers/github
+  id                       String   @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @default(now()) @map("updated_at")
   refresh_token_expires_in Int?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@map(name: "accounts")
+  @@index([userId, providerAccountId], map: "accounts_provider_account_id")
+  @@map("accounts")
 }
 
 model Session {
@@ -80,6 +78,9 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expires], map: "sessions_user_id_expires")
+  @@map("sessions")
 }
 
 model User {
@@ -88,16 +89,13 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          String?   @default("user")
   createdAt     DateTime  @default(now())
+  displayName   String?
   updatedAt     DateTime  @updatedAt
-  
-  accounts Account[]
-  sessions Session[]
-
-  // custom fields
-  posts    Post[]
-  role     String? @default("user")
-  displayName String?
+  posts         Post[]
+  accounts      Account[]
+  sessions      Session[]
 
   @@map("users")
 }

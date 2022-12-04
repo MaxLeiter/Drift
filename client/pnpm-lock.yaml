@@ -4,13 +4,14 @@ specifiers:
   '@next-auth/prisma-adapter': ^1.0.5
   '@next/bundle-analyzer': 12.1.6
   '@next/eslint-plugin-next': 13.0.5-canary.3
-  '@prisma/client': ^4.6.1
+  '@prisma/client': ^4.7.1
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-dropdown-menu': ^2.0.1
   '@radix-ui/react-popover': ^1.0.2
   '@radix-ui/react-tabs': ^1.0.1
   '@radix-ui/react-tooltip': ^1.0.2
   '@types/bcrypt': ^5.0.0
+  '@types/lodash.debounce': ^4.0.7
   '@types/node': 17.0.23
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1
@@ -25,6 +26,7 @@ specifiers:
   eslint: 8.27.0
   eslint-config-next: 13.0.3
   jest: ^29.3.1
+  lodash.debounce: ^4.0.8
   next: 13.0.7-canary.1
   next-auth: ^4.18.0
   next-unused: 0.0.6
@@ -43,9 +45,9 @@ specifiers:
   typescript-plugin-css-modules: 3.4.0
 
 dependencies:
-  '@next-auth/prisma-adapter': 1.0.5_qwexivae5olc6wqfcmxswm7qjy
+  '@next-auth/prisma-adapter': 1.0.5_hpttyne5hky44pj2anoxcmv4zm
   '@next/eslint-plugin-next': 13.0.5-canary.3
-  '@prisma/client': 4.6.1_prisma@4.7.1
+  '@prisma/client': 4.7.1_prisma@4.7.1
   '@radix-ui/react-dialog': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-dropdown-menu': 2.0.1_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-popover': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
@@ -56,6 +58,7 @@ dependencies:
   bcrypt: 5.1.0
   client-zip: 2.2.1
   jest: 29.3.1_@types+node@17.0.23
+  lodash.debounce: 4.0.8
   next: 13.0.7-canary.1_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.18.0_ihvxcpofhpc4k2aqfys2drrlkq
   prisma: 4.7.1
@@ -74,6 +77,7 @@ optionalDependencies:
 devDependencies:
   '@next/bundle-analyzer': 12.1.6
   '@types/bcrypt': 5.0.0
+  '@types/lodash.debounce': 4.0.7
   '@types/node': 17.0.23
   '@types/react': 18.0.9
   '@types/react-datepicker': 4.4.1_biqbaboplfbrettd7655fr4n2y
@@ -785,13 +789,13 @@ packages:
       - supports-color
     dev: false
 
-  /@next-auth/prisma-adapter/1.0.5_qwexivae5olc6wqfcmxswm7qjy:
+  /@next-auth/prisma-adapter/1.0.5_hpttyne5hky44pj2anoxcmv4zm:
     resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
-      '@prisma/client': 4.6.1_prisma@4.7.1
+      '@prisma/client': 4.7.1_prisma@4.7.1
       next-auth: 4.18.0_ihvxcpofhpc4k2aqfys2drrlkq
     dev: false
 
@@ -969,8 +973,8 @@ packages:
   /@popperjs/core/2.11.6:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
 
-  /@prisma/client/4.6.1_prisma@4.7.1:
-    resolution: {integrity: sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==}
+  /@prisma/client/4.7.1_prisma@4.7.1:
+    resolution: {integrity: sha512-/GbnOwIPtjiveZNUzGXOdp7RxTEkHL4DZP3vBaFNadfr6Sf0RshU5EULFzVaSi9i9PIK9PYd+1Rn7z2B2npb9w==}
     engines: {node: '>=14.17'}
     requiresBuild: true
     peerDependencies:
@@ -979,12 +983,12 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32
+      '@prisma/engines-version': 4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c
       prisma: 4.7.1
     dev: false
 
-  /@prisma/engines-version/4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32:
-    resolution: {integrity: sha512-HUCmkXAU2jqp2O1RvNtbE+seLGLyJGEABZS/R38rZjSAafAy0WzBuHq+tbZMnD+b5OSCsTVtIPVcuvx1ySxcWQ==}
+  /@prisma/engines-version/4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c:
+    resolution: {integrity: sha512-Bd4LZ+WAnUHOq31e9X/ihi5zPlr4SzTRwUZZYxvWOxlerIZ7HJlVa9zXpuKTKLpI9O1l8Ec4OYCKsivWCs5a3Q==}
     dev: false
 
   /@prisma/engines/4.7.1:
@@ -1518,6 +1522,16 @@ packages:
   /@types/katex/0.11.1:
     resolution: {integrity: sha512-DUlIj2nk0YnJdlWgsFuVKcX27MLW0KbKmGVoUHmFr+74FYYNUDAaj9ZqTADvsbE8rfxuVmSFc7KczYn5Y09ozg==}
     dev: false
+
+  /@types/lodash.debounce/4.0.7:
+    resolution: {integrity: sha512-X1T4wMZ+gT000M2/91SYj0d/7JfeNZ9PeeOldSNoE/lunLeQXKvkmIumI29IaKMotU/ln/McOIvgzZcQ/3TrSA==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
+    dev: true
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
@@ -4583,6 +4597,10 @@ packages:
   /lodash.camelcase/4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
     dev: true
+
+  /lodash.debounce/4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
 
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}

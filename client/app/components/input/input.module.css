@@ -51,12 +51,6 @@
 	white-space: nowrap;
 }
 
-@media screen and (max-width: 768px) {
-	.wrapper {
-		margin-bottom: var(--gap);
-	}
-}
-
 .input:disabled {
 	background-color: var(--lighter-gray);
 	color: var(--fg);
