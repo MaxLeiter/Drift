@@ -34,7 +34,7 @@ export default async function UserPage({
 
 	return (
 		<>
-			<h1>{user?.displayName}&apos;s public posts</h1>
+			<h1>Public posts by {user?.displayName || "Anonymous"}</h1>
 			<Suspense fallback={<PostList initialPosts={JSON.stringify({})} />}>
 				{/* @ts-ignore because TS async JSX support is iffy */}
 				<PostListWrapper posts={posts} userId={id} />

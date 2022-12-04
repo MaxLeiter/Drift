@@ -4,10 +4,22 @@ import bundleAnalyzer from "@next/bundle-analyzer"
 const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
-		// outputStandalone: true,
 		// esmExternals: true,
 		appDir: true
 	},
+	output: "standalone",
+	async rewrites() {
+		return [
+			{
+				source: "/file/raw/:id",
+				destination: `/api/raw/:id`
+			},
+			{
+				source: "/home",
+				destination: "/"
+			}
+		]
+	}
 	
 }
 

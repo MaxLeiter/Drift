@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@next-auth/prisma-adapter': ^1.0.5
-  '@next/bundle-analyzer': 12.1.6
+  '@next/bundle-analyzer': 13.0.7-canary.1
   '@next/eslint-plugin-next': 13.0.5-canary.3
   '@prisma/client': ^4.7.1
   '@radix-ui/react-dialog': ^1.0.2
@@ -75,7 +75,7 @@ optionalDependencies:
   sharp: 0.31.2
 
 devDependencies:
-  '@next/bundle-analyzer': 12.1.6
+  '@next/bundle-analyzer': 13.0.7-canary.1
   '@types/bcrypt': 5.0.0
   '@types/lodash.debounce': 4.0.7
   '@types/node': 17.0.23
@@ -799,10 +799,10 @@ packages:
       next-auth: 4.18.0_ihvxcpofhpc4k2aqfys2drrlkq
     dev: false
 
-  /@next/bundle-analyzer/12.1.6:
-    resolution: {integrity: sha512-WLydwytAeHoC/neXsiIgK+a6Me12PuSpwopnsZgX5JFNwXQ9MlwPeMGS3aTZkYsv8QmSm0Ns9Yh9FkgLKYaUuQ==}
+  /@next/bundle-analyzer/13.0.7-canary.1:
+    resolution: {integrity: sha512-3CKGOK1Fp5mhCQ001h/GIj/ceZa4IfljWAkxRkX4uAOUAyyQ9MNNLNUX9H95/+oO7k2YS/Z71wXRk/xDaxM3Jw==}
     dependencies:
-      webpack-bundle-analyzer: 4.3.0
+      webpack-bundle-analyzer: 4.7.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2300,6 +2300,11 @@ packages:
   /commander/6.2.1:
     resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /commander/7.2.0:
+    resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
+    engines: {node: '>= 10'}
     dev: true
 
   /commander/8.3.0:
@@ -7181,15 +7186,15 @@ packages:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: false
 
-  /webpack-bundle-analyzer/4.3.0:
-    resolution: {integrity: sha512-J3TPm54bPARx6QG8z4cKBszahnUglcv70+N+8gUqv2I5KOFHJbzBiLx+pAp606so0X004fxM7hqRu10MLjJifA==}
+  /webpack-bundle-analyzer/4.7.0:
+    resolution: {integrity: sha512-j9b8ynpJS4K+zfO5GGwsAcQX4ZHpWV+yRiHDiL+bE0XHJ8NiPYLTNVQdlFYWxtpg9lfAQNlwJg16J9AJtFSXRg==}
     engines: {node: '>= 10.13.0'}
     hasBin: true
     dependencies:
       acorn: 8.8.1
       acorn-walk: 8.2.0
       chalk: 4.1.2
-      commander: 6.2.1
+      commander: 7.2.0
       gzip-size: 6.0.0
       lodash: 4.17.21
       opener: 1.5.2

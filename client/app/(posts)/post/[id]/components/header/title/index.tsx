@@ -26,13 +26,15 @@ export const PostTitle = ({
 }: TitleProps) => {
 	return (
 		<span className={styles.title}>
-			<h3>
+			<h1 style={{
+				fontSize: "1.175rem"
+			}}>
 				{title}{" "}
 				<span style={{ color: "var(--gray)" }}>
 					by{" "}
 					<Link href={`/author/${authorId}`}>{displayName || "anonymous"}</Link>
 				</span>
-			</h3>
+			</h1>
 			{!loading && (
 				<span className={styles.badges}>
 					{visibility && <VisibilityBadge visibility={visibility} />}

@@ -87,12 +87,14 @@ const Document = ({
 						height={"2rem"}
 						style={{ borderRadius: 0 }}
 						value={title || "Untitled"}
+						onChange={() => {}}
 						disabled
 						aria-label="Document title"
 					/>
 				</Link>
 				<div className={styles.descriptionContainer}>
-					<DownloadButtons rawLink={`/api/file/raw/${id}`} />
+					{/* Not /api/ because of rewrites defined in next.config.mjs */}
+					<DownloadButtons rawLink={`/file/raw/${id}`} />
 					<DocumentTabs
 						defaultTab={initialTab}
 						preview={preview}

@@ -5,8 +5,6 @@ import ListItem from "./list-item"
 import {
 	ChangeEvent,
 	useCallback,
-	useDeferredValue,
-	useEffect,
 	useState
 } from "react"
 import Link from "@components/link"
@@ -21,12 +19,14 @@ type Props = {
 	initialPosts: string | PostWithFiles[]
 	morePosts?: boolean
 	userId?: string
+	hideSearch?: boolean
 }
 
 const PostList = ({
 	morePosts,
 	initialPosts: initialPostsMaybeJSON,
-	userId
+	userId,
+	hideSearch
 }: Props) => {
 	const initialPosts =
 		typeof initialPostsMaybeJSON === "string"
@@ -108,7 +108,7 @@ const PostList = ({
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.searchContainer}>
+			{!hideSearch && <div className={styles.searchContainer}>
 				<Input
 					placeholder="Search..."
 					onChange={handleSearchChange}
@@ -117,7 +117,7 @@ const PostList = ({
 					aria-label="Search"
 					value={search}
 				/>
-			</div>
+			</div>}
 			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
 			{searching && (
 				<ul>

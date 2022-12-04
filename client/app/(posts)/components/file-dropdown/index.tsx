@@ -19,7 +19,17 @@ const FileDropdown = ({
 	loading?: boolean
 }) => {
 	if (loading) {
-		return <Spinner />
+		return (
+			<Popover>
+				<Popover.Trigger className={buttonStyles.button}>
+					<div
+						style={{ minWidth: 125 }}
+					>
+						<Spinner />
+					</div>
+				</Popover.Trigger>
+			</Popover>
+		)
 	}
 
 	const items = files.map((file) => {

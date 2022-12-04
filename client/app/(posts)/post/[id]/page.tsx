@@ -100,7 +100,7 @@ const PostView = async ({
 	const stringifiedPost = JSON.stringify(post)
 
 	return (
-		<>
+		<div className={styles.root}>
 			<div className={styles.header}>
 				<PostButtons
 					parentId={post.parentId || undefined}
@@ -133,7 +133,7 @@ const PostView = async ({
 				</span>
 			)}
 			<ScrollToTop />
-		</>
+		</div>
 	)
 }
 
