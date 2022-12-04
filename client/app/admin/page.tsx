@@ -57,7 +57,11 @@ export function PostTable({
 			<tbody>
 				{posts?.map((post) => (
 					<tr key={post.id}>
-						<td><a href={`/post/${post.id}`} target="_blank" rel="noreferrer">{post.title}</a></td>
+						<td>
+							<a href={`/post/${post.id}`} target="_blank" rel="noreferrer">
+								{post.title}
+							</a>
+						</td>
 						<td>{"author" in post ? post.author.name : "no author"}</td>
 						<td>{post.createdAt.toLocaleDateString()}</td>
 						<td>{post.visibility}</td>

@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react"
 import Input from "@components/input"
 import Button from "@components/button"
 import Note from "@components/note"
-import { GitHub } from 'react-feather'
+import { GitHub } from "react-feather"
 const Auth = ({
 	page,
 	requiresServerPassword
@@ -68,7 +68,7 @@ const Auth = ({
 							buttonType="primary"
 							width="100%"
 							style={{
-								color: 'var(--fg)'
+								color: "var(--fg)"
 							}}
 							iconLeft={<GitHub />}
 							onClick={(e) => {

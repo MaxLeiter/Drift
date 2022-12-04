@@ -63,7 +63,7 @@ export const config = (env: Environment): Config => {
 
 	validNodeEnvs(env.NODE_ENV)
 
-	throwIfUndefined("DATABASE_URL");
+	throwIfUndefined("DATABASE_URL")
 
 	const config: Config = {
 		is_production,

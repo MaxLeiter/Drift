@@ -67,10 +67,10 @@ const getPost = async (id: string) => {
 				createdAt: new Date("1970-01-01"),
 				expiresAt: new Date("1970-01-01"),
 				author: {
-					displayName: "",
+					displayName: ""
 				},
 				description: "",
-				authorId: "",
+				authorId: ""
 			},
 			isProtected: true,
 			isAuthor: isAuthorOrAdmin

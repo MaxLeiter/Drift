@@ -4,13 +4,19 @@ import { Suspense } from "react"
 
 async function PostListWrapper({
 	posts,
-	userId,
+	userId
 }: {
 	posts: ReturnType<typeof getPostsByUser>
 	userId: string
 }) {
 	const data = (await posts).filter((post) => post.visibility === "public")
-	return <PostList morePosts={false} userId={userId} initialPosts={JSON.stringify(data)} />
+	return (
+		<PostList
+			morePosts={false}
+			userId={userId}
+			initialPosts={JSON.stringify(data)}
+		/>
+	)
 }
 
 export default async function UserPage({

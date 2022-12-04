@@ -159,13 +159,15 @@ const Header = () => {
 
 	// TODO: this is a hack to close the radix ui menu when a next link is clicked
 	const onClick = () => {
-		document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
 	}
 
 	return (
-		<header className={clsx(styles.header, {
-			[styles.loading]: isLoading,
-		})}>
+		<header
+			className={clsx(styles.header, {
+				[styles.loading]: isLoading
+			})}
+		>
 			<div className={styles.tabs}>
 				<div className={styles.buttons}>{buttons}</div>
 			</div>

@@ -69,7 +69,6 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
 					preview={html}
 				/>
 			))}
-
 		</>
 	)
 }

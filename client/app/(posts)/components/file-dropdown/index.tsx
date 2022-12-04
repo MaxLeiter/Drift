@@ -11,7 +11,13 @@ type Item = File & {
 	icon: JSX.Element
 }
 
-const FileDropdown = ({ files, loading }: { files: File[], loading?: boolean }) => {
+const FileDropdown = ({
+	files,
+	loading
+}: {
+	files: File[]
+	loading?: boolean
+}) => {
 	if (loading) {
 		return <Spinner />
 	}

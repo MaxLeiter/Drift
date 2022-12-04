@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import Tooltip from "@components/tooltip"
 import { timeAgo } from "@lib/time-ago"
 import { useMemo, useState, useEffect } from "react"

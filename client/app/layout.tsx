@@ -18,9 +18,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 			<html lang="en">
 				<head />
 				<body>
-					<LayoutWrapper>
-						{children}
-					</LayoutWrapper>
+					<LayoutWrapper>{children}</LayoutWrapper>
 				</body>
 			</html>
 		</ServerThemeProvider>

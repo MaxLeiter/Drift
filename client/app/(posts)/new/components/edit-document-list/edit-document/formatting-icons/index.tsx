@@ -1,4 +1,11 @@
-import { Bold, Code, Image as ImageIcon, Italic, Link, List } from "react-feather"
+import {
+	Bold,
+	Code,
+	Image as ImageIcon,
+	Italic,
+	Link,
+	List
+} from "react-feather"
 import { RefObject, useMemo } from "react"
 import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"

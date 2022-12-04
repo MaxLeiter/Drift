@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
