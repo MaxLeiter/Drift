@@ -66,6 +66,7 @@ const PasswordModal = ({
 									label="Password"
 									type="password"
 									placeholder="Password"
+									value={password}
 									onChange={(e) => setPassword(e.currentTarget.value)}
 								/>
 								{creating && (
@@ -74,6 +75,7 @@ const PasswordModal = ({
 										label="Confirm"
 										type="password"
 										placeholder="Confirm Password"
+										value={confirmPassword}
 										onChange={(e) => setConfirmPassword(e.currentTarget.value)}
 									/>
 								)}

@@ -10,7 +10,7 @@ type Props = React.HTMLProps<HTMLInputElement> & {
 }
 
 // we have two special rules on top of the props:
-// if onChange or value is passed, we require both
+// if onChange or value is passed, we require both, unless `disabled`
 // if label is passed, we forbid aria-label and vice versa
 type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
 	(
@@ -21,6 +21,11 @@ type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
 		| {
 				onChange?: never
 				value?: never
+		  }
+		| {
+				value: Props["value"]
+				disabled: true
+				onChange?: never
 		  }
 	) &
 	(

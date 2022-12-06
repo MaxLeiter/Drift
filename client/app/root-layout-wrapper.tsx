@@ -17,7 +17,6 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 						enableSystem={true}
 						defaultTheme="dark"
 						disableTransitionOnChange
-						cookieName={"drift-theme"}
 						attribute="data-theme"
 						enableColorScheme={true}
 					>
