@@ -38,7 +38,7 @@ specifiers:
   react-dom: 18.2.0
   react-dropzone: 14.2.3
   react-feather: ^2.0.10
-  react-hot-toast: ^2.4.0
+  react-hot-toast: 2.4.0-beta.0
   server-only: ^0.0.1
   sharp: ^0.31.2
   textarea-markdown-editor: 1.0.4
@@ -70,7 +70,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-dropzone: 14.2.3_react@18.2.0
   react-feather: 2.0.10_react@18.2.0
-  react-hot-toast: github.com/MaxLeiter/react-hot-toast/e48766e293f39871697bbae8d270694733fac954_owo25xnefcwdq3zjgtohz6dbju
+  react-hot-toast: 2.4.0-beta.0_owo25xnefcwdq3zjgtohz6dbju
   server-only: 0.0.1
   textarea-markdown-editor: 1.0.4_biqbaboplfbrettd7655fr4n2y
   ts-jest: 29.0.3_7hcmezpa7bajbjecov7p46z4aa
@@ -5957,6 +5957,20 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-hot-toast/2.4.0-beta.0_owo25xnefcwdq3zjgtohz6dbju:
+    resolution: {integrity: sha512-f/YIDGZ9R+qtOqh1m6yoJvpWFNwLpOSObcV5rarxO32mWDFq3z6pcw2/t7Qb3ho4zymFORYvqlY6WO7rQe6t7g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.11_csstype@3.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - csstype
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -7304,21 +7318,4 @@ packages:
 
   /zwitch/2.0.2:
     resolution: {integrity: sha512-JZxotl7SxAJH0j7dN4pxsTV6ZLXoLdGME+PsjkL/DaBrVryK9kTGq06GfKrwcSOqypP+fdXGoCHE36b99fWVoA==}
-    dev: false
-
-  github.com/MaxLeiter/react-hot-toast/e48766e293f39871697bbae8d270694733fac954_owo25xnefcwdq3zjgtohz6dbju:
-    resolution: {registry: https://registry.npmjs.org/, tarball: https://codeload.github.com/MaxLeiter/react-hot-toast/tar.gz/e48766e293f39871697bbae8d270694733fac954}
-    id: github.com/MaxLeiter/react-hot-toast/e48766e293f39871697bbae8d270694733fac954
-    name: react-hot-toast
-    version: 2.4.0
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      goober: 2.1.11_csstype@3.1.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - csstype
     dev: false
