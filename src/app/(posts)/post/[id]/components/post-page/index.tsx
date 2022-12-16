@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import PasswordModalPage from "./password-modal-wrapper"
 import { File, PostWithFilesAndAuthor } from "@lib/server/prisma"
+import { useSession } from "next-auth/react"
 
 type Props = {
 	post: string | PostWithFilesAndAuthor
@@ -13,11 +14,16 @@ type Props = {
 	isAuthor?: boolean
 }
 
-const PostPage = ({ post: initialPost, isProtected, isAuthor }: Props) => {
+const PostPage = ({ post: initialPost, isProtected, isAuthor: isAuthorFromServer }: Props) => {
+	const { data: session } = useSession()
 	const [post, setPost] = useState<PostWithFilesAndAuthor>(
 		typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost
 	)
 
+	// We generate public and unlisted posts at build time, so we can't use
+	// the session to determine if the user is the author on the server. We need to check
+	// the post's authorId against the session's user id.
+	const isAuthor = isAuthorFromServer ? true : session?.user?.id === post?.authorId;
 	const router = useRouter()
 
 	useEffect(() => {

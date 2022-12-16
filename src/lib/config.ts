@@ -1,3 +1,4 @@
+
 type Config = {
 	is_production: boolean
 	enable_admin: boolean
@@ -14,9 +15,9 @@ type Environment = { [key: string]: EnvironmentValue }
 
 export const config = (env: Environment): Config => {
 	const stringToBoolean = (str: EnvironmentValue): boolean => {
-		if (str === "true") {
+		if (str === "true" || str === "1") {
 			return true
-		} else if (str === "false") {
+		} else if (str === "false" || str === "0") {
 			return false
 		} else if (str) {
 			throw new Error(`Invalid boolean value: ${str}`)
@@ -69,8 +70,8 @@ export const config = (env: Environment): Config => {
 		is_production,
 		enable_admin: stringToBoolean(env.ENABLE_ADMIN),
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
-		welcome_content: env.WELCOME_CONTENT ?? "",
-		welcome_title: env.WELCOME_TITLE ?? "",
+		welcome_content: env.WELCOME_CONTENT ?? "Welcome to Drift.",
+		welcome_title: env.WELCOME_TITLE ?? "Drift",
 		url: process.env.VERCEL_URL ?? throwIfUndefined("DRIFT_URL"),
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? ""

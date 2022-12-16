@@ -13,7 +13,10 @@ const getWelcomeData = async () => {
 export default async function Page() {
 	const { content, rendered, title } = await getWelcomeData()
 	const getPostsPromise = getAllPosts({
-		where: { visibility: "public" }
+		where: { visibility: "public" },
+		include: {
+			files: true,
+		}
 	})
 
 	return (

@@ -44,9 +44,11 @@ export const PostTitle = ({
 			)}
 			{loading && (
 				<span className={styles.badges}>
-					<Skeleton width={100} height={20} />
-					<Skeleton width={100} height={20} />
-					<Skeleton width={100} height={20} />
+					<div style={{ display: "flex", alignItems: "center" }}>
+						<Skeleton width={100} height={20} />
+						<Skeleton width={100} height={20} />
+						<Skeleton width={100} height={20} />
+					</div>
 				</span>
 			)}
 		</span>

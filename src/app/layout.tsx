@@ -8,19 +8,18 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<ServerThemeProvider
-			enableSystem={true}
-			disableTransitionOnChange
-			cookieName={"drift-theme"}
-			attribute="data-theme"
-			enableColorScheme={true}
-		>
+		// <ServerThemeProvider
+		// 	enableSystem={true}
+		// 	disableTransitionOnChange
+		// 	cookieName={"drift-theme"}
+		// 	attribute="data-theme"
+		// 	enableColorScheme={true}
+		// >
 			<html lang="en">
 				<head />
 				<body>
 					<LayoutWrapper>{children}</LayoutWrapper>
 				</body>
 			</html>
-		</ServerThemeProvider>
 	)
 }

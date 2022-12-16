@@ -8,7 +8,40 @@ const providers: NextAuthOptions["providers"] = [
 	GitHubProvider({
 		clientId: config.github_client_id,
 		clientSecret: config.github_client_secret
-	})
+	}),
+	// CredentialsProvider({
+	// 	name: "Credentials",
+	// 	credentials: {
+	// 		username: { label: "Username", type: "text", placeholder: "jsmith" },
+	// 		password: { label: "Password", type: "password" }
+	// 	},
+	// 	async authorize(credentials) {
+	// 		const user = await prisma.user.findUnique({
+	// 			where: {
+	// 				username: credentials.username
+	// 			}
+	// 		})
+
+	// 		if (!user) {
+	// 			// create with prisma
+	// 			// return user
+	// 			const newUser = await prisma.account.create({
+	// 				data: {
+	// 					provider: "credentials",
+	// 					providerAccountId: credentials.username,
+	// 					user: {
+	// 						create: {
+	// 							name: credentials.username,
+	// 							displayName: credentials.username
+	// 						}
+	// 					}
+	// 				}
+	// 			})
+	// 		}
+
+	// 		return user
+	// 	}
+	// })
 ]
 
 export const authOptions: NextAuthOptions = {

@@ -59,7 +59,7 @@ export const PostButtons = ({
 				>
 					Edit a Copy
 				</Button>
-				{viewParentClick && (
+				{parentId && (
 					<Button iconLeft={<ArrowUpCircle />} onClick={viewParentClick}>
 						View Parent
 					</Button>

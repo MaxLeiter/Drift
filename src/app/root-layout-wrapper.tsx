@@ -4,7 +4,6 @@ import Header from "@components/header"
 import Page from "@components/page"
 import { Toasts } from "@components/toasts"
 import * as RadixTooltip from "@radix-ui/react-tooltip"
-import { ThemeProvider } from "@wits/next-themes"
 import { SessionProvider } from "next-auth/react"
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
@@ -13,15 +12,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 			<RadixTooltip.Provider delayDuration={200}>
 				<Toasts />
 				<Page>
-					<ThemeProvider
-						enableSystem={true}
-						defaultTheme="dark"
-						disableTransitionOnChange
-						attribute="data-theme"
-						enableColorScheme={true}
-					>
-						<Header />
-					</ThemeProvider>
+					<Header />
 					{children}
 				</Page>
 			</RadixTooltip.Provider>

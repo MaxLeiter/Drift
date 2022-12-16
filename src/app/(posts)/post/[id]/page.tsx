@@ -1,6 +1,6 @@
 import PostPage from "./components/post-page"
 import { notFound, redirect } from "next/navigation"
-import { getPostById, Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
+import {  getAllPosts, getPostById, Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 import ScrollToTop from "@components/scroll-to-top"
 import { title } from "process"
@@ -14,19 +14,21 @@ export type PostProps = {
 	isProtected?: boolean
 }
 
-// export async function generateStaticParams() {
-// 	const posts = await getAllPosts({
-// 		 where: {
-// 			visibility: {
-// 				equals: "public"
-// 			}
-// 		 }
-// 	})
+export async function generateStaticParams() {
+	const posts = await getAllPosts({
+		 where: {
+			visibility: {
+				equals: "public"
+			}
+		 }
+	})
 
-// 	return posts.map((post) => ({
-// 		id: post.id
-// 	}))
-// }
+	return posts.map((post) => ({
+		id: post.id
+	}))
+}
+
+export const dynamic = 'error';
 
 const fetchOptions = {
 	withFiles: true,
@@ -40,19 +42,16 @@ const getPost = async (id: string) => {
 		return notFound()
 	}
 
+	if (post.visibility === "public" || post.visibility === "unlisted") {
+		return { post }
+	}
+
 	const user = await getCurrentUser()
 	const isAuthorOrAdmin = user?.id === post?.authorId || user?.role === "admin"
 
-	if (post.visibility === "public") {
-		return { post, isAuthor: isAuthorOrAdmin }
-	}
 
 	if (post.visibility === "private" && !isAuthorOrAdmin) {
-		return notFound()
-	}
-
-	if (post.visibility === "private" && !isAuthorOrAdmin) {
-		return notFound()
+		return redirect("/signin")
 	}
 
 	if (post.visibility === "protected" && !isAuthorOrAdmin) {
@@ -64,8 +63,8 @@ const getPost = async (id: string) => {
 				files: [],
 				parentId: "",
 				title: "",
-				createdAt: new Date("1970-01-01"),
-				expiresAt: new Date("1970-01-01"),
+				createdAt: "",
+				expiresAt: "",
 				author: {
 					displayName: ""
 				},
@@ -112,7 +111,8 @@ const PostView = async ({
 					title={post.title}
 					createdAt={post.createdAt.toString()}
 					expiresAt={post.expiresAt?.toString()}
-					displayName={post.author?.displayName || ""}
+					// displayName is an optional param
+					displayName={post.author?.displayName || undefined}
 					visibility={post.visibility}
 					authorId={post.authorId}
 				/>
