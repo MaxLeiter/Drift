@@ -95,7 +95,7 @@ const Post = ({
 				console.error(json)
 				setToast({
 					id: "error",
-					message: "Please fill out all fields",
+					message: json.error ?? "Please fill out all fields",
 					type: "error"
 				})
 				setPasswordModalVisible(false)
@@ -151,7 +151,7 @@ const Post = ({
 				setSubmitting(false)
 				return
 			}
-			
+
 			await sendRequest("/api/post", {
 				title,
 				files: docs,

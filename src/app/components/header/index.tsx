@@ -42,15 +42,15 @@ const Header = () => {
 	const { setTheme, resolvedTheme } = useTheme()
 
 	const getButton = (tab: Tab) => {
-		const isActive = pathname === tab.href
-		const activeStyle = isActive ? styles.active : ""
+		const isActive = `${pathname}` === tab.href
+		const activeStyle = isActive ? styles.active : undefined
 		if (tab.onClick) {
 			return (
 				<Button
 					key={tab.value}
 					iconLeft={tab.icon}
 					onClick={tab.onClick}
-					className={clsx(styles.tab, activeStyle)}
+					className={activeStyle}
 					aria-label={tab.name}
 					aria-current={isActive ? "page" : undefined}
 					data-tab={tab.value}
@@ -63,10 +63,9 @@ const Header = () => {
 				<Link
 					key={tab.value}
 					href={tab.href}
-					className={clsx(styles.tab, activeStyle)}
 					data-tab={tab.value}
 				>
-					<Button iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
+					<Button className={activeStyle} iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
 				</Link>
 			)
 		}

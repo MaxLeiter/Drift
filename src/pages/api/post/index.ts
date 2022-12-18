@@ -25,7 +25,20 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
 
-		const files = req.body.files as (Omit<File, 'content' | 'html'> & { content: string; html: string; })[]
+		const user = await prisma.user.findUnique({
+			where: {
+				id: session.user.id
+			}
+		})
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" })
+		}
+
+		const files = req.body.files as (Omit<File, "content" | "html"> & {
+			content: string
+			html: string
+		})[]
 		const fileTitles = files.map((file) => file.title)
 		const missingTitles = fileTitles.filter((title) => title === "")
 		if (missingTitles.length > 0) {

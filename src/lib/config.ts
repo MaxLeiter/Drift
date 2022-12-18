@@ -8,6 +8,7 @@ type Config = {
 	url: string
 	github_client_id: string
 	github_client_secret: string
+	nextauth_secret: string
 }
 
 type EnvironmentValue = string | undefined
@@ -74,7 +75,8 @@ export const config = (env: Environment): Config => {
 		welcome_title: env.WELCOME_TITLE ?? "Drift",
 		url: process.env.VERCEL_URL ?? throwIfUndefined("DRIFT_URL"),
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
-		github_client_secret: env.GITHUB_CLIENT_SECRET ?? ""
+		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
+		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
 	}
 	return config
 }

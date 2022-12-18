@@ -96,6 +96,9 @@ model User {
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  // below are added for CredentialProvider
+  username      String?   @unique 
+  password      String?   @map("hashed_password")
 
   @@map("users")
 }

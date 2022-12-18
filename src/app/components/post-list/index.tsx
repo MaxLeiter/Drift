@@ -44,6 +44,9 @@ const PostList = ({
 						headers: {
 							"Content-Type": "application/json",
 							"x-page": `${posts.length / 10 + 1}`
+						},
+						next: {
+							revalidate: 10
 						}
 					})
 					const json = await res.json()
@@ -159,7 +162,7 @@ const PostList = ({
 				</div>
 			)}
 			{!searching && hasMorePosts && !setSearchValue && (
-				<div className={styles.moreContainer}>
+				<div>
 					<Button width={"100%"} onClick={loadMoreClick}>
 						Load more
 					</Button>

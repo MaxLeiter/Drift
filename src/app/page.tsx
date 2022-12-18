@@ -15,7 +15,7 @@ export default async function Page() {
 	const getPostsPromise = getAllPosts({
 		where: { visibility: "public" },
 		include: {
-			files: true,
+			files: true
 		}
 	})
 
@@ -69,4 +69,4 @@ async function PublicPostList({
 	)
 }
 
-export const revalidate = 60
+export const revalidate = 30

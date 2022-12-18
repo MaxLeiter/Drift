@@ -17,4 +17,13 @@ declare module "next-auth" {
       role: string
     }
   }
+
+  // override user
+  interface User {
+    username?: string | null
+    email?: string | null
+    role?: string | null
+    id: UserId
+    displayName?: string | null
+  }
 }

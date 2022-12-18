@@ -18,18 +18,21 @@ const Auth = ({
 	const [serverPassword, setServerPassword] = useState("")
 	const [errorMsg, setErrorMsg] = useState("")
 	const signingIn = page === "signin"
+	const signText = signingIn ? "In" : "Up"
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.form}>
 				<div className={styles.formContentSpace}>
-					<h1>{signingIn ? "Sign In" : "Sign Up"}</h1>
+					<h1>Sign {signText}</h1>
 				</div>
 				{/* <form onSubmit={handleSubmit}> */}
 				<form>
 					<div className={styles.formGroup}>
-						{/* <Input
-							htmlType="text"
+						<Input
+							type="text"
 							id="username"
 							value={username}
 							onChange={(event) => setUsername(event.currentTarget.value)}
@@ -37,9 +40,10 @@ const Auth = ({
 							required
 							minLength={3}
 							width="100%"
+							aria-label="Username"
 						/>
 						<Input
-							htmlType="password"
+							type="password"
 							id="password"
 							value={password}
 							onChange={(event) => setPassword(event.currentTarget.value)}
@@ -47,8 +51,8 @@ const Auth = ({
 							required
 							minLength={6}
 							width="100%"
-						/> */}
-						{/* sign in with github */}
+							aria-label="Password"
+						/>
 						{requiresServerPassword && (
 							<Input
 								type="password"
@@ -64,6 +68,21 @@ const Auth = ({
 							/>
 						)}
 						<Button
+							width={"100%"}
+							type="submit"
+							onClick={(e) => {
+								e.preventDefault()
+								signIn("credentials", {
+									username,
+									password,
+									callbackUrl: "/"
+								})
+							}}
+						>
+							Sign {signText}
+						</Button>
+						<hr style={{ width: "100%" }} />
+						<Button
 							type="submit"
 							buttonType="primary"
 							width="100%"
@@ -78,12 +97,8 @@ const Auth = ({
 								})
 							}}
 						>
-							Sign in with GitHub
+							Sign {signText.toLowerCase()} with GitHub
 						</Button>
-
-						{/* <Button width={"100%"} htmlType="submit">
-							{signingIn ? "Sign In" : "Sign Up"}
-						</Button> */}
 					</div>
 					<div className={styles.formContentSpace}>
 						{signingIn ? (

@@ -53,9 +53,9 @@
 	align-items: center;
 }
 
-.active a,
-.active button {
-	color: var(--fg);
+.active,
+.active {
+	color: var(--fg) !important;
 }
 
 .buttonGroup,
