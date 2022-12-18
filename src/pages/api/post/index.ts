@@ -3,7 +3,7 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 
 import { authOptions } from "@lib/server/auth"
-import {prisma,  getPostById } from "@lib/server/prisma"
+import { prisma, getPostById } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 import { unstable_getServerSession } from "next-auth/next"
 import { File } from "@lib/server/prisma"
@@ -25,7 +25,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
 
-		const files = req.body.files as File[]
+		const files = req.body.files as Omit<File, 'content' | 'html'> & { content: string; html: string; }[]
 		const fileTitles = files.map((file) => file.title)
 		const missingTitles = fileTitles.filter((title) => title === "")
 		if (missingTitles.length > 0) {
@@ -44,51 +44,50 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 				.digest("hex")
 		}
 
-		const post = await prisma.post.create({
-			data: {
-				title: req.body.title,
-				description: req.body.description,
-				visibility: req.body.visibility,
-				password: hashedPassword,
-				expiresAt: req.body.expiresAt,
-				parentId: req.body.parentId,
-				authorId: session.user.id,
-			
-				// files: {
-				// 	connectOrCreate: postFiles.map((file) => ({
-				// 		where: {
-				// 			sha: file.sha
-				// 		},
-				// 		create: file
-				// 	}))
-				// }
-			}
-		})
-
-		await Promise.all(
+		const fileHtml = await Promise.all(
 			files.map(async (file) => {
-				const html = (await getHtmlFromFile(file)) as string
-
-				return prisma.file.create({
-					data: {
-						title: file.title,
-						content: file.content,
-						sha: crypto
-							.createHash("sha256")
-							.update(file.content)
-							.digest("hex")
-							.toString(),
-						html: html,
-						userId: session.user.id,
-						post: {
-							connect: {
-								id: post.id
-							}
-						}
-					}
+				return await getHtmlFromFile({
+					content: file.content,
+					title: file.title
 				})
 			})
 		)
+
+		const post = await prisma.post
+			.create({
+				data: {
+					title: req.body.title,
+					description: req.body.description,
+					visibility: req.body.visibility,
+					password: hashedPassword,
+					expiresAt: req.body.expiresAt,
+					parentId: req.body.parentId,
+					authorId: session.user.id,
+					files: {
+						create: files.map((file) => {
+							console.log(file)
+							return {
+								title: file.title,
+								content: Buffer.from(file.content, "utf-8"),
+								sha: crypto
+									.createHash("sha256")
+									.update(file.content)
+									.digest("hex")
+									.toString(),
+								html: Buffer.from(
+									fileHtml[files.indexOf(file)] as string,
+									"utf-8"
+								),
+								userId: session.user.id
+							}
+						})
+					}
+				}
+			})
+			.catch((error) => {
+				console.log(error)
+				return res.status(500).json(error)
+			})
 
 		return res.json(post)
 	} catch (error) {

@@ -47,14 +47,13 @@ export async function createPostFromGist(
 
 							return {
 								title: file.filename,
-								content: content,
+								content: Buffer.from(content, "utf-8"),
 								sha: crypto
 									.createHash("sha256")
 									.update(content)
 									.digest("hex")
 									.toString(),
-								// TODO: shouldn't need this cast
-								html: html as string,
+								html: Buffer.from(html as string, "utf-8"),
 								userId: userId
 							}
 						})

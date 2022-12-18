@@ -16,9 +16,9 @@ model SequelizeMeta {
 model File {
   id        String    @id @default(cuid())
   title     String
-  content   String
+  content   Bytes
   sha       String
-  html      String
+  html      Bytes
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?

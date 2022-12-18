@@ -151,7 +151,7 @@ const Post = ({
 				setSubmitting(false)
 				return
 			}
-
+			
 			await sendRequest("/api/post", {
 				title,
 				files: docs,

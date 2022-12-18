@@ -36,12 +36,44 @@ if (config.enable_admin) {
 
 if (process.env.NODE_ENV !== "production") global.prisma = prisma
 
-export type PostWithFiles = Post & {
-	files: File[]
+const postWithFiles = Prisma.validator<Prisma.PostArgs>()({
+	include: {
+		files: true
+	}
+})
+
+const postWithAuthor = Prisma.validator<Prisma.PostArgs>()({
+	include: {
+		author: true
+	}
+})
+
+const postWithFilesAndAuthor = Prisma.validator<Prisma.PostArgs>()({
+	include: {
+		files: true,
+		author: true
+	}
+})
+
+export type ServerPostWithFiles = Prisma.PostGetPayload<typeof postWithFiles>
+export type PostWithAuthor = Prisma.PostGetPayload<typeof postWithAuthor>
+export type ServerPostWithFilesAndAuthor = Prisma.PostGetPayload<typeof postWithFilesAndAuthor>
+
+export type PostWithFiles = Omit<ServerPostWithFiles, "files"> & {
+	files: Omit<ServerPostWithFiles["files"][number], "content" | "html"> & {
+		content: string
+		html: string
+	}[]
 }
 
-export type PostWithFilesAndAuthor = PostWithFiles & {
-	author: User
+export type PostWithFilesAndAuthor = Omit<
+	ServerPostWithFilesAndAuthor,
+	"files"
+> & {
+	files: Omit<ServerPostWithFilesAndAuthor["files"][number], "content" | "html"> & {
+		content: string
+		html: string
+	}[]
 }
 
 export const getFilesForPost = async (postId: string) => {
@@ -68,7 +100,7 @@ export async function getPostsByUser(userId: string): Promise<Post[]>
 export async function getPostsByUser(
 	userId: string,
 	includeFiles: true
-): Promise<PostWithFiles[]>
+): Promise<ServerPostWithFiles[]>
 export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 	const posts = await prisma.post.findMany({
 		where: {
@@ -148,12 +180,25 @@ export const getPostById = async (
 	postId: Post["id"],
 	options?: GetPostByIdOptions
 ): Promise<Post | PostWithFiles | PostWithFilesAndAuthor | null> => {
-	const post = await prisma.post.findUnique({
+	let post = await prisma.post.findUnique({
 		where: {
 			id: postId
 		},
 		...options
 	})
+
+	if (post) {
+		if ("files" in post) {
+			// @ts-expect-error TODO: fix types so files can exist
+			console.log(post.files)
+			// @ts-expect-error TODO: fix types so files can exist
+			post.files = post.files.map((file) => ({
+				...file,
+				content: file.content ? file.content.toString() : undefined,
+				html: file.html ? file.html.toString() : undefined
+			}))
+		}
+	}
 
 	return post
 }
@@ -167,7 +212,7 @@ export const getAllPosts = async ({
 	withFiles?: boolean
 	withAuthor?: boolean
 } & Prisma.PostFindManyArgs = {}): Promise<
-	Post[] | PostWithFiles[] | PostWithFilesAndAuthor[]
+	Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
 > => {
 	const posts = await prisma.post.findMany({
 		include: {
@@ -216,7 +261,7 @@ export const searchPosts = async (
 		userId?: User["id"]
 		publicOnly?: boolean
 	} = {}
-): Promise<PostWithFiles[]> => {
+): Promise<ServerPostWithFiles[]> => {
 	const posts = await prisma.post.findMany({
 		where: {
 			OR: [
@@ -231,9 +276,8 @@ export const searchPosts = async (
 					files: {
 						some: {
 							content: {
-								search: query
-							},
-							userId: userId
+								in: Buffer.from(query)
+							}
 						}
 					},
 					visibility: publicOnly ? "public" : undefined
@@ -245,5 +289,5 @@ export const searchPosts = async (
 		}
 	})
 
-	return posts as PostWithFiles[]
+	return posts as ServerPostWithFiles[]
 }

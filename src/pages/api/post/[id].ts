@@ -1,6 +1,6 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { getPostById } from "@lib/server/prisma"
+import { getPostById, PostWithFiles } from "@lib/server/prisma"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import { prisma } from "lib/server/prisma"
@@ -16,7 +16,6 @@ export default withMethods(["GET", "PUT", "DELETE"], handler)
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 	const id = parseQueryParam(req.query.id)
-	const files = req.query.files ? parseQueryParam(req.query.files) : true
 
 	if (!id) {
 		return res.status(400).json({ error: "Missing id" })
@@ -44,7 +43,9 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 
 	// the user can always go directly to their own post
 	if (session?.user.id === post.authorId) {
-		return res.json(post)
+		return res.json({
+			...post,
+		})
 	}
 
 	if (post.visibility === "protected") {
@@ -56,7 +57,9 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 			.toString()
 
 		if (hash === post.password) {
-			return res.json(post)
+			return res.json({
+				...post,
+			})
 		} else {
 			return {
 				isProtected: true,
