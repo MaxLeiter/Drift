@@ -67,14 +67,9 @@ const PostFiles = ({
 			}
 		}
 	}, [isAuthor, post.expiresAt, router])
-	
+
 	if (isLoading) {
-		return (
-			<DocumentComponent
-				skeleton={true}
-				initialTab={"preview"}
-			/>
-		)
+		return <DocumentComponent skeleton={true} initialTab={"preview"} />
 	}
 
 	if (isProtected) {
@@ -83,7 +78,7 @@ const PostFiles = ({
 
 	return (
 		<>
-			{post.files?.map(({ id, content, title, html }: File) => (
+			{post.files?.map(({ id, content, title, html }) => (
 				<DocumentComponent
 					skeleton={false}
 					key={id}

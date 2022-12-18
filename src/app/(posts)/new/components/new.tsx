@@ -40,7 +40,7 @@ const Post = ({
 }) => {
 	const session = useSession()
 
-	const parsedPost = JSON.parse(stringifiedInitialPost || "{}")
+	const parsedPost = JSON.parse(stringifiedInitialPost || "{}") as PostWithFiles
 	const initialPost = parsedPost?.id ? parsedPost : null
 	const { setToast } = useToasts()
 	const router = useRouter()
@@ -51,7 +51,7 @@ const Post = ({
 	const [expiresAt, setExpiresAt] = useState<Date>()
 
 	const defaultDocs: Document[] = initialPost
-		? initialPost.files?.map((doc: PostWithFiles["files"][0]) => ({
+		? initialPost.files?.map((doc) => ({
 				title: doc.title,
 				content: doc.content,
 				id: doc.id

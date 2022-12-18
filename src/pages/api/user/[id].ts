@@ -1,5 +1,3 @@
-// api/user/[id].ts
-
 import { parseQueryParam } from "@lib/server/parse-query-param"
 import { getUserById } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"

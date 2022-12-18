@@ -60,20 +60,20 @@ export type PostWithAuthor = Prisma.PostGetPayload<typeof postWithAuthor>
 export type ServerPostWithFilesAndAuthor = Prisma.PostGetPayload<typeof postWithFilesAndAuthor>
 
 export type PostWithFiles = Omit<ServerPostWithFiles, "files"> & {
-	files: Omit<ServerPostWithFiles["files"][number], "content" | "html"> & {
+	files: (Omit<ServerPostWithFiles["files"][number], "content" | "html"> & {
 		content: string
 		html: string
-	}[]
+	})[]
 }
 
 export type PostWithFilesAndAuthor = Omit<
 	ServerPostWithFilesAndAuthor,
 	"files"
 > & {
-	files: Omit<ServerPostWithFilesAndAuthor["files"][number], "content" | "html"> & {
+	files: (Omit<ServerPostWithFilesAndAuthor["files"][number], "content" | "html"> & {
 		content: string
 		html: string
-	}[]
+	})[]
 }
 
 export const getFilesForPost = async (postId: string) => {
@@ -247,7 +247,7 @@ export const getAllUsers = async () => {
 		}
 	})
 
-	return users as UserWithPosts[]
+	return users
 }
 
 export const searchPosts = async (
@@ -267,7 +267,7 @@ export const searchPosts = async (
 			OR: [
 				{
 					title: {
-						search: query
+						search: query,
 					},
 					authorId: userId,
 					visibility: publicOnly ? "public" : undefined
@@ -276,8 +276,8 @@ export const searchPosts = async (
 					files: {
 						some: {
 							content: {
-								in: Buffer.from(query)
-							}
+								in: [Buffer.from(query)]
+							},
 						}
 					},
 					visibility: publicOnly ? "public" : undefined

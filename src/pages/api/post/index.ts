@@ -25,7 +25,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
 
-		const files = req.body.files as Omit<File, 'content' | 'html'> & { content: string; html: string; }[]
+		const files = req.body.files as (Omit<File, 'content' | 'html'> & { content: string; html: string; })[]
 		const fileTitles = files.map((file) => file.title)
 		const missingTitles = fileTitles.filter((title) => title === "")
 		if (missingTitles.length > 0) {
@@ -65,7 +65,6 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 					authorId: session.user.id,
 					files: {
 						create: files.map((file) => {
-							console.log(file)
 							return {
 								title: file.title,
 								content: Buffer.from(file.content, "utf-8"),
@@ -85,7 +84,6 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 				}
 			})
 			.catch((error) => {
-				console.log(error)
 				return res.status(500).json(error)
 			})
 
