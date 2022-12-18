@@ -56,7 +56,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default withMethods(["GET", "PUT", "DELETE"], handler)
 
-// valid jsdoc
 /**
  * @description Deletes a user and all of their posts, files, and accounts
  * @warning This function does not perform any authorization checks
@@ -69,7 +68,7 @@ export async function deleteUser(id: string | undefined) {
 			authorId: id
 		}
 	})
-	
+
 	await prisma.user.delete({
 		where: {
 			id
