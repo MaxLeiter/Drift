@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "src/node_modules/.pnpm/typescript@4.6.4/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "dotenv.enableAutocloaking": false
+}

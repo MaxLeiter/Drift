@@ -78,7 +78,7 @@ export const config = (env: Environment): Config => {
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
 		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
-		credential_auth: stringToBoolean("CREDENTIAL_AUTH")
+		credential_auth: stringToBoolean("CREDENTIAL_AUTH") ?? true
 	}
 	return config
 }
