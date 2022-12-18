@@ -3,13 +3,14 @@
 import { startTransition, useEffect, useRef, useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
-import { getSession, signIn } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import Input from "@components/input"
 import Button from "@components/button"
 import { GitHub } from "react-feather"
 import { useToasts } from "@components/toasts"
 import { useRouter, useSearchParams } from "next/navigation"
 import Note from "@components/note"
+
 const Auth = ({
 	page,
 	requiresServerPassword,
