@@ -5,83 +5,140 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@lib/server/prisma"
 import config from "@lib/config"
 import * as crypto from "crypto"
+import { Provider } from "next-auth/providers"
 
-const providers: NextAuthOptions["providers"] = [
-	GitHubProvider({
-		clientId: config.github_client_id,
-		clientSecret: config.github_client_secret
-	}),
-	CredentialsProvider({
-		name: "Credentials",
-		credentials: {
-			username: { label: "Username", type: "text", placeholder: "jsmith" },
-			password: { label: "Password", type: "password" }
+const credentialsOptions = () => {
+	const options: Record<string, any> = {
+		username: {
+			label: "Username",
+			required: true,
+			type: "text"
 		},
-		async authorize(credentials) {
-			if (!credentials) {
-				return null
-			}
+		password: {
+			label: "Password",
+			required: true,
+			type: "password"
+		}
+	}
 
-			const user = await prisma.user.findUnique({
-				where: {
-					username: credentials.username
-				},
-				select: {
-					id: true,
-					username: true,
-					displayName: true,
-					role: true,
-					password: true
+	if (config.registration_password) {
+		options["registration_password"] = {
+			label: "Server Password",
+			type: "password",
+			optional: true
+		}
+	}
+
+	return options
+}
+const providers = () => {
+	const providers = []
+
+	if (config.github_client_id && config.github_client_secret) {
+		providers.push(
+			GitHubProvider({
+				clientId: config.github_client_id,
+				clientSecret: config.github_client_secret
+			})
+		)
+	}
+
+	if (config.credential_auth) {
+		providers.push(
+			CredentialsProvider({
+				name: "Drift",
+				credentials: credentialsOptions(),
+				async authorize(credentials) {
+					if (!credentials || !credentials.username || !credentials.password) {
+						throw new Error("Missing credentials")
+					}
+
+					if (credentials.username.length < 3) {
+						throw new Error("Username must be at least 3 characters")
+					}
+
+					if (credentials.password.length < 3) {
+						throw new Error("Password must be at least 3 characters")
+					}
+
+					const user = await prisma.user.findUnique({
+						where: {
+							username: credentials.username
+						},
+						select: {
+							id: true,
+							username: true,
+							displayName: true,
+							role: true,
+							password: true
+						}
+					})
+
+					const hashedPassword = crypto
+						.createHash("sha256")
+						.update(credentials.password + config.nextauth_secret)
+						.digest("hex")
+
+					if (credentials.signingIn === "true") {
+						if (
+							user?.password &&
+							crypto.timingSafeEqual(
+								Buffer.from(user.password),
+								Buffer.from(hashedPassword)
+							)
+						) {
+							return user
+						} else {
+							throw new Error("Incorrect username or password")
+						}
+					} else {
+						if (config.registration_password) {
+							if (!credentials.registration_password) {
+								throw new Error("Missing registration password")
+							}
+
+							if (
+								credentials.registration_password !==
+								config.registration_password
+							) {
+								throw new Error("Incorrect registration password")
+							}
+						}
+
+						if (user) {
+							throw new Error("Username already taken")
+						}
+
+						const newUser = await prisma.user.create({
+							data: {
+								username: credentials.username,
+								displayName: credentials.username,
+								role: "user",
+								password: hashedPassword,
+								name: credentials.username
+							}
+						})
+
+						return newUser
+					}
 				}
 			})
+		)
+	}
 
-			const hashedPassword = crypto
-				.createHash("sha256")
-				.update
-				(credentials
-					.password
-					+ config.nextauth_secret)
-				.digest("hex")
-
-			if (!user) {
-				const newUser = await prisma.user.create({
-					data: {
-						username: credentials.username,
-						displayName: credentials.username,
-						role: "user",
-						password: hashedPassword,
-						name: credentials.username,
-					}
-				})
-
-				return newUser
-			} else if (
-				user.password &&
-				crypto.timingSafeEqual(
-					Buffer.from(user.password),
-					Buffer.from(hashedPassword)
-				)
-			) {
-				return user
-			}
-
-			return null
-		}
-	})
-]
+	return providers
+}
 
 export const authOptions: NextAuthOptions = {
-	// see https://github.com/prisma/prisma/issues/16117 / https://github.com/shadcn/taxonomy
-	adapter: PrismaAdapter(prisma as any),
+	adapter: PrismaAdapter(prisma),
 	session: {
 		strategy: "jwt"
 	},
 	pages: {
-		signIn: "/signin"
-		// TODO
-		// error: "/auth/error",
+		signIn: "/signin",
+		error: "/signin"
 	},
-	providers,
+	providers: providers(),
 	callbacks: {
 		async session({ token, session }) {
 			if (token) {
@@ -94,6 +151,7 @@ export const authOptions: NextAuthOptions = {
 
 			return session
 		},
+
 		async jwt({ token, user }) {
 			const dbUser = await prisma.user.findFirst({
 				where: {

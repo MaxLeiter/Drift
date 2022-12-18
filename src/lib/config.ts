@@ -1,4 +1,3 @@
-
 type Config = {
 	is_production: boolean
 	enable_admin: boolean
@@ -9,6 +8,7 @@ type Config = {
 	github_client_id: string
 	github_client_secret: string
 	nextauth_secret: string
+	credential_auth: boolean
 }
 
 type EnvironmentValue = string | undefined
@@ -77,6 +77,9 @@ export const config = (env: Environment): Config => {
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
 		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
+		credential_auth: stringToBoolean(
+			developmentDefault("CREDENTIAL_AUTH", "true")
+		)
 	}
 	return config
 }

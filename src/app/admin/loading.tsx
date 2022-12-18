@@ -1,4 +1,4 @@
-import { PostTable, UserTable } from "./page"
+import { PostTable, UserTable } from "./components/tables"
 
 export default function AdminLoading() {
 	return (

@@ -40,7 +40,7 @@ type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
 	)
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ label, className, width, height, labelClassName, ...props }, ref) => {
+	({ label, className, required, width, height, labelClassName, ...props }, ref) => {
 		return (
 			<div
 				className={styles.wrapper}

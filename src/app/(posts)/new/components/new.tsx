@@ -187,7 +187,7 @@ const Post = ({
 	)
 
 	if (session.status === "unauthenticated") {
-		router.push("/login")
+		router.push("/signin")
 		return null
 	}
 

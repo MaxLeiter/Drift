@@ -3,6 +3,7 @@ import { parseQueryParam } from "@lib/server/parse-query-param"
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "lib/server/prisma"
 import { getSession } from "next-auth/react"
+import { deleteUser } from "../user/[id]"
 
 const actions = [
 	"user",
@@ -94,11 +95,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						return res.status(400).json({ error: "Invalid request" })
 					}
 
-					const user = await prisma.user.delete({
-						where: { id: userId }
-					})
+					await deleteUser(userId)
 
-					return res.status(200).json(user)
+					return res.status(200).send("User deleted")
 				case "delete-post":
 					const { postId } = req.body
 					if (!postId) {

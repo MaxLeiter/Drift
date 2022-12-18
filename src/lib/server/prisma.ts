@@ -57,7 +57,9 @@ const postWithFilesAndAuthor = Prisma.validator<Prisma.PostArgs>()({
 
 export type ServerPostWithFiles = Prisma.PostGetPayload<typeof postWithFiles>
 export type PostWithAuthor = Prisma.PostGetPayload<typeof postWithAuthor>
-export type ServerPostWithFilesAndAuthor = Prisma.PostGetPayload<typeof postWithFilesAndAuthor>
+export type ServerPostWithFilesAndAuthor = Prisma.PostGetPayload<
+	typeof postWithFilesAndAuthor
+>
 
 export type PostWithFiles = Omit<ServerPostWithFiles, "files"> & {
 	files: (Omit<ServerPostWithFiles["files"][number], "content" | "html"> & {
@@ -70,7 +72,10 @@ export type PostWithFilesAndAuthor = Omit<
 	ServerPostWithFilesAndAuthor,
 	"files"
 > & {
-	files: (Omit<ServerPostWithFilesAndAuthor["files"][number], "content" | "html"> & {
+	files: (Omit<
+		ServerPostWithFilesAndAuthor["files"][number],
+		"content" | "html"
+	> & {
 		content: string
 		html: string
 	})[]
@@ -201,40 +206,25 @@ export const getPostById = async (
 	return post
 }
 
-export const getAllPosts = async ({
-	withFiles = false,
-	withAuthor = false,
-	take = 100,
-	...rest
-}: {
-	withFiles?: boolean
-	withAuthor?: boolean
-} & Prisma.PostFindManyArgs = {}): Promise<
-	Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
-> => {
-	const posts = await prisma.post.findMany({
-		include: {
-			files: withFiles,
-			author: withAuthor
-		},
-		// TODO: optimize which to grab
-		take,
-		...rest
-	})
-
-	return posts as typeof withFiles extends true
-		? typeof withAuthor extends true
-			? PostWithFilesAndAuthor[]
-			: PostWithFiles[]
-		: Post[]
+export const getAllPosts = async (
+	options?: Prisma.PostFindManyArgs
+): Promise<Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]> => {
+	const posts = await prisma.post.findMany(options)
+	return posts
 }
 
-export type UserWithPosts = User & {
-	posts: Post[]
-}
+export const userWithPosts = Prisma.validator<Prisma.UserArgs>()({
+	include: {
+		posts: true
+	}
+})
 
-export const getAllUsers = async () => {
-	const users = await prisma.user.findMany({
+export type UserWithPosts = Prisma.UserGetPayload<typeof userWithPosts>
+
+export const getAllUsers = async (
+	options?: Prisma.UserFindManyArgs
+): Promise<User[] | UserWithPosts[]> => {
+	const users = (await prisma.user.findMany({
 		select: {
 			id: true,
 			email: true,
@@ -242,8 +232,9 @@ export const getAllUsers = async () => {
 			displayName: true,
 			posts: true,
 			createdAt: true
-		}
-	})
+		},
+		...options
+	})) as User[] | UserWithPosts[]
 
 	return users
 }
@@ -265,7 +256,7 @@ export const searchPosts = async (
 			OR: [
 				{
 					title: {
-						search: query,
+						search: query
 					},
 					authorId: userId,
 					visibility: publicOnly ? "public" : undefined
@@ -275,7 +266,7 @@ export const searchPosts = async (
 						some: {
 							content: {
 								in: [Buffer.from(query)]
-							},
+							}
 						}
 					},
 					visibility: publicOnly ? "public" : undefined

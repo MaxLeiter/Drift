@@ -6,10 +6,10 @@ const nextConfig = {
 	experimental: {
 		// esmExternals: true,
 		appDir: true,
-		serverComponentsExternalPackages: ['prisma'],
+		serverComponentsExternalPackages: ["prisma", "@prisma/client"],
 	},
 	output: "standalone",
-	async rewrites() {
+	rewrites() {
 		return [
 			{
 				source: "/file/raw/:id",
@@ -21,7 +21,6 @@ const nextConfig = {
 			}
 		]
 	}
-	
 }
 
 export default bundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(

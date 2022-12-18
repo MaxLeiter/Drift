@@ -42,9 +42,42 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			})
 		case "GET":
 			return res.json(currUser)
+		case "DELETE":
+			if (currUser?.role !== "admin" && currUser?.id !== id) {
+				return res.status(403).json({ message: "Unauthorized" })
+			}
+
+			await deleteUser(id)
+
 		default:
 			return res.status(405).json({ message: "Method not allowed" })
 	}
 }
 
-export default withMethods(["GET", "PUT"], handler)
+export default withMethods(["GET", "PUT", "DELETE"], handler)
+
+// valid jsdoc
+/**
+ * @description Deletes a user and all of their posts, files, and accounts
+ * @warning This function does not perform any authorization checks
+ */
+export async function deleteUser(id: string | undefined) {
+
+	// first delete all of the user's posts
+	await prisma.post.deleteMany({
+		where: {
+			authorId: id
+		}
+	})
+	
+	await prisma.user.delete({
+		where: {
+			id
+		},
+		include: {
+			posts: true,
+			accounts: true,
+			sessions: true
+		}
+	})
+}
