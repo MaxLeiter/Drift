@@ -1,3 +1,12 @@
+.markdownPreview {
+	padding: var(--gap-quarter);
+}
+
+.markdownPreview p {
+	margin-top: var(--gap);
+	margin-bottom: var(--gap);
+}
+
 .markdownPreview pre {
 	border-radius: 3px;
 	font-family: "Courier New", Courier, monospace;

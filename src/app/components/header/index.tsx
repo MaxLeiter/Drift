@@ -34,7 +34,6 @@ type Tab = {
 
 const Header = () => {
 	const session = useSession()
-	console.log("session", session)
 	const isSignedIn = session?.status === "authenticated"
 	const isAdmin = session?.data?.user?.role === "admin"
 	const isLoading = session?.status === "loading"

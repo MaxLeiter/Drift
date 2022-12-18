@@ -139,7 +139,7 @@ const Post = ({
 			for (const doc of docs) {
 				if (!doc.title) {
 					setToast({
-						message: "Please fill out all the document titles",
+						message: "Please fill out all the filenames",
 						type: "error"
 					})
 					hasErrored = true

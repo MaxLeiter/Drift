@@ -3,19 +3,19 @@
 }
 
 [data-side='top'] .tooltip{
-    margin-bottom: var(--gap);
+    margin-bottom: var(--gap-quarter);
 }
 
 .tooltip[data-side='bottom'] {
-    margin-top: var(--gap);
+    margin-top: var(--gap-quarter);
 }
 
 .tooltip[data-side='left'] {
-    margin-right: var(--gap);
+    margin-right: var(--gap-quarter);
 }
 
 .tooltip[data-side='right'] {
-    margin-left: var(--gap);
+    margin-left: var(--gap-quarter);
 }
 
 @keyframes fadein {

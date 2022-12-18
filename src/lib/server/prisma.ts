@@ -111,11 +111,25 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 		where: {
 			authorId: userId
 		},
-		include: {
-			files: withFiles
-		},
 		orderBy: {
 			createdAt: "desc"
+		},
+		select: {
+			id: true,
+			title: true,
+			createdAt: true,
+			updatedAt: true,
+			authorId: true,
+			visibility: true,
+			...(withFiles && {
+				files: {
+					select: {
+						id: true,
+						title: true,
+						createdAt: true,
+					}
+				}
+			})
 		}
 	})
 

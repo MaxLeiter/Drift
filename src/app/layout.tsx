@@ -1,6 +1,9 @@
 import "@styles/globals.css"
-import { LayoutWrapper } from "./root-layout-wrapper"
-import { ServerThemeProvider } from "@wits/next-themes"
+import { Providers } from "./providers"
+// import { ServerThemeProvider } from "@wits/next-themes"
+import Page from "@components/page"
+import { Toasts } from "@components/toasts"
+import Header from "@components/header"
 
 interface RootLayoutProps {
 	children: React.ReactNode
@@ -15,11 +18,17 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 		// 	attribute="data-theme"
 		// 	enableColorScheme={true}
 		// >
-			<html lang="en">
-				<head />
-				<body>
-					<LayoutWrapper>{children}</LayoutWrapper>
-				</body>
-			</html>
+		<html lang="en">
+			<head />
+			<body>
+				<Toasts />
+				<Page>
+					<Providers>
+						<Header />
+						{children}
+					</Providers>
+				</Page>
+			</body>
+		</html>
 	)
 }

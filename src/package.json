@@ -38,7 +38,8 @@
 		"react-hot-toast": "2.4.0-beta.0",
 		"server-only": "^0.0.1",
 		"textarea-markdown-editor": "1.0.4",
-		"ts-jest": "^29.0.3"
+		"ts-jest": "^29.0.3",
+		"uuid": "^9.0.0"
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.0.7-canary.4",
@@ -48,6 +49,7 @@
 		"@types/react": "18.0.9",
 		"@types/react-datepicker": "4.4.1",
 		"@types/react-dom": "18.0.3",
+		"@types/uuid": "^9.0.0",
 		"clsx": "^1.2.1",
 		"cross-env": "7.0.3",
 		"csstype": "^3.1.1",

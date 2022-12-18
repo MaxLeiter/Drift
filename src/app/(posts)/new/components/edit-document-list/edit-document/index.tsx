@@ -82,7 +82,7 @@ const Document = ({
 						/>
 					)}
 				</div>
-				<div className={styles.descriptionContainer}>
+				<div className={styles.documentContainer}>
 					<DocumentTabs
 						isEditing={true}
 						defaultTab={defaultTab}

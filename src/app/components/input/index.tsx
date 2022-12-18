@@ -38,9 +38,12 @@ type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
 				"aria-label": Props["aria-label"]
 		  }
 	)
-// eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ label, className, required, width, height, labelClassName, ...props }, ref) => {
+	(
+		{ label, className, required, width, height, labelClassName, ...props },
+		ref
+	) => {
+		const labelId = label?.replace(/\s/g, "-").toLowerCase()
 		return (
 			<div
 				className={styles.wrapper}
@@ -51,7 +54,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			>
 				{label && (
 					<label
-						aria-labelledby={label}
+						htmlFor={labelId}
 						className={clsx(styles.label, labelClassName)}
 					>
 						{label}
@@ -59,7 +62,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 				)}
 				<input
 					ref={ref}
-					id={label}
+					id={labelId}
 					className={clsx(styles.input, label && styles.withLabel, className)}
 					{...props}
 					style={{
@@ -72,5 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 		)
 	}
 )
+
+Input.displayName = "Input"
 
 export default Input

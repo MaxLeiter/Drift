@@ -6,6 +6,7 @@
 	.header {
 		flex-direction: column;
 		gap: var(--gap);
+		margin-bottom: var(--gap);
 	}
 }
 

@@ -1,47 +1,24 @@
-.card {
-	padding: var(--gap);
-	border: 1px solid var(--light-gray);
-	border-radius: var(--radius);
+.card header {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 16px;
+	background: var(--lighter-gray);
+	border-radius: 8px 8px 0px 0px;
 }
 
-.descriptionContainer {
+.documentContainer {
 	display: flex;
 	flex-direction: column;
 	min-height: 400px;
 	overflow: auto;
-}
-
-.fileNameContainer {
-	font-family: var(--font-mono) !important;
-	border-radius: var(--radius) !important;
-	margin-bottom: var(--gap-half) !important;
-	width: 100% !important;
-}
-
-.fileNameContainer span {
-	transition: background-color var(--transition) !important;
-	border-color: var(--light-gray) !important;
-}
-
-.fileNameContainer span:target,
-.fileNameContainer span:hover {
-	background-color: var(--lighter-gray) !important;
-}
-
-.fileNameContainer > div {
-	/* Override geist-ui styling */
-	margin: 0 !important;
-}
-
-.actionWrapper {
-	position: relative;
-	z-index: 1;
-	padding-top: 4px;
-}
-
-.actionWrapper .actions {
-	position: absolute;
-	right: 0;
+	padding: var(--gap);
+	border: 1px solid var(--lighter-gray);
+	border-top: none;
+	border-radius: 0px 0px 8px 8px;
 }
 
 .textarea {

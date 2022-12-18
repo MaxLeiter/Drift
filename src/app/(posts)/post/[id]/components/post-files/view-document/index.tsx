@@ -9,7 +9,6 @@ import Tooltip from "@components/tooltip"
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
 import DocumentTabs from "app/(posts)/components/tabs"
-import Input from "@components/input"
 import { Download, ExternalLink } from "react-feather"
 
 type SharedProps = {
@@ -32,32 +31,30 @@ type Props = (
 
 const DownloadButtons = ({ rawLink }: { rawLink?: string }) => {
 	return (
-		<div className={styles.actionWrapper}>
-			<ButtonGroup className={styles.actions}>
-				<Tooltip content="Download">
-					<Link
-						href={`${rawLink}?download=true`}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<Button
-							iconRight={<Download />}
-							aria-label="Download"
-							style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
-						/>
-					</Link>
-				</Tooltip>
-				<Tooltip content="Open raw in new tab">
-					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
-						<Button
-							iconLeft={<ExternalLink />}
-							aria-label="Open raw file in new tab"
-							style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-						/>
-					</Link>
-				</Tooltip>
-			</ButtonGroup>
-		</div>
+		<ButtonGroup>
+			<Tooltip content="Download">
+				<Link
+					href={`${rawLink}?download=true`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<Button
+						iconRight={<Download color="var(--fg)" />}
+						aria-label="Download"
+						style={{ border: "none", background: "transparent" }}
+					/>
+				</Link>
+			</Tooltip>
+			<Tooltip content="Open raw in new tab">
+				<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
+					<Button
+						iconLeft={<ExternalLink color="var(--fg)" />}
+						aria-label="Open raw file in new tab"
+						style={{ border: "none", background: "transparent" }}
+					/>
+				</Link>
+			</Tooltip>
+		</ButtonGroup>
 	)
 }
 
@@ -67,9 +64,9 @@ const Document = ({ skeleton, ...props }: Props) => {
 			<>
 				<div className={styles.card}>
 					<div className={styles.fileNameContainer}>
-						<Skeleton width={'100%'} height={36} />
+						<Skeleton width={"100%"} height={36} />
 					</div>
-					<div className={styles.descriptionContainer}>
+					<div className={styles.documentContainer}>
 						<Skeleton width={145} height={36} borderRadius={"4px 4px 0 0"} />
 						<Skeleton
 							width={"100%"}
@@ -87,21 +84,21 @@ const Document = ({ skeleton, ...props }: Props) => {
 	return (
 		<>
 			<div className={styles.card}>
-				<Link href={`#${title}`} className={styles.fileNameContainer}>
-					<Input
-						id={`${title}`}
-						width={"100%"}
-						height={"2rem"}
-						style={{ borderRadius: 0 }}
-						value={title || "Untitled"}
-						onChange={() => {}}
-						disabled
-						aria-label="Document title"
-					/>
-				</Link>
-				<div className={styles.descriptionContainer}>
-					{/* Not /api/ because of rewrites defined in next.config.mjs */}
+				<header>
+					<Link
+						href={`#${title}`}
+						aria-label="File"
+						style={{
+							textDecoration: "none",
+							color: "var(--fg)"
+						}}
+					>
+						{title}
+					</Link>
 					<DownloadButtons rawLink={`/file/raw/${id}`} />
+				</header>
+				<div className={styles.documentContainer}>
+					{/* Not /api/ because of rewrites defined in next.config.mjs */}
 					<DocumentTabs
 						defaultTab={initialTab}
 						preview={preview}
