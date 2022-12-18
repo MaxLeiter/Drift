@@ -20,10 +20,8 @@ export const config = (env: Environment): Config => {
 			return true
 		} else if (str === "false" || str === "0") {
 			return false
-		} else if (str) {
-			throw new Error(`Invalid boolean value: ${str}`)
 		} else {
-			return false
+			return Boolean(str)
 		}
 	}
 
@@ -59,8 +57,11 @@ export const config = (env: Environment): Config => {
 	const is_production = env.NODE_ENV === "production"
 
 	const developmentDefault = (name: string, defaultValue: string): string => {
-		if (is_production) return throwIfUndefined(name)
-		return defaultIfUndefined(name, defaultValue)
+		if (is_production) {
+			return throwIfUndefined(name)
+		} else {
+			return defaultIfUndefined(name, defaultValue)
+		}
 	}
 
 	validNodeEnvs(env.NODE_ENV)
@@ -77,9 +78,7 @@ export const config = (env: Environment): Config => {
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
 		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
-		credential_auth: stringToBoolean(
-			developmentDefault("CREDENTIAL_AUTH", "true")
-		)
+		credential_auth: stringToBoolean("CREDENTIAL_AUTH")
 	}
 	return config
 }

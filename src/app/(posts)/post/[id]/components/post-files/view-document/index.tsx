@@ -63,7 +63,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 		return (
 			<>
 				<div className={styles.card}>
-					<div className={styles.fileNameContainer}>
+					<div>
 						<Skeleton width={"100%"} height={36} />
 					</div>
 					<div className={styles.documentContainer}>
