@@ -190,8 +190,6 @@ export const getPostById = async (
 	if (post) {
 		if ("files" in post) {
 			// @ts-expect-error TODO: fix types so files can exist
-			console.log(post.files)
-			// @ts-expect-error TODO: fix types so files can exist
 			post.files = post.files.map((file) => ({
 				...file,
 				content: file.content ? file.content.toString() : undefined,

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
-import type { File } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
 import Card from "@components/card"
@@ -94,7 +93,7 @@ const ListItem = ({
 					</>
 					<hr />
 					<>
-						{post?.files?.map((file: File) => {
+						{post?.files?.map((file: Pick<PostWithFiles, "files">["files"][0]) => {
 							return (
 								<div key={file.id}>
 									<Link colored href={`/post/${post.id}#${file.title}`}>

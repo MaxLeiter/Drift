@@ -20,7 +20,7 @@ export function UserTable({
 			<tbody>
 				{users?.map((user) => (
 					<tr key={user.id}>
-						<td>{user.name ? user.name : "no name"}</td>
+						<td>{user.displayName ? user.displayName : "no name"}</td>
 						<td>{user.email}</td>
 						<td>{user.role}</td>
 						<td className={styles.id}>{user.id}</td>
@@ -62,7 +62,7 @@ export function PostTable({
 								{post.title}
 							</a>
 						</td>
-						<td>{"author" in post ? post.author.name : "no author"}</td>
+						<td>{"author" in post ? post.author?.name : "no author"}</td>
 						<td>{post.createdAt.toLocaleDateString()}</td>
 						<td>{post.visibility}</td>
 						<td>{post.id}</td>
@@ -89,7 +89,7 @@ export default async function AdminPage() {
 	const [users, posts] = await Promise.all([usersPromise, postsPromise])
 
 	return (
-		<div className={styles.wrapper}>
+		<div>
 			<h1>Admin</h1>
 			<h2>Users</h2>
 			<UserTable users={users} />

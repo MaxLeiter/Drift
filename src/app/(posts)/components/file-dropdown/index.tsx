@@ -1,7 +1,7 @@
 import { Popover } from "@components/popover"
 import { codeFileExtensions } from "@lib/constants"
 import clsx from "clsx"
-import type { File } from "lib/server/prisma"
+import type { File, PostWithFiles } from "lib/server/prisma"
 import styles from "./dropdown.module.css"
 import buttonStyles from "@components/button/button.module.css"
 import { ChevronDown, Code, File as FileIcon } from "react-feather"
@@ -15,7 +15,7 @@ const FileDropdown = ({
 	files,
 	loading
 }: {
-	files: File[]
+	files: Pick<PostWithFiles, "files">["files"]
 	loading?: boolean
 }) => {
 	if (loading) {

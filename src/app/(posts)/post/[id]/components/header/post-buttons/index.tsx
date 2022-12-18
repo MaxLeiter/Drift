@@ -5,8 +5,8 @@ import ButtonGroup from "@components/button-group"
 import FileDropdown from "app/(posts)/components/file-dropdown"
 import { Edit, ArrowUpCircle, Archive } from "react-feather"
 import styles from "./post-buttons.module.css"
-import { File } from "@prisma/client"
 import { useRouter } from "next/navigation"
+import { PostWithFiles } from "@lib/server/prisma"
 
 export const PostButtons = ({
 	title,
@@ -16,7 +16,7 @@ export const PostButtons = ({
 	parentId
 }: {
 	title: string
-	files?: File[]
+	files?: Pick<PostWithFiles, "files">["files"]
 	loading?: boolean
 	postId?: string
 	parentId?: string
