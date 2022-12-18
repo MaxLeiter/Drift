@@ -22,15 +22,18 @@ const NewFromExisting = async ({
 	}
 
 	const post = await getPostById(id, {
-		include: {
-			files: true,
-			author: false
-		},
 		select: {
 			authorId: true,
 			title: true,
 			description: true,
 			id: true,
+			files: {
+				select: {
+					title: true,
+					content: true,
+					id: true,
+				}
+			}
 		}
 	})
 

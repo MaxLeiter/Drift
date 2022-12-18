@@ -60,7 +60,7 @@ const Profile = ({ user }: { user: User }) => {
 	return (
 		<>
 			<Note type="warning">
-				This information will be publicly available on your profile
+				This information will be publicly available on your profile.
 			</Note>
 			<form onSubmit={onSubmit} className={styles.form}>
 				<div>

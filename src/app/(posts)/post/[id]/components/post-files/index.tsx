@@ -18,7 +18,6 @@ const PostFiles = ({
 	post: _initialPost,
 	isAuthor: isAuthorFromServer
 }: Props) => {
-	console.log("PostFiles")
 	const { data: session, status } = useSession()
 	const isLoading = status === "loading"
 	const initialPost =
@@ -27,7 +26,6 @@ const PostFiles = ({
 			: _initialPost
 	const [post, setPost] = useState<PostWithFilesAndAuthor>(initialPost)
 	const isProtected = initialPost.visibility === "protected"
-	console.log(_initialPost, post)
 
 	// We generate public and unlisted posts at build time, so we can't use
 	// the session to determine if the user is the author on the server. We need to check
