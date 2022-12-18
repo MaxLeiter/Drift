@@ -5,7 +5,7 @@ export default function Card({
 	className,
 	...props
 }: {
-	children: React.ReactNode
+	children?: React.ReactNode
 	className?: string
 } & React.ComponentProps<"div">) {
 	return (

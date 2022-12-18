@@ -12,21 +12,8 @@ export default async function SettingsPage() {
 	}
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				gap: "var(--gap)",
-				marginBottom: "var(--gap)"
-			}}
-		>
-			<h1>Settings</h1>
-			<SettingsGroup title="Profile">
-				<Profile user={user} />
-			</SettingsGroup>
-			{/* <SettingsGroup title="Password">
-				<Password />
-			</SettingsGroup> */}
-		</div>
+		<SettingsGroup title="Profile">
+			<Profile user={user} />
+		</SettingsGroup>
 	)
 }

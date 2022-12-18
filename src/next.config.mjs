@@ -5,7 +5,8 @@ const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
 		// esmExternals: true,
-		appDir: true
+		appDir: true,
+		serverComponentsExternalPackages: ['prisma'],
 	},
 	output: "standalone",
 	async rewrites() {

@@ -22,8 +22,16 @@ const NewFromExisting = async ({
 	}
 
 	const post = await getPostById(id, {
-		withFiles: true,
-		withAuthor: false
+		include: {
+			files: true,
+			author: false
+		},
+		select: {
+			authorId: true,
+			title: true,
+			description: true,
+			id: true,
+		}
 	})
 
 	const serialized = JSON.stringify(post)

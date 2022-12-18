@@ -10,7 +10,6 @@
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-	margin-top: var(--gap-double);
 	gap: var(--gap);
 }
 

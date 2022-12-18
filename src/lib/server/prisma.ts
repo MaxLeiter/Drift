@@ -138,10 +138,11 @@ export const createUser = async (
 	}
 }
 
-type GetPostByIdOptions = {
-	withFiles: boolean
-	withAuthor: boolean
-}
+// all of prisma.post.findUnique
+type GetPostByIdOptions = Pick<
+	Prisma.PostFindUniqueArgs,
+	"include" | "rejectOnNotFound" | "select"
+>
 
 export const getPostById = async (
 	postId: Post["id"],
@@ -151,17 +152,7 @@ export const getPostById = async (
 		where: {
 			id: postId
 		},
-		include: {
-			files: options?.withFiles,
-			author: options?.withAuthor
-				? {
-						select: {
-							id: true,
-							displayName: true
-						}
-				  }
-				: false
-		}
+		...options
 	})
 
 	return post

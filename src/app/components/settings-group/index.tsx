@@ -1,13 +1,29 @@
-"use client"
 import Card from "@components/card"
 import styles from "./settings-group.module.css"
 
-type Props = {
-	title: string
-	children: React.ReactNode | React.ReactNode[]
-}
+type Props =
+	| {
+			skeleton: true
+			title?: string
+			children?: React.ReactNode
+	  }
+	| {
+			skeleton?: false
+			title: string
+			children: React.ReactNode
+	  }
 
-const SettingsGroup = ({ title, children }: Props) => {
+const SettingsGroup = ({ title, children, skeleton }: Props) => {
+	if (skeleton) {
+		return (
+			<Card
+				style={{
+					height: 365
+				}}
+			/>
+		)
+	}
+
 	return (
 		<Card>
 			<h4>{title}</h4>

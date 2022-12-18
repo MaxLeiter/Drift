@@ -41,7 +41,11 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 		return (
 			<button
 				ref={ref}
-				className={`${styles.button} ${styles[type]} ${className || ""}`}
+				className={clsx(
+					styles.button,
+					type === "primary" || (type === "secondary" && styles[type]),
+					className
+				)}
 				disabled={disabled || loading}
 				onClick={onClick}
 				style={{ height, width, margin, padding }}

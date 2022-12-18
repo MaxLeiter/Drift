@@ -23,8 +23,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 	}
 
 	const post = await getPostById(id, {
-		withFiles: Boolean(files),
-		withAuthor: true
+		include: {
+			files: true,
+			author: true
+		}
 	})
 
 	if (!post) {

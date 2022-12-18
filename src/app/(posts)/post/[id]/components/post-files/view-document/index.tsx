@@ -1,3 +1,5 @@
+"use client"
+
 import { memo } from "react"
 import styles from "./document.module.css"
 import Skeleton from "@components/skeleton"
@@ -10,15 +12,23 @@ import DocumentTabs from "app/(posts)/components/tabs"
 import Input from "@components/input"
 import { Download, ExternalLink } from "react-feather"
 
-// import Link from "next/link"
-type Props = {
-	title: string
-	initialTab?: "edit" | "preview"
-	skeleton?: boolean
-	id: string
-	content: string
-	preview: string
+type SharedProps = {
+	title?: string
+	initialTab: "edit" | "preview"
+	id?: string
+	content?: string
+	preview?: string
 }
+
+type Props = (
+	| {
+			skeleton?: true
+	  }
+	| {
+			skeleton?: false
+	  }
+) &
+	SharedProps
 
 const DownloadButtons = ({ rawLink }: { rawLink?: string }) => {
 	return (
@@ -51,31 +61,28 @@ const DownloadButtons = ({ rawLink }: { rawLink?: string }) => {
 	)
 }
 
-const Document = ({
-	content,
-	preview,
-	title,
-	initialTab = "edit",
-	skeleton,
-	id
-}: Props) => {
+const Document = ({ skeleton, ...props }: Props) => {
 	if (skeleton) {
 		return (
 			<>
 				<div className={styles.card}>
 					<div className={styles.fileNameContainer}>
-						<Skeleton width={275} height={36} />
+						<Skeleton width={'100%'} height={36} />
 					</div>
 					<div className={styles.descriptionContainer}>
-						<div style={{ flexDirection: "row", display: "flex" }}>
-							<Skeleton width={125} height={36} />
-						</div>
-						<Skeleton width={"100%"} height={350} />
+						<Skeleton width={145} height={36} borderRadius={"4px 4px 0 0"} />
+						<Skeleton
+							width={"100%"}
+							height={350}
+							borderRadius={"0 0 4px 4px"}
+						/>
 					</div>
 				</div>
 			</>
 		)
 	}
+
+	const { title, initialTab, id, content, preview } = props
 
 	return (
 		<>

@@ -14,16 +14,27 @@ type Props = {
 	isAuthor?: boolean
 }
 
-const PostPage = ({ post: initialPost, isProtected, isAuthor: isAuthorFromServer }: Props) => {
-	const { data: session } = useSession()
-	const [post, setPost] = useState<PostWithFilesAndAuthor>(
-		typeof initialPost === "string" ? JSON.parse(initialPost) : initialPost
-	)
+const PostFiles = ({
+	post: _initialPost,
+	isAuthor: isAuthorFromServer
+}: Props) => {
+	console.log("PostFiles")
+	const { data: session, status } = useSession()
+	const isLoading = status === "loading"
+	const initialPost =
+		typeof _initialPost === "string"
+			? (JSON.parse(_initialPost) as PostWithFilesAndAuthor)
+			: _initialPost
+	const [post, setPost] = useState<PostWithFilesAndAuthor>(initialPost)
+	const isProtected = initialPost.visibility === "protected"
+	console.log(_initialPost, post)
 
 	// We generate public and unlisted posts at build time, so we can't use
 	// the session to determine if the user is the author on the server. We need to check
 	// the post's authorId against the session's user id.
-	const isAuthor = isAuthorFromServer ? true : session?.user?.id === post?.authorId;
+	const isAuthor = isAuthorFromServer
+		? true
+		: session?.user?.id === post?.authorId
 	const router = useRouter()
 
 	useEffect(() => {
@@ -58,6 +69,15 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor: isAuthorFromServer
 			}
 		}
 	}, [isAuthor, post.expiresAt, router])
+	
+	if (isLoading) {
+		return (
+			<DocumentComponent
+				skeleton={true}
+				initialTab={"preview"}
+			/>
+		)
+	}
 
 	if (isProtected) {
 		return <PasswordModalPage setPost={setPost} postId={post.id} />
@@ -67,6 +87,7 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor: isAuthorFromServer
 		<>
 			{post.files?.map(({ id, content, title, html }: File) => (
 				<DocumentComponent
+					skeleton={false}
 					key={id}
 					title={title}
 					initialTab={"preview"}
@@ -79,4 +100,4 @@ const PostPage = ({ post: initialPost, isProtected, isAuthor: isAuthorFromServer
 	)
 }
 
-export default PostPage
+export default PostFiles

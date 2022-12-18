@@ -11,7 +11,7 @@ import styles from "./profile.module.css"
 const Profile = ({ user }: { user: User }) => {
 	// TODO: make this displayName, requires fetching user from DB as session doesnt have it
 	const [name, setName] = useState<string>(user.name || "")
-	const [bio, setBio] = useState<string>()
+	const [submitting, setSubmitting] = useState<boolean>(false)
 
 	const { setToast } = useToasts()
 
@@ -19,23 +19,19 @@ const Profile = ({ user }: { user: User }) => {
 		setName(e.target.value)
 	}
 
-	const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setBio(e.target.value)
-	}
-
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (!name && !bio) {
+		if (!name) {
 			setToast({
 				message: "Please fill out at least one field",
 				type: "error"
 			})
 			return
 		}
+		setSubmitting(true)
 
 		const data = {
 			displayName: name,
-			bio
 		}
 
 		const res = await fetch(`/api/user/${user.id}`, {
@@ -45,6 +41,8 @@ const Profile = ({ user }: { user: User }) => {
 			},
 			body: JSON.stringify(data)
 		})
+
+		setSubmitting(false)
 
 		if (res.status === 200) {
 			setToast({
@@ -90,7 +88,7 @@ const Profile = ({ user }: { user: User }) => {
 						aria-label="Email"
 					/>
 				</div>
-				<Button type="submit">Submit</Button>
+				<Button type="submit" loading={submitting}>Submit</Button>
 			</form>
 		</>
 	)

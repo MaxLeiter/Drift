@@ -8,7 +8,12 @@ export default async function Head({
 		id: string
 	}
 }) {
-	const post = await getPostById(params.id)
+	const post = await getPostById(params.id, {
+		select: {
+			title: true,
+			description: true
+		}
+	})
 
 	if (!post) {
 		return null

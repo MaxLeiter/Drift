@@ -1,8 +1,5 @@
 .root {
-	padding-bottom: 200px;
-	display: flex;
-	flex-direction: column;
-	gap: var(--gap);
+
 }
 
 @media screen and (max-width: 900px) {

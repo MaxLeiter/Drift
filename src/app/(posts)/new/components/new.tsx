@@ -17,6 +17,7 @@ import Button from "@components/button"
 import Input from "@components/input"
 import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
+import { useSession } from "next-auth/react"
 
 const emptyDoc = {
 	title: "",
@@ -37,6 +38,8 @@ const Post = ({
 	initialPost?: string
 	newPostParent?: string
 }) => {
+	const session = useSession()
+
 	const parsedPost = JSON.parse(stringifiedInitialPost || "{}")
 	const initialPost = parsedPost?.id ? parsedPost : null
 	const { setToast } = useToasts()
@@ -140,6 +143,7 @@ const Post = ({
 						type: "error"
 					})
 					hasErrored = true
+					break
 				}
 			}
 
@@ -181,6 +185,11 @@ const Post = ({
 		},
 		[]
 	)
+
+	if (session.status === "unauthenticated") {
+		router.push("/login")
+		return null
+	}
 
 	const updateDocTitle = (i: number) => (title: string) => {
 		setDocs((docs) =>
@@ -265,7 +274,6 @@ const Post = ({
 			/>
 			<div className={styles.buttons}>
 				<Button
-					className={styles.button}
 					onClick={() => {
 						setDocs([
 							...docs,
