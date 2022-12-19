@@ -37,7 +37,7 @@ const MarkdownPreview = ({
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body,
+				body
 			})
 
 			if (resp.ok) {

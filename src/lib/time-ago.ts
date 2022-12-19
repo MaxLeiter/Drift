@@ -11,7 +11,7 @@ const epochs = [
 ] as const
 
 const getDuration = (timeAgoInSeconds: number) => {
-	for (let [name, seconds] of epochs) {
+	for (const [name, seconds] of epochs) {
 		const interval = Math.floor(timeAgoInSeconds / seconds)
 
 		if (interval >= 1) {

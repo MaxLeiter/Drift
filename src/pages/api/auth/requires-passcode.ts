@@ -28,6 +28,8 @@ export default async function requiresPasscode(
 			if (slug === "requires-passcode") {
 				return handleRequiresPasscode(req, res)
 			}
+
+			return res.status(404).json({ error: "Not found" })
 		default:
 			return res.status(405).json({ error: "Method not allowed" })
 	}

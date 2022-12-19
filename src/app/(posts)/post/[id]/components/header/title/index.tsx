@@ -26,9 +26,11 @@ export const PostTitle = ({
 }: TitleProps) => {
 	return (
 		<span className={styles.title}>
-			<h1 style={{
-				fontSize: "1.175rem"
-			}}>
+			<h1
+				style={{
+					fontSize: "1.175rem"
+				}}
+			>
 				{title}{" "}
 				<span style={{ color: "var(--gray)" }}>
 					by{" "}

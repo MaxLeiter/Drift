@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		let posts: ServerPostWithFiles[]
 		if (session?.user.id === user || session?.user.role === "admin") {
 			posts = await searchPosts(query, {
-				userId: user,
+				userId: user
 			})
 		} else {
 			posts = await searchPosts(query, {

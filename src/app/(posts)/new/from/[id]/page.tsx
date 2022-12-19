@@ -31,7 +31,7 @@ const NewFromExisting = async ({
 				select: {
 					title: true,
 					content: true,
-					id: true,
+					id: true
 				}
 			}
 		}

@@ -45,13 +45,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (req.method) {
 		case "GET":
 			switch (action) {
-				case "users":
+				case "users": {
 					const users = await prisma.user.findMany()
 					return res.status(200).json(users)
-				case "posts":
+				}
+				case "posts": {
 					const posts = await prisma.post.findMany()
 					return res.status(200).json(posts)
-				case "user":
+				}
+				case "user": {
 					const { id: userId } = req.query
 					const user = await prisma.user.findUnique({
 						where: {
@@ -59,7 +61,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						}
 					})
 					return res.status(200).json(user)
-				case "post":
+				}
+				case "post": {
 					const { id: postId } = req.query
 					const post = await prisma.post.findUnique({
 						where: {
@@ -67,11 +70,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 						}
 					})
 					return res.status(200).json(post)
+				}
 			}
 			break
 		case "PATCH":
 			switch (action) {
-				case "set-role":
+				case "set-role": {
 					const { userId, role } = req.body
 					if (!userId || !role || role !== "admin" || role !== "user") {
 						return res.status(400).json({ error: "Invalid request" })
@@ -85,11 +89,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					})
 
 					return res.status(200).json(user)
+				}
 			}
 			break
 		case "DELETE":
 			switch (action) {
-				case "delete-user":
+				case "delete-user": {
 					const { userId } = req.body
 					if (!userId) {
 						return res.status(400).json({ error: "Invalid request" })
@@ -98,7 +103,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					await deleteUser(userId)
 
 					return res.status(200).send("User deleted")
-				case "delete-post":
+				}
+				case "delete-post": {
 					const { postId } = req.body
 					if (!postId) {
 						return res.status(400).json({ error: "Invalid request" })
@@ -109,6 +115,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 					})
 
 					return res.status(200).json(post)
+				}
 			}
 			break
 	}

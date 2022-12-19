@@ -60,12 +60,10 @@ const Header = () => {
 			)
 		} else if (tab.href) {
 			return (
-				<Link
-					key={tab.value}
-					href={tab.href}
-					data-tab={tab.value}
-				>
-					<Button className={activeStyle} iconLeft={tab.icon}>{tab.name ? tab.name : undefined}</Button>
+				<Link key={tab.value} href={tab.href} data-tab={tab.value}>
+					<Button className={activeStyle} iconLeft={tab.icon}>
+						{tab.name ? tab.name : undefined}
+					</Button>
 				</Link>
 			)
 		}

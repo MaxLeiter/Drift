@@ -129,7 +129,6 @@ const ListItem = ({
 									<li key={file.id}>
 										<Link colored href={`/post/${post.id}#${file.title}`}>
 											{getIconFromFilename(file.title)}
-
 											{file.title || "Untitled file"}
 										</Link>
 									</li>

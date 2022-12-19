@@ -57,8 +57,8 @@ const Auth = ({
 		} else {
 			console.log("res", res)
 			startTransition(() => {
-					router.push("/new")
-					router.refresh()	
+				router.push("/new")
+				router.refresh()
 			})
 		}
 	}

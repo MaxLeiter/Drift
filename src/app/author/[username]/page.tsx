@@ -1,6 +1,8 @@
 import PostList from "@components/post-list"
 import { getPostsByUser, getUserById } from "@lib/server/prisma"
+import Image from "next/image"
 import { Suspense } from "react"
+import { User } from "react-feather"
 
 async function PostListWrapper({
 	posts,
@@ -28,15 +30,40 @@ export default async function UserPage({
 }) {
 	// TODO: the route should be user.name, not id
 	const id = params.username
-	const user = await getUserById(id)
+	const user = await getUserById(id, {
+		image: true
+	})
 
 	const posts = getPostsByUser(id, true)
 
+	const Avatar = () => {
+		if (!user?.image) {
+			return <User />
+		}
+		return (
+			<Image
+				src={user.image}
+				alt="User avatar"
+				className="w-12 h-12 rounded-full"
+				width={48}
+				height={48}
+			/>
+		)
+	}
 	return (
 		<>
-			<h1>Public posts by {user?.displayName || "Anonymous"}</h1>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between"
+				}}
+			>
+				<h1>Public posts by {user?.displayName || "Anonymous"}</h1>
+				<Avatar />
+			</div>
 			<Suspense fallback={<PostList initialPosts={JSON.stringify({})} />}>
-				{/* @ts-ignore because TS async JSX support is iffy */}
+				{/* @ts-expect-error because TS async JSX support is iffy */}
 				<PostListWrapper posts={posts} userId={id} />
 			</Suspense>
 		</>

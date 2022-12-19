@@ -1,7 +1,6 @@
 "use client"
 
 import Button from "@components/button"
-import ButtonDropdown from "@components/button-dropdown"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
 import { Post, User } from "@lib/server/prisma"
@@ -19,7 +18,6 @@ export function UserTable({
 		email: string | null
 		role: string | null
 		displayName: string | null
-
 	}[]
 }) {
 	const { setToast } = useToasts()

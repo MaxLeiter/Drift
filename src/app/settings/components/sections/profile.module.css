@@ -5,3 +5,43 @@
     max-width: 300px;
     margin-top: var(--gap);
 }
+
+/* <div className={styles.upload}>
+<input
+    type="file"
+    disabled={imageViaOauth}
+    className={styles.uploadInput}
+/>
+<Button type="button" disabled={imageViaOauth} width="100%" className={styles.uploadButton}>
+    Upload
+</Button>
+</div> */
+/* we want the file input to be invisible and full width but still interactive button */
+.upload {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    max-width: 300px;
+    margin-top: var(--gap);
+    cursor: pointer;
+}
+
+.uploadInput {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 300px;
+    height: 37px;
+    cursor: pointer;
+}
+
+.uploadButton {
+    width: 100%;
+}
+
+/* hover should affect button */
+.uploadInput:hover + button {
+    border: 1px solid var(--fg);
+    
+}

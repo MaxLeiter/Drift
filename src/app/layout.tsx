@@ -4,9 +4,9 @@ import { Providers } from "./providers"
 import Page from "@components/page"
 import { Toasts } from "@components/toasts"
 import Header from "@components/header"
-import { Inter } from '@next/font/google';
+import { Inter } from "@next/font/google"
 
-const inter = Inter({ subsets: ['latin'], variable: "--inter-font" })
+const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
 interface RootLayoutProps {
 	children: React.ReactNode

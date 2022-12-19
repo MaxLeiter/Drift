@@ -1,16 +1,12 @@
-// nextjs typescript api handler
-
 import { withMethods } from "@lib/api-middleware/with-methods"
 
 import { authOptions } from "@lib/server/auth"
-import { prisma, getPostById } from "@lib/server/prisma"
+import { prisma } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 import { unstable_getServerSession } from "next-auth/next"
 import { File } from "@lib/server/prisma"
 import * as crypto from "crypto"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
-import { getSession } from "next-auth/react"
-import { parseQueryParam } from "@lib/server/parse-query-param"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	return await handlePost(req, res)
@@ -18,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default withMethods(["POST"], handler)
 
-async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
+async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	try {
 		const session = await unstable_getServerSession(req, res, authOptions)
 		if (!session || !session.user.id) {
@@ -49,7 +45,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<any>) {
 			throw new Error("You must submit at least one file")
 		}
 
-		let hashedPassword: string = ""
+		let hashedPassword = ""
 		if (req.body.visibility === "protected") {
 			hashedPassword = crypto
 				.createHash("sha256")

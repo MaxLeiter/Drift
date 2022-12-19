@@ -33,3 +33,9 @@
 	gap: var(--gap-half);
 	margin-bottom: var(--gap);
 }
+
+@media (max-width: 768px) {
+	.container ul {
+		padding: 0 var(--gap);
+	}
+}

@@ -5,10 +5,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@lib/server/prisma"
 import config from "@lib/config"
 import * as crypto from "crypto"
-import { Provider } from "next-auth/providers"
 
 const credentialsOptions = () => {
-	const options: Record<string, any> = {
+	const options: Record<string, unknown> = {
 		username: {
 			label: "Username",
 			required: true,
@@ -47,7 +46,8 @@ const providers = () => {
 		providers.push(
 			CredentialsProvider({
 				name: "Drift",
-				credentials: credentialsOptions(),
+				// @ts-expect-error TODO: fix types
+				credentials: credentialsOptions() as unknown,
 				async authorize(credentials) {
 					if (!credentials || !credentials.username || !credentials.password) {
 						throw new Error("Missing credentials")

@@ -1,9 +1,10 @@
 declare global {
+	// eslint-disable-next-line no-var
 	var prisma: PrismaClient | undefined
 }
 
 import config from "@lib/config"
-import { Post, PrismaClient, File, User, Prisma } from "@prisma/client"
+import { Post, PrismaClient, User, Prisma } from "@prisma/client"
 export type { User, File, Post } from "@prisma/client"
 
 export const prisma =
@@ -126,7 +127,7 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 					select: {
 						id: true,
 						title: true,
-						createdAt: true,
+						createdAt: true
 					}
 				}
 			})
@@ -136,7 +137,10 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 	return posts
 }
 
-export const getUserById = async (userId: User["id"]) => {
+export const getUserById = async (
+	userId: User["id"],
+	selects?: Prisma.UserFindUniqueArgs["select"]
+) => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId
@@ -146,7 +150,8 @@ export const getUserById = async (userId: User["id"]) => {
 			email: true,
 			// displayName: true,
 			role: true,
-			displayName: true
+			displayName: true,
+			...selects
 		}
 	})
 
@@ -199,7 +204,7 @@ export const getPostById = async (
 	postId: Post["id"],
 	options?: GetPostByIdOptions
 ): Promise<Post | PostWithFiles | PostWithFilesAndAuthor | null> => {
-	let post = await prisma.post.findUnique({
+	const post = await prisma.post.findUnique({
 		where: {
 			id: postId
 		},

@@ -5,4 +5,4 @@ const New = () => <NewPost />
 
 export default New
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static"

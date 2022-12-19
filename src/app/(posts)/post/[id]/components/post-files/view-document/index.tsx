@@ -1,15 +1,14 @@
 "use client"
 
-import { memo, useEffect } from "react"
-import styles from "./document.module.css"
-import Skeleton from "@components/skeleton"
-import Link from "next/link"
-
-import Tooltip from "@components/tooltip"
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
+import Skeleton from "@components/skeleton"
+import Tooltip from "@components/tooltip"
 import DocumentTabs from "app/(posts)/components/tabs"
+import Link from "next/link"
+import { memo } from "react"
 import { Download, ExternalLink } from "react-feather"
+import styles from "./document.module.css"
 
 type SharedProps = {
 	title?: string
@@ -22,9 +21,11 @@ type SharedProps = {
 type Props = (
 	| {
 			skeleton?: true
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
 	  }
 	| {
 			skeleton?: false
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
 	  }
 ) &
 	SharedProps

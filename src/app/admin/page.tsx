@@ -1,4 +1,3 @@
-import { Spinner } from "@components/spinner"
 import { getAllPosts, getAllUsers } from "@lib/server/prisma"
 import { PostTable, UserTable } from "./components/tables"
 

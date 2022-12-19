@@ -1,6 +1,6 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { getPostById, PostWithFiles } from "@lib/server/prisma"
+import { getPostById } from "@lib/server/prisma"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import { prisma } from "lib/server/prisma"
@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default withMethods(["GET", "PUT", "DELETE"], handler)
 
-async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
+async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	const id = parseQueryParam(req.query.id)
 
 	if (!id) {
@@ -44,7 +44,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 	// the user can always go directly to their own post
 	if (session?.user.id === post.authorId) {
 		return res.json({
-			...post,
+			...post
 		})
 	}
 
@@ -58,7 +58,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 
 		if (hash === post.password) {
 			return res.json({
-				...post,
+				...post
 			})
 		} else {
 			return {
@@ -76,7 +76,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<any>) {
 }
 
 // PUT is for adjusting visibility and password
-async function handlePut(req: NextApiRequest, res: NextApiResponse<any>) {
+async function handlePut(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	const { password, visibility } = req.body
 	const id = parseQueryParam(req.query.id)
 
@@ -124,7 +124,10 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse<any>) {
 	})
 }
 
-async function handleDelete(req: NextApiRequest, res: NextApiResponse<any>) {
+async function handleDelete(
+	req: NextApiRequest,
+	res: NextApiResponse<unknown>
+) {
 	const id = parseQueryParam(req.query.id)
 
 	if (!id) {

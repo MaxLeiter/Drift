@@ -6,6 +6,6 @@ export interface GistFile {
 export interface Gist {
 	id: string
 	created_at: Date
-	description: String
+	description: string
 	files: GistFile[]
 }

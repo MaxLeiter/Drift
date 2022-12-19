@@ -4,13 +4,13 @@ import Button from "@components/button"
 import Input from "@components/input"
 import Note from "@components/note"
 import { useToasts } from "@components/toasts"
-import { User } from "next-auth"
+import { useSession } from "next-auth/react"
 import { useState } from "react"
 import styles from "./profile.module.css"
 
-const Profile = ({ user }: { user: User }) => {
-	// TODO: make this displayName, requires fetching user from DB as session doesnt have it
-	const [name, setName] = useState<string>(user.name || "")
+const Profile = () => {
+	const { data: session } = useSession()
+	const [name, setName] = useState<string>(session?.user.displayName || "")
 	const [submitting, setSubmitting] = useState<boolean>(false)
 
 	const { setToast } = useToasts()
@@ -31,10 +31,10 @@ const Profile = ({ user }: { user: User }) => {
 		setSubmitting(true)
 
 		const data = {
-			displayName: name,
+			displayName: name
 		}
 
-		const res = await fetch(`/api/user/${user.id}`, {
+		const res = await fetch(`/api/user/${session?.user.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -56,6 +56,18 @@ const Profile = ({ user }: { user: User }) => {
 			})
 		}
 	}
+
+	/* if we have their email, they signed in with OAuth */
+	// const imageViaOauth = Boolean(session?.user.email)
+
+	// const TooltipComponent = ({ children }: { children: React.ReactNode }) =>
+	// 	imageViaOauth ? (
+	// 		<Tooltip content="Change your profile image on your OAuth provider">
+	// 			{children}
+	// 		</Tooltip>
+	// 	) : (
+	// 		<>{children}</>
+	// 	)
 
 	return (
 		<>
@@ -83,12 +95,49 @@ const Profile = ({ user }: { user: User }) => {
 						type="email"
 						width={"100%"}
 						placeholder="my@email.io"
-						value={user.email || undefined}
+						value={session?.user.email || undefined}
 						disabled
 						aria-label="Email"
 					/>
 				</div>
-				<Button type="submit" loading={submitting}>Submit</Button>
+				{/* <div>
+					<label htmlFor="image">User Avatar</label>
+					{user.image ? (
+						<Input
+							id="image"
+							type="file"
+							width={"100%"}
+							placeholder="my image"
+							disabled
+							aria-label="Image"
+							src={user.image}
+						/>
+					) : (
+						<UserIcon />
+					)}
+					<TooltipComponent>
+						<div className={styles.upload}>
+							<input
+								type="file"
+								disabled={imageViaOauth}
+								className={styles.uploadInput}
+							/>
+							<Button
+								type="button"
+								disabled={imageViaOauth}
+								width="100%"
+								className={styles.uploadButton}
+								aria-hidden="true"
+							>
+								Upload
+							</Button>
+						</div>
+					</TooltipComponent>
+				</div> */}
+
+				<Button type="submit" loading={submitting}>
+					Submit
+				</Button>
 			</form>
 		</>
 	)

@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	switch (req.method) {
-		case "PUT":
+		case "PUT": {
 			const { displayName } = req.body
 			const updatedUser = await prisma.user.update({
 				where: {
@@ -40,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				name: updatedUser.displayName
 				// bio: updatedUser.bio
 			})
+		}
 		case "GET":
 			return res.json(currUser)
 		case "DELETE":
@@ -48,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			}
 
 			await deleteUser(id)
-
+			break
 		default:
 			return res.status(405).json({ message: "Method not allowed" })
 	}
@@ -61,7 +62,6 @@ export default withMethods(["GET", "PUT", "DELETE"], handler)
  * @warning This function does not perform any authorization checks
  */
 export async function deleteUser(id: string | undefined) {
-
 	// first delete all of the user's posts
 	await prisma.post.deleteMany({
 		where: {

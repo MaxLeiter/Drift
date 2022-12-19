@@ -55,6 +55,7 @@ const Post = ({
 				title: doc.title,
 				content: doc.content,
 				id: doc.id
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
 		  }))
 		: [emptyDoc]
 
@@ -300,7 +301,7 @@ const Post = ({
 						placeholderText="Won't expire"
 						selected={expiresAt}
 						showTimeInput={true}
-						// @ts-ignore
+						// @ts-expect-error fix time input type
 						customTimeInput={<CustomTimeInput />}
 						timeInputLabel="Time:"
 						dateFormat="MM/dd/yyyy h:mm aa"

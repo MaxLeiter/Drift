@@ -27,7 +27,7 @@ const getPost = async (id: string) => {
 						content: true,
 						updatedAt: true,
 						title: true,
-                        html: true,
+						html: true
 					}
 				}
 			}

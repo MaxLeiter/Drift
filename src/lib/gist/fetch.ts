@@ -22,7 +22,7 @@ interface File {
 export interface GistResponse {
 	id: string
 	created_at: Timestamp
-	description: String
+	description: string
 	files: {
 		[key: string]: File
 	}

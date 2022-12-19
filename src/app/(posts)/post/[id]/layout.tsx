@@ -1,9 +1,5 @@
 import { notFound, redirect } from "next/navigation"
-import {
-	getPostById,
-	Post,
-	PostWithFilesAndAuthor
-} from "@lib/server/prisma"
+import { getPostById, Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import { getCurrentUser } from "@lib/server/session"
 import ScrollToTop from "@components/scroll-to-top"
 import { title } from "process"

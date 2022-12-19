@@ -35,13 +35,13 @@ export const config = (env: Environment): Config => {
 		return value
 	}
 
-	const defaultIfUndefined = (str: string, defaultValue: string): string => {
-		const value = env[str]
-		if (value === undefined) {
-			return defaultValue
-		}
-		return value
-	}
+	// const defaultIfUndefined = (str: string, defaultValue: string): string => {
+	// 	const value = env[str]
+	// 	if (value === undefined) {
+	// 		return defaultValue
+	// 	}
+	// 	return value
+	// }
 
 	const validNodeEnvs = (str: EnvironmentValue) => {
 		const valid = ["development", "production", "test"]
@@ -55,14 +55,6 @@ export const config = (env: Environment): Config => {
 	}
 
 	const is_production = env.NODE_ENV === "production"
-
-	const developmentDefault = (name: string, defaultValue: string): string => {
-		if (is_production) {
-			return throwIfUndefined(name)
-		} else {
-			return defaultIfUndefined(name, defaultValue)
-		}
-	}
 
 	validNodeEnvs(env.NODE_ENV)
 

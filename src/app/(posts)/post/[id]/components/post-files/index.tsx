@@ -77,11 +77,13 @@ const PostFiles = ({
 	}
 
 	return (
-		<main style={{
-			display: "flex",
-			flexDirection: "column",
-			gap: "var(--gap-double)"
-		}}>
+		<main
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: "var(--gap-double)"
+			}}
+		>
 			{post.files?.map(({ id, content, title, html }) => (
 				<DocumentComponent
 					skeleton={false}

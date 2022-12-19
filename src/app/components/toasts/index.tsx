@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Toast, { Toaster } from "react-hot-toast"
 
 export type ToastType = "success" | "error" | "loading" | "default"
