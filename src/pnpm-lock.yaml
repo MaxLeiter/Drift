@@ -4,6 +4,7 @@ specifiers:
   '@next-auth/prisma-adapter': ^1.0.5
   '@next/bundle-analyzer': 13.0.7-canary.4
   '@next/eslint-plugin-next': 13.0.7-canary.4
+  '@next/font': 13.0.8-canary.0
   '@prisma/client': ^4.7.1
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-dropdown-menu': ^2.0.1
@@ -50,6 +51,7 @@ specifiers:
 dependencies:
   '@next-auth/prisma-adapter': 1.0.5_64qbzg5ec56bux2misz3l4u6g4
   '@next/eslint-plugin-next': 13.0.7-canary.4
+  '@next/font': 13.0.8-canary.0
   '@prisma/client': 4.7.1_prisma@4.7.1
   '@radix-ui/react-dialog': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@radix-ui/react-dropdown-menu': 2.0.1_jbvntnid6ohjelon6ccj5dhg2u
@@ -810,6 +812,10 @@ packages:
     resolution: {integrity: sha512-jNgarJTQSia+yTcQr6dF9wZhCfCFIXbc0WzSIAfyx4Z8FZjfmTmeVDGL1JHSYlcSmTnJ6o6Z36MsFh/mreuE4g==}
     dependencies:
       glob: 7.1.7
+    dev: false
+
+  /@next/font/13.0.8-canary.0:
+    resolution: {integrity: sha512-sdi4WoYMbJdiDev9UICg9dMhhA7I2xaJT07e8DZoSDWWTZaKk5zKNKuQFQoP47461R1WZAIQwIYTq+pVxQ87Gw==}
     dev: false
 
   /@next/swc-android-arm-eabi/13.0.8-canary.0:

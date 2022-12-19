@@ -15,6 +15,7 @@
 	"dependencies": {
 		"@next-auth/prisma-adapter": "^1.0.5",
 		"@next/eslint-plugin-next": "13.0.7-canary.4",
+		"@next/font": "13.0.8-canary.0",
 		"@prisma/client": "^4.7.1",
 		"@radix-ui/react-dialog": "^1.0.2",
 		"@radix-ui/react-dropdown-menu": "^2.0.1",

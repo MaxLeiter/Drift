@@ -5,6 +5,7 @@ import ButtonDropdown from "@components/button-dropdown"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
 import { Post, User } from "@lib/server/prisma"
+import Link from "next/link"
 import { useState } from "react"
 import styles from "./table.module.css"
 
@@ -122,9 +123,9 @@ export function PostTable({
 				{posts?.map((post) => (
 					<tr key={post.id}>
 						<td>
-							<a href={`/post/${post.id}`} target="_blank" rel="noreferrer">
+							<Link href={`/post/${post.id}`} target="_blank" rel="noreferrer">
 								{post.title}
-							</a>
+							</Link>
 						</td>
 						<td>{"author" in post ? post.author?.name : "no author"}</td>
 						<td>{new Date(post.createdAt).toLocaleDateString()}</td>

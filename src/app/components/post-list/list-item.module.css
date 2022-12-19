@@ -34,3 +34,31 @@
 		margin: 0;
 	}
 }
+
+.files {
+	padding: var(--gap) 0 !important;
+	margin: 0;
+}
+
+.files li {
+	display: flex;
+	align-items: center;
+	gap: var(--gap);
+}
+
+.files li a {
+	display: flex;
+	align-items: center;
+	gap: var(--gap);
+	color: var(--darker-gray);
+}
+
+.files li a:hover {
+	color: var(--link);
+	text-decoration: none;
+}
+
+.files li a svg {
+	color: inherit;
+}
+

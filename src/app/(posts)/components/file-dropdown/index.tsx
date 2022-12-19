@@ -6,6 +6,7 @@ import styles from "./dropdown.module.css"
 import buttonStyles from "@components/button/button.module.css"
 import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
+import Link from "next/link"
 
 type Item = File & {
 	icon: JSX.Element
@@ -51,12 +52,12 @@ const FileDropdown = ({
 		<ul className={styles.content}>
 			{items.map((item) => (
 				<li key={item.id}>
-					<a href={`#${item.title}`} className={styles.listItem}>
+					<Link href={`#${item.title}`} className={styles.listItem}>
 						<span className={styles.fileIcon}>{item.icon}</span>
 						<span className={styles.fileTitle}>
 							{item.title ? item.title : "Untitled"}
 						</span>
-					</a>
+					</Link>
 				</li>
 			))}
 		</ul>

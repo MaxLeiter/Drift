@@ -1,5 +1,7 @@
 .markdownPreview {
 	padding: var(--gap-quarter);
+	font-size: 18px;
+	line-height: 1.75;
 }
 
 .markdownPreview p {

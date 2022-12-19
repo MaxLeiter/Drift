@@ -1,6 +1,6 @@
 "use client"
 
-import { memo } from "react"
+import { memo, useEffect } from "react"
 import styles from "./document.module.css"
 import Skeleton from "@components/skeleton"
 import Link from "next/link"
@@ -81,10 +81,22 @@ const Document = ({ skeleton, ...props }: Props) => {
 
 	const { title, initialTab, id, content, preview } = props
 
+	// if the query has our title, we can use it to scroll to the file.
+	// we can't use the browsers implementation because the data isn't loaded yet
+	if (title) {
+		const hash = window.location.hash
+		if (hash && hash === `#${title}`) {
+			const element = document.getElementById(title)
+			if (element) {
+				element.scrollIntoView()
+			}
+		}
+	}
+
 	return (
 		<>
 			<div className={styles.card}>
-				<header>
+				<header id={title}>
 					<Link
 						href={`#${title}`}
 						aria-label="File"

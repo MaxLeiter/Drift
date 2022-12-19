@@ -10,7 +10,16 @@ import Tooltip from "@components/tooltip"
 import Badge from "@components/badges/badge"
 import Card from "@components/card"
 import Button from "@components/button"
-import { ArrowUpCircle, Edit, Trash } from "react-feather"
+import {
+	ArrowUpCircle,
+	Code,
+	Database,
+	Edit,
+	FileText,
+	Terminal,
+	Trash
+} from "react-feather"
+import { codeFileExtensions } from "@lib/constants"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -30,6 +39,28 @@ const ListItem = ({
 
 	const viewParentClick = () => {
 		router.push(`/post/${post.parentId}`)
+	}
+
+	const getIconFromFilename = (filename: string) => {
+		const extension = filename.split(".").pop()
+		switch (extension) {
+			case "sql":
+				return <Database />
+			case "sh":
+			case "fish":
+			case "bash":
+			case "zsh":
+			case ".zshrc":
+			case ".bashrc":
+			case ".bash_profile":
+				return <Terminal />
+			default:
+				if (codeFileExtensions.includes(extension || "")) {
+					return <Code />
+				} else {
+					return <FileText />
+				}
+		}
 	}
 
 	return (
@@ -91,18 +122,21 @@ const ListItem = ({
 							<ExpirationBadge postExpirationDate={post.expiresAt} />
 						</div>
 					</>
-					<hr />
-					<>
-						{post?.files?.map((file: Pick<PostWithFiles, "files">["files"][0]) => {
-							return (
-								<div key={file.id}>
-									<Link colored href={`/post/${post.id}#${file.title}`}>
-										{file.title || "Untitled file"}
-									</Link>
-								</div>
-							)
-						})}
-					</>
+					<ul className={styles.files}>
+						{post?.files?.map(
+							(file: Pick<PostWithFiles, "files">["files"][0]) => {
+								return (
+									<li key={file.id}>
+										<Link colored href={`/post/${post.id}#${file.title}`}>
+											{getIconFromFilename(file.title)}
+
+											{file.title || "Untitled file"}
+										</Link>
+									</li>
+								)
+							}
+						)}
+					</ul>
 				</Card>
 			</li>
 		</FadeIn>

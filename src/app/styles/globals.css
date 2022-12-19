@@ -16,7 +16,7 @@
 	--gap-quarter-negative: calc(-1 * var(--gap-quarter));
 
 	/* Typography */
-	--font-sans: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+	--font-sans: var(--inter-font), -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
 		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	--font-mono: ui-monospace, "SFMono-Regular", "Consolas", "Liberation Mono",
 		"Menlo", monospace;
