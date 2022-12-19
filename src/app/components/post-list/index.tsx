@@ -31,32 +31,33 @@ const PostList = ({
 	const [search, setSearchValue] = useState("")
 	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
 	const [searching, setSearching] = useState(false)
-	const [hasMorePosts, setHasMorePosts] = useState(morePosts)
+	const [hasMorePosts] = useState(morePosts)
 	const { setToast } = useToasts()
 
 	const loadMoreClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			e.preventDefault()
 			if (hasMorePosts) {
+				// eslint-disable-next-line no-inner-declarations
 				async function fetchPosts() {
-					const res = await fetch(`/server-api/posts/mine`, {
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-							"x-page": `${posts.length / 10 + 1}`
-						},
-						next: {
-							revalidate: 10
-						}
-					})
-					const json = await res.json()
-					setPosts([...posts, ...json.posts])
-					setHasMorePosts(json.morePosts)
+					// const res = await fetch(`/api/posts/mine`, {
+					// 	method: "GET",
+					// 	headers: {
+					// 		"Content-Type": "application/json",
+					// 		"x-page": `${posts.length / 10 + 1}`
+					// 	},
+					// 	next: {
+					// 		revalidate: 10
+					// 	}
+					// })
+					// const json = await res.json()
+					// setPosts([...posts, ...json.posts])
+					// setHasMorePosts(json.morePosts)
 				}
 				fetchPosts()
 			}
 		},
-		[posts, hasMorePosts]
+		[hasMorePosts]
 	)
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps -- TODO: address this
