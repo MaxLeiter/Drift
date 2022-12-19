@@ -127,8 +127,11 @@ const ListItem = ({
 							(file: Pick<PostWithFiles, "files">["files"][0]) => {
 								return (
 									<li key={file.id}>
-										<Link colored href={`/post/${post.id}#${file.title}`}>
-											{getIconFromFilename(file.title)}
+										<Link colored href={`/post/${post.id}#${file.title}`} style={{
+											display: "flex",
+											alignItems: "center"
+										}}>
+``											{getIconFromFilename(file.title)}
 											{file.title || "Untitled file"}
 										</Link>
 									</li>
