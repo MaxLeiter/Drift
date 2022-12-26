@@ -46,15 +46,11 @@
 	}
 }
 
-.files {
-	padding: var(--gap) 0 !important;
-	margin: 0;
-}
-
 .files li {
 	display: flex;
 	align-items: center;
 	gap: var(--gap);
+	padding: var(--gap-quarter);
 }
 
 .files li a {

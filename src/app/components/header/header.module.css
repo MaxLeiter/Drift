@@ -53,9 +53,8 @@
 	align-items: center;
 }
 
-.active,
-.active {
-	color: var(--fg) !important;
+.tabs .active {
+	color: var(--fg);
 }
 
 .buttonGroup,

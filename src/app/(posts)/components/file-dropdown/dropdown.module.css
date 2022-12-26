@@ -47,10 +47,6 @@
 	
 }
 
-.button {
-	border-radius: none !important;
-}
-
 .content li .fileIcon {
 	display: inline-block;
 	margin-right: var(--gap-half);

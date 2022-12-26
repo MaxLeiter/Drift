@@ -80,8 +80,8 @@
 
 ::selection {
 	text-shadow: none;
-	background: var(--fg) !important;
-	color: var(--bg) !important;
+	background: var(--fg);
+	color: var(--bg);
 }
 
 html,
@@ -129,7 +129,7 @@ a.reset {
 
 pre,
 code {
-	font-family: var(--font-mono) !important;
+	font-family: var(--font-mono);
 }
 
 hr {
@@ -156,10 +156,6 @@ hr {
 		--keyword: #000;
 		--name: #333;
 		--highlight: #eaeaea;
-	}
-
-	* {
-		text-shadow: none !important;
 	}
 }
 
