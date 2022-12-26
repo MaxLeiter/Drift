@@ -6,7 +6,7 @@ const nextConfig = {
 	experimental: {
 		// esmExternals: true,
 		appDir: true,
-		serverComponentsExternalPackages: ["prisma", "@prisma/client"],
+		serverComponentsExternalPackages: ["prisma", "@prisma/client"]
 	},
 	output: "standalone",
 	rewrites() {
@@ -20,6 +20,9 @@ const nextConfig = {
 				destination: "/"
 			}
 		]
+	},
+	images: {
+		domains: ["avatars.githubusercontent.com"]
 	}
 }
 

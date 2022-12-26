@@ -3,6 +3,12 @@
 	justify-content: space-between;
 }
 
+.titleText {
+	display: flex;
+	gap: var(--gap-half);
+	align-items: center;
+}
+
 .badges {
 	display: flex;
 	gap: var(--gap-half);
@@ -32,6 +38,11 @@
 
 	.title h3 {
 		margin: 0;
+	}
+
+	.titleText {
+		flex-direction: column;
+		align-items: flex-start;
 	}
 }
 

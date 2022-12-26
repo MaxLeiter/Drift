@@ -24,12 +24,14 @@ import { codeFileExtensions } from "@lib/constants"
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
 	post,
-	isOwner = true,
-	deletePost
+	isOwner,
+	deletePost,
+	hideActions
 }: {
 	post: PostWithFiles
 	isOwner?: boolean
 	deletePost: () => void
+	hideActions?: boolean
 }) => {
 	const router = useRouter()
 
@@ -69,33 +71,45 @@ const ListItem = ({
 				<Card style={{ overflowY: "scroll" }}>
 					<>
 						<div className={styles.title}>
-							<h3 style={{ display: "inline-block", margin: 0 }}>
-								<Link
-									colored
-									style={{ marginRight: "var(--gap)" }}
-									href={`/post/${post.id}`}
-								>
-									{post.title}
-								</Link>
-							</h3>
-							{isOwner && (
-								<span className={styles.buttons}>
-									{post.parentId && (
-										<Tooltip content={"View parent"}>
-											<Button
-												iconRight={<ArrowUpCircle />}
-												onClick={viewParentClick}
-												height={38}
-											/>
-										</Tooltip>
-									)}
-									<Tooltip content={"Make a copy"}>
+							<span className={styles.titleText}>
+								<h3 style={{ display: "inline-block", margin: 0 }}>
+									<Link
+										colored
+										style={{ marginRight: "var(--gap)" }}
+										href={`/post/${post.id}`}
+									>
+										{post.title}
+									</Link>
+								</h3>
+								<div className={styles.badges}>
+									<VisibilityBadge visibility={post.visibility} />
+									<Badge type="secondary">
+										{post.files?.length === 1
+											? "1 file"
+											: `${post.files?.length || 0} files`}
+									</Badge>
+									<CreatedAgoBadge createdAt={post.createdAt} />
+									<ExpirationBadge postExpirationDate={post.expiresAt} />
+								</div>
+							</span>
+							{!hideActions ? <span className={styles.buttons}>
+								{post.parentId && (
+									<Tooltip content={"View parent"}>
 										<Button
-											iconRight={<Edit />}
-											onClick={editACopy}
+											iconRight={<ArrowUpCircle />}
+											onClick={viewParentClick}
 											height={38}
 										/>
 									</Tooltip>
+								)}
+								<Tooltip content={"Make a copy"}>
+									<Button
+										iconRight={<Edit />}
+										onClick={editACopy}
+										height={38}
+									/>
+								</Tooltip>
+								{isOwner && (
 									<Tooltip content={"Delete"}>
 										<Button
 											iconRight={<Trash />}
@@ -103,35 +117,28 @@ const ListItem = ({
 											height={38}
 										/>
 									</Tooltip>
-								</span>
-							)}
+								)}
+							</span> : null}
 						</div>
 
 						{post.description && (
 							<p className={styles.oneline}>{post.description}</p>
 						)}
-
-						<div className={styles.badges}>
-							<VisibilityBadge visibility={post.visibility} />
-							<Badge type="secondary">
-								{post.files?.length === 1
-									? "1 file"
-									: `${post.files?.length || 0} files`}
-							</Badge>
-							<CreatedAgoBadge createdAt={post.createdAt} />
-							<ExpirationBadge postExpirationDate={post.expiresAt} />
-						</div>
 					</>
 					<ul className={styles.files}>
 						{post?.files?.map(
 							(file: Pick<PostWithFiles, "files">["files"][0]) => {
 								return (
 									<li key={file.id}>
-										<Link colored href={`/post/${post.id}#${file.title}`} style={{
-											display: "flex",
-											alignItems: "center"
-										}}>
-``											{getIconFromFilename(file.title)}
+										<Link
+											colored
+											href={`/post/${post.id}#${file.title}`}
+											style={{
+												display: "flex",
+												alignItems: "center"
+											}}
+										>
+											{getIconFromFilename(file.title)}
 											{file.title || "Untitled file"}
 										</Link>
 									</li>

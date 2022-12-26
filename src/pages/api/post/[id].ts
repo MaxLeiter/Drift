@@ -61,14 +61,14 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 				...post
 			})
 		} else {
-			return {
+			return res.json({
 				isProtected: true,
 				post: {
 					id: post.id,
 					visibility: post.visibility,
-					title: post.title
+					authorId: post.authorId,
 				}
-			}
+			})
 		}
 	}
 

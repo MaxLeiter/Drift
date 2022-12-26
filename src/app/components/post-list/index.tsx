@@ -16,13 +16,17 @@ type Props = {
 	morePosts?: boolean
 	userId?: string
 	hideSearch?: boolean
+	hideActions?: boolean
+	isOwner?: boolean
 }
 
 const PostList = ({
 	morePosts,
 	initialPosts: initialPostsMaybeJSON,
 	userId,
-	hideSearch
+	hideSearch,
+	hideActions,
+	isOwner
 }: Props) => {
 	const initialPosts =
 		typeof initialPostsMaybeJSON === "string"
@@ -156,6 +160,8 @@ const PostList = ({
 									deletePost={deletePost(post.id)}
 									post={post}
 									key={post.id}
+									hideActions={hideActions}
+									isOwner={isOwner}
 								/>
 							)
 						})}

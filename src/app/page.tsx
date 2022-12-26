@@ -11,7 +11,6 @@ const getWelcomeData = async () => {
 }
 
 export default async function Page() {
-	const { content, rendered, title } = await getWelcomeData()
 	const getPostsPromise = getAllPosts({
 		select: {
 			id: true,
@@ -21,18 +20,24 @@ export default async function Page() {
 				select: {
 					name: true
 				}
-			}
+			},
+			visibility: true,
+			files: {
+				select: {
+					id: true,
+					title: true
+				}
+			},
+			authorId: true
 		},
 		where: {
-			deletedAt: null,
-			expiresAt: {
-				gt: new Date()
-			}
+			visibility: "public"
 		},
 		orderBy: {
 			createdAt: "desc"
 		}
 	})
+	const { content, rendered, title } = await getWelcomeData()
 
 	return (
 		<div
@@ -79,9 +84,10 @@ async function PublicPostList({
 			userId={undefined}
 			morePosts={false}
 			initialPosts={JSON.stringify(posts)}
+			hideActions
 			hideSearch
 		/>
 	)
 }
 
-export const revalidate = 30
+export const revalidate = 60

@@ -37,8 +37,11 @@ const ExpirationBadge = ({
 	}, [expirationDate])
 
 	const isExpired = useMemo(() => {
-		return timeUntilString === "in 0 seconds"
-	}, [timeUntilString])
+		if (!expirationDate) {
+			return false
+		}
+		return expirationDate < new Date()
+	}, [expirationDate])
 
 	if (!expirationDate) {
 		return null
@@ -49,7 +52,9 @@ const ExpirationBadge = ({
 			<Tooltip
 				content={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}
 			>
-				<>{isExpired ? "Expired" : `Expires ${timeUntilString}`}</>
+				<span suppressHydrationWarning>
+					{isExpired ? "Expired" : `Expires ${timeUntilString}`}
+				</span>
 			</Tooltip>
 		</Badge>
 	)

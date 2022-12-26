@@ -34,7 +34,9 @@ export const PostTitle = ({
 				{title}{" "}
 				<span style={{ color: "var(--gray)" }}>
 					by{" "}
-					<Link href={`/author/${authorId}`}>{displayName || "anonymous"}</Link>
+					<Link colored href={`/author/${authorId}`}>
+						{displayName || "anonymous"}
+					</Link>
 				</span>
 			</h1>
 			{!loading && (

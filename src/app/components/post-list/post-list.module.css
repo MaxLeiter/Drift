@@ -8,12 +8,6 @@
 	padding: 0.5rem 0;
 }
 
-.container ul li::before {
-	content: "";
-	padding: 0;
-	margin: 0;
-}
-
 .postHeader {
 	display: flex;
 	justify-content: space-between;

@@ -10,9 +10,8 @@ import styles from "./profile.module.css"
 
 const Profile = () => {
 	const { data: session } = useSession()
-	const [name, setName] = useState<string>(session?.user.displayName || "")
+	const [name, setName] = useState<string>(session?.user.name || "")
 	const [submitting, setSubmitting] = useState<boolean>(false)
-
 	const { setToast } = useToasts()
 
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

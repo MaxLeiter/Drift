@@ -17,6 +17,13 @@
 	display: inline-block;
 }
 
+.titleWithDropdown {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
 @media screen and (max-width: 768px) {
 	.title {
 		flex-direction: column;

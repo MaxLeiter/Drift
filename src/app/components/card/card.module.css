@@ -9,7 +9,7 @@
 
 
 .card .content {
-    padding: var(--gap-half);
+    padding: var(--gap);
     width: 100%;
     height: auto;
 }

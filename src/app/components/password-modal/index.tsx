@@ -18,8 +18,8 @@ const PasswordModal = ({
 	onSubmit: onSubmitAfterVerify,
 	creating
 }: Props) => {
-	const [password, setPassword] = useState<string>()
-	const [confirmPassword, setConfirmPassword] = useState<string>()
+	const [password, setPassword] = useState<string>("")
+	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [error, setError] = useState<string>()
 
 	const onSubmit = () => {
@@ -60,6 +60,12 @@ const PasswordModal = ({
 									: "Enter the password to access the post"}
 							</Dialog.Description>
 							<fieldset className={styles.fieldset}>
+								{!error && creating && (
+									<Note type="warning">
+										This doesn&apos;t protect your post from the server
+										administrator.
+									</Note>
+								)}
 								{error && <Note type="error">{error}</Note>}
 								<Input
 									width={"100%"}
@@ -79,15 +85,11 @@ const PasswordModal = ({
 										onChange={(e) => setConfirmPassword(e.currentTarget.value)}
 									/>
 								)}
-								{!error && creating && (
-									<Note type="warning">
-										This doesn&apos;t protect your post from the server
-										administrator.
-									</Note>
-								)}
 							</fieldset>
-							<Button onClick={onClose}>Cancel</Button>
-							<Button onClick={onSubmit}>Submit</Button>
+							<footer className={styles.footer}>
+								<Button onClick={onClose}>Cancel</Button>
+								<Button onClick={onSubmit}>Submit</Button>
+							</footer>
 						</Dialog.Content>
 					</Dialog.Portal>
 				</Dialog.Root>

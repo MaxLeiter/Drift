@@ -13,19 +13,22 @@ export const PostButtons = ({
 	files,
 	loading,
 	postId,
-	parentId
+	parentId,
 }: {
 	title: string
 	files?: Pick<PostWithFiles, "files">["files"]
 	loading?: boolean
 	postId?: string
 	parentId?: string
+	visibility?: string
+	authorId?: string
 }) => {
 	const router = useRouter()
 	const downloadClick = async () => {
 		if (!files?.length) return
 		const downloadZip = (await import("client-zip")).downloadZip
 		const blob = await downloadZip(
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			files.map((file: any) => {
 				return {
 					name: file.title,
@@ -52,11 +55,7 @@ export const PostButtons = ({
 	return (
 		<span className={styles.buttons}>
 			<ButtonGroup verticalIfMobile>
-				<Button
-					iconLeft={<Edit />}
-					onClick={editACopy}
-					style={{ textTransform: "none" }}
-				>
+				<Button iconLeft={<Edit />} onClick={editACopy}>
 					Edit a Copy
 				</Button>
 				{parentId && (
@@ -64,11 +63,7 @@ export const PostButtons = ({
 						View Parent
 					</Button>
 				)}
-				<Button
-					onClick={downloadClick}
-					iconLeft={<Archive />}
-					style={{ textTransform: "none" }}
-				>
+				<Button onClick={downloadClick} iconLeft={<Archive />}>
 					Download as ZIP Archive
 				</Button>
 				<FileDropdown loading={loading} files={files || []} />

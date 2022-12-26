@@ -68,7 +68,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 						<Skeleton width={"100%"} height={36} />
 					</div>
 					<div className={styles.documentContainer}>
-						<Skeleton width={145} height={36} borderRadius={"4px 4px 0 0"} />
+						<Skeleton width={175} height={36} borderRadius={"4px 4px 0 0"} />
 						<Skeleton
 							width={"100%"}
 							height={350}

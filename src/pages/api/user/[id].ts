@@ -42,7 +42,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			})
 		}
 		case "GET":
-			return res.json(currUser)
+			return res.json({
+				...currUser,
+				displayName: user.displayName
+			})
 		case "DELETE":
 			if (currUser?.role !== "admin" && currUser?.id !== id) {
 				return res.status(403).json({ message: "Unauthorized" })

@@ -43,10 +43,10 @@ export default async function UserPage({
 		return (
 			<Image
 				src={user.image}
-				alt="User avatar"
-				className="w-12 h-12 rounded-full"
+				alt=""
 				width={48}
 				height={48}
+				style={{ borderRadius: "50%", height: 32, width: 32 }}
 			/>
 		)
 	}

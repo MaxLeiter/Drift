@@ -5,10 +5,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import { ArrowDown } from "react-feather"
 type Props = {
 	type?: "primary" | "secondary"
-	loading?: boolean
-	disabled?: boolean
-	className?: string
-	iconHeight?: number
+	height?: number | string
 }
 
 type Attrs = Omit<React.HTMLAttributes<any>, keyof Props>
@@ -16,14 +13,14 @@ type ButtonDropdownProps = Props & Attrs
 
 const ButtonDropdown: React.FC<
 	React.PropsWithChildren<ButtonDropdownProps>
-> = ({ type, className, disabled, loading, iconHeight = 24, ...props }) => {
+> = ({ type, ...props }) => {
 	if (!Array.isArray(props.children)) {
 		return null
 	}
 
 	return (
 		<DropdownMenu.Root>
-			<div className={styles.dropdown}>
+			<div className={styles.dropdown} style={{ height: props.height }}>
 				{props.children[0]}
 				<DropdownMenu.Trigger
 					style={{

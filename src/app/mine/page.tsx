@@ -25,6 +25,7 @@ export default async function Mine() {
 			userId={userId}
 			morePosts={hasMore}
 			initialPosts={stringifiedPosts}
+			isOwner={true}
 		/>
 	)
 }

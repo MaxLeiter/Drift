@@ -311,7 +311,7 @@ const Post = ({
 						enableTabLoop={false}
 						minDate={new Date()}
 					/>
-					<ButtonDropdown iconHeight={40}>
+					<ButtonDropdown>
 						<Button
 							height={40}
 							width={251}

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import Button from "@components/button"
 import clsx from "clsx"
-import { useTheme } from "@wits/next-themes"
+import { useTheme } from "next-themes"
 import {
 	GitHub,
 	Home,

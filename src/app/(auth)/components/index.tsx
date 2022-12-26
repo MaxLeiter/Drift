@@ -55,7 +55,6 @@ const Auth = ({
 				message: res.error
 			})
 		} else {
-			console.log("res", res)
 			startTransition(() => {
 				router.push("/new")
 				router.refresh()

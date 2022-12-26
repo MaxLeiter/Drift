@@ -6,13 +6,17 @@ import ButtonGroup from "@components/button-group"
 import Button from "@components/button"
 import { useToasts } from "@components/toasts"
 import { Spinner } from "@components/spinner"
+import { useSession } from "next-auth/react"
 
 type Props = {
+	authorId: string
 	postId: string
 	visibility: string
 }
 
-const VisibilityControl = ({ postId, visibility: postVisibility }: Props) => {
+const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Props) => {
+	const { data: session } = useSession()
+	const isAuthor = session?.user && session?.user?.id === authorId
 	const [visibility, setVisibility] = useState<string>(postVisibility)
 
 	const [isSubmitting, setSubmitting] = useState<string | null>()
@@ -66,9 +70,16 @@ const VisibilityControl = ({ postId, visibility: postVisibility }: Props) => {
 
 	const submitPassword = (password: string) => onSubmit("protected", password)
 
+	if (!isAuthor) {
+		return null
+	}
+
 	return (
 		<>
-			<ButtonGroup verticalIfMobile>
+			<ButtonGroup style={{
+				maxWidth: 600,
+				margin: "var(--gap) auto",
+			}}>
 				<Button
 					disabled={visibility === "private"}
 					onClick={() => onSubmit("private")}

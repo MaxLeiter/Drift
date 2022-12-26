@@ -3,20 +3,27 @@
 import { Post, PostWithFilesAndAuthor } from "@lib/server/prisma"
 import PasswordModal from "@components/password-modal"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useToasts } from "@components/toasts"
+import { useSession } from "next-auth/react"
 
 type Props = {
 	setPost: (post: PostWithFilesAndAuthor) => void
 	postId: Post["id"]
+	authorId: Post["authorId"]
 }
 
-const PasswordModalPage = ({ setPost, postId }: Props) => {
+const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 	const router = useRouter()
 	const { setToast } = useToasts()
+	const { data: session, status } = useSession()
+	const isAuthor =
+		status === "loading"
+			? undefined
+			: session?.user && session?.user?.id === authorId
 	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(true)
 
-	const onSubmit = async (password: string) => {
+	const onSubmit = useCallback(async (password: string) => {
 		const res = await fetch(`/api/post/${postId}?password=${password}`, {
 			method: "GET",
 			headers: {
@@ -44,12 +51,23 @@ const PasswordModalPage = ({ setPost, postId }: Props) => {
 				setPost(data)
 			}
 		}
-	}
+	}, [postId, setPost, setToast])
 
 	const onClose = () => {
 		setIsPasswordModalOpen(false)
 		router.push("/")
 	}
+
+	useEffect(() => {
+		if (isAuthor) {
+			onSubmit("author")
+			setToast({
+				message:
+					"You're the author of this post, so you automatically have access to it.",
+				type: "default"
+			})
+		}
+	}, [isAuthor, onSubmit, setToast])
 
 	return (
 		<PasswordModal

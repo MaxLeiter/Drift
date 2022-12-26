@@ -24,6 +24,5 @@ declare module "next-auth" {
     email?: string | null
     role?: string | null
     id: UserId
-    displayName?: string | null
   }
 }
