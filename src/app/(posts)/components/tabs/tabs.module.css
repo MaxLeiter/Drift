@@ -3,9 +3,20 @@
 	flex-direction: column;
 }
 
+.listWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .list {
 	flex-shrink: 0;
 	display: flex;
+}
+
+.list .formattingIcons {
+	margin-left: auto;
 }
 
 .trigger {
@@ -40,4 +51,12 @@
 .trigger[data-state="active"] {
 	color: var(--darkest-gray);
 	box-shadow: inset 0 -1px 0 0 currentColor, 0 1px 0 0 currentColor;
+}
+
+@media (max-width: 600px) {
+	.listWrapper {
+		flex-direction: column;
+		justify-content: flex-start;
+
+	}
 }

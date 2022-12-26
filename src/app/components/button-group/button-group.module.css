@@ -14,12 +14,12 @@
 	border-radius: 0 !important;
 }
 
-.button-group > button:first-of-type {
+.button-group button:first-of-type {
 	border-top-left-radius: var(--radius) !important;
 	border-bottom-left-radius: var(--radius) !important;
 }
 
-.button-group > button:last-of-type {
+.button-group button:last-of-type {
 	border-top-right-radius: var(--radius) !important;
 	border-bottom-right-radius: var(--radius) !important;
 }
@@ -29,14 +29,14 @@
 		flex-direction: column !important;
 	}
 
-	.verticalIfMobile.button-group > button:first-of-type {
+	.verticalIfMobile.button-group button:first-of-type {
 		border-top-left-radius: var(--radius) !important;
 		border-top-right-radius: var(--radius) !important;
 		border-bottom-left-radius: 0 !important;
 		border-bottom-right-radius: 0 !important;
 	}
 
-	.verticalIfMobile.button-group > button:last-of-type {
+	.verticalIfMobile.button-group button:last-of-type {
 		border-top-left-radius: 0 !important;
 		border-top-right-radius: 0 !important;
 		border-bottom-left-radius: var(--radius) !important;

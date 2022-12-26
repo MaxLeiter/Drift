@@ -84,7 +84,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 
 	// if the query has our title, we can use it to scroll to the file.
 	// we can't use the browsers implementation because the data isn't loaded yet
-	if (title) {
+	if (title && typeof window !== "undefined") {
 		const hash = window.location.hash
 		if (hash && hash === `#${title}`) {
 			const element = document.getElementById(title)

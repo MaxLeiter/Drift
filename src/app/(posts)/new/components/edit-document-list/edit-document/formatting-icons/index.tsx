@@ -12,12 +12,15 @@ import { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Tooltip from "@components/tooltip"
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
+import clsx from "clsx"
 // TODO: clean up
 
 const FormattingIcons = ({
-	textareaRef
+	textareaRef,
+	className
 }: {
 	textareaRef?: RefObject<TextareaMarkdownRef>
+	className?: string
 }) => {
 	const formattingActions = useMemo(() => {
 		const handleBoldClick = () => textareaRef?.current?.trigger("bold")
@@ -62,22 +65,28 @@ const FormattingIcons = ({
 	}, [textareaRef])
 
 	return (
-		<div className={styles.actionWrapper}>
-			<ButtonGroup className={styles.actions}>
-				{formattingActions.map(({ icon, name, action }) => (
-					<Tooltip
-						content={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
-						key={name}
-					>
-						<Button
-							aria-label={name}
-							iconRight={icon}
-							onMouseDown={(e) => e.preventDefault()}
-							onClick={action}
-						/>
-					</Tooltip>
-				))}
-			</ButtonGroup>
+		<div className={clsx(styles.actionWrapper, className)}>
+			{formattingActions.map(({ icon, name, action }) => (
+				<Tooltip
+					content={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
+					key={name}
+				>
+					<Button
+						height={32}
+						style={{
+							fontSize: 14,
+							borderRight: "none",
+							borderLeft: "none",
+							borderTop: "none",
+							borderBottom: "none"
+						}}
+						aria-label={name}
+						iconRight={icon}
+						onMouseDown={(e) => e.preventDefault()}
+						onClick={action}
+					/>
+				</Tooltip>
+			))}
 		</div>
 	)
 }

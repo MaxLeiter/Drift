@@ -14,7 +14,6 @@
 
 .contentWrapper {
 	z-index: 1000;
-
 }
 
 .content {
@@ -42,9 +41,7 @@
 	justify-content: space-between;
 	color: var(--dark-gray);
 	text-decoration: none;
-	/* vertical alignment */
 	padding: var(--gap-quarter) 0;
-	
 }
 
 .content li .fileIcon {
@@ -53,7 +50,6 @@
 }
 
 .content li .fileTitle {
-	/* from Geist */
 	font-size: calc(0.875 * 16px);
 }
 

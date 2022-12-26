@@ -42,16 +42,23 @@ export default function DocumentTabs({
 			className={styles.root}
 			defaultValue={defaultTab}
 		>
-			<RadixTabs.List className={styles.list}>
-				<RadixTabs.Trigger value="edit" className={styles.trigger}>
-					{isEditing ? "Edit" : "Raw"}
-				</RadixTabs.Trigger>
-				<RadixTabs.Trigger value="preview" className={styles.trigger}>
-					{isEditing ? "Preview" : "Rendered"}
-				</RadixTabs.Trigger>
+			<RadixTabs.List className={styles.listWrapper}>
+				<div className={styles.list}>
+					<RadixTabs.Trigger value="edit" className={styles.trigger}>
+						{isEditing ? "Edit" : "Raw"}
+					</RadixTabs.Trigger>
+					<RadixTabs.Trigger value="preview" className={styles.trigger}>
+						{isEditing ? "Preview" : "Rendered"}
+					</RadixTabs.Trigger>
+				</div>
+				{isEditing && (
+					<FormattingIcons
+						className={styles.formattingIcons}
+						textareaRef={codeEditorRef}
+					/>
+				)}
 			</RadixTabs.List>
 			<RadixTabs.Content value="edit">
-				{isEditing && <FormattingIcons textareaRef={codeEditorRef} />}
 				<div
 					style={{
 						marginTop: 6,
