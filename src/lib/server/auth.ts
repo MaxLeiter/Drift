@@ -139,6 +139,34 @@ export const authOptions: NextAuthOptions = {
 		error: "/signin"
 	},
 	providers: providers(),
+	events: {
+		createUser: async ({ user }) => {
+			const totalUsers = await prisma.user.count()
+			console.log('totalUsers', totalUsers)
+			if (config.enable_admin && totalUsers === 1) {
+				await prisma.user.update({
+					where: {
+						id: user.id,
+					},
+					data: {
+						role: "admin"
+					}
+				})
+			}
+
+			if (!user.username) {
+				await prisma.user.update({
+					where: {
+						id: user.id
+					},
+					data: {
+						username: user.name,
+						displayName: user.name,
+					}
+				})
+			}
+		}
+	},
 	callbacks: {
 		async session({ token, session }) {
 			if (token) {

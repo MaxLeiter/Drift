@@ -13,23 +13,6 @@ export const prisma =
 		log: ["query"]
 	})
 
-if (config.enable_admin) {
-	// a prisma middleware for capturing the first user and making them an admin
-	prisma.$use(async (params, next) => {
-		const result = await next(params)
-		if (params.model === "User" && params.action === "create") {
-			const users = await prisma.user.findMany()
-			if (users.length === 1) {
-				await prisma.user.update({
-					where: { id: users[0].id },
-					data: { role: "admin" }
-				})
-			}
-		}
-		return result
-	})
-}
-
 // prisma.$use(async (params, next) => {
 // 	const result = await next(params)
 // 	return updateDates(result)
