@@ -4,7 +4,7 @@ import { title } from "process"
 import { PostButtons } from "./components/header/post-buttons"
 import styles from "./layout.module.css"
 import { PostTitle } from "./components/header/title"
-import { getPost } from "./page"
+import { getPost } from "./get-post"
 
 export default async function PostLayout({
 	children,
