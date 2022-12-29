@@ -66,7 +66,7 @@ export default async function Page() {
 			</Card>
 			<div>
 				<h2>Recent public posts</h2>
-				{/* @ts-ignore because of async RSC */}
+				{/* @ts-expect-error because of async RSC */}
 				<PublicPostList getPostsPromise={getPostsPromise} />
 			</div>
 		</div>
@@ -78,16 +78,28 @@ async function PublicPostList({
 }: {
 	getPostsPromise: Promise<Post[]>
 }) {
-	const posts = await getPostsPromise
-	return (
-		<PostList
-			userId={undefined}
-			morePosts={false}
-			initialPosts={JSON.stringify(posts)}
-			hideActions
-			hideSearch
-		/>
-	)
+	try {
+		const posts = await getPostsPromise
+		return (
+			<PostList
+				userId={undefined}
+				morePosts={false}
+				initialPosts={JSON.stringify(posts)}
+				hideActions
+				hideSearch
+			/>
+		)
+	} catch (error) {
+		return (
+			<PostList
+				userId={undefined}
+				morePosts={false}
+				initialPosts={[]}
+				hideActions
+				hideSearch
+			/>
+		)
+	}
 }
 
 export const revalidate = 60

@@ -21,7 +21,7 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 	const [post, setPost] = useState<PostWithFilesAndAuthor>(initialPost)
 	const router = useRouter()
 
-	if (post.expiresAt) {
+	if (post?.expiresAt) {
 		if (new Date(post.expiresAt) < new Date()) {
 			router.push("/expired")
 		}
@@ -29,7 +29,7 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 
 	useEffect(() => {
 		let interval: NodeJS.Timer | null = null
-		if (post.expiresAt) {
+		if (post?.expiresAt) {
 			interval = setInterval(() => {
 				const expirationDate = new Date(post.expiresAt ? post.expiresAt : "")
 				if (expirationDate < new Date()) {
@@ -41,10 +41,10 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 		return () => {
 			if (interval) clearInterval(interval)
 		}
-	}, [post.expiresAt, router])
+	}, [post?.expiresAt, router])
 
-	const isProtected = post.visibility === "protected"
-	const hasFetched = post.files !== undefined
+	const isProtected = post?.visibility === "protected"
+	const hasFetched = post?.files !== undefined
 	if (isProtected && !hasFetched) {
 		return (
 			<PasswordModalPage
@@ -63,7 +63,7 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 				gap: "var(--gap-double)"
 			}}
 		>
-			{post.files?.map(({ id, content, title, html }) => (
+			{post?.files?.map(({ id, content, title, html }) => (
 				<DocumentComponent
 					skeleton={false}
 					key={id}

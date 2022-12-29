@@ -21,8 +21,7 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 		status === "loading"
 			? undefined
 			: session?.user && session?.user?.id === authorId
-	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(true)
-
+	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
 	const onSubmit = useCallback(async (password: string) => {
 		const res = await fetch(`/api/post/${postId}?password=${password}`, {
 			method: "GET",
@@ -48,7 +47,7 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 				})
 			} else {
 				setIsPasswordModalOpen(false)
-				setPost(data)
+				setPost(data.post)
 			}
 		}
 	}, [postId, setPost, setToast])
@@ -66,6 +65,8 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 					"You're the author of this post, so you automatically have access to it.",
 				type: "default"
 			})
+		} else if (isAuthor === false) {
+			setIsPasswordModalOpen(true)
 		}
 	}, [isAuthor, onSubmit, setToast])
 

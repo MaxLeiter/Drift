@@ -44,7 +44,8 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	// the user can always go directly to their own post
 	if (session?.user.id === post.authorId) {
 		return res.json({
-			...post
+			post: post,
+			password: undefined
 		})
 	}
 
@@ -58,7 +59,8 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 
 		if (hash === post.password) {
 			return res.json({
-				...post
+				post,
+				password: undefined
 			})
 		} else {
 			return res.json({

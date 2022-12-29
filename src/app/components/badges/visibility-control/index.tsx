@@ -7,6 +7,7 @@ import Button from "@components/button"
 import { useToasts } from "@components/toasts"
 import { Spinner } from "@components/spinner"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 type Props = {
 	authorId: string
@@ -22,6 +23,7 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 	const [isSubmitting, setSubmitting] = useState<string | null>()
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 	const { setToast } = useToasts()
+	const router = useRouter();
 
 	const sendRequest = useCallback(
 		async (visibility: string, password?: string) => {
@@ -36,6 +38,7 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 			if (res.ok) {
 				const json = await res.json()
 				setVisibility(json.visibility)
+				router.refresh()
 			} else {
 				setToast({
 					message: "An error occurred",

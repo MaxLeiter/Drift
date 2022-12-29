@@ -7,3 +7,10 @@
 	height: auto;
 	margin: 0 auto;
 }
+
+/* 55rem == --main-content */
+@media screen and (max-width: 55rem) {
+	.page {
+		padding: 0 1rem;
+	}
+}

@@ -38,7 +38,7 @@
 
 .header {
 	transition: opacity 0.2s ease-in-out;
-	opacity: 0;
+	opacity: .5;
 }
 
 .header:not(.loading) {
@@ -67,6 +67,10 @@
 }
 
 @media only screen and (max-width: 768px) {
+	.header {
+		opacity: 1;
+	}
+
 	.wrapper [data-tab="github"] {
 		display: none;
 	}
