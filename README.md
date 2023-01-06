@@ -1,4 +1,4 @@
-# <img src="client/public/assets/logo.png" height="32px" alt="" /> Drift
+# <img src="src/public/assets/logo.png" height="32px" alt="" /> Drift
 
 > **Note:** This branch is where all work is being done to refactor to the Next.js 13 app directory and React Server Components.
 
