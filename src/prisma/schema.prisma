@@ -96,6 +96,7 @@ model User {
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  apiTokens  ApiToken[]
   // below are added for CredentialProvider
   username      String?   @unique 
   password      String?   @map("hashed_password")
@@ -110,4 +111,17 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model ApiToken {
+  id          String  @default(cuid()) @id
+  name        String
+  token       String  @unique
+  expiresAt   DateTime
+  user        User    @relation(fields: [userId], references: [id]) 
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
 }

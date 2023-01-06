@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition, useEffect, useRef, useState } from "react"
+import { startTransition, useEffect, useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
 import { signIn } from "next-auth/react"
@@ -94,9 +94,7 @@ const Auth = ({
 									type="password"
 									id="server-password"
 									value={serverPassword}
-									onChange={(event) =>
-										setServerPassword(event.currentTarget.value)
-									}
+									onChange={handleChangeServerPassword}
 									placeholder="Server Password"
 									required={true}
 									width="100%"

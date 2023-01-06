@@ -1,5 +1,7 @@
-import { User } from "next-auth"
-import { JWT } from "next-auth/jwt"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { User } from "next-auth"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { JWT } from "next-auth/jwt"
 
 type UserId = string
 
@@ -7,6 +9,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: UserId
     role: string
+    sessionToken: string
   }
 }
 
@@ -15,6 +18,7 @@ declare module "next-auth" {
     user: User & {
       id: UserId
       role: string
+      sessionToken: string
     }
   }
 
@@ -24,5 +28,6 @@ declare module "next-auth" {
     email?: string | null
     role?: string | null
     id: UserId
+    token?: string
   }
 }

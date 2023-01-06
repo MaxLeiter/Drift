@@ -1,0 +1,43 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	max-width: 300px;
+	margin-top: var(--gap);
+}
+
+.upload {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	max-width: 300px;
+	margin-top: var(--gap);
+	cursor: pointer;
+}
+
+.uploadInput {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	width: 300px;
+	height: 37px;
+	cursor: pointer;
+}
+
+.uploadButton {
+	width: 100%;
+}
+
+/* hover should affect button */
+.uploadInput:hover + button {
+	border: 1px solid var(--fg);
+}
+
+.tokens {
+	margin-top: var(--gap);
+}
+
+.tokens table thead th {
+	text-align: left;
+}

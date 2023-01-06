@@ -142,7 +142,6 @@ export const authOptions: NextAuthOptions = {
 	events: {
 		createUser: async ({ user }) => {
 			const totalUsers = await prisma.user.count()
-			console.log('totalUsers', totalUsers)
 			if (config.enable_admin && totalUsers === 1) {
 				await prisma.user.update({
 					where: {
@@ -175,6 +174,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.email = token.email
 				session.user.image = token.picture
 				session.user.role = token.role
+				session.user.sessionToken = token.sessionToken
 			}
 
 			return session
@@ -208,7 +208,8 @@ export const authOptions: NextAuthOptions = {
 				email: dbUser.email,
 				picture: dbUser.image,
 				role: dbUser.role || "user",
-				username: dbUser.username
+				username: dbUser.username,
+				sessionToken: token.sessionToken
 			}
 		}
 	}

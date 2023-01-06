@@ -6,17 +6,6 @@
     margin-top: var(--gap);
 }
 
-/* <div className={styles.upload}>
-<input
-    type="file"
-    disabled={imageViaOauth}
-    className={styles.uploadInput}
-/>
-<Button type="button" disabled={imageViaOauth} width="100%" className={styles.uploadButton}>
-    Upload
-</Button>
-</div> */
-/* we want the file input to be invisible and full width but still interactive button */
 .upload {
     position: relative;
     display: flex;

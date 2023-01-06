@@ -5,6 +5,7 @@ declare global {
 
 import config from "@lib/config"
 import { Post, PrismaClient, User, Prisma } from "@prisma/client"
+import * as crypto from "crypto"
 export type { User, File, Post } from "@prisma/client"
 
 export const prisma =
@@ -281,4 +282,23 @@ export const searchPosts = async (
 	})
 
 	return posts as ServerPostWithFiles[]
+}
+
+function generateApiToken() {
+	return crypto.randomBytes(32).toString("hex")
+}
+
+export const createApiToken = async (userId: User["id"], name: string) => {
+	const apiToken = await prisma.apiToken.create({
+		data: {
+			token: generateApiToken(),
+			expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 3),
+			user: {
+				connect: { id: userId }
+			},
+			name
+		}
+	})
+
+	return apiToken
 }
