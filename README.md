@@ -24,20 +24,20 @@ If you want to contribute, need support, or want to stay updated, you can join t
 
 ### Development
 
-In the `src/` directory, run `pnpm i`. If you need `pnpm`, you can download it [here](https://pnpm.io/installation).
+In the root directory, run `pnpm i`. If you need `pnpm`, you can download it [here](https://pnpm.io/installation).
 You can run `pnpm dev` in `client` for file watching and live reloading.
 
 To work with [prisma](prisma.io/), you can use `pnpm prisma` or `pnpm exec prisma` to interact with the database.
 
 ### Production
 
-`pnpm build` in `src/` will produce production code. `pnpm start` will run the Next.js server.
+`pnpm build` will produce production code. `pnpm start` will start the Next.js server.
 
 ### Environment Variables
 
 You can change these to your liking.
 
-`src/.env`:
+`.env`:
 
 - `DRIFT_URL`: the URL of the drift instance.
 - `DATABASE_URL`: the URL to connect to your postgres instance. For example, `postgresql://user:password@localhost:5432/drift`.
@@ -58,11 +58,11 @@ You can change these to your liking.
 ## Running with pm2
 
 It's easy to start Drift using [pm2](https://pm2.keymetrics.io/).
-First, add the `.env` file to `src/` with your values (see the above section for the required options).
+First, add the `.env` file with your values (see the above section for the required options).
 
 Then, use the following command to start the server:
 
-- `cd src && pnpm build && pm2 start pnpm --name drift --interpreter bash -- start`
+- `pnpm build && pm2 start pnpm --name drift --interpreter bash -- start`
 
 Refer to pm2's docs or `pm2 help` for more information.
 
