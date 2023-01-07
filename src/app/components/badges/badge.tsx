@@ -6,7 +6,7 @@ type BadgeProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-	({ type, children, ...rest}: BadgeProps, ref) => {
+	({ type, children, ...rest }: BadgeProps, ref) => {
 		return (
 			<div className={styles.container} {...rest}>
 				<div className={`${styles.badge} ${styles[type]}`} ref={ref}>

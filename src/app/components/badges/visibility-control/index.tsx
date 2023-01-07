@@ -15,7 +15,11 @@ type Props = {
 	visibility: string
 }
 
-const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Props) => {
+const VisibilityControl = ({
+	authorId,
+	postId,
+	visibility: postVisibility
+}: Props) => {
 	const { data: session } = useSession()
 	const isAuthor = session?.user && session?.user?.id === authorId
 	const [visibility, setVisibility] = useState<string>(postVisibility)
@@ -23,7 +27,7 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 	const [isSubmitting, setSubmitting] = useState<string | null>()
 	const [passwordModalVisible, setPasswordModalVisible] = useState(false)
 	const { setToast } = useToasts()
-	const router = useRouter();
+	const router = useRouter()
 
 	const sendRequest = useCallback(
 		async (visibility: string, password?: string) => {
@@ -43,7 +47,6 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 					message: "Visibility updated",
 					type: "success"
 				})
-				
 			} else {
 				setToast({
 					message: "An error occurred",
@@ -84,10 +87,12 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 
 	return (
 		<>
-			<ButtonGroup style={{
-				maxWidth: 600,
-				margin: "var(--gap) auto",
-			}}>
+			<ButtonGroup
+				style={{
+					maxWidth: 600,
+					margin: "var(--gap) auto"
+				}}
+			>
 				<Button
 					disabled={visibility === "private"}
 					onClick={() => onSubmit("private")}

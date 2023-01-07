@@ -55,7 +55,6 @@ const Post = ({
 				title: doc.title,
 				content: doc.content,
 				id: doc.id
-				// eslint-disable-next-line no-mixed-spaces-and-tabs
 		  }))
 		: [emptyDoc]
 
@@ -285,7 +284,6 @@ const Post = ({
 							}
 						])
 					}}
-					type="default"
 					style={{
 						flex: 1
 					}}

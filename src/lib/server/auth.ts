@@ -146,7 +146,7 @@ export const authOptions: NextAuthOptions = {
 			if (config.enable_admin && totalUsers === 1) {
 				await prisma.user.update({
 					where: {
-						id: user.id,
+						id: user.id
 					},
 					data: {
 						role: "admin"
@@ -161,7 +161,7 @@ export const authOptions: NextAuthOptions = {
 					},
 					data: {
 						username: user.name,
-						displayName: user.name,
+						displayName: user.name
 					}
 				})
 			}

@@ -50,10 +50,10 @@ export function useApiTokens({ userId, initialTokens }: UseApiTokens) {
 			throw new Error(response.error)
 			return
 		}
-        
+
 		mutate([...(data || []), response])
 
-        return response as SerializedApiToken
+		return response as SerializedApiToken
 	}
 
 	const expireToken = async (id: string) => {

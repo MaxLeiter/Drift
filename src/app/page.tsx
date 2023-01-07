@@ -68,7 +68,9 @@ export default async function Page() {
 			<div>
 				<h2>Recent public posts</h2>
 				<Suspense
-					fallback={<PostList skeleton hideSearch initialPosts={JSON.stringify({})} />}
+					fallback={
+						<PostList skeleton hideSearch initialPosts={JSON.stringify({})} />
+					}
 				>
 					{/* @ts-expect-error because of async RSC */}
 					<PublicPostList getPostsPromise={getPostsPromise} />

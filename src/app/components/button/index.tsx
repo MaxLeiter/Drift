@@ -1,9 +1,12 @@
 import styles from "./button.module.css"
-import { forwardRef, Ref } from "react"
+import { forwardRef } from "react"
 import clsx from "clsx"
 import { Spinner } from "@components/spinner"
 
-type Props = React.HTMLProps<HTMLButtonElement> & {
+type Props = React.DetailedHTMLProps<
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
+	HTMLButtonElement
+> & {
 	children?: React.ReactNode
 	buttonType?: "primary" | "secondary"
 	className?: string
@@ -25,7 +28,6 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			onClick,
 			className,
 			buttonType = "primary",
-			type = "button",
 			disabled = false,
 			iconRight,
 			iconLeft,
@@ -41,11 +43,10 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 		return (
 			<button
 				ref={ref}
-				className={clsx(
-					styles.button,
-					type === "primary" || (type === "secondary" && styles[type]),
-					className
-				)}
+				className={clsx(styles.button, className, {
+					[styles.primary]: buttonType === "primary",
+					[styles.secondary]: buttonType === "secondary"
+				})}
 				disabled={disabled || loading}
 				onClick={onClick}
 				style={{ height, width, margin, padding }}

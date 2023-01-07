@@ -19,7 +19,7 @@ const Profile = () => {
 			setName(session?.user.name || "")
 		}
 	}, [name, session])
-	
+
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value)
 	}

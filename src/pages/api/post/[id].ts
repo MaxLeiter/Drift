@@ -68,7 +68,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 				post: {
 					id: post.id,
 					visibility: post.visibility,
-					authorId: post.authorId,
+					authorId: post.authorId
 				}
 			})
 		}

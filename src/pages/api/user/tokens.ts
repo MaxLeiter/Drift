@@ -25,7 +25,7 @@ export default async function handle(
 					expiresAt: true,
 					name: true
 				}
-			});
+			})
 
 			console.log(tokens)
 

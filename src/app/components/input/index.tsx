@@ -17,7 +17,7 @@ type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
 		| {
 				onChange: Props["onChange"]
 				value: Props["value"]
-		  } // if onChange or value is passed, we require both
+		  }
 		| {
 				onChange?: never
 				value?: never
@@ -64,6 +64,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					ref={ref}
 					id={labelId}
 					className={clsx(styles.input, label && styles.withLabel, className)}
+					required={required}
 					{...props}
 					style={{
 						width,

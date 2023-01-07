@@ -5,7 +5,10 @@ import Input from "@components/input"
 import Note from "@components/note"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
-import { SerializedApiToken, useApiTokens } from "src/app/hooks/swr/use-api-tokens"
+import {
+	SerializedApiToken,
+	useApiTokens
+} from "src/app/hooks/swr/use-api-tokens"
 import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { useSession } from "next-auth/react"
 import { useState } from "react"

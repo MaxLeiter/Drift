@@ -7,5 +7,8 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "root": true,
-  "ignorePatterns": ["node_modules/", "__tests__/"]
+  "ignorePatterns": ["node_modules/", "__tests__/"],
+  "rules": {
+	"no-mixed-spaces-and-tabs": ["off"]
+  }
 }

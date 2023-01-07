@@ -92,33 +92,35 @@ const ListItem = ({
 									<ExpirationBadge postExpirationDate={post.expiresAt} />
 								</div>
 							</span>
-							{!hideActions ? <span className={styles.buttons}>
-								{post.parentId && (
-									<Tooltip content={"View parent"}>
+							{!hideActions ? (
+								<span className={styles.buttons}>
+									{post.parentId && (
+										<Tooltip content={"View parent"}>
+											<Button
+												iconRight={<ArrowUpCircle />}
+												onClick={viewParentClick}
+												height={38}
+											/>
+										</Tooltip>
+									)}
+									<Tooltip content={"Make a copy"}>
 										<Button
-											iconRight={<ArrowUpCircle />}
-											onClick={viewParentClick}
+											iconRight={<Edit />}
+											onClick={editACopy}
 											height={38}
 										/>
 									</Tooltip>
-								)}
-								<Tooltip content={"Make a copy"}>
-									<Button
-										iconRight={<Edit />}
-										onClick={editACopy}
-										height={38}
-									/>
-								</Tooltip>
-								{isOwner && (
-									<Tooltip content={"Delete"}>
-										<Button
-											iconRight={<Trash />}
-											onClick={deletePost}
-											height={38}
-										/>
-									</Tooltip>
-								)}
-							</span> : null}
+									{isOwner && (
+										<Tooltip content={"Delete"}>
+											<Button
+												iconRight={<Trash />}
+												onClick={deletePost}
+												height={38}
+											/>
+										</Tooltip>
+									)}
+								</span>
+							) : null}
 						</div>
 
 						{post.description && (

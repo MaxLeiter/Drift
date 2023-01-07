@@ -21,11 +21,9 @@ type SharedProps = {
 type Props = (
 	| {
 			skeleton?: true
-			// eslint-disable-next-line no-mixed-spaces-and-tabs
 	  }
 	| {
 			skeleton?: false
-			// eslint-disable-next-line no-mixed-spaces-and-tabs
 	  }
 ) &
 	SharedProps

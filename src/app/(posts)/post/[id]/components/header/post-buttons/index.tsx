@@ -13,7 +13,7 @@ export const PostButtons = ({
 	files,
 	loading,
 	postId,
-	parentId,
+	parentId
 }: {
 	title: string
 	files?: Pick<PostWithFiles, "files">["files"]

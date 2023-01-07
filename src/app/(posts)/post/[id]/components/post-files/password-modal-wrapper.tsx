@@ -22,35 +22,38 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 			? undefined
 			: session?.user && session?.user?.id === authorId
 	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
-	const onSubmit = useCallback(async (password: string) => {
-		const res = await fetch(`/api/post/${postId}?password=${password}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-
-		if (!res.ok) {
-			setToast({
-				type: "error",
-				message: "Wrong password"
+	const onSubmit = useCallback(
+		async (password: string) => {
+			const res = await fetch(`/api/post/${postId}?password=${password}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json"
+				}
 			})
-			return
-		}
 
-		const data = await res.json()
-		if (data) {
-			if (data.error) {
+			if (!res.ok) {
 				setToast({
-					message: data.error,
-					type: "error"
+					type: "error",
+					message: "Wrong password"
 				})
-			} else {
-				setIsPasswordModalOpen(false)
-				setPost(data.post)
+				return
 			}
-		}
-	}, [postId, setPost, setToast])
+
+			const data = await res.json()
+			if (data) {
+				if (data.error) {
+					setToast({
+						message: data.error,
+						type: "error"
+					})
+				} else {
+					setIsPasswordModalOpen(false)
+					setPost(data.post)
+				}
+			}
+		},
+		[postId, setPost, setToast]
+	)
 
 	const onClose = () => {
 		setIsPasswordModalOpen(false)

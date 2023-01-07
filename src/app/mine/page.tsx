@@ -24,4 +24,4 @@ export default async function Mine() {
 	)
 }
 
-export const revalidate = 0;
+export const revalidate = 0

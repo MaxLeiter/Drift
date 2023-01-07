@@ -6,7 +6,7 @@
 		"dev": "next dev --port 3000",
 		"build": "next build",
 		"start": "next start --port 3000",
-		"lint": "next lint && prettier --list-different --config .prettierrc '{components,lib,app,pages}/**/*.{ts,tsx}' --write",
+		"lint": "next lint && prettier --list-different --config .prettierrc 'src/{components,lib,app,pages}/**/*.{ts,tsx}' --write",
 		"analyze": "cross-env ANALYZE=true next build",
 		"find:unused": "next-unused",
 		"prisma": "prisma",

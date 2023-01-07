@@ -21,9 +21,9 @@ export const PostTitle = ({
 	visibility,
 	createdAt,
 	expiresAt,
-	loading,
-	// authorId
-}: TitleProps) => {
+	loading
+}: // authorId
+TitleProps) => {
 	return (
 		<span className={styles.title}>
 			<h1
