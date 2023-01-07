@@ -24,9 +24,6 @@ const Document = ({
 	defaultTab = "edit",
 	handleOnContentChange
 }: Props) => {
-	// const height = editable ? "500px" : '100%'
-	const height = "100%"
-
 	const onTitleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) =>
 			setTitle ? setTitle(event.target.value) : null,

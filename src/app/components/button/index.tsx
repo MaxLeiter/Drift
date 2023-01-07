@@ -27,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			children,
 			onClick,
 			className,
-			buttonType = "primary",
+			buttonType = "secondary",
 			disabled = false,
 			iconRight,
 			iconLeft,

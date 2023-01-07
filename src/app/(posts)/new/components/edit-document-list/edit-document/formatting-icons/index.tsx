@@ -83,6 +83,7 @@ const FormattingIcons = ({
 						iconRight={icon}
 						onMouseDown={(e) => e.preventDefault()}
 						onClick={action}
+						buttonType="secondary"
 					/>
 				</Tooltip>
 			))}
