@@ -32,7 +32,7 @@ const ButtonDropdown: React.FC<
 				>
 					<Button
 						iconLeft={<ArrowDown />}
-						type={type}
+						buttonType={type}
 						className={styles.icon}
 					/>
 				</DropdownMenu.Trigger>

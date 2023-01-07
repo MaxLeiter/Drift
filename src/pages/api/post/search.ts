@@ -1,4 +1,5 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
+import { authOptions } from "@lib/server/auth"
 import { parseQueryParam } from "@lib/server/parse-query-param"
 import { searchPosts, ServerPostWithFiles } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -7,7 +8,7 @@ import { unstable_getServerSession } from "next-auth"
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { q, userId } = req.query
 
-	const session = await unstable_getServerSession()
+	const session = await unstable_getServerSession(req, res, authOptions)
 
 	const query = parseQueryParam(q)
 	const user = parseQueryParam(userId)
