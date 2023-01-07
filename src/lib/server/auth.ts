@@ -119,7 +119,6 @@ const providers = () => {
 							}
 						})
 
-						console.log("New user created")
 						return newUser
 					}
 				}
@@ -160,8 +159,7 @@ export const authOptions: NextAuthOptions = {
 						id: user.id
 					},
 					data: {
-						username: user.name,
-						displayName: user.name
+						username: user.name?.replace(/ /g, "-")
 					}
 				})
 			}
@@ -187,9 +185,6 @@ export const authOptions: NextAuthOptions = {
 					OR: [
 						{
 							username: user?.username
-						},
-						{
-							email: user?.email
 						}
 					]
 				}

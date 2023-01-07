@@ -27,8 +27,6 @@ export default async function handle(
 				}
 			})
 
-			console.log(tokens)
-
 			return res.json(tokens)
 		}
 		case "POST": {

@@ -117,7 +117,6 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 			})
 		}
 	})
-	console.log(posts)
 
 	return posts
 }
