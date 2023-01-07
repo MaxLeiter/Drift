@@ -66,8 +66,8 @@ const ListItem = ({
 	}
 
 	return (
-		<FadeIn>
-			<li key={post.id}>
+		<FadeIn as="li" key={post.id}>
+			<li>
 				<Card style={{ overflowY: "scroll" }}>
 					<>
 						<div className={styles.title}>

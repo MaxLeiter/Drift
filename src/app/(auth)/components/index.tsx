@@ -133,7 +133,6 @@ const Auth = ({
 						{isGithubEnabled ? (
 							<Button
 								type="submit"
-								buttonType="primary"
 								width="100%"
 								style={{
 									color: "var(--fg)"

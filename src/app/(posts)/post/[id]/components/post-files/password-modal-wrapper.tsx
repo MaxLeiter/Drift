@@ -13,7 +13,7 @@ type Props = {
 	authorId: Post["authorId"]
 }
 
-const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
+const PasswordModalWrapper = ({ setPost, postId, authorId }: Props) => {
 	const router = useRouter()
 	const { setToast } = useToasts()
 	const { data: session, status } = useSession()
@@ -68,7 +68,7 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 					"You're the author of this post, so you automatically have access to it.",
 				type: "default"
 			})
-		} else if (isAuthor === false) {
+		} else {
 			setIsPasswordModalOpen(true)
 		}
 	}, [isAuthor, onSubmit, setToast])
@@ -83,4 +83,4 @@ const PasswordModalPage = ({ setPost, postId, authorId }: Props) => {
 	)
 }
 
-export default PasswordModalPage
+export default PasswordModalWrapper

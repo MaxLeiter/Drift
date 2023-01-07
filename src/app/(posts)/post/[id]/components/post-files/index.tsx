@@ -4,7 +4,7 @@ import DocumentComponent from "./view-document"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import PasswordModalPage from "./password-modal-wrapper"
+import PasswordModalWrapper from "./password-modal-wrapper"
 import { PostWithFilesAndAuthor } from "@lib/server/prisma"
 
 type Props = {
@@ -45,9 +45,10 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 
 	const isProtected = post?.visibility === "protected"
 	const hasFetched = post?.files !== undefined
+	console.log({ isProtected, hasFetched })
 	if (isProtected && !hasFetched) {
 		return (
-			<PasswordModalPage
+			<PasswordModalWrapper
 				authorId={post.authorId}
 				setPost={setPost}
 				postId={post.id}

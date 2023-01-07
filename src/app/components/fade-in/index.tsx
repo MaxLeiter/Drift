@@ -5,15 +5,18 @@ const FadeIn = ({
 	duration = 300,
 	delay = 0,
 	children,
+	as,
 	...delegated
 }: {
 	duration?: number
 	delay?: number
 	children: React.ReactNode
+	as?: React.ElementType
 	[key: string]: any
 }) => {
+	const Element = as || "div"
 	return (
-		<div
+		<Element
 			{...delegated}
 			className={styles.fadeIn}
 			style={{
@@ -23,7 +26,7 @@ const FadeIn = ({
 			}}
 		>
 			{children}
-		</div>
+		</Element>
 	)
 }
 
