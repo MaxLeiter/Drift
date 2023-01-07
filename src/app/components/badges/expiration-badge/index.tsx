@@ -1,7 +1,7 @@
 "use client"
 
 import Tooltip from "@components/tooltip"
-import { timeUntil } from "@lib/time-ago"
+import { timeUntil } from "src/app/lib/time-ago"
 import { useEffect, useMemo, useState } from "react"
 import Badge from "../badge"
 

@@ -22,7 +22,7 @@ export const PostTitle = ({
 	createdAt,
 	expiresAt,
 	loading,
-	authorId
+	// authorId
 }: TitleProps) => {
 	return (
 		<span className={styles.title}>
@@ -33,10 +33,9 @@ export const PostTitle = ({
 			>
 				{title}{" "}
 				<span style={{ color: "var(--gray)" }}>
-					by{" "}
-					<Link colored href={`/author/${authorId}`}>
-						{displayName || "anonymous"}
-					</Link>
+					by {/* <Link colored href={`/author/${authorId}`}> */}
+					{displayName || "anonymous"}
+					{/* </Link> */}
 				</span>
 			</h1>
 			{!loading && (

@@ -39,6 +39,11 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 				const json = await res.json()
 				setVisibility(json.visibility)
 				router.refresh()
+				setToast({
+					message: "Visibility updated",
+					type: "success"
+				})
+				
 			} else {
 				setToast({
 					message: "An error occurred",
@@ -47,7 +52,7 @@ const VisibilityControl = ({ authorId, postId, visibility: postVisibility }: Pro
 				setPasswordModalVisible(false)
 			}
 		},
-		[postId, setToast, setVisibility]
+		[postId, router, setToast]
 	)
 
 	const onSubmit = useCallback(

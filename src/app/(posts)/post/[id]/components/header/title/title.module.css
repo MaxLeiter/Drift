@@ -3,18 +3,13 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: var(--gap);
 }
 
 .title .badges {
 	display: flex;
 	gap: var(--gap-half);
 	flex-wrap: wrap;
-}
-
-.title h3 {
-	margin: 0;
-	padding: 0;
-	display: inline-block;
 }
 
 .titleWithDropdown {

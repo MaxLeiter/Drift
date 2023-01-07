@@ -46,9 +46,18 @@ const parseAndCheckAuthToken = async (req: NextApiRequest) => {
 			token
 		},
 		select: {
-			userId: true
+			userId: true,
+			expiresAt: true
 		}
 	})
+
+	if (!user) {
+		return null
+	}
+
+	if (user.expiresAt < new Date()) {
+		return null
+	}
 
 	return user?.userId
 }

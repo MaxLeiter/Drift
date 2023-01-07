@@ -14,9 +14,10 @@ async function PostListWrapper({
 	const data = (await posts).filter((post) => post.visibility === "public")
 	return (
 		<PostList
-			morePosts={false}
 			userId={userId}
 			initialPosts={JSON.stringify(data)}
+			hideSearch
+			hideActions
 		/>
 	)
 }
@@ -62,9 +63,9 @@ export default async function UserPage({
 				<h1>Public posts by {user?.displayName || "Anonymous"}</h1>
 				<Avatar />
 			</div>
-			<Suspense fallback={<PostList initialPosts={JSON.stringify({})} />}>
+			<Suspense fallback={<PostList hideSearch skeleton initialPosts={[]} />}>
 				{/* @ts-expect-error because TS async JSX support is iffy */}
-				<PostListWrapper posts={posts} userId={id} />
+				<PostListWrapper hideSearch posts={posts} userId={id} />
 			</Suspense>
 		</>
 	)

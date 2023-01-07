@@ -2,7 +2,7 @@
 
 import Button from "@components/button"
 import ButtonGroup from "@components/button-group"
-import FileDropdown from "app/(posts)/components/file-dropdown"
+import FileDropdown from "src/app/(posts)/components/file-dropdown"
 import { Edit, ArrowUpCircle, Archive } from "react-feather"
 import styles from "./post-buttons.module.css"
 import { useRouter } from "next/navigation"

@@ -1,5 +1,5 @@
 import SettingsGroup from "../components/settings-group"
-import Profile from "app/settings/components/sections/profile"
+import Profile from "src/app/settings/components/sections/profile"
 import APIKeys from "./components/sections/api-keys"
 
 export default async function SettingsPage() {

@@ -39,13 +39,13 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": [
-        "app/components/*"
+        "src/app/components/*"
       ],
       "@lib/*": [
-        "lib/*"
+        "src/lib/*"
       ],
       "@styles/*": [
-        "app/styles/*"
+        "src/app/styles/*"
       ]
     }
   },

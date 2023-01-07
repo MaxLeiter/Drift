@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback } from "react"
 import styles from "./document.module.css"
 import Button from "@components/button"
 import Input from "@components/input"
-import DocumentTabs from "app/(posts)/components/tabs"
+import DocumentTabs from "src/app/(posts)/components/tabs"
 import { Trash } from "react-feather"
 
 type Props = {

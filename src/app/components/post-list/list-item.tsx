@@ -72,7 +72,7 @@ const ListItem = ({
 					<>
 						<div className={styles.title}>
 							<span className={styles.titleText}>
-								<h3 style={{ display: "inline-block", margin: 0 }}>
+								<h4 style={{ display: "inline-block", margin: 0 }}>
 									<Link
 										colored
 										style={{ marginRight: "var(--gap)" }}
@@ -80,7 +80,7 @@ const ListItem = ({
 									>
 										{post.title}
 									</Link>
-								</h3>
+								</h4>
 								<div className={styles.badges}>
 									<VisibilityBadge visibility={post.visibility} />
 									<Badge type="secondary">

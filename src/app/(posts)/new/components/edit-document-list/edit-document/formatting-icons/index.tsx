@@ -11,7 +11,6 @@ import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Tooltip from "@components/tooltip"
 import Button from "@components/button"
-import ButtonGroup from "@components/button-group"
 import clsx from "clsx"
 // TODO: clean up
 

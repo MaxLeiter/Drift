@@ -1,9 +1,10 @@
 import Image from "next/image"
 import Card from "@components/card"
-import { getWelcomeContent } from "pages/api/welcome"
+import { getWelcomeContent } from "src/pages/api/welcome"
 import DocumentTabs from "./(posts)/components/tabs"
 import { getAllPosts, Post } from "@lib/server/prisma"
-import PostList from "@components/post-list"
+import PostList, { NoPostsFound } from "@components/post-list"
+import { Suspense } from "react"
 
 const getWelcomeData = async () => {
 	const welcomeContent = await getWelcomeContent()
@@ -66,8 +67,12 @@ export default async function Page() {
 			</Card>
 			<div>
 				<h2>Recent public posts</h2>
-				{/* @ts-expect-error because of async RSC */}
-				<PublicPostList getPostsPromise={getPostsPromise} />
+				<Suspense
+					fallback={<PostList skeleton hideSearch initialPosts={JSON.stringify({})} />}
+				>
+					{/* @ts-expect-error because of async RSC */}
+					<PublicPostList getPostsPromise={getPostsPromise} />
+				</Suspense>
 			</div>
 		</div>
 	)
@@ -80,25 +85,16 @@ async function PublicPostList({
 }) {
 	try {
 		const posts = await getPostsPromise
+
+		if (posts.length === 0) {
+			return <NoPostsFound />
+		}
+
 		return (
-			<PostList
-				userId={undefined}
-				morePosts={false}
-				initialPosts={JSON.stringify(posts)}
-				hideActions
-				hideSearch
-			/>
+			<PostList initialPosts={JSON.stringify(posts)} hideActions hideSearch />
 		)
 	} catch (error) {
-		return (
-			<PostList
-				userId={undefined}
-				morePosts={false}
-				initialPosts={[]}
-				hideActions
-				hideSearch
-			/>
-		)
+		return <NoPostsFound />
 	}
 }
 

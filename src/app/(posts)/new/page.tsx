@@ -1,4 +1,4 @@
-import NewPost from "app/(posts)/new/components/new"
+import NewPost from "src/app/(posts)/new/components/new"
 import "./react-datepicker.css"
 
 const New = () => <NewPost />

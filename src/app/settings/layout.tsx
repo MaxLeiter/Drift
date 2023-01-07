@@ -11,7 +11,8 @@ export default function SettingsLayout({
 					display: "flex",
 					flexDirection: "column",
 					gap: "var(--gap)",
-					marginBottom: "var(--gap)"
+					marginBottom: "var(--gap)",
+					marginTop: "var(--gap)"
 				}}
 			>
 				{children}

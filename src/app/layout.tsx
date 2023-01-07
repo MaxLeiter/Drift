@@ -1,6 +1,5 @@
 import "@styles/globals.css"
 import { Providers } from "./providers"
-// import { ServerThemeProvider } from "@wits/next-themes"
 import Page from "@components/page"
 import { Toasts } from "@components/toasts"
 import Header from "@components/header"
@@ -14,13 +13,6 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
 	return (
-		// <ServerThemeProvider
-		// 	enableSystem={true}
-		// 	disableTransitionOnChange
-		// 	cookieName={"drift-theme"}
-		// 	attribute="data-theme"
-		// 	enableColorScheme={true}
-		// >
 		<html lang="en" className={inter.variable}>
 			<head />
 			<body>

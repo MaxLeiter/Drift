@@ -119,6 +119,7 @@ const providers = () => {
 							}
 						})
 
+						console.log("New user created")
 						return newUser
 					}
 				}

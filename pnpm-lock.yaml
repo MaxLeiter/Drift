@@ -21,7 +21,6 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.46.1
   '@typescript-eslint/parser': ^5.46.1
   '@wcj/markdown-to-html': ^2.1.2
-  '@wits/next-themes': 0.2.14
   client-only: ^0.0.1
   client-zip: 2.2.1
   clsx: ^1.2.1
@@ -63,7 +62,6 @@ dependencies:
   '@radix-ui/react-tabs': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-tooltip': 1.0.2_jbvntnid6ohjelon6ccj5dhg2u
   '@wcj/markdown-to-html': 2.1.2
-  '@wits/next-themes': 0.2.14_3tcywg5dy5qhcmsv6sy2pt6lua
   client-only: 0.0.1
   client-zip: 2.2.1
   jest: 29.3.1_@types+node@17.0.23
@@ -1803,18 +1801,6 @@ packages:
       vfile: 5.3.5
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@wits/next-themes/0.2.14_3tcywg5dy5qhcmsv6sy2pt6lua:
-    resolution: {integrity: sha512-fHKb/tRcWbYNblGHZtfvAQztDhzUB9d7ZkYOny0BisSPh6EABcsqxKB48ABUQztcmKywlp2zEMkLcSRj/PQBSw==}
-    peerDependencies:
-      next: '*'
-      react: '*'
-      react-dom: '*'
-    dependencies:
-      next: 13.1.2-canary.0_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /acorn-jsx/5.3.2_acorn@8.8.1:

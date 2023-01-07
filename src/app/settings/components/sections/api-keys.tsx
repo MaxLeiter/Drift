@@ -5,97 +5,56 @@ import Input from "@components/input"
 import Note from "@components/note"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
-import { ApiToken } from "@prisma/client"
+import { SerializedApiToken, useApiTokens } from "src/app/hooks/swr/use-api-tokens"
+import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import useSWR from "swr"
 import styles from "./api-keys.module.css"
 
-type ConvertDateToString<T> = {
-	[P in keyof T]: T[P] extends Date ? string : T[P]
-}
-
-type SerializedApiToken = ConvertDateToString<ApiToken>
-
 // need to pass in the accessToken
-const APIKeys = ({ tokens: initialTokens }: { tokens?: SerializedApiToken[] }) => {
+const APIKeys = ({
+	tokens: initialTokens
+}: {
+	tokens?: SerializedApiToken[]
+}) => {
 	const session = useSession()
 	const { setToast } = useToasts()
-	const { data, error, mutate } = useSWR<SerializedApiToken[]>(
-		"/api/user/tokens?userId=" + session?.data?.user?.id,
-		{
-			fetcher: async (url: string) => {
-				if (session.status === "loading") return initialTokens
-
-				return fetch(url).then(async (res) => {
-					const data = await res.json()
-					if (data.error) {
-						setError(data.error)
-						return
-					} else {
-						setError(undefined)
-					}
-
-					return data
-				})
-			},
-			fallbackData: initialTokens
-		}
-	)
+	const { data, error, createToken, expireToken } = useApiTokens({
+		userId: session.data?.user.id,
+		initialTokens
+	})
 
 	const [submitting, setSubmitting] = useState<boolean>(false)
 	const [newToken, setNewToken] = useState<string>("")
-	const [errorText, setError] = useState<string>()
-
-	const createToken = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
-		if (!newToken) {
-			return
-		}
-		setSubmitting(true)
-
-		const res = await fetch(
-			`/api/user/tokens?userId=${session.data?.user.id}&name=${newToken}`,
-			{
-				method: "POST",
-			}
-		)
-
-		const response = await res.json()
-		if (response.error) {
-			setError(response.error)
-			return
-		} else {
-			setError(undefined)
-		}
-
-		setSubmitting(false)
-		navigator.clipboard.writeText(response.token)
-		mutate([...(data || []), response])
-		setNewToken("")
-		setToast({
-			message: "Copied to clipboard!",
-			type: "success"
-		})
-	}
-
-	const expireToken = async (id: string) => {
-		setSubmitting(true)
-		await fetch(`/api/user/tokens?userId=${session.data?.user.id}&tokenId=${id}`, {
-			method: "DELETE",
-			headers: {
-				Authorization: "Bearer " + session?.data?.user.sessionToken
-			}
-		})
-		setSubmitting(false)
-		mutate(data?.filter((token) => token.id !== id))
-	}
 
 	const onChangeNewToken = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNewToken(e.target.value)
 	}
 
-	const hasError = Boolean(error || errorText)
+	const onCreateTokenClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault()
+		setSubmitting(true)
+		try {
+			const createdToken = await createToken(newToken)
+			setNewToken("")
+			await copyToClipboard(createdToken?.token || "")
+			setToast({
+				message: "Your new API key has been copied to your clipboard.",
+				type: "success"
+			})
+			setSubmitting(false)
+		} catch (e) {
+			if (e instanceof Error) {
+				setToast({
+					message: e.message,
+					type: "error"
+				})
+			}
+			setSubmitting(false)
+		}
+	}
+
+	const hasError = Boolean(error)
 	return (
 		<>
 			{!hasError && (
@@ -103,31 +62,32 @@ const APIKeys = ({ tokens: initialTokens }: { tokens?: SerializedApiToken[] }) =
 					API keys allow you to access the API from 3rd party tools.
 				</Note>
 			)}
-			{hasError && <Note type="error">{error?.message || errorText}</Note>}
-
+			{hasError && <Note type="error">{error?.message}</Note>}
 			<form className={styles.form}>
-				<h3>Create new</h3>
-				<Input
-					type="text"
-					value={newToken}
-					onChange={onChangeNewToken}
-					aria-label="API Key name"
-					placeholder="Name"
-				/>
-				<Button
-					type="button"
-					onClick={createToken}
-					loading={submitting}
-					disabled={!newToken}
-				>
-					Submit
-				</Button>
+				<h5>Create new</h5>
+				<fieldset className={styles.fieldset}>
+					<Input
+						type="text"
+						value={newToken}
+						onChange={onChangeNewToken}
+						aria-label="API Key name"
+						placeholder="Name"
+					/>
+					<Button
+						type="button"
+						onClick={onCreateTokenClick}
+						loading={submitting}
+						disabled={!newToken}
+					>
+						Submit
+					</Button>
+				</fieldset>
 			</form>
 
 			<div className={styles.tokens}>
 				{data ? (
 					data?.length ? (
-						<table width={'100%'}>
+						<table width={"100%"}>
 							<thead>
 								<tr>
 									<th>Name</th>
@@ -144,7 +104,6 @@ const APIKeys = ({ tokens: initialTokens }: { tokens?: SerializedApiToken[] }) =
 											<Button
 												type="button"
 												onClick={() => expireToken(token.id)}
-												loading={submitting}
 											>
 												Revoke
 											</Button>

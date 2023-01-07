@@ -1,7 +1,7 @@
 "use client"
 
 import * as RadixTabs from "@radix-ui/react-tabs"
-import FormattingIcons from "app/(posts)/new/components/edit-document-list/edit-document/formatting-icons"
+import FormattingIcons from "src/app/(posts)/new/components/edit-document-list/edit-document/formatting-icons"
 import { ChangeEvent, useRef } from "react"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Preview, { StaticPreview } from "../preview"

@@ -38,7 +38,7 @@
 
 .header {
 	transition: opacity 0.2s ease-in-out;
-	opacity: .5;
+	opacity: 0;
 }
 
 .header:not(.loading) {

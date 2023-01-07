@@ -3,7 +3,7 @@ import { parseQueryParam } from "@lib/server/parse-query-param"
 import { getPostById } from "@lib/server/prisma"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
-import { prisma } from "lib/server/prisma"
+import { prisma } from "src/lib/server/prisma"
 import * as crypto from "crypto"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

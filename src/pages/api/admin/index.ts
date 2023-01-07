@@ -1,7 +1,7 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
 import { NextApiRequest, NextApiResponse } from "next"
-import { prisma } from "lib/server/prisma"
+import { prisma } from "src/lib/server/prisma"
 import { getSession } from "next-auth/react"
 import { deleteUser } from "../user/[id]"
 

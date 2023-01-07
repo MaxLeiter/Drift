@@ -5,7 +5,7 @@ import Input from "@components/input"
 import Note from "@components/note"
 import { useToasts } from "@components/toasts"
 import { useSession } from "next-auth/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./profile.module.css"
 
 const Profile = () => {
@@ -14,6 +14,12 @@ const Profile = () => {
 	const [submitting, setSubmitting] = useState<boolean>(false)
 	const { setToast } = useToasts()
 
+	useEffect(() => {
+		if (!name) {
+			setName(session?.user.name || "")
+		}
+	}, [name, session])
+	
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value)
 	}
@@ -71,7 +77,7 @@ const Profile = () => {
 	return (
 		<>
 			<Note type="warning">
-				This information will be publicly available on your profile.
+				Your display name is publicly available on your profile.
 			</Note>
 			<form onSubmit={onSubmit} className={styles.form}>
 				<div>

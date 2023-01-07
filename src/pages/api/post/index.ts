@@ -95,7 +95,6 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 			.catch((error) => {
 				return res.status(500).json(error)
 			})
-
 		return res.json(post)
 	} catch (error) {
 		return res.status(500).json(error)

@@ -3,66 +3,42 @@
 import styles from "./post-list.module.css"
 import ListItem from "./list-item"
 import { ChangeEvent, useCallback, useState } from "react"
-import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
 import Input from "@components/input"
-import Button from "@components/button"
 import { useToasts } from "@components/toasts"
 import { ListItemSkeleton } from "./list-item-skeleton"
+import Link from "@components/link"
 import debounce from "lodash.debounce"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
 	morePosts?: boolean
-	userId?: string
 	hideSearch?: boolean
 	hideActions?: boolean
 	isOwner?: boolean
+	skeleton?: boolean
+	searchValue?: string
+	userId?: string
 }
 
 const PostList = ({
-	morePosts,
 	initialPosts: initialPostsMaybeJSON,
-	userId,
 	hideSearch,
 	hideActions,
-	isOwner
+	isOwner,
+	skeleton,
+	userId
 }: Props) => {
 	const initialPosts =
 		typeof initialPostsMaybeJSON === "string"
 			? JSON.parse(initialPostsMaybeJSON)
 			: initialPostsMaybeJSON
-	const [search, setSearchValue] = useState("")
-	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
+	const [searchValue, setSearchValue] = useState("")
 	const [searching, setSearching] = useState(false)
-	const [hasMorePosts] = useState(morePosts)
+	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
 	const { setToast } = useToasts()
 
-	const loadMoreClick = useCallback(
-		(e: React.MouseEvent<HTMLButtonElement>) => {
-			e.preventDefault()
-			if (hasMorePosts) {
-				// eslint-disable-next-line no-inner-declarations
-				async function fetchPosts() {
-					// const res = await fetch(`/api/posts/mine`, {
-					// 	method: "GET",
-					// 	headers: {
-					// 		"Content-Type": "application/json",
-					// 		"x-page": `${posts.length / 10 + 1}`
-					// 	},
-					// 	next: {
-					// 		revalidate: 10
-					// 	}
-					// })
-					// const json = await res.json()
-					// setPosts([...posts, ...json.posts])
-					// setHasMorePosts(json.morePosts)
-				}
-				fetchPosts()
-			}
-		},
-		[hasMorePosts]
-	)
+	const showSkeleton = skeleton || searching
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps -- TODO: address this
 	const onSearch = useCallback(
@@ -131,27 +107,18 @@ const PostList = ({
 						disabled={!posts}
 						style={{ maxWidth: 300 }}
 						aria-label="Search"
-						value={search}
+						value={searchValue}
 					/>
 				</div>
 			)}
 			{!posts && <p style={{ color: "var(--warning)" }}>Failed to load.</p>}
-			{searching && (
+			{showSkeleton && (
 				<ul>
 					<ListItemSkeleton />
 					<ListItemSkeleton />
 				</ul>
 			)}
-			{!searching && posts?.length === 0 && posts && (
-				<p>
-					No posts found. Create one{" "}
-					<Link colored href="/new">
-						here
-					</Link>
-					.
-				</p>
-			)}
-			{!searching && posts?.length > 0 && (
+			{!showSkeleton && posts?.length > 0 && (
 				<div>
 					<ul>
 						{posts.map((post) => {
@@ -168,15 +135,20 @@ const PostList = ({
 					</ul>
 				</div>
 			)}
-			{!searching && hasMorePosts && !setSearchValue && (
-				<div>
-					<Button width={"100%"} onClick={loadMoreClick}>
-						Load more
-					</Button>
-				</div>
-			)}
 		</div>
 	)
 }
 
 export default PostList
+
+export function NoPostsFound() {
+	return (
+		<p>
+			No posts found. Create one{" "}
+			<Link colored href="/new">
+				here
+			</Link>
+			.
+		</p>
+	)
+}
