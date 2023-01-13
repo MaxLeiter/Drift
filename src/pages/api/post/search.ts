@@ -26,9 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 
 		const posts = await searchPosts(searchQuery, {
-			userId,
-			withFiles: true,
-			publicOnly: false
+			userId
 		})
 
 		return res.json(posts)

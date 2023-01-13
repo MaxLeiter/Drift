@@ -257,7 +257,8 @@ export const searchPosts = async (
 					title: {
 						contains: query
 					},
-					authorId: userId
+					authorId: userId,
+					visibility: userId ? undefined : "public"
 				},
 				{
 					files: {
@@ -267,6 +268,7 @@ export const searchPosts = async (
 							}
 						}
 					},
+					visibility: userId ? undefined : "public",
 					authorId: userId
 				}
 			]
