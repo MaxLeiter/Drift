@@ -25,7 +25,7 @@ const nextConfig = {
 		domains: ["avatars.githubusercontent.com"]
 	},
 	env: {
-		NEXT_PUBLIC_DRIFT_URL: process.env.VERCEL_URL || process.env.DRIFT_URL
+		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
 	}
 }
 
