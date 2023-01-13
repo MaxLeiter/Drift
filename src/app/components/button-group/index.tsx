@@ -5,7 +5,6 @@ export default function ButtonGroup({
 	verticalIfMobile,
 	...props
 }: {
-	children: React.ReactNode | React.ReactNode[]
 	verticalIfMobile?: boolean
 } & React.HTMLAttributes<HTMLDivElement>) {
 	return (

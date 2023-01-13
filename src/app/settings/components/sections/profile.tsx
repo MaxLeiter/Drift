@@ -13,7 +13,7 @@ import { User } from "@prisma/client"
 function Profile() {
 	const { session } = useSessionSWR()
 	console.log(session)
-	const { data: userData  } = useSWR<User>(
+	const { data: userData } = useSWR<User>(
 		session?.user?.id ? `/api/user/${session?.user?.id}` : null
 	)
 	const [name, setName] = useState<string>(userData?.displayName || "")

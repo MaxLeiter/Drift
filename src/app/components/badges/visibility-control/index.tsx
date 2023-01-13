@@ -16,11 +16,9 @@ type Props = {
 	visibility: string
 }
 
-const VisibilityControl = ({
-	authorId,
-	postId,
-	visibility: postVisibility
-}: Props) => {
+function VisibilityControl({
+	authorId, postId, visibility: postVisibility
+}: Props) {
 	const { session } = useSessionSWR()
 	const isAuthor = session?.user && session?.user?.id === authorId
 	const [visibility, setVisibility] = useState<string>(postVisibility)
@@ -32,16 +30,13 @@ const VisibilityControl = ({
 
 	const sendRequest = useCallback(
 		async (visibility: string, password?: string) => {
-			const res = await fetchWithUser(
-				`/api/post/${postId}`,
-				{
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({ visibility, password })
-				}
-			)
+			const res = await fetchWithUser(`/api/post/${postId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ visibility, password })
+			})
 
 			if (res.ok) {
 				const json = await res.json()
@@ -129,8 +124,7 @@ const VisibilityControl = ({
 				creating={true}
 				isOpen={passwordModalVisible}
 				onClose={onClosePasswordModal}
-				onSubmit={submitPassword}
-			/>
+				onSubmit={submitPassword} />
 		</>
 	)
 }

@@ -9,7 +9,8 @@ import { Spinner } from "@components/spinner"
 import Link from "next/link"
 
 function FileDropdown({
-	files, loading
+	files,
+	loading
 }: {
 	files: Pick<PostWithFiles, "files">["files"]
 	loading?: boolean

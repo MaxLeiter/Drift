@@ -1,3 +1,5 @@
-export default function NewLayout({ children }: { children: React.ReactNode }) {
+import { ChildrenProps } from "src/app/providers"
+
+export default function NewLayout({ children }: ChildrenProps) {
 	return <>{children}</>
 }

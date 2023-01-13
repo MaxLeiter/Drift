@@ -5,7 +5,7 @@ import Skeleton from "@components/skeleton"
 export const ListItemSkeleton = () => (
 	<li>
 		<Card style={{ overflowY: "scroll" }}>
-			<div style={{display: 'flex', gap: 16}}>
+			<div style={{ display: "flex", gap: 16 }}>
 				<div className={styles.title}>
 					{/* title */}
 					<Skeleton width={80} height={32} />

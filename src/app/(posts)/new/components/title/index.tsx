@@ -31,7 +31,8 @@ function Title({ onChange, title }: props) {
 				label="Title"
 				className={styles.labelAndInput}
 				style={{ width: "100%" }}
-				labelClassName={styles.labelAndInput} />
+				labelClassName={styles.labelAndInput}
+			/>
 		</div>
 	)
 }

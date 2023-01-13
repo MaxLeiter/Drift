@@ -8,7 +8,7 @@ type Props = {
 	height?: number | string
 }
 
-type Attrs = Omit<React.HTMLAttributes<any>, keyof Props>
+type Attrs = Omit<React.HTMLAttributes<HTMLDivElement>, keyof Props>
 type ButtonDropdownProps = Props & Attrs
 
 const ButtonDropdown: React.FC<

@@ -1,11 +1,10 @@
 import { getCurrentUser } from "@lib/server/session"
 import { redirect } from "next/navigation"
+import { PropsWithChildren } from "react"
 
 export default async function AdminLayout({
 	children
-}: {
-	children: React.ReactNode
-}) {
+}: PropsWithChildren<unknown>) {
 	const user = await getCurrentUser()
 	const isAdmin = user?.role === "admin"
 

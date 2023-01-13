@@ -1,7 +1,6 @@
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import VisibilityBadge from "@components/badges/visibility-badge"
-import Link from "@components/link"
 import Skeleton from "@components/skeleton"
 import styles from "./title.module.css"
 

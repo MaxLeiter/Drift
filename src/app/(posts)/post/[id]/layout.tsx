@@ -5,16 +5,16 @@ import { PostButtons } from "./components/header/post-buttons"
 import styles from "./layout.module.css"
 import { PostTitle } from "./components/header/title"
 import { getPost } from "./get-post"
+import { PropsWithChildren } from "react"
 
 export default async function PostLayout({
 	children,
 	params
-}: {
+}: PropsWithChildren<{
 	params: {
 		id: string
 	}
-	children: React.ReactNode
-}) {
+}>) {
 	const { post } = (await getPost(params.id)) as {
 		post: PostWithFilesAndAuthor
 	}

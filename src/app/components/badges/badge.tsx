@@ -2,7 +2,6 @@ import React from "react"
 import styles from "./badge.module.css"
 type BadgeProps = {
 	type: "primary" | "secondary" | "error" | "warning"
-	children: React.ReactNode
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(

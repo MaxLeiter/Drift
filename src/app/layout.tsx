@@ -1,29 +1,28 @@
 import "@styles/globals.css"
 import { Providers } from "./providers"
-import Page from "@components/page"
+import Layout from "@components/layout"
 import { Toasts } from "@components/toasts"
 import Header from "@components/header"
 import { Inter } from "@next/font/google"
+import { PropsWithChildren } from "react"
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
-interface RootLayoutProps {
-	children: React.ReactNode
-}
-
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+	children
+}: PropsWithChildren<unknown>) {
 	return (
 		// suppressHydrationWarning is required because of next-themes
 		<html lang="en" className={inter.variable} suppressHydrationWarning>
 			<head />
 			<body>
 				<Toasts />
-				<Page>
+				<Layout>
 					<Providers>
 						<Header />
 						{children}
 					</Providers>
-				</Page>
+				</Layout>
 			</body>
 		</html>
 	)

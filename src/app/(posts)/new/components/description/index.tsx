@@ -17,7 +17,8 @@ function Description({ onChange, description }: props) {
 				label="Description"
 				maxLength={256}
 				width="100%"
-				placeholder="An optional description of your post" />
+				placeholder="An optional description of your post"
+			/>
 		</div>
 	)
 }

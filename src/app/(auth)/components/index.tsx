@@ -27,6 +27,7 @@ function Auth({
 	const signText = signingIn ? "In" : "Up"
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
+	const [submitting, setSubmitting] = useState(false)
 	const queryParams = useSearchParams()
 
 	useEffect(() => {
@@ -40,6 +41,7 @@ function Auth({
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
+		setSubmitting(true)
 
 		const res = await signIn("credentials", {
 			username,
@@ -54,6 +56,7 @@ function Auth({
 				type: "error",
 				message: res.error
 			})
+			setSubmitting(false)
 		} else {
 			startTransition(() => {
 				router.push("/new")
@@ -126,7 +129,7 @@ function Auth({
 							width="100%"
 							aria-label="Password"
 						/>
-						<Button width={"100%"} type="submit">
+						<Button width={"100%"} type="submit" loading={submitting}>
 							Sign {signText}
 						</Button>
 						{isGithubEnabled ? <hr style={{ width: "100%" }} /> : null}

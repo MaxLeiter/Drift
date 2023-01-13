@@ -12,9 +12,7 @@ type Props = {
 	title?: string
 }
 
-function MarkdownPreview({
-	height = 500, fileId, content = "", title
-}: Props) {
+function MarkdownPreview({ height = 500, fileId, content = "", title }: Props) {
 	const [preview, setPreview] = useState<string>(content)
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
@@ -25,9 +23,9 @@ function MarkdownPreview({
 			const body = fileId
 				? undefined
 				: JSON.stringify({
-					title: title || "",
-					content: content
-				})
+						title: title || "",
+						content: content
+				  })
 
 			const resp = await fetchWithUser(path, {
 				method: method,
@@ -61,7 +59,8 @@ function MarkdownPreview({
 export default memo(MarkdownPreview)
 
 export function StaticPreview({
-	preview, height = 500
+	preview,
+	height = 500
 }: {
 	preview: string
 	height: string | number
@@ -72,6 +71,7 @@ export function StaticPreview({
 			dangerouslySetInnerHTML={{ __html: preview }}
 			style={{
 				height
-			}} />
+			}}
+		/>
 	)
 }
