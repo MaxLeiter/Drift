@@ -10,14 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const publicSearch = parseQueryParam(query.public)
 	const searchQuery = parseQueryParam(q)
 
-	console.log(
-		"searchQuery",
-		searchQuery,
-		"publicSearch",
-		publicSearch,
-		"userId",
-		query.userId
-	)
 	if (!searchQuery) {
 		res.status(400).json({ error: "Invalid query" })
 		return

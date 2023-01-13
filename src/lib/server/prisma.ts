@@ -259,10 +259,9 @@ export const searchPosts = async (
 			OR: [
 				{
 					title: {
-						search: query
+						contains: query
 					},
-					authorId: userId,
-					visibility: publicOnly ? "public" : undefined
+					authorId: userId
 				},
 				{
 					files: {
@@ -272,13 +271,9 @@ export const searchPosts = async (
 							}
 						}
 					},
-					authorId: userId,
-					visibility: publicOnly ? "public" : undefined
+					authorId: userId
 				}
 			]
-		},
-		include: {
-			files: withFiles
 		}
 	})
 
