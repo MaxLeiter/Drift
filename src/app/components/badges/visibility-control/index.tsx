@@ -17,7 +17,9 @@ type Props = {
 }
 
 function VisibilityControl({
-	authorId, postId, visibility: postVisibility
+	authorId,
+	postId,
+	visibility: postVisibility
 }: Props) {
 	const { session } = useSessionSWR()
 	const isAuthor = session?.user && session?.user?.id === authorId
@@ -124,7 +126,8 @@ function VisibilityControl({
 				creating={true}
 				isOpen={passwordModalVisible}
 				onClose={onClosePasswordModal}
-				onSubmit={submitPassword} />
+				onSubmit={submitPassword}
+			/>
 		</>
 	)
 }

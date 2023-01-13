@@ -2,7 +2,11 @@
 import styles from "./fade.module.css"
 
 function FadeIn({
-	duration = 300, delay = 0, children, as, ...delegated
+	duration = 300,
+	delay = 0,
+	children,
+	as,
+	...delegated
 }: {
 	duration?: number
 	delay?: number

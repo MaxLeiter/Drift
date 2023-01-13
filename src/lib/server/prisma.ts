@@ -245,13 +245,9 @@ export const getAllUsers = async (
 export const searchPosts = async (
 	query: string,
 	{
-		withFiles = false,
-		userId,
-		publicOnly
+		userId
 	}: {
-		withFiles?: boolean
 		userId?: User["id"]
-		publicOnly?: boolean
 	} = {}
 ): Promise<ServerPostWithFiles[]> => {
 	const posts = await prisma.post.findMany({
