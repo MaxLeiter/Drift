@@ -14,21 +14,19 @@ import Button from "@components/button"
 import clsx from "clsx"
 // TODO: clean up
 
-const FormattingIcons = ({
-	textareaRef,
-	className
+function FormattingIcons({
+	textareaRef, className
 }: {
 	textareaRef?: RefObject<TextareaMarkdownRef>
 	className?: string
-}) => {
+}) {
 	const formattingActions = useMemo(() => {
 		const handleBoldClick = () => textareaRef?.current?.trigger("bold")
 		const handleItalicClick = () => textareaRef?.current?.trigger("italic")
 		const handleLinkClick = () => textareaRef?.current?.trigger("link")
 		const handleImageClick = () => textareaRef?.current?.trigger("image")
 		const handleCodeClick = () => textareaRef?.current?.trigger("code")
-		const handleListClick = () =>
-			textareaRef?.current?.trigger("unordered-list")
+		const handleListClick = () => textareaRef?.current?.trigger("unordered-list")
 		return [
 			{
 				icon: <Bold />,
@@ -83,8 +81,7 @@ const FormattingIcons = ({
 						iconRight={icon}
 						onMouseDown={(e) => e.preventDefault()}
 						onClick={action}
-						buttonType="secondary"
-					/>
+						buttonType="secondary" />
 				</Tooltip>
 			))}
 		</div>

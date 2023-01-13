@@ -3,13 +3,13 @@ import { notFound, redirect } from "next/navigation"
 import { getPostById } from "@lib/server/prisma"
 import { getSession } from "@lib/server/session"
 
-const NewFromExisting = async ({
+async function NewFromExisting({
 	params
 }: {
 	params: {
 		id: string
 	}
-}) => {
+}) {
 	const session = await getSession()
 	if (!session?.user) {
 		return redirect("/signin")

@@ -11,7 +11,7 @@ import { useToasts } from "@components/toasts"
 import { useRouter, useSearchParams } from "next/navigation"
 import Note from "@components/note"
 
-const Auth = ({
+function Auth({
 	page,
 	requiresServerPassword,
 	isGithubEnabled
@@ -19,7 +19,7 @@ const Auth = ({
 	page: "signup" | "signin"
 	requiresServerPassword?: boolean
 	isGithubEnabled?: boolean
-}) => {
+}) {
 	const [serverPassword, setServerPassword] = useState("")
 	const { setToast } = useToasts()
 	const signingIn = page === "signin"
@@ -38,7 +38,7 @@ const Auth = ({
 		}
 	}, [queryParams, setToast])
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 
 		const res = await signIn("credentials", {
@@ -62,17 +62,17 @@ const Auth = ({
 		}
 	}
 
-	const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+	function handleChangeUsername(event: React.ChangeEvent<HTMLInputElement>) {
 		setUsername(event.target.value)
 	}
 
-	const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+	function handleChangePassword(event: React.ChangeEvent<HTMLInputElement>) {
 		setPassword(event.target.value)
 	}
 
-	const handleChangeServerPassword = (
+	function handleChangeServerPassword(
 		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+	) {
 		setServerPassword(event.target.value)
 	}
 

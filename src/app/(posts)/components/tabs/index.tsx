@@ -2,7 +2,7 @@
 
 import * as RadixTabs from "@radix-ui/react-tabs"
 import FormattingIcons from "src/app/(posts)/new/components/edit-document-list/edit-document/formatting-icons"
-import { ChangeEvent, useRef } from "react"
+import { ChangeEvent, ClipboardEvent, useRef } from "react"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Preview, { StaticPreview } from "../preview"
 import styles from "./tabs.module.css"
@@ -11,7 +11,7 @@ type Props = RadixTabs.TabsProps & {
 	isEditing: boolean
 	defaultTab: "preview" | "edit"
 	handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
-	onPaste?: (e: any) => void
+	onPaste?: (e: ClipboardEvent<HTMLTextAreaElement>) => void
 	title?: string
 	content?: string
 	preview?: string

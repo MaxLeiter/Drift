@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from "react"
+import { ChangeEvent, ClipboardEvent, useCallback } from "react"
 import styles from "./document.module.css"
 import Button from "@components/button"
 import Input from "@components/input"
@@ -12,10 +12,10 @@ type Props = {
 	handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
 	defaultTab?: "edit" | "preview"
 	remove?: () => void
-	onPaste?: (e: any) => void
+	onPaste?: (e: ClipboardEvent<HTMLTextAreaElement>) => void
 }
 
-const Document = ({
+function Document({
 	onPaste,
 	remove,
 	title,
@@ -23,7 +23,7 @@ const Document = ({
 	setTitle,
 	defaultTab = "edit",
 	handleOnContentChange
-}: Props) => {
+}: Props) {
 	const onTitleChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) =>
 			setTitle ? setTitle(event.target.value) : null,
@@ -84,6 +84,8 @@ const Document = ({
 						isEditing={true}
 						defaultTab={defaultTab}
 						handleOnContentChange={handleOnContentChange}
+						// TODO: solve types
+						// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
 						onPaste={onPaste}
 						title={title}
 						content={content}

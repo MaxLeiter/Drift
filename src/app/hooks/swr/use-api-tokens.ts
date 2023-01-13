@@ -16,17 +16,7 @@ const TOKENS_ENDPOINT = "/api/user/tokens"
 
 export function useApiTokens({ userId, initialTokens }: UseApiTokens) {
 	const { data, mutate, error, isLoading } = useSWR<SerializedApiToken[]>(
-		"/api/user/tokens?userId=" + userId,
-		async (url: string) => {
-			return fetch(url).then(async (res) => {
-				const data = await res.json()
-				if (data.error) {
-					throw new Error(data.error)
-				}
-
-				return data
-			})
-		},
+		userId ? "/api/user/tokens?userId=" + userId : null,
 		{
 			refreshInterval: 10000,
 			fallbackData: initialTokens

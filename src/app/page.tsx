@@ -6,7 +6,7 @@ import { getAllPosts, Post } from "@lib/server/prisma"
 import PostList, { NoPostsFound } from "@components/post-list"
 import { Suspense } from "react"
 
-const getWelcomeData = async () => {
+export async function getWelcomeData() {
 	const welcomeContent = await getWelcomeContent()
 	return welcomeContent
 }

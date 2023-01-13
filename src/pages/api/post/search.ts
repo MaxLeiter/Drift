@@ -1,39 +1,45 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
-import { authOptions } from "@lib/server/auth"
 import { parseQueryParam } from "@lib/server/parse-query-param"
-import { searchPosts, ServerPostWithFiles } from "@lib/server/prisma"
+import { searchPosts } from "@lib/server/prisma"
+import { verifyApiUser } from "@lib/server/verify-api-user"
 import { NextApiRequest, NextApiResponse } from "next"
-import { unstable_getServerSession } from "next-auth"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { q, userId } = req.query
+	const query = req.query
+	const q = parseQueryParam(query.q)
+	const publicSearch = parseQueryParam(query.public)
+	const searchQuery = parseQueryParam(q)
 
-	const session = await unstable_getServerSession(req, res, authOptions)
-
-	const query = parseQueryParam(q)
-	const user = parseQueryParam(userId)
-	if (!query) {
+	console.log(
+		"searchQuery",
+		searchQuery,
+		"publicSearch",
+		publicSearch,
+		"userId",
+		query.userId
+	)
+	if (!searchQuery) {
 		res.status(400).json({ error: "Invalid query" })
 		return
 	}
 
-	try {
-		let posts: ServerPostWithFiles[]
-		if (session?.user.id === user || session?.user.role === "admin") {
-			posts = await searchPosts(query, {
-				userId: user
-			})
-		} else {
-			posts = await searchPosts(query, {
-				userId: user,
-				publicOnly: true
-			})
+	if (publicSearch) {
+		const posts = await searchPosts(searchQuery)
+		return res.json(posts)
+	} else {
+		const userId = await verifyApiUser(req, res)
+		if (!userId) {
+			res.status(401).json({ error: "Unauthorized" })
+			return
 		}
 
-		res.status(200).json(posts)
-	} catch (err) {
-		console.error(err)
-		res.status(500).json({ error: "Internal server error" })
+		const posts = await searchPosts(searchQuery, {
+			userId,
+			withFiles: true,
+			publicOnly: false
+		})
+
+		return res.json(posts)
 	}
 }
 

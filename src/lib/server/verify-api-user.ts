@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { unstable_getServerSession } from "next-auth"
-import { authOptions } from "./auth"
 import { parseQueryParam } from "./parse-query-param"
 import { prisma } from "./prisma"
+import { getCurrentUser } from "./session"
 
 /**
  * verifyApiUser checks for a `userId` param. If it exists, it checks that the
@@ -23,12 +22,9 @@ export const verifyApiUser = async (
 		return parseAndCheckAuthToken(req)
 	}
 
-	const session = await unstable_getServerSession(req, res, authOptions)
-	if (!session) {
-		return null
-	}
+	const user = await getCurrentUser({ req, res })
 
-	if (session.user.id !== userId) {
+	if (user?.id !== userId) {
 		return null
 	}
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
+import { useCallback, useState, ClipboardEvent } from "react"
 import generateUUID from "@lib/generate-uuid"
 import styles from "./post.module.css"
 import EditDocumentList from "./edit-document-list"
@@ -17,7 +17,8 @@ import Button from "@components/button"
 import Input from "@components/input"
 import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
-import { useSession } from "next-auth/react"
+import { useSessionSWR } from "@lib/use-session-swr"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 const emptyDoc = {
 	title: "",
@@ -31,14 +32,14 @@ export type Document = {
 	id: string
 }
 
-const Post = ({
+function Post({
 	initialPost: stringifiedInitialPost,
 	newPostParent
 }: {
 	initialPost?: string
 	newPostParent?: string
-}) => {
-	const session = useSession()
+}): JSX.Element | null {
+	const { isAuthenticated } = useSessionSWR()
 
 	const parsedPost = JSON.parse(stringifiedInitialPost || "{}") as PostWithFiles
 	const initialPost = parsedPost?.id ? parsedPost : null
@@ -74,7 +75,7 @@ const Post = ({
 				parentId?: string
 			}
 		) => {
-			const res = await fetch(url, {
+			const res = await fetchWithUser(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -115,7 +116,6 @@ const Post = ({
 			}
 
 			setPasswordModalVisible(false)
-
 			setSubmitting(true)
 
 			let hasErrored = false
@@ -164,15 +164,6 @@ const Post = ({
 		[docs, expiresAt, newPostParent, sendRequest, setToast, title]
 	)
 
-	const onClosePasswordModal = () => {
-		setPasswordModalVisible(false)
-		setSubmitting(false)
-	}
-
-	const submitPassword = (password: string) => onSubmit("protected", password)
-
-	const onChangeExpiration = (date: Date) => setExpiresAt(date)
-
 	const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault()
 		setTitle(e.target.value)
@@ -186,28 +177,47 @@ const Post = ({
 		[]
 	)
 
-	if (session.status === "unauthenticated") {
+	if (isAuthenticated === false) {
 		router.push("/signin")
 		return null
 	}
 
-	const updateDocTitle = (i: number) => (title: string) => {
-		setDocs((docs) =>
-			docs.map((doc, index) => (i === index ? { ...doc, title } : doc))
-		)
+	function onClosePasswordModal() {
+		setPasswordModalVisible(false)
+		setSubmitting(false)
 	}
 
-	const updateDocContent = (i: number) => (content: string) => {
-		setDocs((docs) =>
-			docs.map((doc, index) => (i === index ? { ...doc, content } : doc))
-		)
+	function submitPassword(password: string) {
+		return onSubmit("protected", password)
 	}
 
-	const removeDoc = (i: number) => () => {
-		setDocs((docs) => docs.filter((_, index) => i !== index))
+	function onChangeExpiration(date: Date) {
+		return setExpiresAt(date)
 	}
 
-	const uploadDocs = (files: Document[]) => {
+	function updateDocTitle(i: number) {
+		return (title: string) => {
+			setDocs((docs) =>
+				docs.map((doc, index) => (i === index ? { ...doc, title } : doc))
+			)
+		}
+	}
+
+	function updateDocContent(i: number) {
+		return (content: string) => {
+			setDocs((docs) =>
+				docs.map((doc, index) => (i === index ? { ...doc, content } : doc))
+			)
+		}
+	}
+
+	function removeDoc(i: number) {
+		return () => {
+			setDocs((docs) => docs.filter((_, index) => i !== index))
+		}
+	}
+
+	function uploadDocs(files: Document[]) {
 		// if no title is set and the only document is empty,
 		const isFirstDocEmpty =
 			docs.length <= 1 && (docs.length ? docs[0].title === "" : true)
@@ -224,7 +234,7 @@ const Post = ({
 		else setDocs((docs) => [...docs, ...files])
 	}
 
-	const onPaste = (e: ClipboardEvent) => {
+	function onPaste(e: ClipboardEvent<HTMLTextAreaElement>) {
 		const pastedText = e.clipboardData?.getData("text")
 
 		if (pastedText) {
@@ -233,32 +243,6 @@ const Post = ({
 			}
 		}
 	}
-
-	const CustomTimeInput = ({
-		date,
-		value,
-		onChange
-	}: {
-		date: Date
-		value: string
-		onChange: (date: string) => void
-	}) => (
-		<input
-			type="time"
-			value={value}
-			onChange={(e) => {
-				if (!isNaN(date.getTime())) {
-					onChange(e.target.value || date.toISOString().slice(11, 16))
-				}
-			}}
-			style={{
-				backgroundColor: "var(--bg)",
-				border: "1px solid var(--light-gray)",
-				borderRadius: "var(--radius)"
-			}}
-			required
-		/>
-	)
 
 	return (
 		<div className={styles.root}>
@@ -345,3 +329,31 @@ const Post = ({
 }
 
 export default Post
+
+function CustomTimeInput({
+	date,
+	value,
+	onChange
+}: {
+	date: Date
+	value: string
+	onChange: (date: string) => void
+}) {
+	return (
+		<input
+			type="time"
+			value={value}
+			onChange={(e) => {
+				if (!isNaN(date.getTime())) {
+					onChange(e.target.value || date.toISOString().slice(11, 16))
+				}
+			}}
+			style={{
+				backgroundColor: "var(--bg)",
+				border: "1px solid var(--light-gray)",
+				borderRadius: "var(--radius)"
+			}}
+			required
+		/>
+	)
+}

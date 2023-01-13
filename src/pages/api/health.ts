@@ -1,3 +1,4 @@
+import { withMethods } from "@lib/api-middleware/with-methods"
 import { NextApiRequest, NextApiResponse } from "next"
 
 const handler = async (_: NextApiRequest, res: NextApiResponse) => {
@@ -6,4 +7,4 @@ const handler = async (_: NextApiRequest, res: NextApiResponse) => {
 	})
 }
 
-export default handler
+export default withMethods(["GET"], handler)

@@ -10,9 +10,9 @@ import {
 	useApiTokens
 } from "src/app/hooks/swr/use-api-tokens"
 import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
-import { useSession } from "next-auth/react"
 import { useState } from "react"
 import styles from "./api-keys.module.css"
+import { useSessionSWR } from "@lib/use-session-swr"
 
 // need to pass in the accessToken
 const APIKeys = ({
@@ -20,10 +20,10 @@ const APIKeys = ({
 }: {
 	tokens?: SerializedApiToken[]
 }) => {
-	const session = useSession()
+	const { session } = useSessionSWR()
 	const { setToast } = useToasts()
 	const { data, error, createToken, expireToken } = useApiTokens({
-		userId: session.data?.user.id,
+		userId: session?.user?.id,
 		initialTokens
 	})
 

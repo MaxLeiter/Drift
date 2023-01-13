@@ -4,7 +4,7 @@ import styles from "./header.module.css"
 // import useUserData from "@lib/hooks/use-user-data"
 import Link from "@components/link"
 import { usePathname } from "next/navigation"
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import Button from "@components/button"
 import clsx from "clsx"
 import { useTheme } from "next-themes"
@@ -23,6 +23,7 @@ import {
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import buttonStyles from "@components/button/button.module.css"
 import { useMemo } from "react"
+import { useSessionSWR } from "@lib/use-session-swr"
 
 type Tab = {
 	name: string
@@ -33,10 +34,7 @@ type Tab = {
 }
 
 const Header = () => {
-	const session = useSession()
-	const isSignedIn = session?.status === "authenticated"
-	const isAdmin = session?.data?.user?.role === "admin"
-	const isLoading = session?.status === "loading"
+	const { isAuthenticated, isAdmin, isLoading, mutate } = useSessionSWR()
 
 	const pathname = usePathname()
 	const { setTheme, resolvedTheme } = useTheme()
@@ -97,7 +95,7 @@ const Header = () => {
 			value: "theme"
 		})
 
-		if (isSignedIn)
+		if (isAuthenticated)
 			return [
 				{
 					name: "New",
@@ -122,10 +120,12 @@ const Header = () => {
 					name: "Sign Out",
 					icon: <UserX />,
 					value: "signout",
-					onClick: () =>
+					onClick: () => {
+						mutate(undefined)
 						signOut({
 							callbackUrl: "/"
 						})
+					}
 				}
 			]
 		else
@@ -150,7 +150,7 @@ const Header = () => {
 					href: "/signup"
 				}
 			]
-	}, [isAdmin, resolvedTheme, isSignedIn, setTheme])
+	}, [isAdmin, resolvedTheme, isAuthenticated, setTheme, mutate])
 
 	const buttons = pages.map(getButton)
 

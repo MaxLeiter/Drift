@@ -8,7 +8,7 @@ type props = {
 	description: string
 }
 
-const Description = ({ onChange, description }: props) => {
+function Description({ onChange, description }: props) {
 	return (
 		<div className={styles.description}>
 			<Input
@@ -17,8 +17,7 @@ const Description = ({ onChange, description }: props) => {
 				label="Description"
 				maxLength={256}
 				width="100%"
-				placeholder="An optional description of your post"
-			/>
+				placeholder="An optional description of your post" />
 		</div>
 	)
 }

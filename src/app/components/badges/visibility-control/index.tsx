@@ -6,8 +6,9 @@ import ButtonGroup from "@components/button-group"
 import Button from "@components/button"
 import { useToasts } from "@components/toasts"
 import { Spinner } from "@components/spinner"
-import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { useSessionSWR } from "@lib/use-session-swr"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 type Props = {
 	authorId: string
@@ -20,7 +21,7 @@ const VisibilityControl = ({
 	postId,
 	visibility: postVisibility
 }: Props) => {
-	const { data: session } = useSession()
+	const { session } = useSessionSWR()
 	const isAuthor = session?.user && session?.user?.id === authorId
 	const [visibility, setVisibility] = useState<string>(postVisibility)
 
@@ -31,13 +32,16 @@ const VisibilityControl = ({
 
 	const sendRequest = useCallback(
 		async (visibility: string, password?: string) => {
-			const res = await fetch(`/api/post/${postId}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({ visibility, password })
-			})
+			const res = await fetchWithUser(
+				`/api/post/${postId}`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({ visibility, password })
+				}
+			)
 
 			if (res.ok) {
 				const json = await res.json()

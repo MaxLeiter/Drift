@@ -2,17 +2,10 @@ import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
 import { getPostById } from "@lib/server/prisma"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { getSession } from "next-auth/react"
 import { prisma } from "src/lib/server/prisma"
 import * as crypto from "crypto"
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method === "GET") return handleGet(req, res)
-	else if (req.method === "PUT") return handlePut(req, res)
-	else if (req.method === "DELETE") return handleDelete(req, res)
-}
-
-export default withMethods(["GET", "PUT", "DELETE"], handler)
+import { getSession } from "@lib/server/session"
+import { verifyApiUser } from "@lib/server/verify-api-user"
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	const id = parseQueryParam(req.query.id)
@@ -39,10 +32,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse<unknown>) {
 		res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate")
 	}
 
-	const session = await getSession({ req })
+	const userId = await verifyApiUser(req, res)
 
 	// the user can always go directly to their own post
-	if (session?.user.id === post.authorId) {
+	if (userId === post.authorId) {
 		return res.json({
 			post: post,
 			password: undefined
@@ -92,9 +85,8 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse<unknown>) {
 		return res.status(404).json({ message: "Post not found" })
 	}
 
-	const session = await getSession({ req })
-
-	const isAuthor = session?.user.id === post.authorId
+	const session = await getSession({ req, res })
+	const isAuthor = session?.user?.id === post.authorId
 
 	if (!isAuthor) {
 		return res.status(403).json({ message: "Unauthorized" })
@@ -142,10 +134,10 @@ async function handleDelete(
 		return res.status(404).json({ message: "Post not found" })
 	}
 
-	const session = await getSession({ req })
+	const session = await getSession({ req, res })
 
-	const isAuthor = session?.user.id === post.authorId
-	const isAdmin = session?.user.role === "admin"
+	const isAuthor = session?.user?.id === post.authorId
+	const isAdmin = session?.user?.role === "admin"
 
 	if (!isAuthor && !isAdmin) {
 		return res.status(403).json({ message: "Unauthorized" })
@@ -162,3 +154,11 @@ async function handleDelete(
 
 	res.json({ message: "Post deleted" })
 }
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	if (req.method === "GET") return handleGet(req, res)
+	else if (req.method === "PUT") return handlePut(req, res)
+	else if (req.method === "DELETE") return handleDelete(req, res)
+}
+
+export default withMethods(["GET", "PUT", "DELETE"], handler)

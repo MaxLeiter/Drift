@@ -20,7 +20,7 @@ type props = {
 	title?: string
 }
 
-const Title = ({ onChange, title }: props) => {
+function Title({ onChange, title }: props) {
 	return (
 		<div className={styles.title}>
 			<h1 style={{ margin: 0, padding: 0 }}>Drift</h1>
@@ -31,8 +31,7 @@ const Title = ({ onChange, title }: props) => {
 				label="Title"
 				className={styles.labelAndInput}
 				style={{ width: "100%" }}
-				labelClassName={styles.labelAndInput}
-			/>
+				labelClassName={styles.labelAndInput} />
 		</div>
 	)
 }

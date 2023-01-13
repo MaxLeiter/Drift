@@ -4,21 +4,27 @@ import Button from "@components/button"
 import Input from "@components/input"
 import Note from "@components/note"
 import { useToasts } from "@components/toasts"
-import { useSession } from "next-auth/react"
+import { useSessionSWR } from "@lib/use-session-swr"
 import { useEffect, useState } from "react"
 import styles from "./profile.module.css"
+import useSWR from "swr"
+import { User } from "@prisma/client"
 
-const Profile = () => {
-	const { data: session } = useSession()
-	const [name, setName] = useState<string>(session?.user.name || "")
+function Profile() {
+	const { session } = useSessionSWR()
+	console.log(session)
+	const { data: userData  } = useSWR<User>(
+		session?.user?.id ? `/api/user/${session?.user?.id}` : null
+	)
+	const [name, setName] = useState<string>(userData?.displayName || "")
 	const [submitting, setSubmitting] = useState<boolean>(false)
 	const { setToast } = useToasts()
 
 	useEffect(() => {
-		if (!name) {
-			setName(session?.user.name || "")
+		if (!name && userData?.displayName) {
+			setName(userData?.displayName)
 		}
-	}, [name, session])
+	}, [name, userData?.displayName])
 
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value)
@@ -39,7 +45,7 @@ const Profile = () => {
 			displayName: name
 		}
 
-		const res = await fetch(`/api/user/${session?.user.id}`, {
+		const res = await fetch(`/api/user/${session?.user?.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -64,7 +70,6 @@ const Profile = () => {
 
 	/* if we have their email, they signed in with OAuth */
 	// const imageViaOauth = Boolean(session?.user.email)
-
 	// const TooltipComponent = ({ children }: { children: React.ReactNode }) =>
 	// 	imageViaOauth ? (
 	// 		<Tooltip content="Change your profile image on your OAuth provider">
@@ -73,7 +78,6 @@ const Profile = () => {
 	// 	) : (
 	// 		<>{children}</>
 	// 	)
-
 	return (
 		<>
 			<Note type="warning">
@@ -106,39 +110,39 @@ const Profile = () => {
 					/>
 				</div>
 				{/* <div>
-					<label htmlFor="image">User Avatar</label>
-					{user.image ? (
-						<Input
-							id="image"
-							type="file"
-							width={"100%"}
-							placeholder="my image"
-							disabled
-							aria-label="Image"
-							src={user.image}
-						/>
-					) : (
-						<UserIcon />
-					)}
-					<TooltipComponent>
-						<div className={styles.upload}>
-							<input
-								type="file"
-								disabled={imageViaOauth}
-								className={styles.uploadInput}
-							/>
-							<Button
-								type="button"
-								disabled={imageViaOauth}
-								width="100%"
-								className={styles.uploadButton}
-								aria-hidden="true"
-							>
-								Upload
-							</Button>
-						</div>
-					</TooltipComponent>
-				</div> */}
+                <label htmlFor="image">User Avatar</label>
+                {user.image ? (
+                    <Input
+                        id="image"
+                        type="file"
+                        width={"100%"}
+                        placeholder="my image"
+                        disabled
+                        aria-label="Image"
+                        src={user.image}
+                    />
+                ) : (
+                    <UserIcon />
+                )}
+                <TooltipComponent>
+                    <div className={styles.upload}>
+                        <input
+                            type="file"
+                            disabled={imageViaOauth}
+                            className={styles.uploadInput}
+                        />
+                        <Button
+                            type="button"
+                            disabled={imageViaOauth}
+                            width="100%"
+                            className={styles.uploadButton}
+                            aria-hidden="true"
+                        >
+                            Upload
+                        </Button>
+                    </div>
+                </TooltipComponent>
+            </div> */}
 
 				<Button type="submit" loading={submitting}>
 					Submit

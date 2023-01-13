@@ -5,7 +5,8 @@ import PasswordModal from "@components/password-modal"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { useToasts } from "@components/toasts"
-import { useSession } from "next-auth/react"
+import { useSessionSWR } from "@lib/use-session-swr"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 type Props = {
 	setPost: (post: PostWithFilesAndAuthor) => void
@@ -16,20 +17,22 @@ type Props = {
 const PasswordModalWrapper = ({ setPost, postId, authorId }: Props) => {
 	const router = useRouter()
 	const { setToast } = useToasts()
-	const { data: session, status } = useSession()
-	const isAuthor =
-		status === "loading"
-			? undefined
-			: session?.user && session?.user?.id === authorId
+	const { session, isLoading } = useSessionSWR()
+	const isAuthor = isLoading
+		? undefined
+		: session?.user && session?.user?.id === authorId
 	const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
 	const onSubmit = useCallback(
 		async (password: string) => {
-			const res = await fetch(`/api/post/${postId}?password=${password}`, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json"
+			const res = await fetchWithUser(
+				`/api/post/${postId}?password=${password}`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					}
 				}
-			})
+			)
 
 			if (!res.ok) {
 				setToast({

@@ -8,13 +8,12 @@ import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
 import Link from "next/link"
 
-const FileDropdown = ({
-	files,
-	loading
+function FileDropdown({
+	files, loading
 }: {
 	files: Pick<PostWithFiles, "files">["files"]
 	loading?: boolean
-}) => {
+}) {
 	if (loading) {
 		return (
 			<Popover>

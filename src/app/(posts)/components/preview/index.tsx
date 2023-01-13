@@ -3,6 +3,7 @@ import styles from "./preview.module.css"
 import "@styles/markdown.css"
 import "@styles/syntax.css"
 import { Spinner } from "@components/spinner"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 type Props = {
 	height?: number | string
@@ -11,12 +12,9 @@ type Props = {
 	title?: string
 }
 
-const MarkdownPreview = ({
-	height = 500,
-	fileId,
-	content = "",
-	title
-}: Props) => {
+function MarkdownPreview({
+	height = 500, fileId, content = "", title
+}: Props) {
 	const [preview, setPreview] = useState<string>(content)
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
@@ -27,11 +25,11 @@ const MarkdownPreview = ({
 			const body = fileId
 				? undefined
 				: JSON.stringify({
-						title: title || "",
-						content: content
-				  })
+					title: title || "",
+					content: content
+				})
 
-			const resp = await fetch(path, {
+			const resp = await fetchWithUser(path, {
 				method: method,
 				headers: {
 					"Content-Type": "application/json"
@@ -62,20 +60,18 @@ const MarkdownPreview = ({
 
 export default memo(MarkdownPreview)
 
-export const StaticPreview = ({
-	preview,
-	height = 500
+export function StaticPreview({
+	preview, height = 500
 }: {
 	preview: string
 	height: string | number
-}) => {
+}) {
 	return (
 		<article
 			className={styles.markdownPreview}
 			dangerouslySetInnerHTML={{ __html: preview }}
 			style={{
 				height
-			}}
-		/>
+			}} />
 	)
 }

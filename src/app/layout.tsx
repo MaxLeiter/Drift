@@ -13,7 +13,8 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang="en" className={inter.variable}>
+		// suppressHydrationWarning is required because of next-themes
+		<html lang="en" className={inter.variable} suppressHydrationWarning>
 			<head />
 			<body>
 				<Toasts />

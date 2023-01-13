@@ -2,7 +2,7 @@ import Auth from "../components"
 import { getRequiresPasscode } from "src/pages/api/auth/requires-passcode"
 import config from "@lib/config"
 
-const getPasscode = async () => {
+async function getPasscode() {
 	return await getRequiresPasscode()
 }
 

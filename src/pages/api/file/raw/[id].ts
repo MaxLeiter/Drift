@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "src/lib/server/prisma"
 import { parseQueryParam } from "@lib/server/parse-query-param"
+import { withMethods } from "@lib/api-middleware/with-methods"
 
 const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { id, download } = req.query
@@ -30,4 +31,4 @@ const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
 	res.end()
 }
 
-export default getRawFile
+export default withMethods(["GET"], getRawFile)

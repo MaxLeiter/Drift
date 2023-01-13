@@ -6,6 +6,7 @@ import { useToasts } from "@components/toasts"
 import { Post, User } from "@lib/server/prisma"
 import Link from "next/link"
 import { useState } from "react"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import styles from "./table.module.css"
 
 export function UserTable({
@@ -25,7 +26,7 @@ export function UserTable({
 
 	const deleteUser = async (id: string) => {
 		try {
-			const res = await fetch("/api/admin?action=delete-user", {
+			const res = await fetchWithUser("/api/admin?action=delete-user", {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json"

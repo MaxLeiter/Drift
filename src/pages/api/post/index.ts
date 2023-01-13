@@ -1,34 +1,17 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 
-import { authOptions } from "@lib/server/auth"
 import { prisma } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
-import { unstable_getServerSession } from "next-auth/next"
 import { File } from "@lib/server/prisma"
 import * as crypto from "crypto"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	return await handlePost(req, res)
-}
-
-export default withMethods(["POST"], handler)
+import { verifyApiUser } from "@lib/server/verify-api-user"
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 	try {
-		const session = await unstable_getServerSession(req, res, authOptions)
-		if (!session || !session.user.id) {
+		const userId = await verifyApiUser(req, res)
+		if (!userId) {
 			return res.status(401).json({ error: "Unauthorized" })
-		}
-
-		const user = await prisma.user.findUnique({
-			where: {
-				id: session.user.id
-			}
-		})
-
-		if (!user) {
-			return res.status(404).json({ error: "User not found" })
 		}
 
 		const files = req.body.files as (Omit<File, "content" | "html"> & {
@@ -71,7 +54,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 					password: hashedPassword,
 					expiresAt: req.body.expiresAt,
 					parentId: req.body.parentId,
-					authorId: session.user.id,
+					authorId: userId,
 					files: {
 						create: files.map((file) => {
 							return {
@@ -86,7 +69,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 									fileHtml[files.indexOf(file)] as string,
 									"utf-8"
 								),
-								userId: session.user.id
+								userId
 							}
 						})
 					}
@@ -100,3 +83,9 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 		return res.status(500).json(error)
 	}
 }
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	return await handlePost(req, res)
+}
+
+export default withMethods(["POST"], handler)

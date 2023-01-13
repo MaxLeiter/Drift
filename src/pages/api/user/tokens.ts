@@ -2,11 +2,9 @@ import { parseQueryParam } from "@lib/server/parse-query-param"
 import { NextApiRequest, NextApiResponse } from "next"
 import { createApiToken, prisma } from "@lib/server/prisma"
 import { verifyApiUser } from "@lib/server/verify-api-user"
+import { withMethods } from "@lib/api-middleware/with-methods"
 
-export default async function handle(
-	req: NextApiRequest,
-	res: NextApiResponse
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const userId = await verifyApiUser(req, res)
 	if (!userId) {
 		return res.status(400).json({ error: "Missing userId or auth token" })
@@ -55,3 +53,5 @@ export default async function handle(
 			return res.status(405).end()
 	}
 }
+
+export default withMethods(["GET", "POST", "DELETE"], handler)

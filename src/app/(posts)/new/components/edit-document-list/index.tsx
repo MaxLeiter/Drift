@@ -1,8 +1,8 @@
 import type { Document } from "../new"
 import DocumentComponent from "./edit-document"
-import { ChangeEvent, useCallback } from "react"
+import { ChangeEvent, useCallback, ClipboardEvent } from "react"
 
-const DocumentList = ({
+function DocumentList({
 	docs,
 	removeDoc,
 	updateDocContent,
@@ -13,8 +13,8 @@ const DocumentList = ({
 	updateDocTitle: (i: number) => (title: string) => void
 	updateDocContent: (i: number) => (content: string) => void
 	removeDoc: (i: number) => () => void
-	onPaste: (e: any) => void
-}) => {
+	onPaste?: (e: ClipboardEvent<HTMLTextAreaElement>) => void
+}) {
 	const handleOnChange = useCallback(
 		(i: number) => (e: ChangeEvent<HTMLTextAreaElement>) => {
 			updateDocContent(i)(e.target.value)

@@ -9,6 +9,7 @@ import { useToasts } from "@components/toasts"
 import { ListItemSkeleton } from "./list-item-skeleton"
 import Link from "@components/link"
 import debounce from "lodash.debounce"
+import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
@@ -36,6 +37,7 @@ const PostList = ({
 	const [searchValue, setSearchValue] = useState("")
 	const [searching, setSearching] = useState(false)
 	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)
+
 	const { setToast } = useToasts()
 
 	const showSkeleton = skeleton || searching
@@ -51,8 +53,8 @@ const PostList = ({
 
 			setSearching(true)
 			async function fetchPosts() {
-				const res = await fetch(
-					`/api/post/search?q=${encodeURIComponent(query)}&userId=${userId}`,
+				const res = await fetchWithUser(
+					`/api/post/search?q=${encodeURIComponent(query)}`,
 					{
 						method: "GET",
 						headers: {
@@ -61,6 +63,7 @@ const PostList = ({
 					}
 				)
 				const json = await res.json()
+				console.log(json)
 				setPosts(json)
 				setSearching(false)
 			}
@@ -79,22 +82,22 @@ const PostList = ({
 
 	const deletePost = useCallback(
 		(postId: string) => async () => {
-			const res = await fetch(`/api/post/${postId}`, {
+			const res = await fetchWithUser(`/api/post/${postId}`, {
 				method: "DELETE"
 			})
 
-			if (!res.ok) {
+			if (!res?.ok) {
 				console.error(res)
 				return
 			} else {
-				setPosts((posts) => posts.filter((post) => post.id !== postId))
+				setPosts((posts) => posts?.filter((post) => post.id !== postId))
 				setToast({
 					message: "Post deleted",
 					type: "success"
 				})
 			}
 		},
-		[setToast]
+		[setPosts, setToast]
 	)
 
 	return (
@@ -118,7 +121,7 @@ const PostList = ({
 					<ListItemSkeleton />
 				</ul>
 			)}
-			{!showSkeleton && posts?.length > 0 && (
+			{!showSkeleton && posts && posts.length > 0 ? (
 				<div>
 					<ul>
 						{posts.map((post) => {
@@ -134,7 +137,7 @@ const PostList = ({
 						})}
 					</ul>
 				</div>
-			)}
+			) : null}
 		</div>
 	)
 }

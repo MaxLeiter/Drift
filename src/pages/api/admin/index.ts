@@ -1,8 +1,8 @@
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { parseQueryParam } from "@lib/server/parse-query-param"
+import { getCurrentUser } from "@lib/server/session"
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "src/lib/server/prisma"
-import { getSession } from "next-auth/react"
 import { deleteUser } from "../user/[id]"
 
 const actions = [
@@ -24,19 +24,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		return
 	}
 
-	const session = await getSession({ req })
-	const id = session?.user?.id
-
-	const isAdmin = await prisma.user
-		.findUnique({
-			where: {
-				id
-			},
-			select: {
-				role: true
-			}
-		})
-		.then((user) => user?.role === "admin")
+	const user = await getCurrentUser({ req, res })
+	const isAdmin = user?.role === "admin"
 
 	if (!isAdmin) {
 		return res.status(403).json({ error: "Not authorized" })

@@ -1,12 +1,19 @@
+import type { GetServerSidePropsContext } from "next"
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "./auth"
 
-export async function getSession() {
-	return await unstable_getServerSession(authOptions)
+type Params = {
+	req: GetServerSidePropsContext["req"]
+	res: GetServerSidePropsContext["res"]
 }
 
-export async function getCurrentUser() {
-	const session = await getSession()
+export async function getSession(params?: Params) {
+	if (!params) return await unstable_getServerSession(authOptions)
+	return await unstable_getServerSession(params.req, params.res, authOptions)
+}
+
+export async function getCurrentUser(params?: Params) {
+	const session = await getSession(params)
 
 	return session?.user
 }

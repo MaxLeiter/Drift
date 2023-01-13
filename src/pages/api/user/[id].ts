@@ -58,8 +58,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default withMethods(["GET", "PUT", "DELETE"], handler)
-
 /**
  * @description Deletes a user and all of their posts, files, and accounts
  * @warning This function does not perform any authorization checks
@@ -83,3 +81,5 @@ export async function deleteUser(id: string | undefined) {
 		}
 	})
 }
+
+export default withMethods(["GET", "PUT", "DELETE"], handler)
