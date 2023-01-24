@@ -26,10 +26,20 @@ export const config = (env: Environment): Config => {
 	}
 
 	// TODO: improve `key` type
-	const throwIfUndefined = (key: keyof Environment): string => {
+	const throwIfUndefined = (
+		key: keyof Environment,
+		justWarn?: boolean
+	): string => {
 		const value = env[key]
 		if (value === undefined) {
-			throw new Error(`Missing environment variable: ${key}`)
+			if (justWarn) {
+				console.warn(
+					`${key} is missing, but is expected. \n This can occur when building when a database is not yet available.`
+				)
+				return ""
+			} else {
+				throw new Error(`Missing environment variable: ${key}`)
+			}
 		}
 
 		return value

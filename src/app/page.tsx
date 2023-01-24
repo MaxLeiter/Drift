@@ -48,7 +48,7 @@ export default async function Page() {
 				style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
 			>
 				<Image
-					src={"/assets/logo-optimized.svg"}
+					src={"/assets/logo.svg"}
 					width={48}
 					height={48}
 					alt=""
