@@ -135,7 +135,8 @@ export default async function handler(req: NextRequest) {
 		),
 		{
 			width: WIDTH,
-			height: HEIGHT,
+			height: HEIGHT
+
 			// debug: true
 		}
 	)

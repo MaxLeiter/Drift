@@ -106,16 +106,17 @@ const Document = ({ skeleton, ...props }: Props) => {
 					>
 						{title}
 					</Link>
+					{/* Not /api/ because of rewrites defined in next.config.mjs */}
 					<DownloadButtons rawLink={`/file/raw/${id}`} />
 				</header>
 				<div className={styles.documentContainer}>
-					{/* Not /api/ because of rewrites defined in next.config.mjs */}
 					<DocumentTabs
 						defaultTab={initialTab}
 						staticPreview={preview}
-						content={content}
 						isEditing={false}
-					/>
+					>
+						{content || ""}
+					</DocumentTabs>
 				</div>
 			</div>
 		</>

@@ -14,7 +14,7 @@ type Props = RadixTabs.TabsProps & {
 	onPaste?: (e: ClipboardEvent<HTMLTextAreaElement>) => void
 	title?: string
 	staticPreview?: string
-	children: string;
+	children: string
 }
 
 export default function DocumentTabs({
@@ -83,9 +83,11 @@ export default function DocumentTabs({
 			</RadixTabs.Content>
 			<RadixTabs.Content value="preview">
 				{isEditing ? (
-					<Preview height={"100%"} title={title}>{children}</Preview>
+					<Preview height={"100%"} title={title}>
+						{children}
+					</Preview>
 				) : (
-					<StaticPreview height={"100%"}>{preview}</StaticPreview>
+					<StaticPreview height={"100%"}>{preview || ""}</StaticPreview>
 				)}
 			</RadixTabs.Content>
 		</RadixTabs.Root>

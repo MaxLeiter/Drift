@@ -17,7 +17,7 @@ const actions = [
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { action: requestedAction } = req.query
-	const action = parseQueryParam(requestedAction) as typeof actions[number]
+	const action = parseQueryParam(requestedAction) as (typeof actions)[number]
 
 	if (!action || !actions.includes(action)) {
 		res.status(400).json({ error: "Invalid action" })
