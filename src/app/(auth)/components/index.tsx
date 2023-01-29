@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition, useEffect, useState } from "react"
+import { startTransition, Suspense, useEffect, useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
 import { signIn } from "next-auth/react"
@@ -8,8 +8,9 @@ import Input from "@components/input"
 import Button from "@components/button"
 import { GitHub } from "react-feather"
 import { useToasts } from "@components/toasts"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Note from "@components/note"
+import { ErrorQueryParamsHandler } from "./query-handler"
 
 function Auth({
 	page,
@@ -28,16 +29,6 @@ function Auth({
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [submitting, setSubmitting] = useState(false)
-	const queryParams = useSearchParams()
-
-	useEffect(() => {
-		if (queryParams.get("error")) {
-			setToast({
-				message: queryParams.get("error") as string,
-				type: "error"
-			})
-		}
-	}, [queryParams, setToast])
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
@@ -81,6 +72,10 @@ function Auth({
 
 	return (
 		<div className={styles.container}>
+			{/* Suspense boundary because useSearchParams causes static bailout */}
+			<Suspense fallback={null}>
+				<ErrorQueryParamsHandler />
+			</Suspense>
 			<div className={styles.form}>
 				<div className={styles.formContentSpace}>
 					<h1>Sign {signText}</h1>
