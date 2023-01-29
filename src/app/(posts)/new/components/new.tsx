@@ -6,7 +6,6 @@ import generateUUID from "@lib/generate-uuid"
 import styles from "./post.module.css"
 import EditDocumentList from "./edit-document-list"
 import { ChangeEvent } from "react"
-import DatePicker from "react-datepicker"
 import getTitleForPostCopy from "@lib/get-title-for-post-copy"
 import Description from "./description"
 import { PostWithFiles } from "@lib/server/prisma"
@@ -19,6 +18,9 @@ import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
+
+import dynamic from "next/dynamic"
+const DatePicker = dynamic(() => import("react-datepicker"))
 
 const emptyDoc = {
 	title: "",
