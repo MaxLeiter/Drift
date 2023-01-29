@@ -19,7 +19,7 @@ function Document({
 	onPaste,
 	remove,
 	title,
-	content,
+	content = "",
 	setTitle,
 	defaultTab = "edit",
 	handleOnContentChange
@@ -88,8 +88,9 @@ function Document({
 						// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
 						onPaste={onPaste}
 						title={title}
-						content={content}
-					/>
+					>
+						{content}
+					</DocumentTabs>
 				</div>
 			</div>
 		</>

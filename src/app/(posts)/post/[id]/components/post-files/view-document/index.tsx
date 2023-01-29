@@ -78,7 +78,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 		)
 	}
 
-	const { title, initialTab, id, content, preview } = props
+	const { title, initialTab, id, content = "", preview } = props
 
 	// if the query has our title, we can use it to scroll to the file.
 	// we can't use the browsers implementation because the data isn't loaded yet
@@ -115,7 +115,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 						staticPreview={preview}
 						isEditing={false}
 					>
-						{content || ""}
+						{content}
 					</DocumentTabs>
 				</div>
 			</div>
