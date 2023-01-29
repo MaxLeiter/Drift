@@ -38,11 +38,6 @@
 
 .header {
 	transition: opacity 0.2s ease-in-out;
-	opacity: 0;
-}
-
-.header:not(.loading) {
-	opacity: 1;
 }
 
 .selectContent {

@@ -4,7 +4,8 @@ import Layout from "@components/layout"
 import { Toasts } from "@components/toasts"
 import Header from "@components/header"
 import { Inter } from "@next/font/google"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, Suspense } from "react"
+import { Spinner } from "@components/spinner"
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
@@ -19,7 +20,9 @@ export default async function RootLayout({
 				<Toasts />
 				<Layout>
 					<Providers>
-						<Header />
+						<Suspense fallback={<Spinner />}>
+							<Header />
+						</Suspense>
 						{children}
 					</Providers>
 				</Layout>

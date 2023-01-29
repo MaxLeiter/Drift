@@ -4,6 +4,10 @@
 	margin: 0;
 }
 
+.container > * {
+	width: 100%;
+}
+
 .container ul li {
 	padding: 0.5rem 0;
 }

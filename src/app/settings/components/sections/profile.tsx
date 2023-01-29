@@ -12,7 +12,6 @@ import { User } from "@prisma/client"
 
 function Profile() {
 	const { session } = useSessionSWR()
-	console.log(session)
 	const { data: userData } = useSWR<User>(
 		session?.user?.id ? `/api/user/${session?.user?.id}` : null
 	)
@@ -104,7 +103,7 @@ function Profile() {
 						type="email"
 						width={"100%"}
 						placeholder="my@email.io"
-						value={session?.user.email || undefined}
+						value={session?.user.email || ""}
 						disabled
 						aria-label="Email"
 					/>

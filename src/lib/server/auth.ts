@@ -49,7 +49,6 @@ const providers = () => {
 				// @ts-expect-error TODO: fix types
 				credentials: credentialsOptions() as unknown,
 				async authorize(credentials) {
-					console.log("credentials")
 					if (!credentials || !credentials.username || !credentials.password) {
 						throw new Error("Missing credentials")
 					}

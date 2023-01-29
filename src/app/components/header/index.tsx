@@ -9,7 +9,6 @@ import Button from "@components/button"
 import clsx from "clsx"
 import { useTheme } from "next-themes"
 import {
-	GitHub,
 	Home,
 	Menu,
 	Moon,
@@ -17,13 +16,13 @@ import {
 	Settings,
 	Sun,
 	User,
-	UserPlus,
 	UserX
 } from "react-feather"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import buttonStyles from "@components/button/button.module.css"
 import { useMemo } from "react"
 import { useSessionSWR } from "@lib/use-session-swr"
+import Skeleton from "@components/skeleton"
 
 type Tab = {
 	name: string
@@ -34,7 +33,7 @@ type Tab = {
 }
 
 const Header = () => {
-	const { isAuthenticated, isAdmin, isLoading, mutate } = useSessionSWR()
+	const { isAdmin, isAuthenticated, isLoading, mutate } = useSessionSWR()
 
 	const pathname = usePathname()
 	const { setTheme, resolvedTheme } = useTheme()
@@ -52,6 +51,7 @@ const Header = () => {
 					aria-label={tab.name}
 					aria-current={isActive ? "page" : undefined}
 					data-tab={tab.value}
+					width="auto"
 				>
 					{tab.name ? tab.name : undefined}
 				</Button>
@@ -59,7 +59,7 @@ const Header = () => {
 		} else if (tab.href) {
 			return (
 				<Link key={tab.value} href={tab.href} data-tab={tab.value}>
-					<Button className={activeStyle} iconLeft={tab.icon}>
+					<Button className={activeStyle} iconLeft={tab.icon} width="auto">
 						{tab.name ? tab.name : undefined}
 					</Button>
 				</Link>
@@ -69,12 +69,12 @@ const Header = () => {
 
 	const pages = useMemo(() => {
 		const defaultPages: Tab[] = [
-			{
-				name: "GitHub",
-				href: "https://github.com/maxleiter/drift",
-				icon: <GitHub />,
-				value: "github"
-			}
+			// {
+			// 	name: "GitHub",
+			// 	href: "https://github.com/maxleiter/drift",
+			// 	icon: <GitHub />,
+			// 	value: "github"
+			// }
 		]
 
 		if (isAdmin) {
@@ -95,28 +95,10 @@ const Header = () => {
 			value: "theme"
 		})
 
-		if (isAuthenticated)
-			return [
-				{
-					name: "New",
-					icon: <PlusCircle />,
-					value: "new",
-					href: "/new"
-				},
-				{
-					name: "Yours",
-					icon: <User />,
-					value: "yours",
-					href: "/mine"
-				},
-				{
-					name: "Settings",
-					icon: <Settings />,
-					value: "settings",
-					href: "/settings"
-				},
-				...defaultPages,
-				{
+		// the is loading case is handled in the JSX
+		if (!isLoading) {
+			if (isAuthenticated) {
+				defaultPages.push({
 					name: "Sign Out",
 					icon: <UserX />,
 					value: "signout",
@@ -126,33 +108,60 @@ const Header = () => {
 							callbackUrl: "/"
 						})
 					}
-				}
-			]
-		else
-			return [
-				{
-					name: "Home",
-					icon: <Home />,
-					value: "home",
-					href: "/"
-				},
-				...defaultPages,
-				{
+				})
+			} else {
+				defaultPages.push({
 					name: "Sign in",
 					icon: <User />,
 					value: "signin",
 					href: "/signin"
-				},
-				{
-					name: "Sign up",
-					icon: <UserPlus />,
-					value: "signup",
-					href: "/signup"
-				}
-			]
-	}, [isAdmin, resolvedTheme, isAuthenticated, setTheme, mutate])
+				})
+			}
+		}
+
+		return [
+			{
+				name: "Home",
+				icon: <Home />,
+				value: "home",
+				href: "/home"
+			},
+			{
+				name: "New",
+				icon: <PlusCircle />,
+				value: "new",
+				href: "/new"
+			},
+			{
+				name: "Yours",
+				icon: <User />,
+				value: "yours",
+				href: "/mine"
+			},
+			{
+				name: "Settings",
+				icon: <Settings />,
+				value: "settings",
+				href: "/settings"
+			},
+			...defaultPages
+		]
+	}, [isAdmin, resolvedTheme, isLoading, setTheme, isAuthenticated, mutate])
 
 	const buttons = pages.map(getButton)
+
+	if (isLoading) {
+		buttons.push(
+			<Button iconLeft={<User />} key="loading">
+				Sign{" "}
+				<Skeleton
+					width={20}
+					height={15}
+					style={{ display: "inline-block", verticalAlign: "middle" }}
+				/>
+			</Button>
+		)
+	}
 
 	// TODO: this is a hack to close the radix ui menu when a next link is clicked
 	const onClick = () => {
@@ -160,11 +169,7 @@ const Header = () => {
 	}
 
 	return (
-		<header
-			className={clsx(styles.header, {
-				[styles.loading]: isLoading
-			})}
-		>
+		<header className={styles.header}>
 			<div className={styles.tabs}>
 				<div className={styles.buttons}>{buttons}</div>
 			</div>

@@ -8,12 +8,12 @@ import { fetchWithUser } from "src/app/lib/fetch-with-user"
 type Props = {
 	height?: number | string
 	fileId?: string
-	content?: string
 	title?: string
+	children?: string
 }
 
-function MarkdownPreview({ height = 500, fileId, content = "", title }: Props) {
-	const [preview, setPreview] = useState<string>(content)
+function MarkdownPreview({ height = 500, fileId, title, children }: Props) {
+	const [preview, setPreview] = useState<string>(children || "")
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
 		async function fetchPost() {
@@ -24,7 +24,7 @@ function MarkdownPreview({ height = 500, fileId, content = "", title }: Props) {
 				? undefined
 				: JSON.stringify({
 						title: title || "",
-						content: content
+						content: children
 				  })
 
 			const resp = await fetchWithUser(path, {
@@ -43,14 +43,14 @@ function MarkdownPreview({ height = 500, fileId, content = "", title }: Props) {
 			setIsLoading(false)
 		}
 		fetchPost()
-	}, [content, fileId, title])
+	}, [children, fileId, title])
 
 	return (
 		<>
 			{isLoading ? (
 				<Spinner />
 			) : (
-				<StaticPreview preview={preview} height={height} />
+				<StaticPreview height={height}>{preview}</StaticPreview>
 			)}
 		</>
 	)
@@ -59,16 +59,16 @@ function MarkdownPreview({ height = 500, fileId, content = "", title }: Props) {
 export default memo(MarkdownPreview)
 
 export function StaticPreview({
-	preview,
+	children,
 	height = 500
 }: {
-	preview: string
+	children: string
 	height: string | number
 }) {
 	return (
 		<article
 			className={styles.markdownPreview}
-			dangerouslySetInnerHTML={{ __html: preview }}
+			dangerouslySetInnerHTML={{ __html: children }}
 			style={{
 				height
 			}}

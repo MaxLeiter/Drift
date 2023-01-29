@@ -5,7 +5,6 @@ import { withMethods } from "@lib/api-middleware/with-methods"
 
 const getRawFile = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { id, download } = req.query
-
 	const file = await prisma.file.findUnique({
 		where: {
 			id: parseQueryParam(id)

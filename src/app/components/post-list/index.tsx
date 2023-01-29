@@ -10,6 +10,7 @@ import { ListItemSkeleton } from "./list-item-skeleton"
 import Link from "@components/link"
 import debounce from "lodash.debounce"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
+import { Stack } from "@components/stack"
 
 type Props = {
 	initialPosts: string | PostWithFiles[]
@@ -63,7 +64,6 @@ const PostList = ({
 					}
 				)
 				const json = await res.json()
-				console.log(json)
 				setPosts(json)
 				setSearching(false)
 			}
@@ -101,7 +101,7 @@ const PostList = ({
 	)
 
 	return (
-		<div className={styles.container}>
+		<Stack className={styles.container} alignItems="center">
 			{!hideSearch && (
 				<div className={styles.searchContainer}>
 					<Input
@@ -122,23 +122,21 @@ const PostList = ({
 				</ul>
 			)}
 			{!showSkeleton && posts && posts.length > 0 ? (
-				<div>
-					<ul>
-						{posts.map((post) => {
-							return (
-								<ListItem
-									deletePost={deletePost(post.id)}
-									post={post}
-									key={post.id}
-									hideActions={hideActions}
-									isOwner={isOwner}
-								/>
-							)
-						})}
-					</ul>
-				</div>
+				<ul>
+					{posts.map((post) => {
+						return (
+							<ListItem
+								deletePost={deletePost(post.id)}
+								post={post}
+								key={post.id}
+								hideActions={hideActions}
+								isOwner={isOwner}
+							/>
+						)
+					})}
+				</ul>
 			) : null}
-		</div>
+		</Stack>
 	)
 }
 

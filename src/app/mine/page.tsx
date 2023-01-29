@@ -3,6 +3,7 @@ import { getPostsByUser } from "@lib/server/prisma"
 import PostList from "@components/post-list"
 import { getCurrentUser } from "@lib/server/session"
 import { authOptions } from "@lib/server/auth"
+import { Suspense } from "react"
 
 export default async function Mine() {
 	const userId = (await getCurrentUser())?.id
@@ -15,12 +16,14 @@ export default async function Mine() {
 
 	const stringifiedPosts = JSON.stringify(posts)
 	return (
-		<PostList
-			userId={userId}
-			initialPosts={stringifiedPosts}
-			isOwner={true}
-			hideSearch={false}
-		/>
+		<Suspense fallback={<PostList skeleton={true} initialPosts={[]} />}>
+			<PostList
+				userId={userId}
+				initialPosts={stringifiedPosts}
+				isOwner={true}
+				hideSearch={false}
+			/>
+		</Suspense>
 	)
 }
 

@@ -112,7 +112,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 					{/* Not /api/ because of rewrites defined in next.config.mjs */}
 					<DocumentTabs
 						defaultTab={initialTab}
-						preview={preview}
+						staticPreview={preview}
 						content={content}
 						isEditing={false}
 					/>

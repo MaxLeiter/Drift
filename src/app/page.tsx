@@ -2,17 +2,72 @@ import Image from "next/image"
 import Card from "@components/card"
 import { getWelcomeContent } from "src/pages/api/welcome"
 import DocumentTabs from "./(posts)/components/tabs"
-import { getAllPosts, Post } from "@lib/server/prisma"
+import { getAllPosts } from "@lib/server/prisma"
 import PostList, { NoPostsFound } from "@components/post-list"
-import { Suspense } from "react"
+import { cache, Suspense } from "react"
+import ErrorBoundary from "@components/error/fallback"
+import { Stack } from "@components/stack"
 
-export async function getWelcomeData() {
+const getWelcomeData = cache(async () => {
 	const welcomeContent = await getWelcomeContent()
 	return welcomeContent
-}
+})
 
 export default async function Page() {
-	const getPostsPromise = getAllPosts({
+	const { title } = await getWelcomeData()
+
+	return (
+		<Stack direction="column">
+			<Stack direction="row" alignItems="center">
+				<Image
+					src={"/assets/logo.svg"}
+					width={48}
+					height={48}
+					alt=""
+					priority
+				/>
+				<h1 style={{ marginLeft: "var(--gap)" }}>{title}</h1>
+			</Stack>
+			{/* @ts-expect-error because of async RSC */}
+			<WelcomePost />
+			<h2>Recent public posts</h2>
+			<ErrorBoundary>
+				<Suspense
+					fallback={
+						<PostList
+							skeleton
+							hideActions
+							hideSearch
+							initialPosts={JSON.stringify({})}
+						/>
+					}
+				>
+					{/* @ts-expect-error because of async RSC */}
+					<PublicPostList />
+				</Suspense>
+			</ErrorBoundary>
+		</Stack>
+	)
+}
+
+async function WelcomePost() {
+	const { content, rendered, title } = await getWelcomeData()
+	return (
+		<Card>
+			<DocumentTabs
+				defaultTab="preview"
+				isEditing={false}
+				staticPreview={rendered as string}
+				title={title}
+			>
+				{content}
+			</DocumentTabs>
+		</Card>
+	)
+}
+
+async function PublicPostList() {
+	const posts = await getAllPosts({
 		select: {
 			id: true,
 			title: true,
@@ -38,66 +93,12 @@ export default async function Page() {
 			createdAt: "desc"
 		}
 	})
-	const { content, rendered, title } = await getWelcomeData()
 
-	return (
-		<div
-			style={{ display: "flex", flexDirection: "column", gap: "var(--gap)" }}
-		>
-			<div
-				style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-			>
-				<Image
-					src={"/assets/logo.svg"}
-					width={48}
-					height={48}
-					alt=""
-					priority
-				/>
-				<h1 style={{ marginLeft: "var(--gap)" }}>{title}</h1>
-			</div>
-			<Card>
-				<DocumentTabs
-					defaultTab="preview"
-					isEditing={false}
-					content={content}
-					preview={rendered as string}
-					title={title}
-				/>
-			</Card>
-			<div>
-				<h2>Recent public posts</h2>
-				<Suspense
-					fallback={
-						<PostList skeleton hideSearch initialPosts={JSON.stringify({})} />
-					}
-				>
-					{/* @ts-expect-error because of async RSC */}
-					<PublicPostList getPostsPromise={getPostsPromise} />
-				</Suspense>
-			</div>
-		</div>
-	)
-}
-
-async function PublicPostList({
-	getPostsPromise
-}: {
-	getPostsPromise: Promise<Post[]>
-}) {
-	try {
-		const posts = await getPostsPromise
-
-		if (posts.length === 0) {
-			return <NoPostsFound />
-		}
-
-		return (
-			<PostList initialPosts={JSON.stringify(posts)} hideActions hideSearch />
-		)
-	} catch (error) {
+	if (posts.length === 0) {
 		return <NoPostsFound />
 	}
-}
 
-export const revalidate = 60
+	return (
+		<PostList initialPosts={JSON.stringify(posts)} hideActions hideSearch />
+	)
+}

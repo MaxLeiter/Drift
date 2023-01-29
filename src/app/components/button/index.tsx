@@ -31,11 +31,12 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			disabled = false,
 			iconRight,
 			iconLeft,
-			height,
+			height = 40,
 			width,
-			padding,
+			padding = 10,
 			margin,
 			loading,
+			style,
 			...props
 		},
 		ref
@@ -49,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 				})}
 				disabled={disabled || loading}
 				onClick={onClick}
-				style={{ height, width, margin, padding }}
+				style={{ height, width, margin, padding, ...style }}
 				{...props}
 			>
 				{children && iconLeft && (

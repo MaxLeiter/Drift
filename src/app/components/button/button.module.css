@@ -3,7 +3,7 @@
 	cursor: pointer;
 	border-radius: var(--radius);
 	border: 1px solid var(--border);
-	padding: var(--gap-half) var(--gap);
+	/* padding: var(--gap-half) var(--gap); */
 	color: var(--darker-gray);
 }
 

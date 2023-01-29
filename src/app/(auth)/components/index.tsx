@@ -132,25 +132,27 @@ function Auth({
 						<Button width={"100%"} type="submit" loading={submitting}>
 							Sign {signText}
 						</Button>
-						{isGithubEnabled ? <hr style={{ width: "100%" }} /> : null}
 						{isGithubEnabled ? (
-							<Button
-								type="submit"
-								width="100%"
-								style={{
-									color: "var(--fg)"
-								}}
-								iconLeft={<GitHub />}
-								onClick={(e) => {
-									e.preventDefault()
-									signIn("github", {
-										callbackUrl: "/",
-										registration_password: serverPassword
-									})
-								}}
-							>
-								Sign {signText.toLowerCase()} with GitHub
-							</Button>
+							<>
+								<hr style={{ width: "100%" }} />
+								<Button
+									type="submit"
+									width="100%"
+									style={{
+										color: "var(--fg)"
+									}}
+									iconLeft={<GitHub />}
+									onClick={(e) => {
+										e.preventDefault()
+										signIn("github", {
+											callbackUrl: "/",
+											registration_password: serverPassword
+										})
+									}}
+								>
+									Sign {signText.toLowerCase()} with GitHub
+								</Button>
+							</>
 						) : null}
 					</div>
 					<div className={styles.formContentSpace}>

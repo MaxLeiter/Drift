@@ -45,7 +45,6 @@ const PostFiles = ({ post: _initialPost }: Props) => {
 
 	const isProtected = post?.visibility === "protected"
 	const hasFetched = post?.files !== undefined
-	console.log({ isProtected, hasFetched })
 	if (isProtected && !hasFetched) {
 		return (
 			<PasswordModalWrapper
