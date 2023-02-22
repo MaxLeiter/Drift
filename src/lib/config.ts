@@ -76,7 +76,9 @@ export const config = (env: Environment): Config => {
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
 		welcome_content: env.WELCOME_CONTENT ?? "Welcome to Drift.",
 		welcome_title: env.WELCOME_TITLE ?? "Drift",
-		url: throwIfUndefined("DRIFT_URL"),
+		url:
+			throwIfUndefined("DRIFT_URL", true) ||
+			`https://${throwIfUndefined("VERCEL_URL")}`,
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
 		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
