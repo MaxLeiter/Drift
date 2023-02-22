@@ -6,6 +6,7 @@ declare global {
 import config from "@lib/config"
 import { Post, PrismaClient, User, Prisma } from "@prisma/client"
 import * as crypto from "crypto"
+import { cache } from "react"
 export type { User, File, Post } from "@prisma/client"
 
 export const prisma =
@@ -209,12 +210,16 @@ export const getPostById = async (
 	return post
 }
 
-export const getAllPosts = async (
-	options?: Prisma.PostFindManyArgs
-): Promise<Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]> => {
-	const posts = await prisma.post.findMany(options)
-	return posts
-}
+export const getAllPosts = cache(
+	async (
+		options?: Prisma.PostFindManyArgs
+	): Promise<
+		Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
+	> => {
+		const posts = await prisma.post.findMany(options)
+		return posts
+	}
+)
 
 export const userWithPosts = Prisma.validator<Prisma.UserArgs>()({
 	include: {

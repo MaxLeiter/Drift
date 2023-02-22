@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition, Suspense, useEffect, useState } from "react"
+import { startTransition, Suspense, useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../components/link"
 import { signIn } from "next-auth/react"
