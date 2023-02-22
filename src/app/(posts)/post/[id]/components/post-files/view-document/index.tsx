@@ -106,8 +106,9 @@ const Document = ({ skeleton, ...props }: Props) => {
 					>
 						{title}
 					</Link>
+					{/* TODO: switch to api once next.js bug is fixed */}
 					{/* Not /api/ because of rewrites defined in next.config.mjs */}
-					<DownloadButtons rawLink={`/file/raw/${id}`} />
+					<DownloadButtons rawLink={`/api/file/raw/${id}`} />
 				</header>
 				<div className={styles.documentContainer}>
 					<DocumentTabs
