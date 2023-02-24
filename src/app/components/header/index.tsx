@@ -51,7 +51,6 @@ const Header = () => {
 					aria-label={tab.name}
 					aria-current={isActive ? "page" : undefined}
 					data-tab={tab.value}
-					width="auto"
 				>
 					{tab.name ? tab.name : undefined}
 				</Button>
@@ -59,7 +58,7 @@ const Header = () => {
 		} else if (tab.href) {
 			return (
 				<Link key={tab.value} href={tab.href} data-tab={tab.value}>
-					<Button className={activeStyle} iconLeft={tab.icon} width="auto">
+					<Button className={activeStyle} iconLeft={tab.icon}>
 						{tab.name ? tab.name : undefined}
 					</Button>
 				</Link>
@@ -178,7 +177,7 @@ const Header = () => {
 					className={clsx(buttonStyles.button, styles.mobile)}
 					asChild
 				>
-					<Button aria-label="Menu">
+					<Button aria-label="Menu" height="auto">
 						<Menu />
 					</Button>
 				</DropdownMenu.Trigger>

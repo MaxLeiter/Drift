@@ -59,6 +59,7 @@
 
 .contentWrapper {
 	background: var(--bg);
+	margin-left: var(--gap);
 }
 
 @media only screen and (max-width: 768px) {
