@@ -14,10 +14,6 @@ const nextConfig = {
 				source: "/file/raw/:id",
 				destination: `/api/raw/:id`
 			},
-			{
-				source: "/home",
-				destination: "/"
-			}
 		]
 	},
 	images: {
@@ -25,7 +21,7 @@ const nextConfig = {
 	},
 	env: {
 		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
-	},
+	}
 }
 
 export default bundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(
