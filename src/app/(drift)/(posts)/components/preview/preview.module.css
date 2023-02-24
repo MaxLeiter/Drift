@@ -45,10 +45,6 @@
 	color: var(--darker-gray);
 }
 
-.markdownPreview a {
-	color: #0070f3;
-}
-
 /* Auto-linked headers */
 .markdownPreview h1 a,
 .markdownPreview h2 a,

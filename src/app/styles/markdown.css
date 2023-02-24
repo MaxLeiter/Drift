@@ -129,3 +129,7 @@ table td {
 article > :not(:first-child) {
 	margin-top: 1.5rem;
 }
+
+article a {
+	color: var(--link);
+}
