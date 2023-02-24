@@ -3,9 +3,7 @@ import { Providers } from "./providers"
 import Layout from "@components/layout"
 import { Toasts } from "@components/toasts"
 import Header from "@components/header"
-import { Inter } from "@next/font/google"
-import { Suspense } from "react"
-import { Spinner } from "@components/spinner"
+import { Inter } from "next/font/google"
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
@@ -22,9 +20,7 @@ export default async function RootLayout({
 				<Toasts />
 				<Layout>
 					<Providers>
-						<Suspense fallback={<Spinner />}>
-							<Header />
-						</Suspense>
+						<Header />
 						{children}
 					</Providers>
 				</Layout>
