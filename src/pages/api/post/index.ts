@@ -2,7 +2,7 @@ import { withMethods } from "@lib/api-middleware/with-methods"
 
 import { prisma } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
-import { File } from "@lib/server/prisma"
+import { ServerFile } from "@lib/server/prisma"
 import * as crypto from "crypto"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
 import { verifyApiUser } from "@lib/server/verify-api-user"
@@ -14,7 +14,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
 
-		const files = req.body.files as (Omit<File, "content" | "html"> & {
+		const files = req.body.files as (Omit<ServerFile, "content" | "html"> & {
 			content: string
 			html: string
 		})[]

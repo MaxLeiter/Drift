@@ -13,7 +13,7 @@ import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import { Stack } from "@components/stack"
 
 type Props = {
-	initialPosts: string | PostWithFiles[]
+	initialPosts: PostWithFiles[]
 	morePosts?: boolean
 	hideSearch?: boolean
 	hideActions?: boolean
@@ -24,17 +24,13 @@ type Props = {
 }
 
 const PostList = ({
-	initialPosts: initialPostsMaybeJSON,
+	initialPosts,
 	hideSearch,
 	hideActions,
 	isOwner,
 	skeleton,
 	userId
 }: Props) => {
-	const initialPosts =
-		typeof initialPostsMaybeJSON === "string"
-			? JSON.parse(initialPostsMaybeJSON)
-			: initialPostsMaybeJSON
 	const [searchValue, setSearchValue] = useState("")
 	const [searching, setSearching] = useState(false)
 	const [posts, setPosts] = useState<PostWithFiles[]>(initialPosts)

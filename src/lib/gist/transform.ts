@@ -1,11 +1,10 @@
 import { Gist } from "./types"
 import * as crypto from "crypto"
-import type { Post } from "@lib/server/prisma"
 import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
-import { prisma } from "@lib/server/prisma"
+import { prisma, ServerPost } from "@lib/server/prisma"
 
 export type AdditionalPostInformation = Pick<
-	Post,
+	ServerPost,
 	"visibility" | "password" | "expiresAt"
 > & {
 	userId: string
@@ -14,7 +13,7 @@ export type AdditionalPostInformation = Pick<
 export async function createPostFromGist(
 	{ userId, visibility, password, expiresAt }: AdditionalPostInformation,
 	gist: Gist
-): Promise<Post> {
+): Promise<ServerPost> {
 	const files = Object.values(gist.files)
 	const [title, description] = gist.description.split("\n", 1)
 

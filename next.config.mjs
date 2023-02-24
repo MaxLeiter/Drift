@@ -26,6 +26,9 @@ const nextConfig = {
 	},
 	env: {
 		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
+	},
+	typescript: {
+		// ignoreBuildErrors: true,
 	}
 }
 

@@ -1,4 +1,5 @@
-import Card from "@components/card"
+"use client"
+
 import * as RadixTooltip from "@radix-ui/react-tooltip"
 import styles from "./tooltip.module.css"
 
@@ -17,8 +18,9 @@ const Tooltip = ({
 			<RadixTooltip.Trigger asChild className={className}>
 				{children}
 			</RadixTooltip.Trigger>
+
 			<RadixTooltip.Content>
-				<Card className={styles.tooltip}>{content}</Card>
+				<div className={styles.tooltip}>{content}</div>
 			</RadixTooltip.Content>
 		</RadixTooltip.Root>
 	)

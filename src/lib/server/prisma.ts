@@ -4,11 +4,20 @@ declare global {
 }
 
 import config from "@lib/config"
-import { Post, PrismaClient, User, Prisma } from "@prisma/client"
+import {
+	Post as ServerPost,
+	PrismaClient,
+	User as ServerUser,
+	Prisma,
+	File as ServerFile
+} from "@prisma/client"
 import * as crypto from "crypto"
 import { cache } from "react"
-export type { User, File, Post } from "@prisma/client"
-
+export type {
+	User as ServerUser,
+	File as ServerFile,
+	Post as ServerPost
+} from "@prisma/client"
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
@@ -42,29 +51,91 @@ const postWithFilesAndAuthor = Prisma.validator<Prisma.PostArgs>()({
 })
 
 export type ServerPostWithFiles = Prisma.PostGetPayload<typeof postWithFiles>
-export type PostWithAuthor = Prisma.PostGetPayload<typeof postWithAuthor>
+export type ServerPostWithAuthor = Prisma.PostGetPayload<typeof postWithAuthor>
 export type ServerPostWithFilesAndAuthor = Prisma.PostGetPayload<
 	typeof postWithFilesAndAuthor
 >
 
-export type PostWithFiles = Omit<ServerPostWithFiles, "files"> & {
-	files: (Omit<ServerPostWithFiles["files"][number], "content" | "html"> & {
+export type PostWithFiles = Omit<
+	ServerPostWithFiles,
+	"files" | "updatedAt" | "createdAt" | "deletedAt" | "expiresAt"
+> & {
+	files: (Omit<
+		ServerPostWithFiles["files"][number],
+		"content" | "html" | "updatedAt" | "createdAt" | "deletedAt"
+	> & {
 		content: string
 		html: string
+		updatedAt?: string
+		createdAt: string
+		deletedAt?: string
 	})[]
+	updatedAt?: string
+	createdAt: string
+	deletedAt?: string
+	expiresAt?: string
 }
 
 export type PostWithFilesAndAuthor = Omit<
 	ServerPostWithFilesAndAuthor,
-	"files"
+	"files" | "updatedAt" | "createdAt" | "deletedAt" | "expiresAt" | "author"
 > & {
 	files: (Omit<
 		ServerPostWithFilesAndAuthor["files"][number],
-		"content" | "html"
+		"content" | "html" | "updatedAt" | "createdAt" | "deletedAt"
 	> & {
 		content: string
 		html: string
+		updatedAt?: string
+		createdAt: string
+		deletedAt?: string
 	})[]
+
+	author: Omit<
+		ServerPostWithFilesAndAuthor["author"],
+		"createdAt" | "updatedAt"
+	> & {
+		createdAt: string
+		updatedAt: string
+	}
+
+	updatedAt?: string
+	createdAt: string
+	deletedAt?: string
+	expiresAt?: string
+}
+
+export function serverPostToClientPost(
+	post: ServerPostWithFiles | ServerPostWithFilesAndAuthor
+): PostWithFilesAndAuthor | PostWithFiles {
+	let result: PostWithFiles | PostWithFilesAndAuthor = {
+		...post,
+		files: post.files?.map((file) => ({
+			...file,
+			content: file.content?.toString("utf-8"),
+			html: file.html?.toString("utf-8"),
+			updatedAt: file.updatedAt?.toISOString(),
+			createdAt: file.createdAt?.toISOString(),
+			deletedAt: file.deletedAt?.toISOString()
+		})),
+		updatedAt: post.updatedAt?.toISOString(),
+		createdAt: post.createdAt?.toISOString(),
+		deletedAt: post.deletedAt?.toISOString(),
+		expiresAt: post.expiresAt?.toISOString()
+	}
+
+	if ("author" in post && post.author) {
+		result = {
+			...result,
+			author: {
+				...post.author,
+				createdAt: post.author.createdAt?.toISOString(),
+				updatedAt: post.author.updatedAt?.toISOString()
+			}
+		}
+	}
+
+	return result
 }
 
 export const getFilesForPost = async (postId: string) => {
@@ -87,12 +158,15 @@ export async function getFilesByPost(postId: string) {
 	return files
 }
 
-export async function getPostsByUser(userId: string): Promise<Post[]>
+export async function getPostsByUser(userId: string): Promise<ServerPost[]>
 export async function getPostsByUser(
 	userId: string,
 	includeFiles: true
 ): Promise<ServerPostWithFiles[]>
-export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
+export async function getPostsByUser(
+	userId: ServerUser["id"],
+	withFiles?: boolean
+) {
 	const posts = await prisma.post.findMany({
 		where: {
 			authorId: userId
@@ -123,7 +197,7 @@ export async function getPostsByUser(userId: User["id"], withFiles?: boolean) {
 }
 
 export const getUserById = async (
-	userId: User["id"],
+	userId: ServerUser["id"],
 	selects?: Prisma.UserFindUniqueArgs["select"]
 ) => {
 	const user = await prisma.user.findUnique({
@@ -143,7 +217,7 @@ export const getUserById = async (
 	return user
 }
 
-export const isUserAdmin = async (userId: User["id"]) => {
+export const isUserAdmin = async (userId: ServerUser["id"]) => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId
@@ -185,36 +259,24 @@ type GetPostByIdOptions = Pick<
 	"include" | "rejectOnNotFound" | "select"
 >
 
-export const getPostById = async (
-	postId: Post["id"],
-	options?: GetPostByIdOptions
-): Promise<Post | PostWithFiles | PostWithFilesAndAuthor | null> => {
-	const post = await prisma.post.findUnique({
-		where: {
-			id: postId
-		},
-		...options
-	})
+export const getPostById = cache(
+	async (postId: ServerPost["id"], options?: GetPostByIdOptions) => {
+		const post = await prisma.post.findUnique({
+			where: {
+				id: postId
+			},
+			...options
+		})
 
-	if (post) {
-		if ("files" in post) {
-			// @ts-expect-error TODO: fix types so files can exist
-			post.files = post.files.map((file) => ({
-				...file,
-				content: file.content ? file.content.toString() : undefined,
-				html: file.html ? file.html.toString() : undefined
-			}))
-		}
+		return post
 	}
-
-	return post
-}
+)
 
 export const getAllPosts = cache(
 	async (
 		options?: Prisma.PostFindManyArgs
 	): Promise<
-		Post[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
+		ServerPost[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
 	> => {
 		const posts = await prisma.post.findMany(options)
 		return posts
@@ -231,7 +293,7 @@ export type UserWithPosts = Prisma.UserGetPayload<typeof userWithPosts>
 
 export const getAllUsers = async (
 	options?: Prisma.UserFindManyArgs
-): Promise<User[] | UserWithPosts[]> => {
+): Promise<ServerUser[] | UserWithPosts[]> => {
 	const users = (await prisma.user.findMany({
 		select: {
 			id: true,
@@ -242,7 +304,7 @@ export const getAllUsers = async (
 			createdAt: true
 		},
 		...options
-	})) as User[] | UserWithPosts[]
+	})) as ServerUser[] | UserWithPosts[]
 
 	return users
 }
@@ -252,7 +314,7 @@ export const searchPosts = async (
 	{
 		userId
 	}: {
-		userId?: User["id"]
+		userId?: ServerUser["id"]
 	} = {}
 ): Promise<ServerPostWithFiles[]> => {
 	const posts = await prisma.post.findMany({
@@ -287,7 +349,10 @@ function generateApiToken() {
 	return crypto.randomBytes(32).toString("hex")
 }
 
-export const createApiToken = async (userId: User["id"], name: string) => {
+export const createApiToken = async (
+	userId: ServerUser["id"],
+	name: string
+) => {
 	const apiToken = await prisma.apiToken.create({
 		data: {
 			token: generateApiToken(),
@@ -300,4 +365,20 @@ export const createApiToken = async (userId: User["id"], name: string) => {
 	})
 
 	return apiToken
+}
+
+export function getFileById(fileId: ServerFile["id"]) {
+	return prisma.file.findUnique({
+		where: {
+			id: fileId
+		},
+		include: {
+			post: {
+				select: {
+					id: true,
+					visibility: true
+				}
+			}
+		}
+	})
 }

@@ -9,6 +9,7 @@ import { Spinner } from "@components/spinner"
 import { useRouter } from "next/navigation"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
+import FadeIn from "@components/fade-in"
 
 type Props = {
 	authorId: string
@@ -87,7 +88,7 @@ function VisibilityControl({
 	}
 
 	return (
-		<>
+		<FadeIn>
 			<ButtonGroup
 				style={{
 					maxWidth: 600,
@@ -128,7 +129,7 @@ function VisibilityControl({
 				onClose={onClosePasswordModal}
 				onSubmit={submitPassword}
 			/>
-		</>
+		</FadeIn>
 	)
 }
 

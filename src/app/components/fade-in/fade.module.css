@@ -1,9 +1,9 @@
-@media (prefers-reduced-motion: no-preference) {
-	.fadeIn {
-		animation-name: fadeInAnimation;
-		animation-fill-mode: backwards;
-	}
+/* @media (prefers-reduced-motion: no-preference) { */
+.fadeIn {
+	animation-name: fadeInAnimation;
+	animation-fill-mode: backwards;
 }
+/* } */
 
 @keyframes fadeInAnimation {
 	from {

@@ -122,6 +122,10 @@ table th {
 
 table th,
 table td {
-	padding: 0.5rem 1rem;
+	padding: 0.35rem 0.75rem;
 	border: 1px solid var(--light-gray);
+}
+
+article > :not(:first-child) {
+	margin-top: 1.5rem;
 }

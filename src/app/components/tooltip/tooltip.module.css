@@ -1,24 +1,32 @@
 .tooltip {
-    animation: fadein 300ms;
+	animation: fadein 300ms;
+	background: var(--bg);
+	border-radius: var(--radius);
+	padding: 0 var(--gap);
+	border: 1px solid var(--border);
 }
 
-[data-side='top'] .tooltip{
-    margin-bottom: var(--gap-quarter);
+[data-side="top"] .tooltip {
+	margin-bottom: var(--gap-quarter);
 }
 
-.tooltip[data-side='bottom'] {
-    margin-top: var(--gap-quarter);
+.tooltip[data-side="bottom"] {
+	margin-top: var(--gap-quarter);
 }
 
-.tooltip[data-side='left'] {
-    margin-right: var(--gap-quarter);
+.tooltip[data-side="left"] {
+	margin-right: var(--gap-quarter);
 }
 
-.tooltip[data-side='right'] {
-    margin-left: var(--gap-quarter);
+.tooltip[data-side="right"] {
+	margin-left: var(--gap-quarter);
 }
 
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

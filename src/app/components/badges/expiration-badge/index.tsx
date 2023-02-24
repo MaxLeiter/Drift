@@ -8,11 +8,11 @@ import Badge from "../badge"
 const ExpirationBadge = ({
 	postExpirationDate
 }: {
-	postExpirationDate: Date | string | null
+	postExpirationDate: Date | string | undefined
 	onExpires?: () => void
 }) => {
 	const expirationDate = useMemo(
-		() => (postExpirationDate ? new Date(postExpirationDate) : null),
+		() => (postExpirationDate ? new Date(postExpirationDate) : undefined),
 		[postExpirationDate]
 	)
 	const [timeUntilString, setTimeUntil] = useState<string | null>(

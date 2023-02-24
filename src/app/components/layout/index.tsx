@@ -1,8 +1,18 @@
 "use client"
 
-import { PropsWithChildren } from "react"
+import clsx from "clsx"
 import styles from "./page.module.css"
 
-export default function Layout({ children }: PropsWithChildren<unknown>) {
-	return <div className={styles.page}>{children}</div>
+export default function Layout({
+	children,
+	forSites
+}: {
+	forSites?: boolean
+	children: React.ReactNode
+}) {
+	return (
+		<div className={clsx(styles.page, forSites && styles.forSites)}>
+			{children}
+		</div>
+	)
 }

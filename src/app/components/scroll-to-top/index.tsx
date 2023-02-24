@@ -8,6 +8,12 @@ import styles from "./scroll.module.css"
 
 const ScrollToTop = () => {
 	const [shouldShow, setShouldShow] = useState(false)
+
+	const isReducedMotion =
+		typeof window !== "undefined"
+			? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+			: false
+
 	useEffect(() => {
 		// if user is scrolled, set visible
 		const handleScroll = () => {
@@ -17,13 +23,8 @@ const ScrollToTop = () => {
 		return () => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
-	const isReducedMotion =
-		typeof window !== "undefined"
-			? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-			: false
 	const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.currentTarget.blur()
-
 		window.scrollTo({ top: 0, behavior: isReducedMotion ? "auto" : "smooth" })
 	}
 

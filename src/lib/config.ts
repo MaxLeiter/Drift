@@ -74,7 +74,9 @@ export const config = (env: Environment): Config => {
 		is_production,
 		enable_admin: stringToBoolean(env.ENABLE_ADMIN),
 		registration_password: env.REGISTRATION_PASSWORD ?? "",
-		welcome_content: env.WELCOME_CONTENT ?? "Welcome to Drift.",
+		welcome_content:
+			env.WELCOME_CONTENT ??
+			"## Drift is a self-hostable clone of GitHub Gist.\n\nIt is a simple way to save and share code and text snippets, with support for the following:\n\n- Render GitHub Extended Markdown\n- User authentication\n- Private, public, and password protected posts\n- Syntax highlighting and language detection\n- Drag-and-drop file uploading \n\n You can find the source code and sponsor development on [GitHub](https://github.com/MaxLeiter/drift).",
 		welcome_title: env.WELCOME_TITLE ?? "Drift",
 		url:
 			throwIfUndefined("DRIFT_URL", true) ||
