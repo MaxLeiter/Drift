@@ -56,6 +56,14 @@ const APIKeys = ({
 			setSubmitting(false)
 		}
 	}
+	
+	const onRevoke = (tokenId: string) => {
+		expireToken(tokenId)
+		setToast({
+			message: "Your API key has been revoked.",
+			type: "success"
+		})
+	}
 
 	const hasError = Boolean(error)
 	return (
@@ -106,7 +114,7 @@ const APIKeys = ({
 										<td>
 											<Button
 												type="button"
-												onClick={() => expireToken(token.id)}
+												onClick={() => onRevoke(token.id)}
 											>
 												Revoke
 											</Button>

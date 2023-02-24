@@ -6,9 +6,8 @@ const nextConfig = {
 	experimental: {
 		// esmExternals: true,
 		appDir: true,
-		serverComponentsExternalPackages: ["prisma", "@prisma/client"]
+		serverComponentsExternalPackages: ["prisma", "@prisma/client"],
 	},
-	output: "standalone",
 	rewrites() {
 		return [
 			{
@@ -27,9 +26,6 @@ const nextConfig = {
 	env: {
 		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
 	},
-	typescript: {
-		// ignoreBuildErrors: true,
-	}
 }
 
 export default bundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(
