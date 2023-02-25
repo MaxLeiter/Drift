@@ -1,4 +1,5 @@
 import VisibilityControl from "@components/badges/visibility-control"
+import { getMetadata } from "src/app/lib/metadata"
 import {
 	PostWithFilesAndAuthor,
 	serverPostToClientPost,
@@ -27,4 +28,29 @@ export default async function PostPage({
 			/>
 		</>
 	)
+}
+
+export const generateMetadata = async ({
+	params
+}: {
+	params: {
+		id: string
+	}
+}) => {
+	const post = (await getPost(params.id)) as ServerPostWithFilesAndAuthor
+
+	return getMetadata({
+		title: post.title,
+		description: post.description || undefined,
+		hidden: post.visibility === "public",
+		overrides: {
+			openGraph: {
+				title: post.title,
+				description: post.description || undefined,
+				type: "website",
+				siteName: "Drift",
+				// TODO: og images
+			}
+		}
+	})
 }

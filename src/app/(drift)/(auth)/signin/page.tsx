@@ -1,3 +1,4 @@
+import { getMetadata } from "src/app/lib/metadata"
 import config from "@lib/config"
 import Auth from "../components"
 
@@ -10,3 +11,7 @@ function isGithubEnabled() {
 export default function SignInPage() {
 	return <Auth page="signin" isGithubEnabled={isGithubEnabled()} />
 }
+
+export const metadata = getMetadata({
+	title: "Sign in",
+})

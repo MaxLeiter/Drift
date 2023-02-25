@@ -1,6 +1,7 @@
 import Auth from "../components"
 import { getRequiresPasscode } from "src/pages/api/auth/requires-passcode"
 import config from "@lib/config"
+import { getMetadata } from "src/app/lib/metadata"
 
 async function getPasscode() {
 	return await getRequiresPasscode()
@@ -22,3 +23,7 @@ export default async function SignUpPage() {
 		/>
 	)
 }
+
+export const metadata = getMetadata({
+	title: "Sign up",
+})

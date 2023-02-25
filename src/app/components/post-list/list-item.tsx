@@ -99,6 +99,7 @@ const ListItem = ({
 											<Button
 												iconRight={<ArrowUpCircle />}
 												onClick={viewParentClick}
+												// TODO: not perfect on mobile
 												height={38}
 											/>
 										</Tooltip>

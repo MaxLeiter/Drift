@@ -1,6 +1,5 @@
-"use client"
-
 import Note from "@components/note"
+import { getMetadata } from "src/app/lib/metadata"
 
 export default function ExpiredPage() {
 	return (
@@ -9,3 +8,8 @@ export default function ExpiredPage() {
 		</Note>
 	)
 }
+
+export const metadata = getMetadata({
+	title: "Post expired",
+	hidden: true
+})

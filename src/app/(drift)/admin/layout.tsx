@@ -1,3 +1,4 @@
+import { getMetadata } from "src/app/lib/metadata"
 import { getCurrentUser } from "@lib/server/session"
 import { redirect } from "next/navigation"
 
@@ -15,3 +16,9 @@ export default async function AdminLayout({
 
 	return children
 }
+
+export const metadata = getMetadata({
+	title: "Admin",
+	hidden: true
+})
+
