@@ -1,9 +1,15 @@
 #!/bin/bash
-url="http://localhost:3000"
-# Generated at /settings
+
+# usage
+# ./upload.sh -t "title" -v "visibility" -p "password" file1 file2 file3
+
+url="https://drift.lol"
+
+# Generate one at /settings (don't worry, this ones been revoked)
 TOKEN=""
 
-set -e # Exit on error
+# Exit on error
+set -e
 
 visibility="unlisted"
 title="Untitled"
@@ -38,13 +44,8 @@ while getopts ":t:d:v:p:" opt; do
 done
 shift $((OPTIND - 1))
 
-# Set the API endpoint URL
-# {"id":"clel2nl7b0003p0scejnggjar","title":"test","visibility":"unlisted","password":"","createdAt":"2023-02-26T07:30:48.215Z","updatedAt":"2023-02-26T07:30:48.215Z","deletedAt":null,"expiresAt":null,"parentId":null,"description":"","authorId":"clc4babr80000p0gasef3i5ij"}⏎
-# Set the bearer token
-
 header="Authorization: Bearer $TOKEN"
 
-# Set the JSON payload
 json=$(
     cat <<EOF
 {
@@ -74,14 +75,29 @@ done
 # Close the JSON payload: remove just the trailing comma and add the closing bracket
 json=$(echo "$json" | sed '$s/,$//')"]}"
 
-# Send the POST request to the API endpoint
 response=$(curl -s -X POST -H "$header" -H "Content-Type: application/json" -d "$json" "$url/api/post")
 
 # Extract the ID from the response using jq
 id=$(echo "$response" | jq -r '.id')
 
+# Extract an error message
+error=$(echo "$response" | jq -r '.error')
+
+# If there was an error, print it and exit
+if [ "$error" != "null" ]; then
+    echo "Error: $error"
+    exit 1
+fi
+
 # Construct the URL with the ID
 url_with_id="$url/post/$id"
 
 # Print the URL
-echo "$url_with_id"
+file_or_files="files"
+have_or_has="have"
+if [ "$#" -eq 1 ]; then
+    file_or_files="file"
+    have_or_has="has"
+fi
+
+echo "Your $file_or_files $have_or_has been uploaded to $url_with_id."
