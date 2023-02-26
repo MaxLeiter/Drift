@@ -41,7 +41,6 @@ export default function HomePage({
 				<Item
 					shortcut="T"
 					onSelect={() => {
-						console.log("toggle theme", resolvedTheme)
 						setTheme(resolvedTheme === "dark" ? "light" : "dark")
 					}}
 					icon={resolvedTheme === "dark" ? <Sun /> : <Moon />}

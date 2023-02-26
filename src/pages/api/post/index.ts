@@ -8,11 +8,14 @@ import { getHtmlFromFile } from "@lib/server/get-html-from-drift-file"
 import { verifyApiUser } from "@lib/server/verify-api-user"
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
+	console.log("Handling post request")
 	try {
 		const userId = await verifyApiUser(req, res)
 		if (!userId) {
 			return res.status(401).json({ error: "Unauthorized" })
 		}
+
+		console.log("User is authenticated")
 
 		const files = req.body.files as (Omit<ServerFile, "content" | "html"> & {
 			content: string
@@ -23,9 +26,10 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 		if (missingTitles.length > 0) {
 			throw new Error("All files must have a title")
 		}
+		console.log("All files have titles")
 
 		if (files.length === 0) {
-			throw new Error("You must submit at least one file")
+			throw new Error("You must submit at lea	st one file")
 		}
 
 		let hashedPassword = ""
@@ -80,12 +84,17 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse<unknown>) {
 			})
 		return res.json(post)
 	} catch (error) {
+		console.error(error)
 		return res.status(500).json(error)
 	}
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	return await handlePost(req, res)
+	try {
+		return await handlePost(req, res)
+	} catch (error) {
+		return res.status(500).json(error)
+	}
 }
 
 export default withMethods(["POST"], handler)
