@@ -1,23 +1,16 @@
 .actionWrapper {
 	position: relative;
-    z-index: 1;
-}
+	z-index: 1;
 
-.actionWrapper .actions {
+	.actions {
+		/* small screens, top: 0 */
+		@media (max-width: 767px) {
+			top: 0;
+		}
 
-}
-
-/* small screens, top: 0 */
-@media (max-width: 767px) {
-	.actionWrapper .actions {
-		top: 0;
-	}
-}
-
-
-@media (max-width: 768px) {
-	.actionWrapper .actions {
-		position: relative;
-		margin-left: 0 !important;
+		@media (max-width: 768px) {
+			position: relative;
+			margin-left: 0 !important;
+		}
 	}
 }

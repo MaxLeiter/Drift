@@ -4,10 +4,8 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: inherit;
-}
 
-@media screen and (max-width: 650px) {
-	.title {
+	@media screen and (max-width: 650px) {
 		align-items: flex-start;
 		flex-direction: column;
 	}

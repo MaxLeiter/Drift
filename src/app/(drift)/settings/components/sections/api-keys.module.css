@@ -4,22 +4,22 @@
 	gap: var(--gap);
 	max-width: 350px;
 	margin-top: var(--gap);
-}
+	/* fieldset contains an input and button. I want button to be small next to input */
 
-/* fieldset contains an input and button. I want button to be small next to input */
-.form .fieldset {
-	display: flex;
-	flex-direction: row;
-	gap: var(--gap);
-	border: none;
-	padding: 0;
-	margin: 0;
-}
+	.fieldset {
+		display: flex;
+		flex-direction: row;
+		gap: var(--gap);
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
 
-.tokens {
-	margin-top: var(--gap);
-}
+	.tokens {
+		margin-top: var(--gap);
 
-.tokens table thead th {
-	text-align: left;
+		table thead th {
+			text-align: left;
+		}
+	}
 }

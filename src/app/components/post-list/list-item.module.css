@@ -46,26 +46,27 @@
 	}
 }
 
-.files li {
-	display: flex;
-	align-items: center;
-	gap: var(--gap);
-	padding: var(--gap-quarter);
-}
+.files {
+	li {
+		display: flex;
+		align-items: center;
+		gap: var(--gap);
+		padding: var(--gap-quarter);
+	}
 
-.files li a {
-	display: flex;
-	align-items: center;
-	gap: var(--gap);
-	color: var(--darker-gray);
-}
+	li a {
+		display: flex;
+		align-items: center;
+		gap: var(--gap);
+		color: var(--darker-gray);
+	}
 
-.files li a:hover {
-	color: var(--link);
-	text-decoration: none;
-}
+	li a:hover {
+		color: var(--link);
+		text-decoration: none;
+	}
 
-.files li a svg {
-	color: inherit;
+	li a svg {
+		color: inherit;
+	}
 }
-
