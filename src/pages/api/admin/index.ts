@@ -3,7 +3,7 @@ import { parseQueryParam } from "@lib/server/parse-query-param"
 import { getCurrentUser } from "@lib/server/session"
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "src/lib/server/prisma"
-import { deleteUser } from "../user/[id]"
+import { deleteUser } from "../user/[userId]"
 
 const actions = [
 	"user",

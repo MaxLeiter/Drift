@@ -55,7 +55,7 @@ export default function HomePage({
 					}}
 					icon={<Settings />}
 				>
-					Go to Settings 
+					Go to Settings
 				</Item>
 			</Command.Group>
 		</>

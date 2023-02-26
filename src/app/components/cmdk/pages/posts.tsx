@@ -7,7 +7,9 @@ import { File } from "react-feather"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import Item from "../item"
 
-export default function PostsPage({ setOpen }: {
+export default function PostsPage({
+	setOpen
+}: {
 	setOpen: (open: boolean) => void
 }) {
 	const { session } = useSessionSWR()
@@ -32,7 +34,14 @@ export default function PostsPage({ setOpen }: {
 	return (
 		<>
 			{isLoading && (
-				<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 100 }}>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						height: 100
+					}}
+				>
 					<Spinner />
 				</div>
 			)}
