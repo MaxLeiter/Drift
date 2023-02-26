@@ -9,8 +9,7 @@ import dynamic from "next/dynamic"
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
-// const CmdK = dynamic(() => import("@components/cmdk"), { ssr: false })
-import CmdK from "@components/cmdk"
+const CmdK = dynamic(() => import("@components/cmdk"), { ssr: false })
 
 export default async function RootLayout({
 	children

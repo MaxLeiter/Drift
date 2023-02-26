@@ -1,6 +1,5 @@
 "use client"
 
-import FadeIn from "@components/fade-in"
 import { Command } from "cmdk"
 import { useEffect, useRef, useState } from "react"
 import styles from "./cmdk.module.css"
