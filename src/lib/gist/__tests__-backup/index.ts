@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import { Post } from "@lib/models/Post"
 import { User } from "@lib/models/User"
 import { File } from "@lib/models/File"
