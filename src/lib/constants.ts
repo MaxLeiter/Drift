@@ -2,7 +2,9 @@ import { ServerPost } from "./server/prisma"
 
 // Visibilties for the webpages feature
 export const ALLOWED_VISIBILITIES_FOR_WEBPAGE = ["public", "unlisted"]
-export function isAllowedVisibilityForWebpage(visibility: ServerPost["visibility"]) {
+export function isAllowedVisibilityForWebpage(
+	visibility: ServerPost["visibility"]
+) {
 	return ALLOWED_VISIBILITIES_FOR_WEBPAGE.includes(visibility)
 }
 

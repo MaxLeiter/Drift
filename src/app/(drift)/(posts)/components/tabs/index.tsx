@@ -24,7 +24,7 @@ export default function DocumentTabs({
 	onPaste,
 	title,
 	staticPreview: preview,
-	children,
+	children: rawContent,
 	...props
 }: Props) {
 	const codeEditorRef = useRef<TextareaMarkdownRef>(null)
@@ -72,7 +72,7 @@ export default function DocumentTabs({
 							onPaste={onPaste ? onPaste : undefined}
 							ref={codeEditorRef}
 							placeholder=""
-							value={children}
+							value={rawContent}
 							onChange={handleOnContentChange}
 							// TODO: Textarea should grow to fill parent if height == 100%
 							style={{ flex: 1, minHeight: 350 }}
@@ -84,7 +84,7 @@ export default function DocumentTabs({
 			<RadixTabs.Content value="preview">
 				{isEditing ? (
 					<Preview height={"100%"} title={title}>
-						{children}
+						{rawContent}
 					</Preview>
 				) : (
 					<StaticPreview height={"100%"}>{preview || ""}</StaticPreview>

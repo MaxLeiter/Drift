@@ -51,11 +51,6 @@
 	color: var(--fg);
 }
 
-.buttonGroup,
-.mobile {
-	display: none;
-}
-
 .contentWrapper {
 	background: var(--bg);
 	margin-left: var(--gap);
@@ -68,39 +63,6 @@
 
 	.wrapper [data-tab="github"] {
 		display: none;
-	}
-
-	.mobile {
-		margin-top: var(--gap);
-		margin-bottom: var(--gap);
-		display: flex;
-	}
-
-	.buttonGroup {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.dropdownItem:not(:first-child):not(:last-child) :global(button) {
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-
-	.dropdownItem:first-child :global(button) {
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-
-	.dropdownItem:last-child :global(button) {
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
-
-	.dropdownItem a,
-	.dropdownItem button {
-		width: 100%;
 	}
 
 	.tabs {

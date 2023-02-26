@@ -40,7 +40,7 @@ function Post({
 }: {
 	initialPost?: PostWithFiles
 	newPostParent?: string
-}): JSX.Element | null {
+}): JSX.Element {
 	const { isAuthenticated } = useSessionSWR()
 
 	const { setToast } = useToasts()
@@ -89,10 +89,10 @@ function Post({
 			})
 
 			if (res.ok) {
-				const json = await res.json()
+				const json = (await res.json()) as { id: string }
 				router.push(`/post/${json.id}`)
 			} else {
-				const json = await res.json()
+				const json = (await res.json()) as { error: string }
 				console.error(json)
 				setToast({
 					id: "error",
@@ -179,7 +179,7 @@ function Post({
 
 	if (isAuthenticated === false) {
 		router.push("/signin")
-		return null
+		return <></>
 	}
 
 	function onClosePasswordModal() {

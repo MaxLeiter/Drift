@@ -25,5 +25,5 @@ export default async function SignUpPage() {
 }
 
 export const metadata = getMetadata({
-	title: "Sign up",
+	title: "Sign up"
 })

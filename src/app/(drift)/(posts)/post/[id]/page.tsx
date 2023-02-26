@@ -48,7 +48,7 @@ export const generateMetadata = async ({
 				title: post.title,
 				description: post.description || undefined,
 				type: "website",
-				siteName: "Drift",
+				siteName: "Drift"
 				// TODO: og images
 			}
 		}

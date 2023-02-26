@@ -21,4 +21,3 @@ export const metadata = getMetadata({
 	title: "Admin",
 	hidden: true
 })
-

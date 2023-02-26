@@ -4,6 +4,12 @@
 	line-height: 1.75;
 }
 
+.skeletonPreview {
+	padding: var(--gap-half);
+	font-size: 18px;
+	line-height: 1.75;
+}
+
 .markdownPreview p {
 	margin-top: var(--gap);
 	margin-bottom: var(--gap);

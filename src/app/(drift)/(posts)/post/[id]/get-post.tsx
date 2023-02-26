@@ -54,9 +54,9 @@ export const getPost = cache(async (id: string) => {
 
 	if (post.visibility === "protected") {
 		return {
-				visibility: "protected",
-				authorId: post.authorId,
-				id: post.id
+			visibility: "protected",
+			authorId: post.authorId,
+			id: post.id
 		}
 	}
 

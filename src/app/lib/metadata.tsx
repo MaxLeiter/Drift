@@ -9,6 +9,8 @@ type PageSeoProps = {
 	isPrivate?: boolean
 }
 
+// TODO: remove once fully migrated to new metadata API
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PageSeo = ({
 	title: pageTitle,
 	description = "A self-hostable clone of GitHub Gist",
@@ -26,8 +28,6 @@ const PageSeo = ({
 		</>
 	)
 }
-
-export default PageSeo
 
 const ThemeAndIcons = () => (
 	<>

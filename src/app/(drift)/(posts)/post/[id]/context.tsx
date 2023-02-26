@@ -3,9 +3,9 @@
 import { createContext, useContext } from "react"
 import { getPost } from "./get-post"
 
-const PostContext = createContext<
-	Awaited<ReturnType<typeof getPost>> | null
->(null)
+const PostContext = createContext<Awaited<ReturnType<typeof getPost>> | null>(
+	null
+)
 
 export const PostProvider = PostContext.Provider
 

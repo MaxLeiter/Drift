@@ -1,0 +1,53 @@
+.mobileTrigger {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.header {
+		opacity: 1;
+	}
+
+	.wrapper [data-tab="github"] {
+		display: none;
+	}
+
+	.mobileTrigger {
+		margin-top: var(--gap);
+		margin-bottom: var(--gap);
+		display: flex;
+		align-items: center;
+	}
+
+	.mobileTrigger button {
+		display: none;
+	}
+
+	.dropdownItem a,
+	.dropdownItem button {
+		width: 100%;
+		text-align: left;
+		white-space: nowrap;
+		display: block;
+	}
+
+	.dropdownItem:not(:first-child):not(:last-child) :global(button) {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.dropdownItem:first-child :global(button) {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.dropdownItem:last-child :global(button) {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.tabs {
+		display: none;
+	}
+}

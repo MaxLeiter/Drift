@@ -56,7 +56,7 @@ const APIKeys = ({
 			setSubmitting(false)
 		}
 	}
-	
+
 	const onRevoke = (tokenId: string) => {
 		expireToken(tokenId)
 		setToast({
@@ -112,10 +112,7 @@ const APIKeys = ({
 										<td>{token.name}</td>
 										<td>{new Date(token.expiresAt).toDateString()}</td>
 										<td>
-											<Button
-												type="button"
-												onClick={() => onRevoke(token.id)}
-											>
+											<Button type="button" onClick={() => onRevoke(token.id)}>
 												Revoke
 											</Button>
 										</td>

@@ -2,8 +2,10 @@ import { memo, useEffect, useState } from "react"
 import styles from "./preview.module.css"
 import "@styles/markdown.css"
 import "@styles/syntax.css"
-import { Spinner } from "@components/spinner"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
+import { Spinner } from "@components/spinner"
+import React from "react"
+import clsx from "clsx"
 
 type Props = {
 	height?: number | string
@@ -12,11 +14,16 @@ type Props = {
 	children?: string
 }
 
-function MarkdownPreview({ height = 500, fileId, title, children }: Props) {
-	const [preview, setPreview] = useState<string>(children || "")
+function MarkdownPreview({
+	height = 500,
+	fileId,
+	title,
+	children: rawContent
+}: Props) {
+	const [preview, setPreview] = useState<string>(rawContent || "")
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 	useEffect(() => {
-		async function fetchPost() {
+		async function fetchHTML() {
 			// POST to avoid query string length limit
 			const method = fileId ? "GET" : "POST"
 			const path = fileId ? `/api/file/html/${fileId}` : "/api/file/get-html"
@@ -24,7 +31,7 @@ function MarkdownPreview({ height = 500, fileId, title, children }: Props) {
 				? undefined
 				: JSON.stringify({
 						title: title || "",
-						content: children
+						content: rawContent
 				  })
 
 			const resp = await fetchWithUser(path, {
@@ -42,8 +49,8 @@ function MarkdownPreview({ height = 500, fileId, title, children }: Props) {
 
 			setIsLoading(false)
 		}
-		fetchPost()
-	}, [children, fileId, title])
+		fetchHTML()
+	}, [rawContent, fileId, title])
 
 	return (
 		<>
@@ -73,5 +80,24 @@ export function StaticPreview({
 				height
 			}}
 		/>
+	)
+}
+
+export function StaticPreviewSkeleton({
+	children,
+	height = 500
+}: {
+	children: string
+	height: string | number
+}) {
+	return (
+		<div
+			className={clsx(styles.markdownPreview)}
+			style={{
+				height
+			}}
+		>
+			{children}
+		</div>
 	)
 }
