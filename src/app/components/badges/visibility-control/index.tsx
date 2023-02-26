@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import FadeIn from "@components/fade-in"
+import { PostWithFiles } from "@lib/server/prisma"
 
 type Props = {
 	authorId: string
@@ -42,7 +43,7 @@ function VisibilityControl({
 			})
 
 			if (res.ok) {
-				const json = await res.json()
+				const json = await res.json() as PostWithFiles
 				setVisibility(json.visibility)
 				router.refresh()
 				setToast({

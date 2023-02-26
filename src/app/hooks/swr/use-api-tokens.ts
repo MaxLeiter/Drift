@@ -1,4 +1,5 @@
 import { ApiToken } from "@prisma/client"
+import { ApiResponse } from "src/app/(drift)/providers"
 import useSWR from "swr"
 
 type ConvertDateToString<T> = {
@@ -35,15 +36,15 @@ export function useApiTokens({ userId, initialTokens }: UseApiTokens) {
 			}
 		)
 
-		const response = await res.json()
+		const response = await res.json() as ApiResponse<SerializedApiToken>
 		if (response.error) {
 			throw new Error(response.error)
 			return
 		}
 
-		mutate([...(data || []), response])
+		mutate([...(data || []), response.data])
 
-		return response as SerializedApiToken
+		return response.data
 	}
 
 	const expireToken = async (id: string) => {

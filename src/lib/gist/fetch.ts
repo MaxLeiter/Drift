@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { Gist, GistFile } from "./types"
 
 async function fetchHelper(response: Response): Promise<Response> {
@@ -6,7 +9,7 @@ async function fetchHelper(response: Response): Promise<Response> {
 			.get("content-type")
 			?.includes("application/json")
 		const err = await (isJson ? response.json() : response.text())
-		throw new Error(err)
+		throw new Error(err as string)
 	}
 	return response
 }

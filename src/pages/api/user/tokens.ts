@@ -25,7 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 				}
 			})
 
-			return res.json(tokens)
+			return res.json({ data: tokens })
 		}
 		case "POST": {
 			const name = parseQueryParam(req.query.name)
@@ -33,7 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 				return res.status(400).json({ error: "Missing token name" })
 			}
 			const token = await createApiToken(userId, name)
-			return res.json(token)
+			return res.json({ data: token })
 		}
 		case "DELETE": {
 			const tokenId = parseQueryParam(req.query.tokenId)

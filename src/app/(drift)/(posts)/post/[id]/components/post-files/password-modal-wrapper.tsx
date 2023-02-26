@@ -44,7 +44,12 @@ const PasswordModalWrapper = ({ setPost, postId, authorId }: Props) => {
 				return
 			}
 
-			const data = await res.json()
+			// TODO: properly check type
+			const data = (await res.json()) as {
+				post: PostWithFilesAndAuthor
+				error?: string
+			}
+
 			if (data) {
 				if (data.error) {
 					setToast({
