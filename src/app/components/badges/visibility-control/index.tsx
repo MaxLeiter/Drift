@@ -43,7 +43,7 @@ function VisibilityControl({
 			})
 
 			if (res.ok) {
-				const json = await res.json() as PostWithFiles
+				const json = (await res.json()) as PostWithFiles
 				setVisibility(json.visibility)
 				router.refresh()
 				setToast({

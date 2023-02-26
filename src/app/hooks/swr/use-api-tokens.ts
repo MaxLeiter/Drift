@@ -36,7 +36,7 @@ export function useApiTokens({ userId, initialTokens }: UseApiTokens) {
 			}
 		)
 
-		const response = await res.json() as ApiResponse<SerializedApiToken>
+		const response = (await res.json()) as ApiResponse<SerializedApiToken>
 		if (response.error) {
 			throw new Error(response.error)
 			return

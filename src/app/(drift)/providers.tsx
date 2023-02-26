@@ -18,17 +18,19 @@ export function Providers({ children }: PropsWithChildren<unknown>) {
 	)
 }
 
-export type ApiResponse<T> = {
-	data: T
-	error: never
-} | {
-	data: never
-	error: string
-}
+export type ApiResponse<T> =
+	| {
+			data: T
+			error: never
+	  }
+	| {
+			data: never
+			error: string
+	  }
 
 async function fetcher<T>(url: string): Promise<unknown> {
 	const response = await fetch(url)
-	const data: ApiResponse<T> = await response.json() as ApiResponse<T>
+	const data: ApiResponse<T> = (await response.json()) as ApiResponse<T>
 
 	if (data.error) {
 		throw new Error(data.error)

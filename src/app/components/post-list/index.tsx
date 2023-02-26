@@ -59,7 +59,7 @@ const PostList = ({
 						}
 					}
 				)
-				const json = await res.json() as PostWithFiles[]
+				const json = (await res.json()) as PostWithFiles[]
 				setPosts(json)
 				setSearching(false)
 			}
