@@ -1,3 +1,5 @@
+import "@total-typescript/ts-reset";
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { User } from "next-auth"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
