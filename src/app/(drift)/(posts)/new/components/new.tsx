@@ -269,7 +269,8 @@ function Post({
 						])
 					}}
 					style={{
-						flex: 1
+						flex: 1,
+						minWidth: 120
 					}}
 				>
 					Add a File

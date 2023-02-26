@@ -5,8 +5,12 @@ import { Toasts } from "@components/toasts"
 import Header from "@components/header"
 import { Inter } from "next/font/google"
 import { getMetadata } from "src/app/lib/metadata"
+import dynamic from "next/dynamic"
 
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
+
+// const CmdK = dynamic(() => import("@components/cmdk"), { ssr: false })
+import CmdK from "@components/cmdk"
 
 export default async function RootLayout({
 	children
@@ -18,12 +22,13 @@ export default async function RootLayout({
 		<html lang="en" className={inter.variable} suppressHydrationWarning>
 			<body>
 				<Toasts />
-				<Layout>
-					<Providers>
+				<Providers>
+					<Layout>
+						<CmdK />
 						<Header />
 						{children}
-					</Providers>
-				</Layout>
+					</Layout>
+				</Providers>
 			</body>
 		</html>
 	)

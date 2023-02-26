@@ -1,33 +1,31 @@
-import { parseQueryParam } from "@lib/server/parse-query-param"
 import { getUserById } from "@lib/server/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "src/lib/server/prisma"
 import { withMethods } from "@lib/api-middleware/with-methods"
 import { getSession } from "next-auth/react"
+import { verifyApiUser } from "@lib/server/verify-api-user"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const id = parseQueryParam(req.query.id)
-	if (!id) {
-		return res.status(400).json({ error: "Missing id" })
+	const userId = await verifyApiUser(req, res)
+
+	if (!userId) {
+		return res.status(400).json({ error: "Missing userId or auth token" })
 	}
 
-	const user = await getUserById(id)
-	const currUser = (await getSession({ req }))?.user
+	const [session, user] = await Promise.all([
+		// TODO; this call is duplicated in veryfiyApiUser
+		getSession({ req }),
+		getUserById(userId)
+	])
 
-	if (!user) {
-		return res.status(404).json({ message: "User not found" })
-	}
-
-	if (user.id !== currUser?.id) {
-		return res.status(403).json({ message: "Unauthorized" })
-	}
+	const currUser = session?.user
 
 	switch (req.method) {
 		case "PUT": {
 			const { displayName } = req.body
 			const updatedUser = await prisma.user.update({
 				where: {
-					id
+					id: userId
 				},
 				data: {
 					displayName
@@ -44,14 +42,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		case "GET":
 			return res.json({
 				...currUser,
-				displayName: user.displayName
+				displayName: user?.displayName
 			})
 		case "DELETE":
-			if (currUser?.role !== "admin" && currUser?.id !== id) {
+			if (currUser?.role !== "admin") {
 				return res.status(403).json({ message: "Unauthorized" })
 			}
 
-			await deleteUser(id)
+			await deleteUser(userId)
 			break
 		default:
 			return res.status(405).json({ message: "Method not allowed" })

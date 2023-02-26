@@ -37,7 +37,7 @@
 
 	.buttons .rightButtons {
 		flex-direction: column;
-		align-items: flex-end;
+		align-items: flex-start;
 	}
 
 	.buttons .rightButtons > * {
