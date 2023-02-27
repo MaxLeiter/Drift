@@ -6,20 +6,20 @@ export default withAuth(
 	async function middleware(req) {
 		const token = await getToken({ req })
 
-		const isAuth = !!token
+		const isAuthed = !!token
 		const isAuthPage =
 			req.nextUrl.pathname.startsWith("/signup") ||
 			req.nextUrl.pathname.startsWith("/signin")
 
 		if (isAuthPage) {
-			if (isAuth) {
+			if (isAuthed) {
 				return NextResponse.redirect(new URL("/new", req.url))
 			}
 
 			return null
 		}
 
-		if (!isAuth) {
+		if (!isAuthed) {
 			return NextResponse.redirect(new URL("/signin", req.url))
 		}
 	},
@@ -42,5 +42,6 @@ export const config = {
 		"/signin",
 		"/signup",
 		"/new",
+		"/mine",
 	]
 }

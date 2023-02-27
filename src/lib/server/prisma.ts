@@ -243,7 +243,6 @@ export const createUser = async (
 		config.registration_password &&
 		serverPassword !== config.registration_password
 	) {
-		console.log("Registration password mismatch")
 		throw new Error("Wrong registration password")
 	}
 

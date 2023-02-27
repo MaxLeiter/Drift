@@ -16,7 +16,6 @@ import Button from "@components/button"
 import Input from "@components/input"
 import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
-import { useSessionSWR } from "@lib/use-session-swr"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 
 import dynamic from "next/dynamic"
@@ -41,8 +40,6 @@ function Post({
 	initialPost?: PostWithFiles
 	newPostParent?: string
 }): JSX.Element {
-	const { isAuthenticated } = useSessionSWR()
-
 	const { setToast } = useToasts()
 	const router = useRouter()
 	const [title, setTitle] = useState(
@@ -91,6 +88,7 @@ function Post({
 			if (res.ok) {
 				const json = (await res.json()) as { id: string }
 				router.push(`/post/${json.id}`)
+				return
 			} else {
 				const json = (await res.json()) as { error: string }
 				console.error(json)
@@ -176,11 +174,6 @@ function Post({
 		},
 		[]
 	)
-
-	if (isAuthenticated === false) {
-		router.push("/signin")
-		return <></>
-	}
 
 	function onClosePasswordModal() {
 		setPasswordModalVisible(false)

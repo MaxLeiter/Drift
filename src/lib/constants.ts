@@ -8,6 +8,8 @@ export function isAllowedVisibilityForWebpage(
 	return ALLOWED_VISIBILITIES_FOR_WEBPAGE.includes(visibility)
 }
 
+export const SIGNED_IN_COOKIE = "next-auth.session-token"
+
 // Code files for uploading with drag and drop and syntax highlighting
 export const allowedFileTypes = [
 	"application/json",

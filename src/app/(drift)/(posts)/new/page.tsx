@@ -6,8 +6,6 @@ export default function New() {
 	return <NewPost />
 }
 
-export const dynamic = "force-static"
-
 export const metadata = getMetadata({
 	title: "New post",
 	hidden: true

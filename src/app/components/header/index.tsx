@@ -155,31 +155,30 @@ const Header = () => {
 			isAuthLoading ? (
 				<NavButtonPlaceholder width={SIGN_IN_WIDTH} key="signin" />
 			) : undefined,
-			!isAuthLoading ? (
-				isAuthenticated ? (
-					<FadeIn key="signout-fade">
-						<NavButton
-							name="Sign Out"
-							icon={<UserX />}
-							value="signout"
-							onClick={() => {
-								signOut()
-								mutateSession(undefined)
-							}}
-							width={SIGN_IN_WIDTH}
-						/>
-					</FadeIn>
-				) : (
-					<FadeIn key="signin-fade">
-						<NavButton
-							name="Sign In"
-							icon={<User />}
-							value="signin"
-							href="/signin"
-							width={SIGN_IN_WIDTH}
-						/>
-					</FadeIn>
-				)
+			isAuthenticated === true ? (
+				<FadeIn key="signout-fade">
+					<NavButton
+						name="Sign Out"
+						icon={<UserX />}
+						value="signout"
+						onClick={() => {
+							signOut()
+							mutateSession(undefined)
+						}}
+						width={SIGN_IN_WIDTH}
+					/>
+				</FadeIn>
+			) : undefined,
+			isAuthenticated === false ? (
+				<FadeIn key="signin-fade">
+					<NavButton
+						name="Sign In"
+						icon={<User />}
+						value="signin"
+						href="/signin"
+						width={SIGN_IN_WIDTH}
+					/>
+				</FadeIn>
 			) : undefined,
 			isAdmin ? (
 				<FadeIn>
