@@ -45,6 +45,7 @@ type Tab = {
 
 const Header = () => {
 	const {
+		session,
 		isAdmin,
 		isAuthenticated,
 		isLoading: isAuthLoading,
@@ -162,7 +163,11 @@ const Header = () => {
 						icon={<UserX />}
 						value="signout"
 						onClick={() => {
-							signOut()
+							signOut({
+								callbackUrl: `/signedout${
+									session?.user?.id ? "?userId=" + session?.user?.id : ""
+								}`
+							})
 							mutateSession(undefined)
 						}}
 						width={SIGN_IN_WIDTH}
@@ -199,7 +204,8 @@ const Header = () => {
 		mounted,
 		resolvedTheme,
 		setTheme,
-		mutateSession
+		mutateSession,
+		session
 	])
 
 	return (
