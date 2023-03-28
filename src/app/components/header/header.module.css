@@ -47,10 +47,6 @@
 	align-items: center;
 }
 
-.tabs .active {
-	color: var(--fg);
-}
-
 .contentWrapper {
 	background: var(--bg);
 	margin-left: var(--gap);

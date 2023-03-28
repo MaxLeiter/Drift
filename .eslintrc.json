@@ -1,5 +1,4 @@
 {
-	"plugins": ["@typescript-eslint"],
 	"extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
 	"ignorePatterns": ["node_modules/", "__tests__/"],
 	"rules": {
