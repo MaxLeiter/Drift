@@ -2,6 +2,7 @@ import { Command } from "cmdk"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { FilePlus, Moon, Search, Settings, Sun } from "react-feather"
+import { setDriftTheme } from "src/app/lib/set-theme"
 import { CmdKPage } from ".."
 import Item from "../item"
 
@@ -41,7 +42,7 @@ export default function HomePage({
 				<Item
 					shortcut="T"
 					onSelect={() => {
-						setTheme(resolvedTheme === "dark" ? "light" : "dark")
+						setDriftTheme(resolvedTheme === "dark" ? "light" : "dark", setTheme)
 					}}
 					icon={resolvedTheme === "dark" ? <Sun /> : <Moon />}
 				>

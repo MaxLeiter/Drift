@@ -1,11 +1,28 @@
+"use client"
+
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import buttonStyles from "@components/button/button.module.css"
 import Button from "@components/button"
 import { Menu } from "react-feather"
 import clsx from "clsx"
 import styles from "./mobile.module.css"
+import { getButtons } from "./buttons"
+import { useSessionSWR } from "@lib/use-session-swr"
 
-export default function MobileHeader({ buttons }: { buttons: JSX.Element[] }) {
+export default function MobileHeader({
+	isAuthenticated,
+	theme
+}: {
+	isAuthenticated: boolean
+	theme: string
+}) {
+	const { isAdmin } = useSessionSWR()
+	const buttons = getButtons({
+		isAuthenticated,
+		theme,
+		isAdmin
+	})
+
 	// TODO: this is a hack to close the radix ui menu when a next link is clicked
 	const onClick = () => {
 		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
