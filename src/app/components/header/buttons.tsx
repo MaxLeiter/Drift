@@ -151,6 +151,7 @@ export function getButtons({
 		isAuthenticated === true ? (
 			<NavButton
 				name="Sign Out"
+				key="signout"
 				icon={<UserX />}
 				value="signout"
 				onClick={() => {
@@ -166,6 +167,7 @@ export function getButtons({
 		isAuthenticated === false ? (
 			<NavButton
 				name="Sign In"
+				key="signin"
 				icon={<User />}
 				value="signin"
 				href="/signin"
@@ -176,6 +178,7 @@ export function getButtons({
 			<FadeIn>
 				<NavButton
 					name="Admin"
+					key="admin"
 					icon={<Settings />}
 					value="admin"
 					href="/admin"
