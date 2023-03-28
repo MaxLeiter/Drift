@@ -1,7 +1,6 @@
 import styles from "./header.module.css"
-import { getButtons, HeaderButtons } from "./buttons"
+import { HeaderButtons } from "./buttons"
 import MobileHeader from "./mobile"
-import { useMemo } from "react"
 
 export default function Header({
 	theme,
@@ -10,15 +9,6 @@ export default function Header({
 	theme: string
 	isAuthenticated: boolean
 }) {
-	const memoHeaderButtons = useMemo(
-		() => (
-			<>
-				<HeaderButtons isAuthenticated={isAuthenticated} theme={theme} />
-			</>
-		),
-		[isAuthenticated, theme]
-	)
-
 	return (
 		<header className={styles.header}>
 			<div className={styles.tabs}>
