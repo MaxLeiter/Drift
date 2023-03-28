@@ -1,10 +1,16 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { NextAuthOptions } from "next-auth"
+import { NextAuthOptions, User } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
+import KeycloakProvider from "next-auth/providers/keycloak"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@lib/server/prisma"
 import config from "@lib/config"
 import * as crypto from "crypto"
+import {
+	isCredentialEnabled,
+	isGithubEnabled,
+	isKeycloakEnabled
+} from "./auth-props"
 
 const credentialsOptions = () => {
 	const options: Record<string, unknown> = {
@@ -33,7 +39,7 @@ const credentialsOptions = () => {
 const providers = () => {
 	const providers = []
 
-	if (config.github_client_id && config.github_client_secret) {
+	if (isGithubEnabled()) {
 		providers.push(
 			GitHubProvider({
 				clientId: config.github_client_id,
@@ -42,7 +48,41 @@ const providers = () => {
 		)
 	}
 
-	if (config.credential_auth) {
+	if (isKeycloakEnabled()) {
+		const keycloak = KeycloakProvider({
+			clientId: config.keycloak_client_id,
+			clientSecret: config.keycloak_client_secret,
+			issuer: config.keycloak_issuer,
+			token: {
+				async request(ctx) {
+					const { client, provider, params, checks } = ctx
+					const tokens = await client.callback(
+						provider.callbackUrl,
+						params,
+						checks
+					)
+					if ("refresh_expires_in" in tokens) {
+						tokens.refresh_token_expires_in = tokens.refresh_expires_in
+						delete tokens.refresh_expires_in
+					}
+					delete tokens["not-before-policy"]
+					return { tokens }
+				}
+			}
+		})
+		const originalKeycloakProfile = keycloak.profile
+		;(keycloak.profile = async (profile, tokens) => {
+			const originalProfile = await originalKeycloakProfile(profile, tokens)
+			const newProfile: User & { displayName?: string | null } = {
+				...originalProfile,
+				displayName: originalProfile.name ?? null
+			}
+			return newProfile
+		}),
+			providers.push(keycloak)
+	}
+
+	if (isCredentialEnabled()) {
 		providers.push(
 			CredentialsProvider({
 				name: "Drift",
@@ -207,6 +247,58 @@ export const authOptions: NextAuthOptions = {
 				username: dbUser.username,
 				sessionToken: token.sessionToken
 			}
+		},
+		async redirect({ url, baseUrl }) {
+			if (url.startsWith(baseUrl)) return url
+			if (url.startsWith("/signedout")) {
+				const userIdFound = url.match(/userId=([^?&]+)/)
+				let userId = null
+				if (userIdFound?.length === 2) {
+					userId = userIdFound[1]
+				}
+				if (!userId) {
+					return baseUrl
+				}
+				const account = await prisma.account.findFirst({
+					where: {
+						AND: [
+							{
+								userId
+							}
+						]
+					}
+				})
+
+				let ssoLogoutUrl = null
+				let idToken = null
+				let clientId = null
+
+				// OpenID Connect Logout
+				if (account?.provider === "keycloak") {
+					ssoLogoutUrl = `${config.keycloak_issuer}/protocol/openid-connect/logout`
+					idToken = account.id_token
+					clientId = config.keycloak_client_id
+				}
+
+				if (!ssoLogoutUrl) {
+					return baseUrl
+				}
+
+				let signoutWithRedirectUrl = `${ssoLogoutUrl}?post_logout_redirect_uri=${encodeURIComponent(
+					baseUrl
+				)}`
+
+				if (idToken) {
+					signoutWithRedirectUrl += `&id_token_hint=${idToken}`
+				} else if (clientId) {
+					signoutWithRedirectUrl += `&client_id=${clientId}`
+				}
+
+				return signoutWithRedirectUrl
+			}
+			// Allows relative callback URLs
+			if (url.startsWith("/")) return new URL(url, baseUrl).toString()
+			return baseUrl
 		}
 	}
 } as const

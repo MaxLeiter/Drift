@@ -1,16 +1,10 @@
 import Auth from "../components"
 import { getRequiresPasscode } from "src/pages/api/auth/requires-passcode"
-import config from "@lib/config"
 import { getMetadata } from "src/app/lib/metadata"
+import { getAuthProviders, isCredentialEnabled } from "@lib/server/auth-props"
 
 async function getPasscode() {
 	return await getRequiresPasscode()
-}
-
-function isGithubEnabled() {
-	return config.github_client_id.length && config.github_client_secret.length
-		? true
-		: false
 }
 
 export default async function SignUpPage() {
@@ -19,7 +13,8 @@ export default async function SignUpPage() {
 		<Auth
 			page="signup"
 			requiresServerPassword={requiresPasscode}
-			isGithubEnabled={isGithubEnabled()}
+			credentialAuth={isCredentialEnabled()}
+			authProviders={getAuthProviders()}
 		/>
 	)
 }

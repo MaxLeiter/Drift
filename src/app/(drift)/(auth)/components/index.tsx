@@ -6,20 +6,23 @@ import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
 import Input from "@components/input"
 import Button from "@components/button"
-import { GitHub } from "react-feather"
+import { Key } from "react-feather"
 import { useToasts } from "@components/toasts"
 import { useRouter } from "next/navigation"
 import Note from "@components/note"
 import { ErrorQueryParamsHandler } from "./query-handler"
+import { AuthProviders } from "@lib/server/auth-props"
 
 function Auth({
 	page,
+	credentialAuth,
 	requiresServerPassword,
-	isGithubEnabled
+	authProviders
 }: {
 	page: "signup" | "signin"
+	credentialAuth?: boolean
 	requiresServerPassword?: boolean
-	isGithubEnabled?: boolean
+	authProviders?: AuthProviders
 }) {
 	const [serverPassword, setServerPassword] = useState("")
 	const { setToast } = useToasts()
@@ -102,51 +105,60 @@ function Auth({
 							</>
 						) : null}
 
-						<Input
-							type="text"
-							id="username"
-							value={username}
-							onChange={handleChangeUsername}
-							placeholder="Username"
-							required={true}
-							minLength={3}
-							width="100%"
-							aria-label="Username"
-						/>
-						<Input
-							type="password"
-							id="password"
-							value={password}
-							onChange={handleChangePassword}
-							placeholder="Password"
-							required={true}
-							minLength={6}
-							width="100%"
-							aria-label="Password"
-						/>
-						<Button width={"100%"} type="submit" loading={submitting}>
-							Sign {signText}
-						</Button>
-						{isGithubEnabled ? (
+						{credentialAuth ? (
 							<>
-								<hr style={{ width: "100%" }} />
-								<Button
-									type="submit"
+								<Input
+									type="text"
+									id="username"
+									value={username}
+									onChange={handleChangeUsername}
+									placeholder="Username"
+									required={true}
+									minLength={3}
 									width="100%"
-									style={{
-										color: "var(--fg)"
-									}}
-									iconLeft={<GitHub />}
-									onClick={(e) => {
-										e.preventDefault()
-										signIn("github", {
-											callbackUrl: "/",
-											registration_password: serverPassword
-										})
-									}}
-								>
-									Sign {signText.toLowerCase()} with GitHub
+									aria-label="Username"
+								/>
+								<Input
+									type="password"
+									id="password"
+									value={password}
+									onChange={handleChangePassword}
+									placeholder="Password"
+									required={true}
+									minLength={6}
+									width="100%"
+									aria-label="Password"
+								/>
+								<Button width={"100%"} type="submit" loading={submitting}>
+									Sign {signText}
 								</Button>
+							</>
+						) : null}
+
+						{authProviders?.length ? (
+							<>
+								{authProviders?.map((provider) => {
+									return provider.enabled ? (
+										<Button
+											type="submit"
+											width="100%"
+											key={provider.id + "-button"}
+											style={{
+												color: "var(--fg)"
+											}}
+											iconLeft={<Key />}
+											onClick={(e) => {
+												e.preventDefault()
+												signIn(provider.id, {
+													callbackUrl: "/",
+													registration_password: serverPassword
+												})
+											}}
+										>
+											Sign {signText.toLowerCase()} with {provider.public_name}
+										</Button>
+									) : null
+								})}
 							</>
 						) : null}
 					</div>

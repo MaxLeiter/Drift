@@ -24,6 +24,7 @@ export function useSessionSWR(swrOpts: SWRConfiguration = {}) {
 		isAuthenticated: session?.user?.id ? true : isLoading ? undefined : false,
 		/** undefined while loading */
 		isAdmin:
-			session?.user?.id === "admin" ? true : isLoading ? undefined : false
+			session?.user?.id === "admin" ? true : isLoading ? undefined : false,
+		userId: session?.user?.id
 	}
 }

@@ -7,6 +7,10 @@ type Config = {
 	url: string
 	github_client_id: string
 	github_client_secret: string
+	keycloak_client_id: string
+	keycloak_client_secret: string
+	keycloak_issuer: string
+	keycloak_name: string
 	nextauth_secret: string
 	credential_auth: boolean
 }
@@ -83,8 +87,12 @@ export const config = (env: Environment): Config => {
 			`https://${throwIfUndefined("VERCEL_URL")}`,
 		github_client_id: env.GITHUB_CLIENT_ID ?? "",
 		github_client_secret: env.GITHUB_CLIENT_SECRET ?? "",
+		keycloak_client_id: env.KEYCLOAK_ID ?? "",
+		keycloak_client_secret: env.KEYCLOAK_SECRET ?? "",
+		keycloak_issuer: env.KEYCLOAK_ISSUER ?? "",
+		keycloak_name: env.KEYCLOAK_NAME ?? "",
 		nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
-		credential_auth: stringToBoolean("CREDENTIAL_AUTH") ?? true
+		credential_auth: stringToBoolean(env.CREDENTIAL_AUTH) ?? true
 	}
 	return config
 }

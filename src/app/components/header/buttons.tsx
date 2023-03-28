@@ -45,14 +45,15 @@ export function HeaderButtons({
 	isAuthenticated: boolean
 	theme: string
 }) {
-	const { isAdmin } = useSessionSWR()
+	const { isAdmin, userId } = useSessionSWR()
 
 	return (
 		<>
 			{getButtons({
 				isAuthenticated,
 				theme,
-				isAdmin
+				isAdmin,
+				userId
 			})}
 		</>
 	)
@@ -108,12 +109,14 @@ export function getButtons({
 	isAuthenticated,
 	theme,
 	// mutate: mutateSession,
-	isAdmin
+	isAdmin,
+	userId
 }: {
 	isAuthenticated: boolean
 	theme: string
 	// mutate: KeyedMutator<Session>
-	isAdmin?: boolean
+	isAdmin?: boolean,
+	userId?: string
 }) {
 	return [
 		<NavButton
@@ -151,7 +154,11 @@ export function getButtons({
 				icon={<UserX />}
 				value="signout"
 				onClick={() => {
-					signOut()
+					signOut({
+						callbackUrl: `/signedout${
+							userId ? "?userId=" + userId : ""
+						}`
+					})
 				}}
 				width={SIGN_IN_WIDTH}
 			/>

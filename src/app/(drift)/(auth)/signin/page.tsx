@@ -1,15 +1,16 @@
 import { getMetadata } from "src/app/lib/metadata"
-import config from "@lib/config"
-import Auth from "../components"
 
-function isGithubEnabled() {
-	return config.github_client_id.length && config.github_client_secret.length
-		? true
-		: false
-}
+import Auth from "../components"
+import { getAuthProviders, isCredentialEnabled } from "@lib/server/auth-props"
 
 export default function SignInPage() {
-	return <Auth page="signin" isGithubEnabled={isGithubEnabled()} />
+	return (
+		<Auth
+			page="signin"
+			credentialAuth={isCredentialEnabled()}
+			authProviders={getAuthProviders()}
+		/>
+	)
 }
 
 export const metadata = getMetadata({
