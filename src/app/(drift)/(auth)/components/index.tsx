@@ -6,7 +6,7 @@ import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
 import Input from "@components/input"
 import Button from "@components/button"
-import { Key } from "react-feather"
+import { GitHub, Key, User } from "react-feather"
 import { useToasts } from "@components/toasts"
 import { useRouter } from "next/navigation"
 import Note from "@components/note"
@@ -146,7 +146,7 @@ function Auth({
 											style={{
 												color: "var(--fg)"
 											}}
-											iconLeft={<Key />}
+											iconLeft={getProviderIcon(provider.id)}
 											onClick={(e) => {
 												e.preventDefault()
 												signIn(provider.id, {
@@ -186,3 +186,14 @@ function Auth({
 }
 
 export default Auth
+
+const getProviderIcon = (provider: string) => {
+	switch (provider) {
+		case "github":
+			return <GitHub />
+		case "keycloak": 
+			return <Key />
+		default:
+			return <User />
+	}
+}

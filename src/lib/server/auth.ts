@@ -36,6 +36,7 @@ const credentialsOptions = () => {
 
 	return options
 }
+
 const providers = () => {
 	const providers = []
 
@@ -71,15 +72,16 @@ const providers = () => {
 			}
 		})
 		const originalKeycloakProfile = keycloak.profile
-		;(keycloak.profile = async (profile, tokens) => {
+		keycloak.profile = async (profile, tokens) => {
 			const originalProfile = await originalKeycloakProfile(profile, tokens)
 			const newProfile: User & { displayName?: string | null } = {
 				...originalProfile,
 				displayName: originalProfile.name ?? null
 			}
 			return newProfile
-		}),
-			providers.push(keycloak)
+		}
+
+		providers.push(keycloak)
 	}
 
 	if (isCredentialEnabled()) {

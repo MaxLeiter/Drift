@@ -1,6 +1,6 @@
 "use client"
 
-import { useSelectedLayoutSegment } from "next/navigation"
+import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import FadeIn from "@components/fade-in"
 import { setDriftTheme } from "src/app/lib/set-theme"
 import {
@@ -40,27 +40,23 @@ type Tab = {
 
 export function HeaderButtons({
 	isAuthenticated,
-	theme
+	theme: initialTheme
 }: {
 	isAuthenticated: boolean
 	theme: string
 }) {
 	const { isAdmin, userId } = useSessionSWR()
-
-	return (
-		<>
-			{getButtons({
+	const { resolvedTheme } = useTheme();
+	return getButtons({
 				isAuthenticated,
-				theme,
+				theme: resolvedTheme ? resolvedTheme : initialTheme,
 				isAdmin,
 				userId
-			})}
-		</>
-	)
+			})
 }
 
 function NavButton(tab: Tab) {
-	const segment = useSelectedLayoutSegment()
+	const segment = useSelectedLayoutSegments().slice(-1)[0]
 	const isActive = segment === tab.value.toLowerCase()
 	const activeStyle = isActive ? styles.active : undefined
 	if (tab.onClick) {

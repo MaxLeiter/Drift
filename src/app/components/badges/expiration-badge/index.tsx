@@ -36,16 +36,11 @@ const ExpirationBadge = ({
 		}
 	}, [expirationDate])
 
-	const isExpired = useMemo(() => {
-		if (!expirationDate) {
-			return false
-		}
-		return expirationDate < new Date()
-	}, [expirationDate])
-
 	if (!expirationDate) {
 		return null
 	}
+	
+	const isExpired = expirationDate < new Date()
 
 	return (
 		<Badge type={isExpired ? "error" : "warning"}>

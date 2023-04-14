@@ -7,7 +7,7 @@ import { useMemo, useState, useEffect } from "react"
 import Badge from "../badge"
 
 const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
-	const createdDate = useMemo(() => new Date(createdAt), [createdAt])
+	const createdDate = new Date(createdAt)
 	const [time, setTimeAgo] = useState(timeAgo(createdDate))
 
 	const { setToast } = useToasts()
