@@ -1,6 +1,6 @@
 "use client"
 
-import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
+import { useSelectedLayoutSegments } from "next/navigation"
 import FadeIn from "@components/fade-in"
 import { setDriftTheme } from "src/app/lib/set-theme"
 import {
@@ -46,13 +46,17 @@ export function HeaderButtons({
 	theme: string
 }) {
 	const { isAdmin, userId } = useSessionSWR()
-	const { resolvedTheme } = useTheme();
-	return getButtons({
+	const { resolvedTheme } = useTheme()
+	return (
+		<>
+			{getButtons({
 				isAuthenticated,
 				theme: resolvedTheme ? resolvedTheme : initialTheme,
 				isAdmin,
 				userId
-			})
+			})}
+		</>
+	)
 }
 
 function NavButton(tab: Tab) {
@@ -111,7 +115,7 @@ export function getButtons({
 	isAuthenticated: boolean
 	theme: string
 	// mutate: KeyedMutator<Session>
-	isAdmin?: boolean,
+	isAdmin?: boolean
 	userId?: string
 }) {
 	return [
@@ -152,9 +156,7 @@ export function getButtons({
 				value="signout"
 				onClick={() => {
 					signOut({
-						callbackUrl: `/signedout${
-							userId ? "?userId=" + userId : ""
-						}`
+						callbackUrl: `/signedout${userId ? "?userId=" + userId : ""}`
 					})
 				}}
 				width={SIGN_IN_WIDTH}
