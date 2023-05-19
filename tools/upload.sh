@@ -5,7 +5,7 @@
 
 url="https://drift.lol"
 
-# Generate one at /settings (don't worry, this ones been revoked)
+# Generate one at /settings
 TOKEN=""
 
 # Exit on error
