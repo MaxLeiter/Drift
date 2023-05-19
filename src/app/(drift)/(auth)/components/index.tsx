@@ -32,18 +32,16 @@ function Auth({
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [submitting, setSubmitting] = useState(false)
-
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 		setSubmitting(true)
-
 		const res = await signIn("credentials", {
 			username,
 			password,
 			registration_password: serverPassword,
 			redirect: false,
 			// callbackUrl: "/signin",
-			signingIn: signingIn
+			signingIn
 		})
 		if (res?.error) {
 			setToast({
@@ -191,7 +189,7 @@ const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
 			return <GitHub />
-		case "keycloak": 
+		case "keycloak":
 			return <Key />
 		default:
 			return <User />
