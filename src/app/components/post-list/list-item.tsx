@@ -66,91 +66,89 @@ const ListItem = ({
 	}
 
 	return (
-		<FadeIn key={post.id}>
-			<li>
-				<Card style={{ overflowY: "scroll" }}>
-					<>
-						<div className={styles.title}>
-							<span className={styles.titleText}>
-								<h4 style={{ display: "inline-block", margin: 0 }}>
-									<Link
-										colored
-										style={{ marginRight: "var(--gap)" }}
-										href={`/post/${post.id}`}
-									>
-										{post.title}
-									</Link>
-								</h4>
-								<div className={styles.badges}>
-									<VisibilityBadge visibility={post.visibility} />
-									<Badge type="secondary">
-										{post.files?.length === 1
-											? "1 file"
-											: `${post.files?.length || 0} files`}
-									</Badge>
-									<CreatedAgoBadge createdAt={post.createdAt} />
-									<ExpirationBadge postExpirationDate={post.expiresAt} />
-								</div>
-							</span>
-							{!hideActions ? (
-								<span className={styles.buttons}>
-									{post.parentId && (
-										<Tooltip content={"View parent"}>
-											<Button
-												iconRight={<ArrowUpCircle />}
-												onClick={viewParentClick}
-												// TODO: not perfect on mobile
-												height={38}
-											/>
-										</Tooltip>
-									)}
-									<Tooltip content={"Make a copy"}>
+		<FadeIn key={post.id} as="li">
+			<Card style={{ overflowY: "scroll" }}>
+				<>
+					<div className={styles.title}>
+						<span className={styles.titleText}>
+							<h4 style={{ display: "inline-block", margin: 0 }}>
+								<Link
+									colored
+									style={{ marginRight: "var(--gap)" }}
+									href={`/post/${post.id}`}
+								>
+									{post.title}
+								</Link>
+							</h4>
+							<div className={styles.badges}>
+								<VisibilityBadge visibility={post.visibility} />
+								<Badge type="secondary">
+									{post.files?.length === 1
+										? "1 file"
+										: `${post.files?.length || 0} files`}
+								</Badge>
+								<CreatedAgoBadge createdAt={post.createdAt} />
+								<ExpirationBadge postExpirationDate={post.expiresAt} />
+							</div>
+						</span>
+						{!hideActions ? (
+							<span className={styles.buttons}>
+								{post.parentId && (
+									<Tooltip content={"View parent"}>
 										<Button
-											iconRight={<Edit />}
-											onClick={editACopy}
+											iconRight={<ArrowUpCircle />}
+											onClick={viewParentClick}
+											// TODO: not perfect on mobile
 											height={38}
 										/>
 									</Tooltip>
-									{isOwner && (
-										<Tooltip content={"Delete"}>
-											<Button
-												iconRight={<Trash />}
-												onClick={deletePost}
-												height={38}
-											/>
-										</Tooltip>
-									)}
-								</span>
-							) : null}
-						</div>
+								)}
+								<Tooltip content={"Make a copy"}>
+									<Button
+										iconRight={<Edit />}
+										onClick={editACopy}
+										height={38}
+									/>
+								</Tooltip>
+								{isOwner && (
+									<Tooltip content={"Delete"}>
+										<Button
+											iconRight={<Trash />}
+											onClick={deletePost}
+											height={38}
+										/>
+									</Tooltip>
+								)}
+							</span>
+						) : null}
+					</div>
 
-						{post.description && (
-							<p className={styles.oneline}>{post.description}</p>
-						)}
-					</>
-					<ul className={styles.files}>
-						{post?.files?.map(
-							(file: Pick<PostWithFiles, "files">["files"][0]) => {
-								return (
-									<li key={file.id}>
-										<Link
-											colored
-											href={`/post/${post.id}#${file.title}`}
-											style={{
-												display: "flex",
-												alignItems: "center"
-											}}
-										>
-											{getIconFromFilename(file.title)}
-											{file.title || "Untitled file"}
-										</Link>
-									</li>
-								)
-							}
-						)}
-					</ul>
-				</Card>
-			</li>
+					{post.description && (
+						<p className={styles.oneline}>{post.description}</p>
+					)}
+				</>
+				<ul className={styles.files}>
+					{post?.files?.map(
+						(file: Pick<PostWithFiles, "files">["files"][0]) => {
+							return (
+								<li key={file.id}>
+									<Link
+										colored
+										href={`/post/${post.id}#${file.title}`}
+										style={{
+											display: "flex",
+											alignItems: "center"
+										}}
+									>
+										{getIconFromFilename(file.title)}
+										{file.title || "Untitled file"}
+									</Link>
+								</li>
+							)
+						}
+					)}
+				</ul>
+			</Card>
 		</FadeIn>
 	)
 }
