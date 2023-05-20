@@ -1,6 +1,5 @@
 import { getMetadata } from "src/app/lib/metadata"
 import NewPost from "src/app/(drift)/(posts)/new/components/new"
-import "./react-datepicker.css"
 
 export default function New() {
 	return <NewPost />

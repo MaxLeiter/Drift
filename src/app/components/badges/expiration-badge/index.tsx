@@ -39,7 +39,7 @@ const ExpirationBadge = ({
 	if (!expirationDate) {
 		return null
 	}
-	
+
 	const isExpired = expirationDate < new Date()
 
 	return (

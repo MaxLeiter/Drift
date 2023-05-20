@@ -1,6 +1,7 @@
 "use client"
 
 import Button from "@components/button"
+import Link from "@components/link"
 import Note from "@components/note"
 import { useRouter } from "next/navigation"
 // an error fallback for react-error-boundary
@@ -16,6 +17,9 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 		<Note type="error" style={{ width: "100%" }}>
 			<h3>Something went wrong:</h3>
 			<pre>{error.message}</pre>
+			<Link href="https://github.com/MaxLeiter/Drift/issues/new">
+				<Button>Report an issue</Button>
+			</Link>
 			<Button onClick={resetErrorBoundary}>Try again</Button>
 		</Note>
 	)

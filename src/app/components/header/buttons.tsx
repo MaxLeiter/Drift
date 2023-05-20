@@ -46,15 +46,17 @@ export function HeaderButtons({
 	theme: string
 }) {
 	const { isAdmin, userId } = useSessionSWR()
-	const { resolvedTheme } = useTheme();
-	return <>
-		{getButtons({
-			isAuthenticated,
-			theme: resolvedTheme ? resolvedTheme : initialTheme,
-			isAdmin,
-			userId
-		})}
-	</>
+	const { resolvedTheme } = useTheme()
+	return (
+		<>
+			{getButtons({
+				isAuthenticated,
+				theme: resolvedTheme ? resolvedTheme : initialTheme,
+				isAdmin,
+				userId
+			})}
+		</>
+	)
 }
 
 function NavButton(tab: Tab) {
@@ -102,86 +104,83 @@ function ThemeButton({ theme }: { theme: string }) {
 	)
 }
 
-/** For use by mobile */
 export function getButtons({
 	isAuthenticated,
 	theme,
-	// mutate: mutateSession,
 	isAdmin,
 	userId
 }: {
 	isAuthenticated: boolean
 	theme: string
-	// mutate: KeyedMutator<Session>
-	isAdmin?: boolean,
+	isAdmin?: boolean
 	userId?: string
 }) {
-	return [
-		<NavButton
-			key="home"
-			name="Home"
-			icon={<Home />}
-			value="home"
-			href="/home"
-		/>,
-		<NavButton
-			key="new"
-			name="New"
-			icon={<PlusCircle />}
-			value="new"
-			href="/new"
-		/>,
-		<NavButton
-			key="yours"
-			name="Yours"
-			icon={<User />}
-			value="mine"
-			href="/mine"
-		/>,
-		<NavButton
-			name="Settings"
-			icon={<Settings />}
-			value="settings"
-			href="/settings"
-			key="settings"
-		/>,
-		<ThemeButton key="theme-button" theme={theme} />,
-		isAdmin ? (
-			<FadeIn>
-				<NavButton
-					name="Admin"
-					key="admin"
-					icon={<Settings />}
-					value="admin"
-					href="/admin"
-				/>
-			</FadeIn>
-		) : undefined,
-		isAuthenticated === true ? (
+	return (
+		<>
 			<NavButton
-				name="Sign Out"
-				key="signout"
-				icon={<UserX />}
-				value="signout"
-				onClick={() => {
-					signOut({
-						callbackUrl: `/signedout${
-							userId ? "?userId=" + userId : ""
-						}`
-					})
-				}}
-				width={SIGN_IN_WIDTH}
+				key="home"
+				name="Home"
+				icon={<Home />}
+				value="home"
+				href="/home"
 			/>
-		) : undefined,
-		isAuthenticated === false ? (
 			<NavButton
-				name="Sign In"
-				key="signin"
+				key="new"
+				name="New"
+				icon={<PlusCircle />}
+				value="new"
+				href="/new"
+			/>
+			<NavButton
+				key="yours"
+				name="Yours"
 				icon={<User />}
-				value="signin"
-				href="/signin"
-				width={SIGN_IN_WIDTH}
+				value="mine"
+				href="/mine"
 			/>
-		) : undefined
-	].filter(Boolean)
+			<NavButton
+				name="Settings"
+				icon={<Settings />}
+				value="settings"
+				href="/settings"
+				key="settings"
+			/>
+			<ThemeButton key="theme-button" theme={theme} />
+			{isAdmin && (
+				<FadeIn>
+					<NavButton
+						name="Admin"
+						key="admin"
+						icon={<Settings />}
+						value="admin"
+						href="/admin"
+					/>
+				</FadeIn>
+			)}
+			{isAuthenticated === true && (
+				<NavButton
+					name="Sign Out"
+					key="signout"
+					icon={<UserX />}
+					value="signout"
+					onClick={() => {
+						signOut({
+							callbackUrl: `/signedout${userId ? "?userId=" + userId : ""}`
+						})
+					}}
+					width={SIGN_IN_WIDTH}
+				/>
+			)}
+			{isAuthenticated === false && (
+				<NavButton
+					name="Sign In"
+					key="signin"
+					icon={<User />}
+					value="signin"
+					href="/signin"
+					width={SIGN_IN_WIDTH}
+				/>
+			)}
+		</>
+	)
 }

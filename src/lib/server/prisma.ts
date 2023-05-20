@@ -12,7 +12,6 @@ import {
 	File as ServerFile
 } from "@prisma/client"
 import * as crypto from "crypto"
-import { cache } from "react"
 export type {
 	User as ServerUser,
 	File as ServerFile,
@@ -258,29 +257,28 @@ type GetPostByIdOptions = Pick<
 	"include" | "rejectOnNotFound" | "select"
 >
 
-export const getPostById = cache(
-	async (postId: ServerPost["id"], options?: GetPostByIdOptions) => {
-		const post = await prisma.post.findUnique({
-			where: {
-				id: postId
-			},
-			...options
-		})
+export const getPostById = async (
+	postId: ServerPost["id"],
+	options?: GetPostByIdOptions
+) => {
+	const post = await prisma.post.findUnique({
+		where: {
+			id: postId
+		},
+		...options
+	})
 
-		return post
-	}
-)
+	return post
+}
 
-export const getAllPosts = cache(
-	async (
-		options?: Prisma.PostFindManyArgs
-	): Promise<
-		ServerPost[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
-	> => {
-		const posts = await prisma.post.findMany(options)
-		return posts
-	}
-)
+export const getAllPosts = async (
+	options?: Prisma.PostFindManyArgs
+): Promise<
+	ServerPost[] | ServerPostWithFiles[] | ServerPostWithFilesAndAuthor[]
+> => {
+	const posts = await prisma.post.findMany(options)
+	return posts
+}
 
 export const userWithPosts = Prisma.validator<Prisma.UserArgs>()({
 	include: {

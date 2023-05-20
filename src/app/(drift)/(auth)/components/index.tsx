@@ -191,7 +191,7 @@ const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
 			return <GitHub />
-		case "keycloak": 
+		case "keycloak":
 			return <Key />
 		default:
 			return <User />

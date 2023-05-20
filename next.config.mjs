@@ -6,7 +6,6 @@ const nextConfig = {
 	experimental: {
 		// esmExternals: true,
 		appDir: true,
-		serverComponentsExternalPackages: ["prisma", "@prisma/client"],
 	},
 	rewrites() {
 		return [

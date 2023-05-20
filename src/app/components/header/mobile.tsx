@@ -40,7 +40,7 @@ export default function MobileHeader({
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Portal>
 				<DropdownMenu.Content>
-					{buttons.map((button) => (
+					{buttons.props.children.map((button: JSX.Element) => (
 						<DropdownMenu.Item
 							key={`mobile-${button?.key}`}
 							className={styles.dropdownItem}

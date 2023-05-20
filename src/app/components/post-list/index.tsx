@@ -132,6 +132,7 @@ const PostList = ({
 					})}
 				</ul>
 			) : null}
+			{!showSkeleton && posts && posts.length === 0 && <NoPostsFound />}
 		</Stack>
 	)
 }
