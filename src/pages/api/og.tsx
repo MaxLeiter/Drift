@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import { ImageResponse } from "@vercel/og"
-import { NextRequest } from "next/server"
+import { ImageResponse, NextRequest } from "next/server"
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -62,7 +61,6 @@ export default async function handler(req: NextRequest) {
 	const date = url.searchParams.get("date") || new Date().toISOString()
 	const numFiles = url.searchParams.get("numFiles") || "0"
 
-	// ...
 	return new ImageResponse(
 		(
 			<div
