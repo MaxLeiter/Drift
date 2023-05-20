@@ -6,23 +6,9 @@ import Button from "@components/button"
 import { Menu } from "react-feather"
 import clsx from "clsx"
 import styles from "./mobile.module.css"
-import { getButtons } from "./buttons"
-import { useSessionSWR } from "@lib/use-session-swr"
+import { HeaderButtons } from "./buttons"
 
-export default function MobileHeader({
-	isAuthenticated,
-	theme
-}: {
-	isAuthenticated: boolean
-	theme: string
-}) {
-	const { isAdmin } = useSessionSWR()
-	const buttons = getButtons({
-		isAuthenticated,
-		theme,
-		isAdmin
-	})
-
+export default function MobileHeader() {
 	// TODO: this is a hack to close the radix ui menu when a next link is clicked
 	const onClick = () => {
 		document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
@@ -40,7 +26,7 @@ export default function MobileHeader({
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Portal>
 				<DropdownMenu.Content>
-					{buttons.props.children.map((button: JSX.Element) => (
+					{HeaderButtons().props.children.map((button: JSX.Element) => (
 						<DropdownMenu.Item
 							key={`mobile-${button?.key}`}
 							className={styles.dropdownItem}

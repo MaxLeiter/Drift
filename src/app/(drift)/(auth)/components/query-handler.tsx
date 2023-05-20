@@ -2,9 +2,9 @@
 
 import { useToasts } from "@components/toasts"
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 
-export function ErrorQueryParamsHandler() {
+function _ErrorQueryParamsHandler() {
 	const queryParams = useSearchParams()
 	const { setToast } = useToasts()
 
@@ -18,4 +18,13 @@ export function ErrorQueryParamsHandler() {
 	}, [queryParams, setToast])
 
 	return null
+}
+
+export function ErrorQueryParamsHandler() {
+	/* Suspense boundary because useSearchParams causes static bailout */
+	return (
+		<Suspense fallback={null}>
+			<_ErrorQueryParamsHandler />
+		</Suspense>
+	)
 }

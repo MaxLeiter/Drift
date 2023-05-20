@@ -2,8 +2,8 @@
 
 import { useSelectedLayoutSegments } from "next/navigation"
 import FadeIn from "@components/fade-in"
-import { setDriftTheme } from "src/app/lib/set-theme"
 import {
+	Circle,
 	Home,
 	Moon,
 	PlusCircle,
@@ -18,6 +18,7 @@ import Link from "@components/link"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { useTheme } from "next-themes"
 import styles from "./buttons.module.css"
+import { useEffect, useState } from "react"
 
 // constant width for sign in / sign out buttons to avoid CLS
 const SIGN_IN_WIDTH = 110
@@ -37,27 +38,6 @@ type Tab = {
 			href: string
 	  }
 )
-
-export function HeaderButtons({
-	isAuthenticated,
-	theme: initialTheme
-}: {
-	isAuthenticated: boolean
-	theme: string
-}) {
-	const { isAdmin, userId } = useSessionSWR()
-	const { resolvedTheme } = useTheme()
-	return (
-		<>
-			{getButtons({
-				isAuthenticated,
-				theme: resolvedTheme ? resolvedTheme : initialTheme,
-				isAdmin,
-				userId
-			})}
-		</>
-	)
-}
 
 function NavButton(tab: Tab) {
 	const segment = useSelectedLayoutSegments().slice(-1)[0]
@@ -89,32 +69,51 @@ function NavButton(tab: Tab) {
 	}
 }
 
-function ThemeButton({ theme }: { theme: string }) {
-	const { setTheme } = useTheme()
+function ThemeButton() {
+	const { setTheme, resolvedTheme } = useTheme()
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
 	return (
-		<NavButton
-			name="Theme"
-			icon={theme === "dark" ? <Sun /> : <Moon />}
-			value="dark"
-			onClick={() => {
-				setDriftTheme(theme === "dark" ? "light" : "dark", setTheme)
-			}}
-			key="theme"
-		/>
+		<>
+			{!mounted && (
+				<NavButton
+					name="Theme"
+					icon={<Circle opacity={0.3} />}
+					value="dark"
+					href=""
+					key="theme"
+				/>
+			)}
+			{mounted && (
+				<NavButton
+					name="Theme"
+					icon={
+						<FadeIn>{resolvedTheme === "dark" ? <Sun /> : <Moon />}</FadeIn>
+					}
+					value="dark"
+					onClick={() => {
+						setTheme(resolvedTheme === "dark" ? "light" : "dark")
+					}}
+					key="theme"
+				/>
+			)}
+		</>
 	)
 }
 
-export function getButtons({
-	isAuthenticated,
-	theme,
-	isAdmin,
-	userId
-}: {
-	isAuthenticated: boolean
-	theme: string
-	isAdmin?: boolean
-	userId?: string
-}) {
+export function HeaderButtons(): JSX.Element {
+	const { isAdmin, isAuthenticated, userId } = useSessionSWR()
+
+	useEffect(() => {
+		if (isAuthenticated && !userId) {
+			signOut()
+		}
+	}, [isAuthenticated, userId])
+
 	return (
 		<>
 			<NavButton
@@ -145,7 +144,7 @@ export function getButtons({
 				href="/settings"
 				key="settings"
 			/>
-			<ThemeButton key="theme-button" theme={theme} />
+			<ThemeButton key="theme-button" />
 			{isAdmin && (
 				<FadeIn>
 					<NavButton
@@ -174,6 +173,16 @@ export function getButtons({
 			{isAuthenticated === false && (
 				<NavButton
 					name="Sign In"
+					key="signin"
+					icon={<User />}
+					value="signin"
+					href="/signin"
+					width={SIGN_IN_WIDTH}
+				/>
+			)}
+			{isAuthenticated === undefined && (
+				<NavButton
+					name="Sign"
 					key="signin"
 					icon={<User />}
 					value="signin"

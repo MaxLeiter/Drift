@@ -10,7 +10,7 @@ export function useSessionSWR(swrOpts: SWRConfiguration = {}) {
 		mutate
 	} = useSWR<Session>("/api/auth/session", {
 		fetcher: (url) => fetch(url).then((res) => res.json()) as Promise<Session>,
-		revalidateOnFocus: false,
+		revalidateOnFocus: true,
 		...swrOpts
 	})
 

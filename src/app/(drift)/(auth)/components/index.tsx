@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition, Suspense, useState } from "react"
+import { useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
@@ -52,10 +52,7 @@ function Auth({
 			})
 			setSubmitting(false)
 		} else {
-			startTransition(() => {
-				router.push("/new")
-				router.refresh()
-			})
+			router.push("/new")
 		}
 	}
 
@@ -75,10 +72,7 @@ function Auth({
 
 	return (
 		<div className={styles.container}>
-			{/* Suspense boundary because useSearchParams causes static bailout */}
-			<Suspense fallback={null}>
-				<ErrorQueryParamsHandler />
-			</Suspense>
+			<ErrorQueryParamsHandler />
 			<div className={styles.form}>
 				<div className={styles.formContentSpace}>
 					<h1>Sign {signText}</h1>

@@ -4,15 +4,14 @@ import bundleAnalyzer from "@next/bundle-analyzer"
 const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
-		// esmExternals: true,
-		appDir: true,
+		appDir: true
 	},
 	rewrites() {
 		return [
 			{
 				source: "/file/raw/:id",
 				destination: `/api/raw/:id`
-			},
+			}
 		]
 	},
 	images: {

@@ -10,7 +10,6 @@ export function isAllowedVisibilityForWebpage(
 export const DEFAULT_THEME = "dark"
 
 export const SIGNED_IN_COOKIE = "next-auth.session-token"
-export const THEME_COOKIE = "drift-theme"
 
 // Code files for uploading with drag and drop and syntax highlighting
 export const allowedFileTypes = [
