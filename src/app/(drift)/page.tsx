@@ -12,6 +12,8 @@ import { cache, Suspense } from "react"
 import ErrorBoundary from "@components/error/fallback"
 import { Stack } from "@components/stack"
 
+export const revalidate = 300
+
 const getWelcomeData = cache(async () => {
 	const welcomeContent = await getWelcomeContent()
 	return welcomeContent
