@@ -146,6 +146,17 @@ export function getButtons({
 			key="settings"
 		/>,
 		<ThemeButton key="theme-button" theme={theme} />,
+		isAdmin ? (
+			<FadeIn>
+				<NavButton
+					name="Admin"
+					key="admin"
+					icon={<Settings />}
+					value="admin"
+					href="/admin"
+				/>
+			</FadeIn>
+		) : undefined,
 		isAuthenticated === true ? (
 			<NavButton
 				name="Sign Out"
@@ -171,17 +182,6 @@ export function getButtons({
 				href="/signin"
 				width={SIGN_IN_WIDTH}
 			/>
-		) : undefined,
-		isAdmin ? (
-			<FadeIn>
-				<NavButton
-					name="Admin"
-					key="admin"
-					icon={<Settings />}
-					value="admin"
-					href="/admin"
-				/>
-			</FadeIn>
 		) : undefined
 	].filter(Boolean)
 }
