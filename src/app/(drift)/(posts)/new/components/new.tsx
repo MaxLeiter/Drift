@@ -17,11 +17,11 @@ import Input from "@components/input"
 import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
-import "./react-datepicker.css"
 import dynamic from "next/dynamic"
 
 const DatePicker = dynamic(() => import("react-datepicker"), {
-	ssr: false
+	ssr: false,
+	loading: () => <Input label="Expires at" placeholder="Won't expire" width="100%" height="40px" />
 })
 
 const emptyDoc = {

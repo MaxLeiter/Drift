@@ -49,7 +49,7 @@ specifiers:
   prisma: ^4.12.0
   react: 18.2.0
   react-cookie: ^4.1.1
-  react-datepicker: 4.11.0
+  react-datepicker: 4.10.0
   react-dom: 18.2.0
   react-dropzone: 14.2.3
   react-error-boundary: ^4.0.4
@@ -84,7 +84,7 @@ dependencies:
   next-themes: 0.2.1_e7rdfuvvugpm7lhat2cbgcbani
   react: 18.2.0
   react-cookie: 4.1.1_react@18.2.0
-  react-datepicker: 4.11.0_biqbaboplfbrettd7655fr4n2y
+  react-datepicker: 4.10.0_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
   react-dropzone: 14.2.3_react@18.2.0
   react-error-boundary: 4.0.4_react@18.2.0
@@ -6882,8 +6882,8 @@ packages:
       universal-cookie: 4.0.4
     dev: false
 
-  /react-datepicker/4.11.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-50n93o7mQwBEhg05tbopjFKgs8qgi8VBCAOMC4VqrKut72eAjESc/wXS/k5hRtnP0oe2FCGw7MJuIwh37wuXOw==}
+  /react-datepicker/4.10.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-6IfBCZyWj54ZZGLmEZJ9c4Yph0s9MVfEGDC2evOvf9AmVz+RRcfP2Czqad88Ff9wREbcbqa4dk7IFYeXF1d3Ag==}
     peerDependencies:
       react: ^16.9.0 || ^17 || ^18
       react-dom: ^16.9.0 || ^17 || ^18
