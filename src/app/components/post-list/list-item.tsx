@@ -8,7 +8,13 @@ import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import { Badge } from "@components/badges/badge"
-import Card from "@components/card"
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle
+} from "@components/card"
 import { Button } from "@components/button"
 import {
 	ArrowUpCircle,
@@ -67,9 +73,10 @@ const ListItem = ({
 
 	return (
 		<FadeIn key={post.id} as="li">
-			<Card style={{ overflowY: "scroll" }}>
-				<>
-					<div className={styles.title}>
+			{/* <Card style={{ overflowY: "scroll" }}> */}
+			<Card className="overflow-y-scroll h-42">
+				<CardHeader>
+					<CardTitle className={styles.title}>
 						<span className={styles.titleText}>
 							<h4 style={{ display: "inline-block", margin: 0 }}>
 								<Link
@@ -118,33 +125,36 @@ const ListItem = ({
 								)}
 							</span>
 						) : null}
-					</div>
-
+					</CardTitle>
 					{post.description && (
-						<p className={styles.oneline}>{post.description}</p>
+						<CardDescription>
+							<p className={styles.oneline}>{post.description}</p>
+						</CardDescription>
 					)}
-				</>
-				<ul className={styles.files}>
-					{post?.files?.map(
-						(file: Pick<PostWithFiles, "files">["files"][0]) => {
-							return (
-								<li key={file.id}>
-									<Link
-										colored
-										href={`/post/${post.id}#${file.title}`}
-										style={{
-											display: "flex",
-											alignItems: "center"
-										}}
-									>
-										{getIconFromFilename(file.title)}
-										{file.title || "Untitled file"}
-									</Link>
-								</li>
-							)
-						}
-					)}
-				</ul>
+				</CardHeader>
+				<CardContent>
+					<ul className={styles.files}>
+						{post?.files?.map(
+							(file: Pick<PostWithFiles, "files">["files"][0]) => {
+								return (
+									<li key={file.id}>
+										<Link
+											colored
+											href={`/post/${post.id}#${file.title}`}
+											style={{
+												display: "flex",
+												alignItems: "center"
+											}}
+										>
+											{getIconFromFilename(file.title)}
+											{file.title || "Untitled file"}
+										</Link>
+									</li>
+								)
+							}
+						)}
+					</ul>
+				</CardContent>
 			</Card>
 		</FadeIn>
 	)

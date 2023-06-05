@@ -1,11 +1,11 @@
 import styles from "./list-item.module.css"
-import Card from "@components/card"
+import { Card } from "@components/card"
 import Skeleton from "@components/skeleton"
 
 export const ListItemSkeleton = () => (
 	<li>
 		<Card style={{ overflowY: "scroll" }}>
-			{/* TODO: this is a bad way to do skeletons and is onlya ccurate on desktop */}
+			{/* TODO: this is a bad way to do skeletons and is only accurate on desktop */}
 			<div style={{ display: "flex", gap: 16, marginBottom: 14 }}>
 				<div className={styles.title}>
 					{/* title */}

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Card from "@components/card"
+import { Card, CardContent } from "@components/card"
 import { getWelcomeContent } from "src/pages/api/welcome"
 import DocumentTabs from "./(posts)/components/tabs"
 import {
@@ -54,15 +54,17 @@ export default async function Page() {
 async function WelcomePost() {
 	const { content, rendered, title } = await getWelcomeData()
 	return (
-		<Card>
-			<DocumentTabs
-				defaultTab="preview"
-				isEditing={false}
-				staticPreview={rendered as string}
-				title={title}
-			>
-				{content}
-			</DocumentTabs>
+		<Card className="w-full">
+			<CardContent>
+				<DocumentTabs
+					defaultTab="preview"
+					isEditing={false}
+					staticPreview={rendered as string}
+					title={title}
+				>
+					{content}
+				</DocumentTabs>
+			</CardContent>
 		</Card>
 	)
 }
