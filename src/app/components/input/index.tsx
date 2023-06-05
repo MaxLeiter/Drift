@@ -1,82 +1,51 @@
-import clsx from "clsx"
-import React from "react"
-import styles from "./input.module.css"
+import * as React from "react"
 
-type Props = React.HTMLProps<HTMLInputElement> & {
+import { cn } from "@lib/cn"
+
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 	label?: string
-	width?: number | string
-	height?: number | string
-	labelClassName?: string
+	hideLabel?: boolean
 }
 
-// we have two special rules on top of the props:
-// if onChange or value is passed, we require both, unless `disabled`
-// if label is passed, we forbid aria-label and vice versa
-type InputProps = Omit<Props, "onChange" | "value" | "label" | "aria-label"> &
-	(
-		| {
-				onChange: Props["onChange"]
-				value: Props["value"]
-		  }
-		| {
-				onChange?: never
-				value?: never
-		  }
-		| {
-				value: Props["value"]
-				disabled: true
-				onChange?: never
-		  }
-	) &
-	(
-		| {
-				label: Props["label"]
-				"aria-label"?: never
-		  } // if label is passed, we forbid aria-label and vice versa
-		| {
-				label?: never
-				"aria-label": Props["aria-label"]
-		  }
-	)
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	(
-		{ label, className, required, width, height, labelClassName, ...props },
-		ref
-	) => {
-		const labelId = label?.replace(/\s/g, "-").toLowerCase()
+	({ className, type, label, hideLabel, ...props }, ref) => {
+		const id = React.useId()
 		return (
-			<div
-				className={styles.wrapper}
-				style={{
-					width,
-					height
-				}}
-			>
-				{label && (
+			<span className="flex flex-row w-full items-center">
+				{label && !hideLabel ? (
 					<label
-						htmlFor={labelId}
-						className={clsx(styles.label, labelClassName)}
+						htmlFor={id}
+						className={cn(
+							"h-10 text-sm font-medium text-muted-foreground border border-input bg-transparent px-3 py-2 rounded-md",
+							"rounded-br-none rounded-tr-none",
+							className
+						)}
 					>
 						{label}
 					</label>
-				)}
+				) : null}
+				{label && hideLabel ? (
+					<label htmlFor={id} className="sr-only">
+						{label}
+					</label>
+				) : null}
 				<input
+					type={type}
+					className={cn(
+						"flex h-10 w-full border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+						label && !hideLabel
+							? "rounded-bl-none rounded-tl-none border-l-0"
+							: "rounded-md",
+						className
+					)}
 					ref={ref}
-					id={labelId}
-					className={clsx(styles.input, label && styles.withLabel, className)}
-					required={required}
+					id={id}
 					{...props}
-					style={{
-						width,
-						height,
-						...(props.style || {})
-					}}
 				/>
-			</div>
+			</span>
 		)
 	}
 )
-
 Input.displayName = "Input"
 
-export default Input
+export { Input }

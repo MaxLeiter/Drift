@@ -24,7 +24,7 @@ export default async function RootLayout({
 					<Layout>
 						<CmdK />
 						<Header />
-						{children}
+						<main className="w-[var(--main-content)] mx-auto mt-4">{children}</main>
 					</Layout>
 				</Providers>
 			</body>

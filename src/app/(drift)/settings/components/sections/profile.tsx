@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@components/button"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import Note from "@components/note"
 import { useToasts } from "@components/toasts"
 import { useSessionSWR } from "@lib/use-session-swr"

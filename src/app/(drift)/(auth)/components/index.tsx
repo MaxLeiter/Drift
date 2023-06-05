@@ -4,7 +4,7 @@ import { useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import { Button } from "@components/button"
 import { GitHub, Key, User } from "react-feather"
 import { useToasts } from "@components/toasts"
@@ -92,7 +92,6 @@ function Auth({
 									onChange={handleChangeServerPassword}
 									placeholder="Server Password"
 									required={true}
-									width="100%"
 									aria-label="Server Password"
 								/>
 								<hr style={{ width: "100%" }} />
@@ -123,9 +122,7 @@ function Auth({
 									width="100%"
 									aria-label="Password"
 								/>
-								<Button type="submit">
-									Sign {signText}
-								</Button>
+								<Button type="submit">Sign {signText}</Button>
 							</>
 						) : null}
 
@@ -135,12 +132,10 @@ function Auth({
 									return provider.enabled ? (
 										<Button
 											type="submit"
-											width="100%"
 											key={provider.id + "-button"}
 											style={{
 												color: "var(--fg)"
 											}}
-											iconLeft={getProviderIcon(provider.id)}
 											onClick={(e) => {
 												e.preventDefault()
 												signIn(provider.id, {
@@ -149,7 +144,8 @@ function Auth({
 												})
 											}}
 										>
-											Sign {signText.toLowerCase()} with {provider.public_name}
+											{getProviderIcon(provider.id)} Sign{" "}
+											{signText.toLowerCase()} with {provider.public_name}
 										</Button>
 									) : null
 								})}

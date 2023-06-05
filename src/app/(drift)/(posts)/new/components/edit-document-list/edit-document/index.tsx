@@ -1,8 +1,8 @@
 import { ChangeEvent, ClipboardEvent, useCallback } from "react"
 import styles from "./document.module.css"
 import { Button } from "@components/button"
-import Input from "@components/input"
-import DocumentTabs from "src/app/(drift)/(posts)/components/tabs"
+import { Input } from "@components/input"
+import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 import { Trash } from "react-feather"
 
 type Props = {
@@ -65,18 +65,9 @@ function Document({
 						}}
 					/>
 					{remove && (
-						<Button
-							iconLeft={<Trash />}
-							height={"39px"}
-							width={"48px"}
-							padding={0}
-							margin={0}
-							onClick={() => removeFile(remove)}
-							style={{
-								borderTopLeftRadius: 0,
-								borderBottomLeftRadius: 0
-							}}
-						/>
+						<Button onClick={() => removeFile(remove)} variant="ghost">
+							<Trash height={18} />
+						</Button>
 					)}
 				</div>
 				<div className={styles.documentContainer}>

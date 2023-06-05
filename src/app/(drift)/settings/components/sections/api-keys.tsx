@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@components/button"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import Note from "@components/note"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"

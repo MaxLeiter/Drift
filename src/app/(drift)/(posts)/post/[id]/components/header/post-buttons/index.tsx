@@ -48,9 +48,17 @@ export const PostButtons = ({
 	return (
 		<span className={styles.buttons}>
 			<ButtonGroup verticalIfMobile>
-				<Button onClick={editACopy}>Edit a Copy</Button>
-				{parentId && <Button onClick={viewParentClick}>View Parent</Button>}
-				<Button onClick={downloadClick}>Download as ZIP Archive</Button>
+				<Button variant={"secondary"} onClick={editACopy}>
+					Edit a Copy
+				</Button>
+				{parentId && (
+					<Button variant={"secondary"} onClick={viewParentClick}>
+						View Parent
+					</Button>
+				)}
+				<Button variant={"secondary"} onClick={downloadClick}>
+					Download as ZIP Archive
+				</Button>
 				<FileDropdown loading={loading} files={files || []} />
 			</ButtonGroup>
 		</span>

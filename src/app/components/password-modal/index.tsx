@@ -1,5 +1,5 @@
 import { Button } from "@components/button"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import Note from "@components/note"
 import * as Dialog from "@radix-ui/react-dialog"
 import { useState } from "react"

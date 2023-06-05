@@ -72,19 +72,14 @@ function FormattingIcons({
 					key={name}
 				>
 					<Button
-						style={{
-							fontSize: 14,
-							borderRight: "none",
-							borderLeft: "none",
-							borderTop: "none",
-							borderBottom: "none"
-						}}
 						aria-label={name}
 						onMouseDown={(e) => e.preventDefault()}
 						onClick={action}
+						// no border rounding
+						variant="ghost"
 					>
 						{React.cloneElement(icon, {
-							className: "mr-2 h-4 w-4"
+							className: "h-4 w-4"
 						})}
 					</Button>
 				</Tooltip>

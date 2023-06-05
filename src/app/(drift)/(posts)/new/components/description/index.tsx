@@ -1,4 +1,4 @@
-import Input from "@components/input"
+import { Input } from "@components/input"
 import { ChangeEvent } from "react"
 
 import styles from "../post.module.css"

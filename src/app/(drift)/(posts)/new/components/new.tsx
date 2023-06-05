@@ -13,17 +13,10 @@ import PasswordModal from "../../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
 import { Button, buttonVariants } from "@components/button"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import { useToasts } from "@components/toasts"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import dynamic from "next/dynamic"
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from "@components/dropdown-menu"
-import { ArrowDown } from "react-feather"
 import ButtonDropdown from "@components/button-dropdown"
 import clsx from "clsx"
 
@@ -31,7 +24,6 @@ const DatePicker = dynamic(() => import("react-datepicker"), {
 	ssr: false,
 	loading: () => (
 		<Input
-			label="Expires at"
 			placeholder="Won't expire"
 			width="100%"
 			height="40px"
@@ -283,6 +275,7 @@ function Post({
 						flex: 1,
 						minWidth: 120
 					}}
+					variant={"secondary"}
 				>
 					Add a File
 				</Button>
@@ -290,7 +283,7 @@ function Post({
 					<DatePicker
 						onChange={onChangeExpiration}
 						customInput={
-							<Input label="Expires at" width="100%" height="40px" />
+							<Input hideLabel label="Expires at" width="100%" height="40px" />
 						}
 						placeholderText="Won't expire"
 						selected={expiresAt}

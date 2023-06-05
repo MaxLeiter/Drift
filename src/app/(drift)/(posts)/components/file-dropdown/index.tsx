@@ -6,6 +6,7 @@ import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
 import Link from "next/link"
 import { buttonVariants } from "@components/button"
+import { cn } from "@lib/cn"
 
 function FileDropdown({
 	files,
@@ -46,10 +47,18 @@ function FileDropdown({
 	})
 
 	const content = (
-		<ul className={styles.content}>
+		<ul className="w-[150px]">
 			{items.map((item) => (
 				<li key={item.id}>
-					<Link href={`#${item.title}`} className={styles.listItem}>
+					<Link
+						href={`#${item.title}`}
+						className={cn(
+							buttonVariants({
+								variant: "secondary"
+							}),
+							"w-full"
+						)}
+					>
 						<span className={styles.fileIcon}>{item.icon}</span>
 						<span className={styles.fileTitle}>
 							{item.title ? item.title : "Untitled"}
@@ -64,7 +73,7 @@ function FileDropdown({
 		<Popover>
 			<Popover.Trigger
 				className={buttonVariants({
-					variant: "link"
+					variant: "secondary"
 				})}
 			>
 				<div className={styles.chevron} style={{ marginRight: 6 }}>

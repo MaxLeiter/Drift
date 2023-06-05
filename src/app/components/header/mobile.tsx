@@ -4,7 +4,6 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import { buttonVariants } from "@components/button"
 import { Button } from "@components/button"
 import { Menu } from "react-feather"
-import clsx from "clsx"
 import styles from "./mobile.module.css"
 import { HeaderButtons } from "./buttons"
 
