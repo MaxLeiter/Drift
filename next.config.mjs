@@ -25,10 +25,10 @@ const nextConfig = {
 		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
 	},
 	eslint: {
-		ignoreDuringBuilds: true
+		ignoreDuringBuilds: process.env.VERCEL_ENV !== "production"
 	},
 	typescript: {
-		ignoreBuildErrors: true
+		ignoreBuildErrors: process.env.VERCEL_ENV !== "production"
 	}
 }
 
