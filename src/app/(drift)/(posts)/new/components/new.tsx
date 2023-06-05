@@ -12,16 +12,31 @@ import { PostWithFiles } from "@lib/server/prisma"
 import PasswordModal from "../../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
-import { Button } from "@components/button"
+import { Button, buttonVariants } from "@components/button"
 import Input from "@components/input"
-import ButtonDropdown from "@components/button-dropdown"
 import { useToasts } from "@components/toasts"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import dynamic from "next/dynamic"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from "@components/dropdown-menu"
+import { ArrowDown } from "react-feather"
+import ButtonDropdown from "@components/button-dropdown"
+import clsx from "clsx"
 
 const DatePicker = dynamic(() => import("react-datepicker"), {
 	ssr: false,
-	loading: () => <Input label="Expires at" placeholder="Won't expire" width="100%" height="40px" />
+	loading: () => (
+		<Input
+			label="Expires at"
+			placeholder="Won't expire"
+			width="100%"
+			height="40px"
+		/>
+	)
 })
 
 const emptyDoc = {
@@ -291,27 +306,35 @@ function Post({
 						minDate={new Date()}
 					/>
 					<ButtonDropdown>
-						<Button
-							height={40}
-							width={251}
+						<span
+							className={clsx(
+								"w-full cursor-pointer rounded-br-none rounded-tr-none",
+								buttonVariants({
+									variant: "default"
+								})
+							)}
 							onClick={() => onSubmit("unlisted")}
-							loading={isSubmitting}
 						>
 							Create Unlisted
-						</Button>
-						<Button height={40} width={300} onClick={() => onSubmit("private")}>
+						</span>
+						<span
+							className={clsx("w-full cursor-pointer")}
+							onClick={() => onSubmit("private")}
+						>
 							Create Private
-						</Button>
-						<Button height={40} width={300} onClick={() => onSubmit("public")}>
+						</span>
+						<span
+							className={clsx("w-full cursor-pointer")}
+							onClick={() => onSubmit("public")}
+						>
 							Create Public
-						</Button>
-						<Button
-							height={40}
-							width={300}
+						</span>
+						<span
+							className={clsx("w-full cursor-pointer")}
 							onClick={() => onSubmit("protected")}
 						>
 							Create with Password
-						</Button>
+						</span>
 					</ButtonDropdown>
 				</div>
 			</div>
