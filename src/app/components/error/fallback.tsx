@@ -1,6 +1,6 @@
 "use client"
 
-import Button from "@components/button"
+import { Button } from "@components/button"
 import Link from "@components/link"
 import Note from "@components/note"
 import { useRouter } from "next/navigation"

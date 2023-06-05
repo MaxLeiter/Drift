@@ -13,7 +13,7 @@ import {
 	UserX
 } from "react-feather"
 import { signOut } from "next-auth/react"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import Link from "@components/link"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { useTheme } from "next-themes"

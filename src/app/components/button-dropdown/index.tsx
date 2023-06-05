@@ -1,4 +1,4 @@
-import Button from "@components/button"
+import { Button } from "@components/button"
 import React, { ReactNode } from "react"
 import styles from "./dropdown.module.css"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"

@@ -1,6 +1,6 @@
 "use client"
 
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
 import { ServerPostWithFilesAndAuthor, UserWithPosts } from "@lib/server/prisma"

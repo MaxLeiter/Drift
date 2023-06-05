@@ -3,7 +3,7 @@
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
 import ButtonGroup from "@components/button-group"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useToasts } from "@components/toasts"
 import { Spinner } from "@components/spinner"
 import { useRouter } from "next/navigation"

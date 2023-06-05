@@ -1,6 +1,6 @@
 module.exports = {
 	plugins: [
-		"postcss-nested",
+		'@tailwindcss/nesting',
 		"postcss-flexbugs-fixes",
 		"postcss-hover-media-feature",
 		[
@@ -13,7 +13,7 @@ module.exports = {
 				}
 			}
 		],
-		["tailwindcss", {}],
-		["autoprefixer", {}]
+		"tailwindcss",
+		"autoprefixer"
 	]
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import Button from "@components/button"
+import { Button } from "@components/button"
 import ButtonGroup from "@components/button-group"
 import FileDropdown from "src/app/(drift)/(posts)/components/file-dropdown"
 import { Edit, ArrowUpCircle, Archive } from "react-feather"

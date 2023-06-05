@@ -1,4 +1,4 @@
-import Button from "@components/button"
+import { Button } from "@components/button"
 import ButtonGroup from "@components/button-group"
 import Skeleton from "@components/skeleton"
 import Tooltip from "@components/tooltip"
@@ -43,10 +43,11 @@ const DownloadButtons = ({
 					rel="noopener noreferrer"
 				>
 					<Button
-						iconRight={<Download color="var(--fg)" />}
 						aria-label="Download"
 						style={{ border: "none", background: "transparent" }}
-					/>
+					>
+						<Download color="var(--fg)" className="mr-2 h-4 w-4" />
+					</Button>
 				</Link>
 			</Tooltip>
 			{rawLink ? (

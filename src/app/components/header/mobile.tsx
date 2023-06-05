@@ -1,8 +1,8 @@
 "use client"
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
-import buttonStyles from "@components/button/button.module.css"
-import Button from "@components/button"
+import { buttonVariants } from "@components/button"
+import { Button } from "@components/button"
 import { Menu } from "react-feather"
 import clsx from "clsx"
 import styles from "./mobile.module.css"
@@ -17,10 +17,10 @@ export default function MobileHeader() {
 	return (
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger
-				className={clsx(buttonStyles.button, styles.mobileTrigger)}
+				className={buttonVariants({ className: styles.mobileTrigger })}
 				asChild
 			>
-				<Button aria-label="Menu" height="auto">
+				<Button aria-label="Menu">
 					<Menu />
 				</Button>
 			</DropdownMenu.Trigger>

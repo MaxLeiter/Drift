@@ -9,7 +9,7 @@ import type { PostWithFiles } from "@lib/server/prisma"
 import Tooltip from "@components/tooltip"
 import { Badge } from "@components/badges/badge"
 import Card from "@components/card"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import {
 	ArrowUpCircle,
 	Code,
@@ -96,26 +96,23 @@ const ListItem = ({
 								{post.parentId && (
 									<Tooltip content={"View parent"}>
 										<Button
-											iconRight={<ArrowUpCircle />}
+											// iconRight={<ArrowUpCircle />}
 											onClick={viewParentClick}
 											// TODO: not perfect on mobile
-											height={38}
 										/>
 									</Tooltip>
 								)}
 								<Tooltip content={"Make a copy"}>
 									<Button
-										iconRight={<Edit />}
+										// iconRight={<Edit />}
 										onClick={editACopy}
-										height={38}
 									/>
 								</Tooltip>
 								{isOwner && (
 									<Tooltip content={"Delete"}>
 										<Button
-											iconRight={<Trash />}
+											// iconRight={<Trash />}
 											onClick={deletePost}
-											height={38}
 										/>
 									</Tooltip>
 								)}

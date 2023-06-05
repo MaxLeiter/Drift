@@ -1,12 +1,11 @@
 import { Popover } from "@components/popover"
 import { codeFileExtensions } from "@lib/constants"
-import clsx from "clsx"
 import type { PostWithFiles } from "src/lib/server/prisma"
 import styles from "./dropdown.module.css"
-import buttonStyles from "@components/button/button.module.css"
 import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
 import Link from "next/link"
+import { buttonVariants } from "@components/button"
 
 function FileDropdown({
 	files,
@@ -18,7 +17,11 @@ function FileDropdown({
 	if (loading) {
 		return (
 			<Popover>
-				<Popover.Trigger className={buttonStyles.button}>
+				<Popover.Trigger
+					className={buttonVariants({
+						variant: "link"
+					})}
+				>
 					<div style={{ minWidth: 125 }}>
 						<Spinner />
 					</div>
@@ -60,13 +63,11 @@ function FileDropdown({
 	return (
 		<Popover>
 			<Popover.Trigger
-				className={buttonStyles.button}
-				style={{ height: 40, padding: 10 }}
+				className={buttonVariants({
+					variant: "link"
+				})}
 			>
-				<div
-					className={clsx(buttonStyles.icon, styles.chevron)}
-					style={{ marginRight: 6 }}
-				>
+				<div className={styles.chevron} style={{ marginRight: 6 }}>
 					<ChevronDown />
 				</div>
 				<span>

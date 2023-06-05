@@ -1,6 +1,6 @@
 import { ChangeEvent, ClipboardEvent, useCallback } from "react"
 import styles from "./document.module.css"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import Input from "@components/input"
 import DocumentTabs from "src/app/(drift)/(posts)/components/tabs"
 import { Trash } from "react-feather"
