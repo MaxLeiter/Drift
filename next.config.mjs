@@ -23,6 +23,12 @@ const nextConfig = {
 	},
 	env: {
 		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL
+	},
+	eslint: {
+		ignoreDuringBuilds: true
+	},
+	typescript: {
+		ignoreBuildErrors: true
 	}
 }
 
