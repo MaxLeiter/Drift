@@ -27,9 +27,7 @@ const SettingsGroup = ({ title, children, skeleton }: Props) => {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>
-					<h4>{title}</h4>
-				</CardTitle>
+				<CardTitle>{title}</CardTitle>
 			</CardHeader>
 			<hr className="pb-4" />
 			<CardContent>

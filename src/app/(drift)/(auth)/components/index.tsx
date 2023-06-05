@@ -123,7 +123,7 @@ function Auth({
 									width="100%"
 									aria-label="Password"
 								/>
-								<Button width={"100%"} type="submit" loading={submitting}>
+								<Button type="submit">
 									Sign {signText}
 								</Button>
 							</>

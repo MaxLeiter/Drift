@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import styles from "./profile.module.css"
 import useSWR from "swr"
 import { User } from "@prisma/client"
+import { Spinner } from "@components/spinner"
 
 function Profile() {
 	const { session } = useSessionSWR()
@@ -143,9 +144,7 @@ function Profile() {
                 </TooltipComponent>
             </div> */}
 
-				<Button type="submit" loading={submitting}>
-					Submit
-				</Button>
+				<Button type="submit">{submitting ? <Spinner /> : "Submit"}</Button>
 			</form>
 		</>
 	)

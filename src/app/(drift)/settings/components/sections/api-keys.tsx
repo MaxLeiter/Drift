@@ -87,10 +87,9 @@ const APIKeys = ({
 					<Button
 						type="button"
 						onClick={onCreateTokenClick}
-						loading={submitting}
 						disabled={!newToken}
 					>
-						Submit
+						{submitting ? <Spinner /> : "Submit"}
 					</Button>
 				</fieldset>
 			</form>

@@ -1,8 +1,12 @@
 "use client"
 
-import { Command } from "cmdk"
+import {
+	CommandDialog,
+	CommandList,
+	CommandInput,
+	CommandEmpty
+} from "./cmdk"
 import { useEffect, useRef, useState } from "react"
-import styles from "./cmdk.module.css"
 import "./dialog.css"
 import HomePage from "./pages/home"
 import PostsPage from "./pages/posts"
@@ -10,7 +14,7 @@ import PostsPage from "./pages/posts"
 export type CmdKPage = "home" | "posts"
 export default function CmdK() {
 	const [open, setOpen] = useState(false)
-	const ref = useRef<HTMLDivElement | null>(null)
+	const ref = useRef<HTMLDivElement>()
 	const [page, setPage] = useState<CmdKPage>("home")
 
 	// Toggle the menu when ⌘K is pressed
@@ -53,21 +57,18 @@ export default function CmdK() {
 	}, [page])
 
 	return (
-		<Command.Dialog
+		<CommandDialog
 			open={open}
 			onOpenChange={setOpen}
-			label="Global Command Menu"
-			className={styles.cmdk}
-			ref={ref}
 		>
-			<Command.List>
-				<Command.Empty>No results found.</Command.Empty>
+			<CommandList>
+				<CommandEmpty>No results found.</CommandEmpty>
 				{page === "home" ? (
 					<HomePage setPage={setPage} setOpen={setOpen} />
 				) : null}
 				{page === "posts" ? <PostsPage setOpen={setOpen} /> : null}
-			</Command.List>
-			<Command.Input />
-		</Command.Dialog>
+			</CommandList>
+			<CommandInput />
+		</CommandDialog>
 	)
 }
