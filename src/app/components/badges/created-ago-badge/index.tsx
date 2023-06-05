@@ -4,7 +4,7 @@ import Tooltip from "@components/tooltip"
 import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { timeAgo } from "src/app/lib/time-ago"
 import { useMemo, useState, useEffect } from "react"
-import Badge from "../badge"
+import { Badge } from "../badge"
 
 const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 	const createdDate = useMemo(() => new Date(createdAt), [createdAt])
@@ -30,7 +30,7 @@ const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 	return (
 		// TODO: investigate tooltip not showing
 		<Tooltip content={formattedTime}>
-			<Badge type="secondary" onClick={onClick}>
+			<Badge onClick={onClick}>
 				{" "}
 				<>{time}</>
 			</Badge>

@@ -3,7 +3,7 @@
 import Tooltip from "@components/tooltip"
 import { timeUntil } from "src/app/lib/time-ago"
 import { useEffect, useMemo, useState } from "react"
-import Badge from "../badge"
+import { Badge } from "../badge"
 
 const ExpirationBadge = ({
 	postExpirationDate
@@ -43,7 +43,7 @@ const ExpirationBadge = ({
 	const isExpired = expirationDate < new Date()
 
 	return (
-		<Badge type={isExpired ? "error" : "warning"}>
+		<Badge variant={isExpired ? "destructive" : "default"}>
 			<Tooltip
 				content={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}
 			>

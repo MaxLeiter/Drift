@@ -12,6 +12,8 @@ module.exports = {
 					"custom-properties": false
 				}
 			}
-		]
+		],
+		["tailwindcss", {}],
+		["autoprefixer", {}]
 	]
 }
