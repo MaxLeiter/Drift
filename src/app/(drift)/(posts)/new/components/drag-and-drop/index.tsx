@@ -82,12 +82,11 @@ function FileDropzone({ setDocs }: { setDocs: (docs: Document[]) => void }) {
 
 	return (
 		<div className={styles.container}>
-			<div {...getRootProps()} className={styles.dropzone}>
+			<div {...getRootProps()}>
 				<input {...getInputProps()} />
 				{!isDragActive && (
-					<p className="text-muted-foreground text-center text-sm">
-						Drag some files here, or <span className={styles.verb} /> to select
-						files
+					<p className="text-muted-foreground text-sm cursor-pointer select-none border-2 border-dashed rounded-md p-4">
+						Drag and drop files here, or click to select
 					</p>
 				)}
 				{isDragActive && <p>Release to drop the files here</p>}

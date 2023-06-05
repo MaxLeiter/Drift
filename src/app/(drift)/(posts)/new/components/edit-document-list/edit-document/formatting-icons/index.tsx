@@ -9,7 +9,7 @@ import {
 import { RefObject, useMemo } from "react"
 import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
-import Tooltip from "@components/tooltip"
+import { Tooltip } from "@components/tooltip"
 import { Button } from "@components/button"
 import clsx from "clsx"
 import React from "react"

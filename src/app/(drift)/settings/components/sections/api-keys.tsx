@@ -13,6 +13,7 @@ import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { useState } from "react"
 import styles from "./api-keys.module.css"
 import { useSessionSWR } from "@lib/use-session-swr"
+import { TypographyH4 } from "@components/typography"
 
 // need to pass in the accessToken
 const APIKeys = ({
@@ -75,7 +76,7 @@ const APIKeys = ({
 			)}
 			{hasError && <Note type="error">{error?.message}</Note>}
 			<form className={styles.form}>
-				<h5>Create new</h5>
+				<TypographyH4>Create new</TypographyH4>
 				<fieldset className={styles.fieldset}>
 					<Input
 						type="text"
@@ -85,11 +86,11 @@ const APIKeys = ({
 						placeholder="Name"
 					/>
 					<Button
-						type="button"
 						onClick={onCreateTokenClick}
 						disabled={!newToken}
+						loading={submitting}
 					>
-						{submitting ? <Spinner /> : "Submit"}
+						Submit
 					</Button>
 				</fieldset>
 			</form>
@@ -120,7 +121,7 @@ const APIKeys = ({
 							</tbody>
 						</table>
 					) : (
-						<p>You have no API keys.</p>
+						<p className="p-4 text-center text-muted-foreground">No API keys found.</p>
 					)
 				) : (
 					<div style={{ marginTop: "var(--gap-quarter)" }}>

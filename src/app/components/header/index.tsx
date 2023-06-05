@@ -1,16 +1,14 @@
 "use client"
 
-import { Stack } from "@components/stack"
 import Link from "next/link"
-import Image from "next/image"
 import { cn } from "@lib/cn"
-import { DropdownMenu } from "@components/dropdown-menu"
-import {
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from "@radix-ui/react-dropdown-menu"
-import { ArrowDownCircle } from "react-feather"
+
+import { useSessionSWR } from "@lib/use-session-swr"
+import { PropsWithChildren, useEffect, useState } from "react"
+import { useSelectedLayoutSegments } from "next/navigation"
+import Image from "next/image"
+import FadeIn from "@components/fade-in"
+import { useTheme } from "next-themes"
 
 // <NavButton
 // 				key="home"
@@ -87,57 +85,111 @@ import { ArrowDownCircle } from "react-feather"
 // 				/>
 
 export default function Header() {
+	const { isAdmin, isAuthenticated } = useSessionSWR()
+	const { resolvedTheme, setTheme } = useTheme()
+	const [mounted, setMounted] = useState(false)
+	useEffect(() => setMounted(true), [])
+	const toggleTheme = () => {
+		setTheme(resolvedTheme === "dark" ? "light" : "dark")
+	}
+
 	return (
-		<header className="container mx-auto flex items-center justify-between px-4 py-4">
-			<div className="flex items-center">
+		<header className="flex items-center h-16 mt-4">
+			<Link href="/" className="flex items-center mr-4">
 				<Image
 					src={"/assets/logo.svg"}
-					width={48}
-					height={48}
+					width={32}
+					height={32}
 					alt=""
 					priority
 				/>
-				<span className="text-lg ml-2">Drift</span>
-			</div>
-			<nav className="flex items-center justify-center">
-				<ul className="flex space-x-4">
-					<Link
-						href="/home"
-						className="text-sm font-medium transition-colors hover:text-primary"
-					>
-						Home
-					</Link>
-					<Link
-						href="/new"
-						className="text-sm font-medium transition-colors hover:text-primary"
-					>
+				<span className="pl-4 text-lg font-bold bg-transparent">Drift</span>
+			</Link>
+			<nav className="flex space-x-4 lg:space-x-6">
+				<ul className="flex justify-center space-x-4">
+					<NavLink href="/home">Home</NavLink>
+					<NavLink href="/new" disabled={!isAuthenticated}>
 						New
-					</Link>
-					<Link
-						href="/mine"
-						className="text-sm font-medium transition-colors hover:text-primary"
-					>
+					</NavLink>
+					<NavLink href="/mine" disabled={!isAuthenticated}>
 						Yours
-					</Link>
-					<Link
-						href="/settings"
-						className="text-sm font-medium transition-colors hover:text-primary"
-					>
+					</NavLink>
+					<NavLink href="/settings" disabled={!isAuthenticated}>
 						Settings
-					</Link>
+					</NavLink>
+					{isAdmin && <NavLink href="/admin">Admin</NavLink>}
+					{isAuthenticated === true && (
+						<NavLink href="/signout">Sign Out</NavLink>
+					)}
+					{isAuthenticated === false && (
+						<NavLink href="/signin">Sign In</NavLink>
+					)}
+					{/* {!mounted && (
+				<NavButton
+					name="Theme"
+					icon={<Circle opacity={0.3} />}
+					value="dark"
+					href=""
+					key="theme"
+				/>
+			)}
+			{mounted && (
+				<NavButton
+					name="Theme"
+					icon={
+						<FadeIn>{resolvedTheme === "dark" ? <Sun /> : <Moon />}</FadeIn>
+					}
+					value="dark"
+					onClick={() => {
+						setTheme(resolvedTheme === "dark" ? "light" : "dark")
+					}}
+					key="theme"
+				/>
+			)} */}
+					{mounted && isAuthenticated !== undefined && (
+						<span
+							aria-hidden
+							className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
+							onClick={toggleTheme}
+						>
+							<FadeIn>{resolvedTheme === "dark" ? "Light" : "Dark"}</FadeIn>
+						</span>
+					)}
 				</ul>
 			</nav>
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<ArrowDownCircle />
-				</DropdownMenuTrigger>
-				<DropdownMenuContent>
-					<DropdownMenuItem>
-						<Link href="/signin">Sign In</Link>
-					</DropdownMenuItem>
-					<DropdownMenuItem>Change Theme</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
 		</header>
+	)
+}
+
+type NavLinkProps = PropsWithChildren<{
+	href: string
+	disabled?: boolean
+	active?: boolean
+}>
+
+function NavLink({ href, disabled, children }: NavLinkProps) {
+	const baseClasses =
+		"text-sm text-muted-foreground font-medium transition-colors hover:text-primary"
+	const activeClasses = "text-primary border-primary"
+	const disabledClasses = "text-gray-400 hover:text-gray-400 cursor-default"
+
+	const segments = useSelectedLayoutSegments()
+	const activeSegment = segments[segments.length - 1]
+	const isActive =
+		activeSegment === href.slice(1) ||
+		// special case / because it's an alias of /home/page.tsx
+		(!activeSegment && href === "/home")
+
+	return (
+		<Link
+			href={href}
+			className={cn(
+				baseClasses,
+				isActive && activeClasses,
+				disabled && disabledClasses
+			)}
+		>
+			{children}
+		</Link>
 	)
 }

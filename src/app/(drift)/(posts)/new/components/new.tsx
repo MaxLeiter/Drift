@@ -7,7 +7,7 @@ import styles from "./post.module.css"
 import EditDocumentList from "./edit-document-list"
 import { ChangeEvent } from "react"
 import getTitleForPostCopy from "src/app/lib/get-title-for-post-copy"
-import Description from "./description"
+// import Description from "./description"
 import { PostWithFiles } from "@lib/server/prisma"
 import PasswordModal from "../../../../components/password-modal"
 import Title from "./title"
@@ -19,16 +19,11 @@ import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import dynamic from "next/dynamic"
 import ButtonDropdown from "@components/button-dropdown"
 import clsx from "clsx"
+import { Spinner } from "@components/spinner"
 
 const DatePicker = dynamic(() => import("react-datepicker"), {
 	ssr: false,
-	loading: () => (
-		<Input
-			placeholder="Won't expire"
-			width="100%"
-			height="40px"
-		/>
-	)
+	loading: () => <Input placeholder="Won't expire" width="100%" height="40px" />
 })
 
 const emptyDoc = {
@@ -250,8 +245,7 @@ function Post({
 	return (
 		<div className={styles.root}>
 			<Title title={title} onChange={onChangeTitle} />
-			<Description description={description} onChange={onChangeDescription} />
-			<FileDropzone setDocs={uploadDocs} />
+			{/* <Description description={description} onChange={onChangeDescription} /> */}
 			<EditDocumentList
 				onPaste={onPaste}
 				docs={docs}
@@ -259,6 +253,8 @@ function Post({
 				updateDocContent={updateDocContent}
 				removeDoc={removeDoc}
 			/>
+			<FileDropzone setDocs={uploadDocs} />
+
 			<div className={styles.buttons}>
 				<Button
 					onClick={() => {
@@ -308,7 +304,7 @@ function Post({
 							)}
 							onClick={() => onSubmit("unlisted")}
 						>
-							Create Unlisted
+							{isSubmitting ? <Spinner /> : "Create Unlisted"}
 						</span>
 						<span
 							className={clsx("w-full cursor-pointer")}

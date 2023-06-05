@@ -6,6 +6,7 @@ import {
 	ServerPostWithFiles
 } from "@lib/server/prisma"
 import { PostTable, UserTable } from "./components/tables"
+import { TypographyH1, TypographyH2 } from "@components/typography"
 
 export default async function AdminPage() {
 	const usersPromise = getAllUsers({
@@ -44,11 +45,11 @@ export default async function AdminPage() {
 
 	return (
 		<div>
-			<h1>Admin</h1>
-			<h2>Users</h2>
+			<TypographyH1>Admin</TypographyH1>
+			<TypographyH2>Users</TypographyH2>
 			{/* @ts-expect-error Type 'unknown' is not assignable to type  */}
 			<UserTable users={serializedUsers as unknown} />
-			<h2>Posts</h2>
+			<TypographyH2>Posts</TypographyH2>
 			<PostTable posts={serializedPosts} />
 		</div>
 	)

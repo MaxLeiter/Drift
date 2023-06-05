@@ -8,18 +8,6 @@
 	margin-top: var(--gap-double);
 }
 
-.dropzone {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 18px;
-	border-radius: 2px;
-	border: 2px dashed var(--border);
-	outline: none;
-	cursor: pointer;
-}
-
 .dropzone:focus {
 	border-color: var(--gray);
 }

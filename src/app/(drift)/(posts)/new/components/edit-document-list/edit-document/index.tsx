@@ -4,6 +4,7 @@ import { Button } from "@components/button"
 import { Input } from "@components/input"
 import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 import { Trash } from "react-feather"
+import { Card, CardContent, CardHeader } from "@components/card"
 
 type Props = {
 	title?: string
@@ -49,8 +50,8 @@ function Document({
 	)
 
 	return (
-		<>
-			<div className={styles.card}>
+		<Card className="min-h-[512px]">
+			<CardHeader>
 				<div className={styles.fileNameContainer}>
 					<Input
 						placeholder="MyFile.md"
@@ -70,21 +71,21 @@ function Document({
 						</Button>
 					)}
 				</div>
-				<div className={styles.documentContainer}>
-					<DocumentTabs
-						isEditing={true}
-						defaultTab={defaultTab}
-						handleOnContentChange={handleOnContentChange}
-						// TODO: solve types
-						// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
-						onPaste={onPaste}
-						title={title}
-					>
-						{content}
-					</DocumentTabs>
-				</div>
-			</div>
-		</>
+			</CardHeader>
+			<CardContent>
+				<DocumentTabs
+					isEditing={true}
+					defaultTab={defaultTab}
+					handleOnContentChange={handleOnContentChange}
+					// TODO: solve types
+					// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
+					onPaste={onPaste}
+					title={title}
+				>
+					{content}
+				</DocumentTabs>
+			</CardContent>
+		</Card>
 	)
 }
 

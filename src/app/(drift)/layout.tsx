@@ -6,6 +6,7 @@ import Header from "@components/header"
 import { Inter } from "next/font/google"
 import { getMetadata } from "src/app/lib/metadata"
 import dynamic from "next/dynamic"
+import clsx from "clsx"
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
 const CmdK = dynamic(() => import("@components/cmdk"), { ssr: false })
@@ -17,14 +18,14 @@ export default async function RootLayout({
 }) {
 	return (
 		// suppressHydrationWarning is required because of next-themes
-		<html lang="en" className={inter.variable} suppressHydrationWarning>
+		<html lang="en" className={clsx(inter.variable, "mx-auto w-[var(--main-content)]")} suppressHydrationWarning>
 			<body>
 				<Toasts />
 				<Providers>
 					<Layout>
 						<CmdK />
 						<Header />
-						<main className="w-[var(--main-content)] mx-auto mt-4">{children}</main>
+						<main>{children}</main>
 					</Layout>
 				</Providers>
 			</body>

@@ -1,7 +1,7 @@
 import { Button } from "@components/button"
 import ButtonGroup from "@components/button-group"
 import Skeleton from "@components/skeleton"
-import Tooltip from "@components/tooltip"
+import { Tooltip } from "@components/tooltip"
 import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 import Link from "next/link"
 import { memo } from "react"
@@ -46,7 +46,7 @@ const DownloadButtons = ({
 						aria-label="Download"
 						style={{ border: "none", background: "transparent" }}
 					>
-						<Download color="var(--fg)" className="mr-2 h-4 w-4" />
+						<Download color="var(--fg)" className="w-4 h-4" />
 					</Button>
 				</Link>
 			</Tooltip>
@@ -54,10 +54,11 @@ const DownloadButtons = ({
 				<Tooltip content="Open raw in new tab">
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							iconLeft={<ExternalLink color="var(--fg)" />}
 							aria-label="Open raw file in new tab"
 							style={{ border: "none", background: "transparent" }}
-						/>
+						>
+							<ExternalLink color="var(--fg)" className="w-4 h-4" />
+						</Button>
 					</Link>
 				</Tooltip>
 			) : null}
@@ -65,10 +66,11 @@ const DownloadButtons = ({
 				<Tooltip content="Open as webpage">
 					<Link href={siteLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							iconLeft={<Globe color="var(--fg)" />}
 							aria-label="Open as webpage"
 							style={{ border: "none", background: "transparent" }}
-						/>
+						>
+							<Globe color="var(--fg)" className="w-4 h-4" />
+						</Button>
 					</Link>
 				</Tooltip>
 			) : null}

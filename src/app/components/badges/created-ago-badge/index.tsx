@@ -1,6 +1,6 @@
 "use client"
 import { useToasts } from "@components/toasts"
-import Tooltip from "@components/tooltip"
+import { Tooltip } from "@components/tooltip"
 import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { timeAgo } from "src/app/lib/time-ago"
 import { useMemo, useState, useEffect } from "react"
@@ -30,7 +30,7 @@ const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 	return (
 		// TODO: investigate tooltip not showing
 		<Tooltip content={formattedTime}>
-			<Badge onClick={onClick}>
+			<Badge onClick={onClick} variant={"outline"}>
 				{" "}
 				<>{time}</>
 			</Badge>

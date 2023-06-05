@@ -11,6 +11,10 @@ const nextConfig = {
 			{
 				source: "/file/raw/:id",
 				destination: `/api/raw/:id`
+			},
+			{
+				source: "/signout",
+				destination: `/api/auth/signout`
 			}
 		]
 	},

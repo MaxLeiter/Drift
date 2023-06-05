@@ -8,8 +8,8 @@ import {
 import PostList, { NoPostsFound } from "@components/post-list"
 import { cache, Suspense } from "react"
 import ErrorBoundary from "@components/error/fallback"
-import { Stack } from "@components/stack"
 import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
+import { PageWrapper } from "@components/page-wrapper"
 export const revalidate = 300
 
 const getWelcomeData = cache(async () => {
@@ -19,7 +19,7 @@ const getWelcomeData = cache(async () => {
 
 export default async function Page() {
 	return (
-		<Stack direction="column">
+		<PageWrapper>
 			{/* @ts-expect-error because of async RSC */}
 			<WelcomePost />
 			<h2 className="text-2xl font-bold mt-4">Recent Public Posts</h2>
@@ -33,7 +33,7 @@ export default async function Page() {
 					<PublicPostList />
 				</Suspense>
 			</ErrorBoundary>
-		</Stack>
+		</PageWrapper>
 	)
 }
 

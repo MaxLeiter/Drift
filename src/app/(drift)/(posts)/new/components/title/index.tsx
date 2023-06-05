@@ -21,7 +21,7 @@ type props = {
 
 function Title({ onChange, title }: props) {
 	return (
-		<div>
+		<div className="pt-4">
 			<Input
 				placeholder={placeholder}
 				value={title}

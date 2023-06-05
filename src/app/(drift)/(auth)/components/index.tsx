@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import Note from "@components/note"
 import { ErrorQueryParamsHandler } from "./query-handler"
 import { AuthProviders } from "@lib/server/auth-props"
+import { TypographyH1 } from "@components/typography"
 
 function Auth({
 	page,
@@ -75,7 +76,7 @@ function Auth({
 			<ErrorQueryParamsHandler />
 			<div className={styles.form}>
 				<div className={styles.formContentSpace}>
-					<h1>Sign {signText}</h1>
+					<h1 className="text-3xl font-bold">Sign {signText}</h1>
 				</div>
 				<form onSubmit={handleSubmit}>
 					<div className={styles.formGroup}>

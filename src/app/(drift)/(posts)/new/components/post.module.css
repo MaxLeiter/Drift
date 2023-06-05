@@ -2,7 +2,7 @@
 	padding-bottom: 200px;
 	display: flex;
 	flex-direction: column;
-	gap: var(--gap);
+	gap: var(--gap-half);
 }
 
 .buttons {

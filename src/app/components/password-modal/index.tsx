@@ -1,9 +1,18 @@
 import { Button } from "@components/button"
 import { Input } from "@components/input"
 import Note from "@components/note"
-import * as Dialog from "@radix-ui/react-dialog"
 import { useState } from "react"
 import styles from "./modal.module.css"
+import {
+	AlertDialog,
+	AlertDialogContent,
+	AlertDialogHeader,
+	AlertDialogDescription,
+	AlertDialogTitle,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogFooter
+} from "@components/alert-dialog"
 
 type Props = {
 	creating: boolean
@@ -22,7 +31,8 @@ const PasswordModal = ({
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [error, setError] = useState<string>()
 
-	const onSubmit = () => {
+	const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+		e.preventDefault()
 		if (!password || (creating && !confirmPassword)) {
 			setError("Please enter a password")
 			return
@@ -39,60 +49,57 @@ const PasswordModal = ({
 	return (
 		<>
 			{
-				<Dialog.Root
+				<AlertDialog
 					open={isOpen}
 					onOpenChange={(open) => {
 						if (!open) onClose()
 					}}
 				>
-					<Dialog.Portal>
-						<Dialog.Overlay className={styles.overlay} />
-						<Dialog.Content
-							className={styles.content}
-							onEscapeKeyDown={onClose}
-						>
-							<Dialog.Title>
+					{/* <AlertDialogOverlay className={styles.overlay} /> */}
+					<AlertDialogContent onEscapeKeyDown={onClose}>
+						<AlertDialogHeader>
+							<AlertDialogTitle>
 								{creating ? "Add a password" : "Enter password"}
-							</Dialog.Title>
-							<Dialog.Description>
+							</AlertDialogTitle>
+							<AlertDialogDescription>
 								{creating
 									? "Enter a password to protect your post"
 									: "Enter the password to access the post"}
-							</Dialog.Description>
-							<fieldset className={styles.fieldset}>
-								{!error && creating && (
-									<Note type="warning">
-										This doesn&apos;t protect your post from the server
-										administrator.
-									</Note>
-								)}
-								{error && <Note type="error">{error}</Note>}
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<fieldset className={styles.fieldset}>
+							{!error && creating && (
+								<Note type="warning">
+									This doesn&apos;t protect your post from the server
+									administrator.
+								</Note>
+							)}
+							{error && <Note type="error">{error}</Note>}
+							<Input
+								width={"100%"}
+								label="Password"
+								type="password"
+								placeholder="Password"
+								value={password}
+								onChange={(e) => setPassword(e.currentTarget.value)}
+							/>
+							{creating && (
 								<Input
 									width={"100%"}
-									label="Password"
+									label="Confirm"
 									type="password"
-									placeholder="Password"
-									value={password}
-									onChange={(e) => setPassword(e.currentTarget.value)}
+									placeholder="Confirm Password"
+									value={confirmPassword}
+									onChange={(e) => setConfirmPassword(e.currentTarget.value)}
 								/>
-								{creating && (
-									<Input
-										width={"100%"}
-										label="Confirm"
-										type="password"
-										placeholder="Confirm Password"
-										value={confirmPassword}
-										onChange={(e) => setConfirmPassword(e.currentTarget.value)}
-									/>
-								)}
-							</fieldset>
-							<footer className={styles.footer}>
-								<Button onClick={onClose}>Cancel</Button>
-								<Button onClick={onSubmit}>Submit</Button>
-							</footer>
-						</Dialog.Content>
-					</Dialog.Portal>
-				</Dialog.Root>
+							)}
+						</fieldset>
+						<AlertDialogFooter>
+							<AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
+							<AlertDialogAction onClick={onSubmit}>Submit</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			}
 		</>
 	)

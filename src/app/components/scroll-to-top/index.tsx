@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@components/button"
-import Tooltip from "@components/tooltip"
+import { Tooltip } from "@components/tooltip"
 import { useEffect, useState } from "react"
 import { ChevronUp } from "react-feather"
 import styles from "./scroll.module.css"

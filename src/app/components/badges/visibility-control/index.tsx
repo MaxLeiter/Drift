@@ -98,30 +98,36 @@ function VisibilityControl({
 			>
 				<Button
 					disabled={visibility === "private"}
+					variant={"outline"}
 					onClick={() => onSubmit("private")}
+					loading={isSubmitting === "private"}
 				>
-					{isSubmitting === "private" ? <Spinner /> : "Make Private"}
+					Make Private
 				</Button>
 				<Button
 					disabled={visibility === "public"}
+					variant={"outline"}
 					onClick={() => onSubmit("public")}
+					loading={isSubmitting === "public"}
 				>
-					{isSubmitting === "public" ? <Spinner /> : "Make Public"}
+					Make Public
 				</Button>
 				<Button
 					disabled={visibility === "unlisted"}
+					variant={"outline"}
 					onClick={() => onSubmit("unlisted")}
+					loading={isSubmitting === "unlisted"}
 				>
-					{isSubmitting === "unlisted" ? <Spinner /> : "Make Unlisted"}
+					Make Unlisted
 				</Button>
-				<Button onClick={() => onSubmit("protected")}>
-					{isSubmitting === "protected" ? (
-						<Spinner />
-					) : visibility === "protected" ? (
-						"Change Password"
-					) : (
-						"Protect with Password"
-					)}
+				<Button
+					onClick={() => onSubmit("protected")}
+					variant={"outline"}
+					loading={isSubmitting === "protected"}
+				>
+					{visibility === "protected"
+						? "Change Password"
+						: "Protect with Password"}
 				</Button>
 			</ButtonGroup>
 			<PasswordModal

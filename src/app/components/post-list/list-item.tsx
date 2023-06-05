@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
-import Tooltip from "@components/tooltip"
+import { Tooltip } from "@components/tooltip"
 import { Badge } from "@components/badges/badge"
 import {
 	Card,
@@ -17,15 +17,17 @@ import {
 } from "@components/card"
 import { Button } from "@components/button"
 import {
-	ArrowUpCircle,
 	Code,
 	Database,
 	Edit,
 	FileText,
+	MoreVertical,
 	Terminal,
 	Trash
 } from "react-feather"
 import { codeFileExtensions } from "@lib/constants"
+import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger } from "@components/dropdown-menu"
+import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
 
 // TODO: isOwner should default to false so this can be used generically
 const ListItem = ({
@@ -76,7 +78,7 @@ const ListItem = ({
 			{/* <Card style={{ overflowY: "scroll" }}> */}
 			<Card className="overflow-y-scroll h-42">
 				<CardHeader>
-					<CardTitle className={styles.title}>
+					<CardTitle className="flex items-center justify-between gap-2">
 						<span className={styles.titleText}>
 							<h4 style={{ display: "inline-block", margin: 0 }}>
 								<Link
@@ -89,7 +91,7 @@ const ListItem = ({
 							</h4>
 							<div className={styles.badges}>
 								<VisibilityBadge visibility={post.visibility} />
-								<Badge type="secondary">
+								<Badge variant={"outline"}>
 									{post.files?.length === 1
 										? "1 file"
 										: `${post.files?.length || 0} files`}
@@ -99,28 +101,41 @@ const ListItem = ({
 							</div>
 						</span>
 						{!hideActions ? (
-							<span className={styles.buttons}>
+							<span className="flex gap-2">
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<MoreVertical />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem
+											onSelect={() => {
+												editACopy()
+											}}
+										>
+											Edit a copy
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
 								{post.parentId && (
 									<Tooltip content={"View parent"}>
 										<Button
 											// iconRight={<ArrowUpCircle />}
 											onClick={viewParentClick}
 											// TODO: not perfect on mobile
+											variant={"secondary"}
 										/>
 									</Tooltip>
 								)}
 								<Tooltip content={"Make a copy"}>
-									<Button
-										// iconRight={<Edit />}
-										onClick={editACopy}
-									/>
+									<Button onClick={editACopy} variant={"secondary"}>
+										<Edit height={18} />
+									</Button>
 								</Tooltip>
 								{isOwner && (
 									<Tooltip content={"Delete"}>
-										<Button
-											// iconRight={<Trash />}
-											onClick={deletePost}
-										/>
+										<Button onClick={deletePost} variant={"secondary"}>
+											<Trash height={18} />
+										</Button>
 									</Tooltip>
 								)}
 							</span>

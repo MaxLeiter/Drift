@@ -10,11 +10,6 @@
 	flex-wrap: wrap;
 }
 
-.buttons {
-	display: flex;
-	gap: var(--gap-half);
-}
-
 .oneline {
 	white-space: nowrap;
 	overflow: hidden;

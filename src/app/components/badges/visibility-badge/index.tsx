@@ -5,7 +5,7 @@ type Props = {
 }
 
 const VisibilityBadge = ({ visibility }: Props) => {
-	return <Badge>{visibility}</Badge>
+	return <Badge variant={"outline"}>{visibility}</Badge>
 }
 
 export default VisibilityBadge
