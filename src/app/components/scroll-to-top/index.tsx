@@ -39,8 +39,10 @@ const ScrollToTop = () => {
 				<Button
 					aria-label="Scroll to Top"
 					onClick={onClick}
-					iconLeft={<ChevronUp />}
-				/>
+					variant={"secondary"}
+				>
+					<ChevronUp />
+				</Button>
 			</Tooltip>
 		</div>
 	)

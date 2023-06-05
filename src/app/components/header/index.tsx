@@ -87,8 +87,6 @@ import { useTheme } from "next-themes"
 export default function Header() {
 	const { isAdmin, isAuthenticated } = useSessionSWR()
 	const { resolvedTheme, setTheme } = useTheme()
-	const [mounted, setMounted] = useState(false)
-	useEffect(() => setMounted(true), [])
 	const toggleTheme = () => {
 		setTheme(resolvedTheme === "dark" ? "light" : "dark")
 	}
@@ -118,42 +116,22 @@ export default function Header() {
 						Settings
 					</NavLink>
 					{isAdmin && <NavLink href="/admin">Admin</NavLink>}
-					{isAuthenticated === true && (
-						<NavLink href="/signout">Sign Out</NavLink>
-					)}
-					{isAuthenticated === false && (
-						<NavLink href="/signin">Sign In</NavLink>
-					)}
-					{/* {!mounted && (
-				<NavButton
-					name="Theme"
-					icon={<Circle opacity={0.3} />}
-					value="dark"
-					href=""
-					key="theme"
-				/>
-			)}
-			{mounted && (
-				<NavButton
-					name="Theme"
-					icon={
-						<FadeIn>{resolvedTheme === "dark" ? <Sun /> : <Moon />}</FadeIn>
-					}
-					value="dark"
-					onClick={() => {
-						setTheme(resolvedTheme === "dark" ? "light" : "dark")
-					}}
-					key="theme"
-				/>
-			)} */}
-					{mounted && isAuthenticated !== undefined && (
-						<span
-							aria-hidden
-							className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
-							onClick={toggleTheme}
-						>
-							<FadeIn>{resolvedTheme === "dark" ? "Light" : "Dark"}</FadeIn>
-						</span>
+					{isAuthenticated !== undefined && (
+						<>
+							{isAuthenticated === true && (
+								<NavLink href="/signout">Sign Out</NavLink>
+							)}
+							{isAuthenticated === false && (
+								<NavLink href="/signin">Sign In</NavLink>
+							)}
+							<span
+								aria-hidden
+								className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
+								onClick={toggleTheme}
+							>
+								<FadeIn>{resolvedTheme === "dark" ? "Light" : "Dark"}</FadeIn>
+							</span>
+						</>
 					)}
 				</ul>
 			</nav>

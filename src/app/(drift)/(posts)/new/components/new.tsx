@@ -255,27 +255,24 @@ function Post({
 			/>
 			<FileDropzone setDocs={uploadDocs} />
 
-			<div className={styles.buttons}>
-				<Button
-					onClick={() => {
-						setDocs([
-							...docs,
-							{
-								title: "",
-								content: "",
-								id: generateUUID()
-							}
-						])
-					}}
-					style={{
-						flex: 1,
-						minWidth: 120
-					}}
-					variant={"secondary"}
-				>
-					Add a File
-				</Button>
-				<div className={styles.rightButtons}>
+			<div className="flex items-center justify-between mt-4">
+				<span className="flex flex-1 gap-2">
+					<Button
+						onClick={() => {
+							setDocs([
+								...docs,
+								{
+									title: "",
+									content: "",
+									id: generateUUID()
+								}
+							])
+						}}
+						className="min-w-[120px] max-w-[200px] flex-1"
+						variant={"secondary"}
+					>
+						Add a File
+					</Button>
 					<DatePicker
 						onChange={onChangeExpiration}
 						customInput={
@@ -288,44 +285,44 @@ function Post({
 						customTimeInput={<CustomTimeInput />}
 						timeInputLabel="Time:"
 						dateFormat="MM/dd/yyyy h:mm aa"
-						className={styles.datePicker}
 						clearButtonTitle={"Clear"}
 						// TODO: investigate why this causes margin shift if true
 						enableTabLoop={false}
 						minDate={new Date()}
+						className="max-w-[200px] flex-1"
 					/>
-					<ButtonDropdown>
-						<span
-							className={clsx(
-								"w-full cursor-pointer rounded-br-none rounded-tr-none",
-								buttonVariants({
-									variant: "default"
-								})
-							)}
-							onClick={() => onSubmit("unlisted")}
-						>
-							{isSubmitting ? <Spinner /> : "Create Unlisted"}
-						</span>
-						<span
-							className={clsx("w-full cursor-pointer")}
-							onClick={() => onSubmit("private")}
-						>
-							Create Private
-						</span>
-						<span
-							className={clsx("w-full cursor-pointer")}
-							onClick={() => onSubmit("public")}
-						>
-							Create Public
-						</span>
-						<span
-							className={clsx("w-full cursor-pointer")}
-							onClick={() => onSubmit("protected")}
-						>
-							Create with Password
-						</span>
-					</ButtonDropdown>
-				</div>
+				</span>
+				<ButtonDropdown>
+					<span
+						className={clsx(
+							"w-full cursor-pointer rounded-br-none rounded-tr-none",
+							buttonVariants({
+								variant: "default"
+							})
+						)}
+						onClick={() => onSubmit("unlisted")}
+					>
+						{isSubmitting ? <Spinner /> : "Create Unlisted"}
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("private")}
+					>
+						Create Private
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("public")}
+					>
+						Create Public
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("protected")}
+					>
+						Create with Password
+					</span>
+				</ButtonDropdown>
 			</div>
 			<PasswordModal
 				creating={true}

@@ -17,6 +17,7 @@ import {
 } from "@components/card"
 import { Button } from "@components/button"
 import {
+	ArrowUpCircle,
 	Code,
 	Database,
 	Edit,
@@ -26,7 +27,11 @@ import {
 	Trash
 } from "react-feather"
 import { codeFileExtensions } from "@lib/constants"
-import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger } from "@components/dropdown-menu"
+import {
+	DropdownMenu,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from "@components/dropdown-menu"
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
 
 // TODO: isOwner should default to false so this can be used generically
@@ -104,40 +109,40 @@ const ListItem = ({
 							<span className="flex gap-2">
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
-										<MoreVertical />
+										<MoreVertical className="cursor-pointer" />
 									</DropdownMenuTrigger>
-									<DropdownMenuContent>
+									<DropdownMenuContent className="mt-2 border rounded-md shadow-sm border-border bg-background">
 										<DropdownMenuItem
 											onSelect={() => {
 												editACopy()
 											}}
+											className="cursor-pointer bg-background"
 										>
-											Edit a copy
+											<Edit className="w-4 h-4 mr-2" /> Edit a copy
 										</DropdownMenuItem>
+										{isOwner && (
+											<DropdownMenuItem
+												onSelect={() => {
+													deletePost()
+												}}
+												className="cursor-pointer bg-background"
+											>
+												<Trash className="w-4 h-4 mr-2" />
+												Delete
+											</DropdownMenuItem>
+										)}
+										{post.parentId && (
+											<DropdownMenuItem
+												onSelect={() => {
+													viewParentClick()
+												}}
+											>
+												<ArrowUpCircle className="w-4 h-4 mr-2" />
+												View parent
+											</DropdownMenuItem>
+										)}
 									</DropdownMenuContent>
 								</DropdownMenu>
-								{post.parentId && (
-									<Tooltip content={"View parent"}>
-										<Button
-											// iconRight={<ArrowUpCircle />}
-											onClick={viewParentClick}
-											// TODO: not perfect on mobile
-											variant={"secondary"}
-										/>
-									</Tooltip>
-								)}
-								<Tooltip content={"Make a copy"}>
-									<Button onClick={editACopy} variant={"secondary"}>
-										<Edit height={18} />
-									</Button>
-								</Tooltip>
-								{isOwner && (
-									<Tooltip content={"Delete"}>
-										<Button onClick={deletePost} variant={"secondary"}>
-											<Trash height={18} />
-										</Button>
-									</Tooltip>
-								)}
 							</span>
 						) : null}
 					</CardTitle>
