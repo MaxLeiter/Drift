@@ -88,11 +88,6 @@ input[type="checkbox"]:focus {
 	min-height: 1.4rem;
 }
 
-article *:not(pre) > code {
-	font-weight: 500;
-	font-family: var(--font-sans);
-}
-
 article li > p {
 	display: inline-block;
 	padding: 0;

@@ -143,6 +143,7 @@ function Auth({
 													callbackUrl: "/",
 													registration_password: serverPassword
 												})
+												router.refresh();
 											}}
 										>
 											{getProviderIcon(provider.id)} Sign{" "}

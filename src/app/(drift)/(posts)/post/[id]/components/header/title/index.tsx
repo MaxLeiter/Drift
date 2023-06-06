@@ -19,7 +19,7 @@ export const PostTitle = ({ post, loading }: TitleProps) => {
 		<span className={styles.title}>
 			<h1 className="text-3xl font-bold">
 				{title}{" "}
-				<span style={{ color: "var(--gray)" }}>
+				<span className="text-2xl text-muted-foreground">
 					by {/* <Link colored href={`/author/${authorId}`}> */}
 					{displayName || "anonymous"}
 					{/* </Link> */}

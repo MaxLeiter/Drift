@@ -98,7 +98,7 @@ const PostList = ({
 
 	return (
 		<Stack className={styles.container} alignItems="center">
-			{!hideSearch && (
+			{!hideSearch && posts.length > 0 && (
 				<div className={styles.searchContainer}>
 					<Input
 						placeholder="Search..."

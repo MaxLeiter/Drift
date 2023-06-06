@@ -37,7 +37,7 @@ export default function DocumentTabs({
 
 	return (
 		<Tabs {...props} onValueChange={handleTabChange} defaultValue={defaultTab}>
-			<TabsList>
+			<TabsList className="flex justify-between">
 				<div>
 					<TabsTrigger value="edit">{isEditing ? "Edit" : "Raw"}</TabsTrigger>
 					<TabsTrigger value="preview">

@@ -20,17 +20,18 @@ export default async function Mine() {
 	return (
 		<>
 			<PageTitle>Your Posts</PageTitle>
-			<PageWrapper></PageWrapper>
-			<ErrorBoundary>
-				<Suspense fallback={<PostList skeleton={true} initialPosts={[]} />}>
-					<PostList
-						userId={userId}
-						initialPosts={posts}
-						isOwner={true}
-						hideSearch={false}
-					/>
-				</Suspense>
-			</ErrorBoundary>
+			<PageWrapper>
+				<ErrorBoundary>
+					<Suspense fallback={<PostList skeleton={true} initialPosts={[]} />}>
+						<PostList
+							userId={userId}
+							initialPosts={posts}
+							isOwner={true}
+							hideSearch={false}
+						/>
+					</Suspense>
+				</ErrorBoundary>
+			</PageWrapper>
 		</>
 	)
 }

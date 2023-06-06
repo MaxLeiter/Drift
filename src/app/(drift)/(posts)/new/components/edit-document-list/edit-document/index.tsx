@@ -66,7 +66,8 @@ function Document({
 						}}
 					/>
 					{remove && (
-						<Button onClick={() => removeFile(remove)} variant="ghost">
+						// no left border
+						<Button onClick={() => removeFile(remove)} variant="outline" className="border-color-[var(--border)] border-l-0 rounded-l-none">
 							<Trash height={18} />
 						</Button>
 					)}

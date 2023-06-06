@@ -50,7 +50,6 @@
 		--header-bg: rgba(19, 20, 21, 0.45);
 		--gray-alpha: rgba(19, 20, 21, 0.6);
 		--selection: rgba(255, 255, 255, 0.99);
-		--border: var(--light-gray);
 		--warning: #ff6700;
 		--link: #3291ff;
 		color-scheme: dark;
@@ -88,8 +87,8 @@
 	}
 
 	.dark {
-		--background: 224 71% 4%;
-		--foreground: 213 31% 91%;
+		--background: 224 71% 3%;
+		--foreground: 213 31% 88%;
 
 		--muted: 223 47% 11%;
 		--muted-foreground: 215.4 16.3% 56.9%;
@@ -98,7 +97,7 @@
 		--popover-foreground: 215 20.2% 65.1%;
 
 		--card: 224 71% 4%;
-		--card-foreground: 213 31% 91%;
+		--card-foreground: 213 31% 88%;
 
 		--border: 216 34% 17%;
 		--input: 216 34% 17%;
