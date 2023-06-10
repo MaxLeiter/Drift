@@ -68,6 +68,55 @@ Refer to pm2's docs or `pm2 help` for more information.
 
 ## Running with Docker
 
+## Running with systemd
+
+_**NOTE:** We assume that you know how to enable user lingering if you don't want to use the systemd unit as root_
+
+- As root
+  - Place the following systemd unit in ___/etc/systemd/system___ and name it _drift.service_
+  - Replace any occurrence of ___`$USERNAME`___ with the shell username of the user that will be running the Drift server
+
+  ```
+  ##########
+  # Drift Systemd Unit (Global)
+  ##########
+  [Unit]
+  Description=Drift Server (Global)
+  After=default.target
+  
+  [Service]
+  User=$USERNAME
+  Group=$USERNAME
+  Type=simple
+  WorkingDirectory=/home/$USERNAME/Drift
+  ExecStart=/usr/bin/pnpm start
+  Restart=on-failure
+  
+  [Install]
+  WantedBy=default.target
+  ```
+- As a nomal user
+  - Place the following systemd unit inside ___/home/user/.config/systemd/user___ and name it _drift_user.service_
+  - Replace any occurrence of ___`$USERNAME`___ with the shell username of the user that will be running the Drift server
+
+  ```
+  ##########
+  # Drift Systemd Unit (User)
+  ##########
+  [Unit]
+  Description=Drift Server (User)
+  After=default.target
+  
+  [Service]
+  Type=simple
+  WorkingDirectory=/home/$USERNAME/Drift
+  ExecStart=/usr/bin/pnpm start
+  Restart=on-failure
+  
+  [Install]
+  WantedBy=default.target
+  ```
+  
 ## Current status
 
 Drift is a work in progress. Below is a (rough) list of completed and envisioned features. If you want to help address any of them, please let me know regardless of your experience and I'll be happy to assist.
