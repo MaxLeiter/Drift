@@ -20,11 +20,27 @@ import dynamic from "next/dynamic"
 import ButtonDropdown from "@components/button-dropdown"
 import clsx from "clsx"
 import { Spinner } from "@components/spinner"
+import { cn } from "@lib/cn"
+import { Calendar as CalendarIcon } from "react-feather"
 
-const DatePicker = dynamic(() => import("react-datepicker"), {
-	ssr: false,
-	loading: () => <Input placeholder="Won't expire" width="100%" height="40px" />
-})
+const DatePicker = dynamic(
+	() => import("@components/date-picker").then((m) => m.DatePicker),
+	{
+		ssr: false,
+		loading: () => (
+			<Button
+				variant={"outline"}
+				className={cn(
+					"w-[280px] justify-start text-left font-normal",
+					"text-muted-foreground"
+				)}
+			>
+				<CalendarIcon className="w-4 h-4 mr-2" />
+				<span>Won't expire</span>
+			</Button>
+		)
+	}
+)
 
 const emptyDoc = {
 	title: "",
@@ -273,24 +289,7 @@ function Post({
 					>
 						Add a File
 					</Button>
-					<DatePicker
-						onChange={onChangeExpiration}
-						customInput={
-							<Input hideLabel label="Expires at" width="100%" height="40px" />
-						}
-						placeholderText="Won't expire"
-						selected={expiresAt}
-						showTimeInput={true}
-						// @ts-expect-error fix time input type
-						customTimeInput={<CustomTimeInput />}
-						timeInputLabel="Time:"
-						dateFormat="MM/dd/yyyy h:mm aa"
-						clearButtonTitle={"Clear"}
-						// TODO: investigate why this causes margin shift if true
-						enableTabLoop={false}
-						minDate={new Date()}
-						className="max-w-[200px] flex-1"
-					/>
+					<DatePicker setExpiresAt={setExpiresAt} expiresAt={expiresAt} />
 				</span>
 				<ButtonDropdown>
 					<span

@@ -30,7 +30,7 @@ const CreatedAgoBadge = ({ createdAt }: { createdAt: string | Date }) => {
 	return (
 		// TODO: investigate tooltip not showing
 		<Tooltip content={formattedTime}>
-			<Badge onClick={onClick} variant={"outline"}>
+			<Badge onClick={onClick} variant={"outline"} suppressHydrationWarning>
 				{" "}
 				<>{time}</>
 			</Badge>

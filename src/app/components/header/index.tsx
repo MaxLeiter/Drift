@@ -115,6 +115,13 @@ export default function Header() {
 					<NavLink href="/settings" disabled={!isAuthenticated}>
 						Settings
 					</NavLink>
+					<span
+						aria-hidden
+						className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
+						onClick={toggleTheme}
+					>
+						Theme
+					</span>
 					{isAdmin && <NavLink href="/admin">Admin</NavLink>}
 					{isAuthenticated !== undefined && (
 						<>
@@ -124,13 +131,6 @@ export default function Header() {
 							{isAuthenticated === false && (
 								<NavLink href="/signin">Sign In</NavLink>
 							)}
-							<span
-								aria-hidden
-								className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
-								onClick={toggleTheme}
-							>
-								<FadeIn>{resolvedTheme === "dark" ? "Light" : "Dark"}</FadeIn>
-							</span>
 						</>
 					)}
 				</ul>
@@ -149,7 +149,7 @@ function NavLink({ href, disabled, children }: NavLinkProps) {
 	const baseClasses =
 		"text-sm text-muted-foreground font-medium transition-colors hover:text-primary"
 	const activeClasses = "text-primary border-primary"
-	const disabledClasses = "text-gray-400 hover:text-gray-400 cursor-default"
+	const disabledClasses = "text-gray-600 hover:text-gray-400 cursor-not-allowed"
 
 	const segments = useSelectedLayoutSegments()
 	const activeSegment = segments[segments.length - 1]

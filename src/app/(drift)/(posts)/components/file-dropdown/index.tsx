@@ -1,4 +1,4 @@
-import { Popover } from "@components/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@components/popover"
 import { codeFileExtensions } from "@lib/constants"
 import type { PostWithFiles } from "src/lib/server/prisma"
 import styles from "./dropdown.module.css"
@@ -18,7 +18,7 @@ function FileDropdown({
 	if (loading) {
 		return (
 			<Popover>
-				<Popover.Trigger
+				<PopoverTrigger
 					className={buttonVariants({
 						variant: "link"
 					})}
@@ -26,7 +26,7 @@ function FileDropdown({
 					<div style={{ minWidth: 125 }}>
 						<Spinner />
 					</div>
-				</Popover.Trigger>
+				</PopoverTrigger>
 			</Popover>
 		)
 	}
@@ -71,7 +71,7 @@ function FileDropdown({
 
 	return (
 		<Popover>
-			<Popover.Trigger
+			<PopoverTrigger
 				className={buttonVariants({
 					variant: "secondary"
 				})}
@@ -82,10 +82,10 @@ function FileDropdown({
 				<span>
 					Jump to {files.length} {files.length === 1 ? "file" : "files"}
 				</span>
-			</Popover.Trigger>
-			<Popover.Content className={styles.contentWrapper}>
+			</PopoverTrigger>
+			<PopoverContent className={styles.contentWrapper}>
 				{content}
-			</Popover.Content>
+			</PopoverContent>
 		</Popover>
 	)
 }

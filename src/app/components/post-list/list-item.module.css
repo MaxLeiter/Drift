@@ -44,13 +44,6 @@
 		padding: var(--gap-quarter);
 	}
 
-	li a {
-		display: flex;
-		align-items: center;
-		gap: var(--gap);
-		color: var(--darker-gray);
-	}
-
 	li a:hover {
 		color: var(--link);
 		text-decoration: none;

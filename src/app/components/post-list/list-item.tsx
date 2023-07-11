@@ -157,14 +157,11 @@ const ListItem = ({
 						{post?.files?.map(
 							(file: Pick<PostWithFiles, "files">["files"][0]) => {
 								return (
-									<li key={file.id}>
+									<li key={file.id} className="text-black">
 										<Link
 											colored
 											href={`/post/${post.id}#${file.title}`}
-											style={{
-												display: "flex",
-												alignItems: "center"
-											}}
+											className="flex items-center gap-2 font-mono text-sm text-foreground"
 										>
 											{getIconFromFilename(file.title)}
 											{file.title || "Untitled file"}

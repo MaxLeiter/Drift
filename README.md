@@ -8,6 +8,8 @@ You can try a demo at https://drift.lol. The demo is built on main but has no da
 
 If you want to contribute, need support, or want to stay updated, you can join the IRC channel at #drift on irc.libera.chat or [reach me on twitter](https://twitter.com/Max_Leiter). If you don't have an IRC client yet, you can use a webclient [here](https://demo.thelounge.chat/#/connect?join=%23drift&nick=drift-user&realname=Drift%20User).
 
+Drift is built with Next.js 13, React Server Components, [shadcn/ui](https://github.com/shadcn/ui), and [Prisma](https://prisma.io/).
+
 <hr />
 
 **Contents:**
@@ -48,6 +50,7 @@ You can change these to your liking.
 - `NODE_ENV`: defaults to development, can be `production`
 
 #### Auth environment variables
+
 **Note:** Only credential auth currently supports the registration password, so if you want to secure registration, you must use only credential auth.
 
 - `GITHUB_CLIENT_ID`: the client ID for GitHub OAuth.

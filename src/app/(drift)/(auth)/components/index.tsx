@@ -13,6 +13,7 @@ import Note from "@components/note"
 import { ErrorQueryParamsHandler } from "./query-handler"
 import { AuthProviders } from "@lib/server/auth-props"
 import { TypographyH1 } from "@components/typography"
+import { cn } from "@lib/cn"
 
 function Auth({
 	page,
@@ -54,6 +55,7 @@ function Auth({
 			setSubmitting(false)
 		} else {
 			router.push("/new")
+			router.refresh()
 		}
 	}
 
@@ -74,7 +76,7 @@ function Auth({
 	return (
 		<div className={styles.container}>
 			<ErrorQueryParamsHandler />
-			<div className={styles.form}>
+			<div className={"mx-auto w-[300px]"}>
 				<div className={styles.formContentSpace}>
 					<h1 className="text-3xl font-bold">Sign {signText}</h1>
 				</div>
@@ -123,28 +125,30 @@ function Auth({
 									width="100%"
 									aria-label="Password"
 								/>
-								<Button type="submit">Sign {signText}</Button>
+								<Button type="submit" loading={submitting}>Sign {signText}</Button>
 							</>
 						) : null}
 
 						{authProviders?.length ? (
 							<>
+								<hr className="w-full" />
+								<p className="p-0 mt-2 text-center">
+									Or sign {signText.toLowerCase()} with one of the following
+								</p>
 								{authProviders?.map((provider) => {
 									return provider.enabled ? (
 										<Button
 											type="submit"
 											key={provider.id + "-button"}
-											style={{
-												color: "var(--fg)"
-											}}
 											onClick={(e) => {
 												e.preventDefault()
 												signIn(provider.id, {
 													callbackUrl: "/",
 													registration_password: serverPassword
 												})
-												router.refresh();
+												router.refresh()
 											}}
+											className="my-2 flex w-full max-w-[250px] items-center justify-center"
 										>
 											{getProviderIcon(provider.id)} Sign{" "}
 											{signText.toLowerCase()} with {provider.public_name}
@@ -182,10 +186,10 @@ export default Auth
 const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
-			return <GitHub />
+			return <GitHub className="w-5 h-5 mr-2" />
 		case "keycloak":
-			return <Key />
+			return <Key className="w-5 h-5 mr-2" />
 		default:
-			return <User />
+			return <User className="w-5 h-5 mr-2" />
 	}
 }

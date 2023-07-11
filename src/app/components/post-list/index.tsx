@@ -98,12 +98,12 @@ const PostList = ({
 
 	return (
 		<Stack className={styles.container} alignItems="center">
-			{!hideSearch && posts.length > 0 && (
+			{!hideSearch && (
 				<div className={styles.searchContainer}>
 					<Input
 						placeholder="Search..."
 						onChange={onSearchChange}
-						disabled={!posts}
+						disabled={!posts || posts.length === 0}
 						style={{ maxWidth: 300 }}
 						aria-label="Search"
 						value={searchValue}

@@ -12,7 +12,7 @@
 
 		--small-gap: 4rem;
 		--big-gap: 4rem;
-		--main-content: 55rem;
+		--main-content: min(55rem, 100vw);
 		--radius: 8px;
 		--inline-radius: 5px;
 
