@@ -19,11 +19,6 @@
 	padding: var(--gap-half);
 }
 
-/* first element should never have a top margin */
-.markdownPreview > *:first-child {
-	margin-top: 0;
-}
-
 .markdownPreview h1,
 .markdownPreview h2,
 .markdownPreview h3,
@@ -56,11 +51,11 @@
 .markdownPreview p {
 	margin-top: 1.25rem;
 	margin-bottom: 1.25rem;
-	
+/* 	
 	&:not(:first-child) {
 		line-height: 1.75rem;
 		margin-top: 1.5rem;
-	}
+	} */
 }
 
 .markdownPreview pre {
