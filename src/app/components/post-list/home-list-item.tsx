@@ -2,11 +2,9 @@ import VisibilityBadge from "../badges/visibility-badge"
 import FadeIn from "@components/fade-in"
 import ExpirationBadge from "@components/badges/expiration-badge"
 import CreatedAgoBadge from "@components/badges/created-ago-badge"
-import { useRouter } from "next/navigation"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
-import { Tooltip } from "@components/tooltip"
 import { Badge } from "@components/badges/badge"
 import {
 	Card,
@@ -15,25 +13,8 @@ import {
 	CardHeader,
 	CardTitle
 } from "@components/card"
-import { Button } from "@components/button"
-import {
-	ArrowUpCircle,
-	Code,
-	Database,
-	Edit,
-	FileText,
-	MoreVertical,
-	Terminal,
-	Trash
-} from "react-feather"
-import { codeFileExtensions } from "@lib/constants"
-import {
-	DropdownMenu,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from "@components/dropdown-menu"
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
 import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
+import { useEffect, useRef, useState } from "react"
 
 // TODO: isOwner should default to false so this can be used generically
 const HomeListItem = ({
@@ -44,29 +25,22 @@ const HomeListItem = ({
 	deletePost: () => void
 	hideActions?: boolean
 }) => {
-	const router = useRouter()
+	const [isExpanded, setIsExpanded] = useState(false)
+	const [isOverflowing, setIsOverflowing] = useState(false)
+	const containerRef = useRef<HTMLDivElement>(null)
 
-	const getIconFromFilename = (filename: string) => {
-		const extension = filename.split(".").pop()
-		switch (extension) {
-			case "sql":
-				return <Database />
-			case "sh":
-			case "fish":
-			case "bash":
-			case "zsh":
-			case ".zshrc":
-			case ".bashrc":
-			case ".bash_profile":
-				return <Terminal />
-			default:
-				if (codeFileExtensions.includes(extension || "")) {
-					return <Code />
-				} else {
-					return <FileText />
-				}
-		}
+	const handleExpandClick = () => {
+		setIsExpanded(!isExpanded)
 	}
+
+	useEffect(() => {
+		console.log("checking overflow", containerRef.current)
+		if (!containerRef.current) return
+		if (containerRef.current.scrollHeight > containerRef.current.clientHeight) {
+			console.log("overflowing")
+			setIsOverflowing(true)
+		}
+	}, [post])
 
 	return (
 		<FadeIn key={post.id} as="li">
@@ -102,13 +76,31 @@ const HomeListItem = ({
 					)}
 				</CardHeader>
 				<CardContent>
-					<DocumentTabs
-						isEditing={false}
-						staticPreview={post.files[0].html}
-						defaultTab={"preview"}
+					<div
+						className={`overflow-y-hidden ${
+							isExpanded ? "max-h-full" : "max-h-64"
+						}`}
+						ref={containerRef}
 					>
-						{post.files[0].content}
-					</DocumentTabs>
+						<DocumentTabs
+							isEditing={false}
+							staticPreview={post.files[0].html}
+							defaultTab={"preview"}
+						>
+							{post.files[0].content}
+						</DocumentTabs>
+					</div>
+					{isOverflowing && (
+						<div className="flex items-center mt-2">
+							<hr className="flex-grow border-gray-300 dark:border-gray-700" />
+							<div className="inline-block px-2 border border-gray-300 rounded text-accent-foreground dark:border-gray-700">
+								<button onClick={handleExpandClick} className="text-sm font-bold transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
+									{isExpanded ? "Collapse" : "Expand"}
+								</button>
+							</div>
+							<hr className="flex-grow border-gray-300 dark:border-gray-700" />
+						</div>
+					)}
 				</CardContent>
 			</Card>
 		</FadeIn>

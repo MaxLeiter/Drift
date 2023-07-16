@@ -36,7 +36,6 @@ const ExpirationBadge = ({
 		}
 	}, [expirationDate])
 
-	console.log("expirationDate", expirationDate, timeUntilString)
 	if (!expirationDate) {
 		return null
 	}
@@ -44,7 +43,7 @@ const ExpirationBadge = ({
 	const isExpired = expirationDate < new Date()
 
 	return (
-		<Badge variant={isExpired ? "destructive" : "default"}>
+		<Badge variant={isExpired ? "destructive" : "outline"}>
 			<Tooltip
 				content={`${expirationDate.toLocaleDateString()} ${expirationDate.toLocaleTimeString()}`}
 			>

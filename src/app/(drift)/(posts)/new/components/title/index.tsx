@@ -17,11 +17,12 @@ const placeholder = titlePlaceholders[3]
 type props = {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
 	title?: string
+	className?: string
 }
 
-function Title({ onChange, title }: props) {
+function Title({ onChange, title, className}: props) {
 	return (
-		<div className="pt-4">
+		<div className={className}>
 			<Input
 				placeholder={placeholder}
 				value={title}

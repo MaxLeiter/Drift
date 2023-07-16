@@ -1,5 +1,4 @@
 import NextLink from "next/link"
-import styles from "./link.module.css"
 import { cn } from "@lib/cn"
 
 type LinkProps = {

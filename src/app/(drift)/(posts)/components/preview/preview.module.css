@@ -19,6 +19,11 @@
 	padding: var(--gap-half);
 }
 
+/* first element should never have a top margin */
+.markdownPreview > *:first-child {
+	margin-top: 0;
+}
+
 .markdownPreview h1,
 .markdownPreview h2,
 .markdownPreview h3,
@@ -26,52 +31,26 @@
 .markdownPreview h5,
 .markdownPreview h6 {
 	font-weight: 600;
-	letter-spacing: -0.025em;
-	margin-top: 1.5rem;
-	margin-bottom: 0.5rem;
 }
 
 .markdownPreview h1 {
-	font-size: 1.65rem;
-	line-height: 2.5rem;
-
-	@media (min-width: 1024px) {
-		font-size: 3rem;
-		line-height: 1;
-	}
+	font-size: 1.775rem;
 }
 
 .markdownPreview h2 {
-	padding-bottom: 0.5rem;
-	font-size: 1.875rem;
-	line-height: 2.25rem;
-	font-weight: 600;
-	border-bottom-width: 1px;
-
-	@media (min-width: 1024px) {
-		font-size: 2.25rem;
-		line-height: 1;
-	}
+	font-size: 1.5rem;
 }
 
 .markdownPreview h3 {
-	font-size: 1.5rem;
-	line-height: 2rem;
-
-	@media (min-width: 1024px) {
-		font-size: 1.75rem;
-		line-height: 1;
-	}
+	font-size: 1.25rem;
 }
 
 .markdownPreview h4 {
-	font-size: 1.25rem;
-	line-height: 1.8rem;
+	font-size: 1.125rem;
 }
 
 .markdownPreview h5 {
-	font-size: 1.125rem;
-	line-height: 1.75rem;
+	font-size: 1.1rem;
 }
 
 .markdownPreview p {

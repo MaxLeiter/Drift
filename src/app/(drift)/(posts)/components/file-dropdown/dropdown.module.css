@@ -23,19 +23,6 @@
 	margin: 0;
 }
 
-.content .listItem {
-
-}
-
-.content li .fileIcon {
-	display: inline-block;
-	margin-right: var(--gap-half);
-}
-
-.content li .fileTitle {
-	font-size: calc(0.875 * 16px);
-}
-
 .content li::before {
 	content: "";
 	padding: 0;

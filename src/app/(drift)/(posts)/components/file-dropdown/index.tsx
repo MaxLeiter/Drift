@@ -6,7 +6,6 @@ import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
 import Link from "next/link"
 import { buttonVariants } from "@components/button"
-import { cn } from "@lib/cn"
 
 function FileDropdown({
 	files,
@@ -36,18 +35,18 @@ function FileDropdown({
 		if (codeFileExtensions.includes(extension || "")) {
 			return {
 				...file,
-				icon: <Code />
+				icon: <Code className="w-4 h-4"/>
 			}
 		} else {
 			return {
 				...file,
-				icon: <FileIcon />
+				icon: <FileIcon className="w-4 h-4"/>
 			}
 		}
 	})
 
 	const content = (
-		<ul>
+		<ul className="text-sm">
 			{items.map((item) => (
 				<li key={item.id} className="flex">
 					<Link

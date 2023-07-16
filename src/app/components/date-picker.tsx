@@ -27,7 +27,7 @@ export function DatePicker({
 					)}
 				>
 					<CalendarIcon className="w-4 h-4 mr-2" />
-					{expiresAt ? format(expiresAt, "PPP") : <span>Won't expire</span>}
+					{expiresAt ? format(expiresAt, "PPP") : <span>Won&apos;t expire</span>}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-auto p-0">

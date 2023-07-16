@@ -73,7 +73,7 @@ async function PublicPostList() {
 					id: true,
 					title: true,
 					content: true,
-					html: true,
+					html: true
 				}
 			},
 			authorId: true

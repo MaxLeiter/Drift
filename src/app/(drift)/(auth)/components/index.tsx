@@ -12,8 +12,6 @@ import { useRouter } from "next/navigation"
 import Note from "@components/note"
 import { ErrorQueryParamsHandler } from "./query-handler"
 import { AuthProviders } from "@lib/server/auth-props"
-import { TypographyH1 } from "@components/typography"
-import { cn } from "@lib/cn"
 
 function Auth({
 	page,

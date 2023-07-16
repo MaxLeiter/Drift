@@ -1,7 +1,6 @@
-import { Button } from "@components/button"
 import { Input } from "@components/input"
 import Note from "@components/note"
-import { useState } from "react"
+import { MouseEventHandler, useState } from "react"
 import styles from "./modal.module.css"
 import {
 	AlertDialog,
@@ -31,7 +30,7 @@ const PasswordModal = ({
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [error, setError] = useState<string>()
 
-	const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+	const onSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
 		e.preventDefault()
 		if (!password || (creating && !confirmPassword)) {
 			setError("Please enter a password")

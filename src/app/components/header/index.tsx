@@ -4,10 +4,9 @@ import Link from "next/link"
 import { cn } from "@lib/cn"
 
 import { useSessionSWR } from "@lib/use-session-swr"
-import { PropsWithChildren, useEffect, useState } from "react"
+import { PropsWithChildren } from "react"
 import { useSelectedLayoutSegments } from "next/navigation"
 import Image from "next/image"
-import FadeIn from "@components/fade-in"
 import { useTheme } from "next-themes"
 
 // <NavButton

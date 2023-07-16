@@ -9,7 +9,6 @@ import { useEffect, useState } from "react"
 import styles from "./profile.module.css"
 import useSWR from "swr"
 import { User } from "@prisma/client"
-import { Spinner } from "@components/spinner"
 
 function Profile() {
 	const { session } = useSessionSWR()

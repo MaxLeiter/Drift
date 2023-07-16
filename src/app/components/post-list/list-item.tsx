@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import styles from "./list-item.module.css"
 import Link from "@components/link"
 import type { PostWithFiles } from "@lib/server/prisma"
-import { Tooltip } from "@components/tooltip"
 import { Badge } from "@components/badges/badge"
 import {
 	Card,
@@ -15,7 +14,6 @@ import {
 	CardHeader,
 	CardTitle
 } from "@components/card"
-import { Button } from "@components/button"
 import {
 	ArrowUpCircle,
 	Code,

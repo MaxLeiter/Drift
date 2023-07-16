@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useState, ClipboardEvent } from "react"
 import generateUUID from "@lib/generate-uuid"
-import styles from "./post.module.css"
 import EditDocumentList from "./edit-document-list"
 import { ChangeEvent } from "react"
 import getTitleForPostCopy from "src/app/lib/get-title-for-post-copy"
@@ -13,7 +12,6 @@ import PasswordModal from "../../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
 import { Button, buttonVariants } from "@components/button"
-import { Input } from "@components/input"
 import { useToasts } from "@components/toasts"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import dynamic from "next/dynamic"
@@ -36,7 +34,7 @@ const DatePicker = dynamic(
 				)}
 			>
 				<CalendarIcon className="w-4 h-4 mr-2" />
-				<span>Won't expire</span>
+				<span>Won&apos;t expire</span>
 			</Button>
 		)
 	}
@@ -66,7 +64,9 @@ function Post({
 	const [title, setTitle] = useState(
 		getTitleForPostCopy(initialPost?.title) || ""
 	)
-	const [description, setDescription] = useState(initialPost?.description || "")
+	const [description /*, setDescription */] = useState(
+		initialPost?.description || ""
+	)
 	const [expiresAt, setExpiresAt] = useState<Date>()
 
 	const defaultDocs: Document[] = initialPost
@@ -149,7 +149,7 @@ function Post({
 
 			if (!docs.length) {
 				setToast({
-					message: "Please add at least one document",
+					message: "Please add at least one file",
 					type: "error"
 				})
 				hasErrored = true
@@ -188,13 +188,13 @@ function Post({
 		setTitle(e.target.value)
 	}, [])
 
-	const onChangeDescription = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
-			e.preventDefault()
-			setDescription(e.target.value)
-		},
-		[]
-	)
+	// const onChangeDescription = useCallback(
+	// 	(e: ChangeEvent<HTMLInputElement>) => {
+	// 		e.preventDefault()
+	// 		setDescription(e.target.value)
+	// 	},
+	// 	[]
+	// )
 
 	function onClosePasswordModal() {
 		setPasswordModalVisible(false)
@@ -203,10 +203,6 @@ function Post({
 
 	function submitPassword(password: string) {
 		return onSubmit("protected", password)
-	}
-
-	function onChangeExpiration(date: Date) {
-		return setExpiresAt(date)
 	}
 
 	function updateDocTitle(i: number) {
@@ -259,8 +255,8 @@ function Post({
 	}
 
 	return (
-		<div className={styles.root}>
-			<Title title={title} onChange={onChangeTitle} />
+		<div className="flex flex-col flex-1 gap-4">
+			<Title title={title} onChange={onChangeTitle} className="py-4" />
 			{/* <Description description={description} onChange={onChangeDescription} /> */}
 			<EditDocumentList
 				onPaste={onPaste}
@@ -335,30 +331,30 @@ function Post({
 
 export default Post
 
-function CustomTimeInput({
-	date,
-	value,
-	onChange
-}: {
-	date: Date
-	value: string
-	onChange: (date: string) => void
-}) {
-	return (
-		<input
-			type="time"
-			value={value}
-			onChange={(e) => {
-				if (!isNaN(date.getTime())) {
-					onChange(e.target.value || date.toISOString().slice(11, 16))
-				}
-			}}
-			style={{
-				backgroundColor: "var(--bg)",
-				border: "1px solid var(--light-gray)",
-				borderRadius: "var(--radius)"
-			}}
-			required
-		/>
-	)
-}
+// function CustomTimeInput({
+// 	date,
+// 	value,
+// 	onChange
+// }: {
+// 	date: Date
+// 	value: string
+// 	onChange: (date: string) => void
+// }) {
+// 	return (
+// 		<input
+// 			type="time"
+// 			value={value}
+// 			onChange={(e) => {
+// 				if (!isNaN(date.getTime())) {
+// 					onChange(e.target.value || date.toISOString().slice(11, 16))
+// 				}
+// 			}}
+// 			style={{
+// 				backgroundColor: "var(--bg)",
+// 				border: "1px solid var(--light-gray)",
+// 				borderRadius: "var(--radius)"
+// 			}}
+// 			required
+// 		/>
+// 	)
+// }

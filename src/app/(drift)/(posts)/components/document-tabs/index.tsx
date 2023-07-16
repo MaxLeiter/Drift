@@ -1,7 +1,13 @@
 "use client"
 
 import FormattingIcons from "src/app/(drift)/(posts)/new/components/edit-document-list/edit-document/formatting-icons"
-import { ChangeEvent, ClipboardEvent, ComponentProps, useRef } from "react"
+import {
+	ChangeEvent,
+	ClipboardEvent,
+	ComponentProps,
+	useRef,
+	useState
+} from "react"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Preview, { StaticPreview } from "../preview"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/tabs"
@@ -28,13 +34,16 @@ export default function DocumentTabs({
 	...props
 }: Props) {
 	const codeEditorRef = useRef<TextareaMarkdownRef>(null)
-
+	const [activeTab, setActiveTab] = useState<"preview" | "edit">(defaultTab)
 	const handleTabChange = (newTab: string) => {
 		if (newTab === "preview") {
 			codeEditorRef.current?.focus()
 		}
+		setActiveTab(newTab as "preview" | "edit")
 	}
 
+	const formattingIconsVisibilityClass =
+		activeTab === "preview" ? "hidden" : "block"
 	return (
 		<Tabs {...props} onValueChange={handleTabChange} defaultValue={defaultTab}>
 			<TabsList className="flex justify-between">
@@ -44,7 +53,12 @@ export default function DocumentTabs({
 						{isEditing ? "Preview" : "Rendered"}
 					</TabsTrigger>
 				</div>
-				{isEditing && <FormattingIcons textareaRef={codeEditorRef} className="ml-auto" />}
+				{isEditing && (
+					<FormattingIcons
+						textareaRef={codeEditorRef}
+						className={`ml-auto ${formattingIconsVisibilityClass}`}
+					/>
+				)}
 			</TabsList>
 			<TabsContent value="edit">
 				<div

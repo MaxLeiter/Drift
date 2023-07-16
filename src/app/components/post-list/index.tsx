@@ -43,7 +43,6 @@ const PostList = ({
 
 	const showSkeleton = skeleton || searching
 
-	console.log(initialPosts)
 	// eslint-disable-next-line react-hooks/exhaustive-deps -- TODO: address this
 	const onSearch = useCallback(
 		debounce((query: string) => {
@@ -88,7 +87,10 @@ const PostList = ({
 			})
 
 			if (!res?.ok) {
-				console.error(res)
+				setToast({
+					message: "Failed to delete post",
+					type: "error"
+				})
 				return
 			} else {
 				setPosts((posts) => posts?.filter((post) => post.id !== postId))
