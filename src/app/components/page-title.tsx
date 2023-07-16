@@ -7,7 +7,7 @@ export function PageTitle({
 	...props
 }: PropsWithChildren<React.HTMLProps<HTMLHeadingElement>>) {
 	return (
-		<h1 className={cn("text-4xl font-bold pb-2 pt-2", className)} {...props}>
+		<h1 className={cn("pb-2 pt-2 text-4xl font-bold", className)} {...props}>
 			{children}
 		</h1>
 	)

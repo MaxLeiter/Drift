@@ -142,11 +142,7 @@ function Profile() {
                     </div>
                 </TooltipComponent>
             </div> */}
-				<Button
-					type="submit"
-					disabled={!name}
-					loading={submitting}
-				>
+				<Button type="submit" disabled={!name} loading={submitting}>
 					Submit
 				</Button>
 			</form>

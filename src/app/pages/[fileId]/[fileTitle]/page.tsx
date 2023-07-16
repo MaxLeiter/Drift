@@ -28,12 +28,12 @@ export default async function FilePage({
 	}
 
 	return (
-		<main className="max-w-3xl px-4 mx-auto dark:prose-invert dark:bg-gray-800">
+		<main className="mx-auto max-w-3xl px-4 dark:prose-invert dark:bg-gray-800">
 			<h1 className="prose-2xl text-foreground ">{file.title}</h1>
 			<hr className="my-4 border-foreground" />
 			<article
 				dangerouslySetInnerHTML={{ __html: file.html.toString("utf-8") }}
-				className="prose dark:prose-dark"
+				className="dark:prose-dark prose"
 			/>
 		</main>
 	)

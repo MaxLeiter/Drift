@@ -7,7 +7,12 @@ export default function ThemeProvider({
 	children
 }: PropsWithChildren<unknown>) {
 	return (
-		<NextThemesProvider enableSystem defaultTheme="dark" attribute="class" enableColorScheme>
+		<NextThemesProvider
+			enableSystem
+			defaultTheme="dark"
+			attribute="class"
+			enableColorScheme
+		>
 			{children}
 		</NextThemesProvider>
 	)

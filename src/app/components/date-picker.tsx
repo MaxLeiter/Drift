@@ -26,8 +26,12 @@ export function DatePicker({
 						!expiresAt && "text-muted-foreground"
 					)}
 				>
-					<CalendarIcon className="w-4 h-4 mr-2" />
-					{expiresAt ? format(expiresAt, "PPP") : <span>Won&apos;t expire</span>}
+					<CalendarIcon className="mr-2 h-4 w-4" />
+					{expiresAt ? (
+						format(expiresAt, "PPP")
+					) : (
+						<span>Won&apos;t expire</span>
+					)}
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-auto p-0">

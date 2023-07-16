@@ -18,7 +18,11 @@ export default async function RootLayout({
 }) {
 	return (
 		// suppressHydrationWarning is required because of next-themes
-		<html lang="en" className={clsx(inter.variable, "mx-auto w-[var(--main-content)]")} suppressHydrationWarning>
+		<html
+			lang="en"
+			className={clsx(inter.variable, "mx-auto w-[var(--main-content)]")}
+			suppressHydrationWarning
+		>
 			<body>
 				<Toasts />
 				<Providers>

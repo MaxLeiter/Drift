@@ -91,10 +91,13 @@ const HomeListItem = ({
 						</DocumentTabs>
 					</div>
 					{isOverflowing && (
-						<div className="flex items-center mt-2">
+						<div className="mt-2 flex items-center">
 							<hr className="flex-grow border-gray-300 dark:border-gray-700" />
-							<div className="inline-block px-2 border border-gray-300 rounded text-accent-foreground dark:border-gray-700">
-								<button onClick={handleExpandClick} className="text-sm font-bold transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
+							<div className="inline-block rounded border border-gray-300 px-2 text-accent-foreground dark:border-gray-700">
+								<button
+									onClick={handleExpandClick}
+									className="text-sm font-bold transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+								>
 									{isExpanded ? "Collapse" : "Expand"}
 								</button>
 							</div>

@@ -60,7 +60,9 @@ export default async function UserPage({
 					justifyContent: "space-between"
 				}}
 			>
-				<TypographyH1>Public posts by {user?.displayName || "Anonymous"}</TypographyH1>
+				<TypographyH1>
+					Public posts by {user?.displayName || "Anonymous"}
+				</TypographyH1>
 				<Avatar />
 			</div>
 			<Suspense fallback={<PostList hideSearch skeleton initialPosts={[]} />}>

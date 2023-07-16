@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	({ className, type, label, hideLabel, ...props }, ref) => {
 		const id = React.useId()
 		return (
-			<span className="flex flex-row items-center w-full">
+			<span className="flex w-full flex-row items-center">
 				{label && !hideLabel ? (
 					<label
 						htmlFor={id}

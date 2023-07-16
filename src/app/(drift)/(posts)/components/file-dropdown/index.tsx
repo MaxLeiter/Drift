@@ -35,12 +35,12 @@ function FileDropdown({
 		if (codeFileExtensions.includes(extension || "")) {
 			return {
 				...file,
-				icon: <Code className="w-4 h-4"/>
+				icon: <Code className="h-4 w-4" />
 			}
 		} else {
 			return {
 				...file,
-				icon: <FileIcon className="w-4 h-4"/>
+				icon: <FileIcon className="h-4 w-4" />
 			}
 		}
 	})
@@ -51,7 +51,7 @@ function FileDropdown({
 				<li key={item.id} className="flex">
 					<Link
 						href={`#${item.title}`}
-						className="flex items-center w-full gap-3 hover:underline"
+						className="flex w-full items-center gap-3 hover:underline"
 					>
 						{item.icon}
 						{item.title ? item.title : "Untitled"}

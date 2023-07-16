@@ -14,7 +14,7 @@ function FadeIn({
 	children: React.ReactNode
 	as?: React.ElementType | JSX.Element
 } & React.HTMLAttributes<HTMLElement>) {
-	if (as !== null && typeof as === 'object') {
+	if (as !== null && typeof as === "object") {
 		return React.cloneElement(as, {
 			className: styles.fadeIn,
 			style: {

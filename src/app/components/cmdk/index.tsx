@@ -1,11 +1,6 @@
 "use client"
 
-import {
-	CommandDialog,
-	CommandList,
-	CommandInput,
-	CommandEmpty
-} from "./cmdk"
+import { CommandDialog, CommandList, CommandInput, CommandEmpty } from "./cmdk"
 import { useEffect, useRef, useState } from "react"
 import "./dialog.css"
 import HomePage from "./pages/home"
@@ -57,10 +52,7 @@ export default function CmdK() {
 	}, [page])
 
 	return (
-		<CommandDialog
-			open={open}
-			onOpenChange={setOpen}
-		>
+		<CommandDialog open={open} onOpenChange={setOpen}>
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
 				{page === "home" ? (

@@ -46,7 +46,7 @@ const DownloadButtons = ({
 						aria-label="Download"
 						style={{ border: "none", background: "transparent" }}
 					>
-						<Download color="var(--fg)" className="w-4 h-4" />
+						<Download color="var(--fg)" className="h-4 w-4" />
 					</Button>
 				</Link>
 			</Tooltip>
@@ -57,7 +57,7 @@ const DownloadButtons = ({
 							aria-label="Open raw file in new tab"
 							style={{ border: "none", background: "transparent" }}
 						>
-							<ExternalLink color="var(--fg)" className="w-4 h-4" />
+							<ExternalLink color="var(--fg)" className="h-4 w-4" />
 						</Button>
 					</Link>
 				</Tooltip>
@@ -69,7 +69,7 @@ const DownloadButtons = ({
 							aria-label="Open as webpage"
 							style={{ border: "none", background: "transparent" }}
 						>
-							<Globe color="var(--fg)" className="w-4 h-4" />
+							<Globe color="var(--fg)" className="h-4 w-4" />
 						</Button>
 					</Link>
 				</Tooltip>
@@ -159,7 +159,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 						}
 					/>
 				</header>
-				<div className="flex flex-col h-full pt-2">
+				<div className="flex h-full flex-col pt-2">
 					<DocumentTabs
 						defaultTab={props.initialTab}
 						staticPreview={file?.html}

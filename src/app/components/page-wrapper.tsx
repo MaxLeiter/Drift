@@ -7,7 +7,7 @@ export function PageWrapper({
 	...props
 }: PropsWithChildren<React.HTMLProps<HTMLDivElement>>) {
 	return (
-		<div className={cn("flex flex-col gap-4 mb-4 mt-4", className)} {...props}>
+		<div className={cn("mb-4 mt-4 flex flex-col gap-4", className)} {...props}>
 			{children}
 		</div>
 	)

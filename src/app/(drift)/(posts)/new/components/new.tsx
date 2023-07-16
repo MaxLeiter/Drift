@@ -33,7 +33,7 @@ const DatePicker = dynamic(
 					"text-muted-foreground"
 				)}
 			>
-				<CalendarIcon className="w-4 h-4 mr-2" />
+				<CalendarIcon className="mr-2 h-4 w-4" />
 				<span>Won&apos;t expire</span>
 			</Button>
 		)
@@ -255,7 +255,7 @@ function Post({
 	}
 
 	return (
-		<div className="flex flex-col flex-1 gap-4">
+		<div className="flex flex-1 flex-col gap-4">
 			<Title title={title} onChange={onChangeTitle} className="py-4" />
 			{/* <Description description={description} onChange={onChangeDescription} /> */}
 			<EditDocumentList
@@ -267,7 +267,7 @@ function Post({
 			/>
 			<FileDropzone setDocs={uploadDocs} />
 
-			<div className="flex items-center justify-between mt-4">
+			<div className="mt-4 flex items-center justify-between">
 				<span className="flex flex-1 gap-2">
 					<Button
 						onClick={() => {

@@ -121,7 +121,9 @@ const APIKeys = ({
 							</tbody>
 						</table>
 					) : (
-						<p className="p-4 text-center text-muted-foreground">No API keys found.</p>
+						<p className="p-4 text-center text-muted-foreground">
+							No API keys found.
+						</p>
 					)
 				) : (
 					<div style={{ marginTop: "var(--gap-quarter)" }}>

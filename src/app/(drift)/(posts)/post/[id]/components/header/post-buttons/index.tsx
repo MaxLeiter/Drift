@@ -55,7 +55,11 @@ export const PostButtons = ({
 						View Parent
 					</Button>
 				)}
-				<Button variant={"secondary"} onClick={downloadClick} className="border-r">
+				<Button
+					variant={"secondary"}
+					onClick={downloadClick}
+					className="border-r"
+				>
 					Download as ZIP Archive
 				</Button>
 				<FileDropdown loading={loading} files={files || []} />

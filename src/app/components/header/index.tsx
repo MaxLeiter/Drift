@@ -91,8 +91,8 @@ export default function Header() {
 	}
 
 	return (
-		<header className="flex items-center h-16 mt-4">
-			<Link href="/" className="flex items-center mr-4">
+		<header className="mt-4 flex h-16 items-center">
+			<Link href="/" className="mr-4 flex items-center">
 				<Image
 					src={"/assets/logo.svg"}
 					width={32}
@@ -100,7 +100,7 @@ export default function Header() {
 					alt=""
 					priority
 				/>
-				<span className="pl-4 text-lg font-bold bg-transparent">Drift</span>
+				<span className="bg-transparent pl-4 text-lg font-bold">Drift</span>
 			</Link>
 			<nav className="flex space-x-4 lg:space-x-6">
 				<ul className="flex justify-center space-x-4">
@@ -116,7 +116,7 @@ export default function Header() {
 					</NavLink>
 					<span
 						aria-hidden
-						className="text-sm font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary"
+						className="cursor-pointer text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
 						onClick={toggleTheme}
 					>
 						Theme

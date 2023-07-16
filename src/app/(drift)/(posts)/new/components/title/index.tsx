@@ -20,7 +20,7 @@ type props = {
 	className?: string
 }
 
-function Title({ onChange, title, className}: props) {
+function Title({ onChange, title, className }: props) {
 	return (
 		<div className={className}>
 			<Input
