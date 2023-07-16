@@ -11,6 +11,7 @@ import Link from "@components/link"
 import debounce from "lodash.debounce"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import { Stack } from "@components/stack"
+import HomeListItem from "./home-list-item"
 
 type Props = {
 	initialPosts: PostWithFiles[]
@@ -21,6 +22,8 @@ type Props = {
 	skeleton?: boolean
 	searchValue?: string
 	userId?: string
+	// different home layout
+	isHome?: boolean
 }
 
 const PostList = ({
@@ -29,7 +32,8 @@ const PostList = ({
 	hideActions,
 	isOwner,
 	skeleton,
-	userId
+	userId,
+	isHome
 }: Props) => {
 	const [searchValue, setSearchValue] = useState("")
 	const [searching, setSearching] = useState(false)
@@ -39,6 +43,7 @@ const PostList = ({
 
 	const showSkeleton = skeleton || searching
 
+	console.log(initialPosts)
 	// eslint-disable-next-line react-hooks/exhaustive-deps -- TODO: address this
 	const onSearch = useCallback(
 		debounce((query: string) => {
@@ -120,7 +125,13 @@ const PostList = ({
 			{!showSkeleton && posts && posts.length > 0 ? (
 				<ul>
 					{posts.map((post) => {
-						return (
+						return isHome ? (
+							<HomeListItem
+								post={post}
+								key={post.id}
+								deletePost={deletePost(post.id)}
+							/>
+						) : (
 							<ListItem
 								deletePost={deletePost(post.id)}
 								post={post}

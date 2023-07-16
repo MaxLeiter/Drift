@@ -47,22 +47,15 @@ function FileDropdown({
 	})
 
 	const content = (
-		<ul className="w-[150px]">
+		<ul>
 			{items.map((item) => (
-				<li key={item.id}>
+				<li key={item.id} className="flex">
 					<Link
 						href={`#${item.title}`}
-						className={cn(
-							buttonVariants({
-								variant: "secondary"
-							}),
-							"w-full"
-						)}
+						className="flex items-center w-full gap-3 hover:underline"
 					>
-						<span className={styles.fileIcon}>{item.icon}</span>
-						<span className={styles.fileTitle}>
-							{item.title ? item.title : "Untitled"}
-						</span>
+						{item.icon}
+						{item.title ? item.title : "Untitled"}
 					</Link>
 				</li>
 			))}
@@ -83,9 +76,7 @@ function FileDropdown({
 					Jump to {files.length} {files.length === 1 ? "file" : "files"}
 				</span>
 			</PopoverTrigger>
-			<PopoverContent className={styles.contentWrapper}>
-				{content}
-			</PopoverContent>
+			<PopoverContent>{content}</PopoverContent>
 		</Popover>
 	)
 }

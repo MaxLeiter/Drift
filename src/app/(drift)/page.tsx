@@ -22,7 +22,7 @@ export default async function Page() {
 		<PageWrapper>
 			{/* @ts-expect-error because of async RSC */}
 			<WelcomePost />
-			<h2 className="text-2xl font-bold mt-4">Recent Public Posts</h2>
+			<h2 className="mt-4 text-2xl font-bold">Recent Public Posts</h2>
 			<ErrorBoundary>
 				<Suspense
 					fallback={
@@ -67,10 +67,13 @@ async function PublicPostList() {
 				}
 			},
 			visibility: true,
+			expiresAt: true,
 			files: {
 				select: {
 					id: true,
-					title: true
+					title: true,
+					content: true,
+					html: true,
 				}
 			},
 			authorId: true
@@ -89,5 +92,5 @@ async function PublicPostList() {
 
 	const clientPosts = posts.map((post) => serverPostToClientPost(post))
 
-	return <PostList initialPosts={clientPosts} hideActions hideSearch />
+	return <PostList isHome initialPosts={clientPosts} hideActions hideSearch />
 }

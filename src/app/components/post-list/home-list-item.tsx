@@ -33,13 +33,11 @@ import {
 	DropdownMenuTrigger
 } from "@components/dropdown-menu"
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
+import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 
 // TODO: isOwner should default to false so this can be used generically
-const ListItem = ({
-	post,
-	isOwner,
-	deletePost,
-	hideActions
+const HomeListItem = ({
+	post
 }: {
 	post: PostWithFiles
 	isOwner?: boolean
@@ -47,14 +45,6 @@ const ListItem = ({
 	hideActions?: boolean
 }) => {
 	const router = useRouter()
-
-	const editACopy = () => {
-		router.push(`/new/from/${post.id}`)
-	}
-
-	const viewParentClick = () => {
-		router.push(`/post/${post.parentId}`)
-	}
 
 	const getIconFromFilename = (filename: string) => {
 		const extension = filename.split(".").pop()
@@ -77,11 +67,10 @@ const ListItem = ({
 				}
 		}
 	}
-	console.log(post.expiresAt)
 
 	return (
 		<FadeIn key={post.id} as="li">
-			<Card className="overflow-y-scroll h-42">
+			<Card>
 				<CardHeader>
 					<CardTitle className="flex items-center justify-between gap-2">
 						<span className={styles.titleText}>
@@ -105,46 +94,6 @@ const ListItem = ({
 								<ExpirationBadge postExpirationDate={post.expiresAt} />
 							</div>
 						</span>
-						{!hideActions ? (
-							<span className="flex gap-2">
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<MoreVertical className="cursor-pointer" />
-									</DropdownMenuTrigger>
-									<DropdownMenuContent className="mt-2 border rounded-md shadow-sm border-border bg-background">
-										<DropdownMenuItem
-											onSelect={() => {
-												editACopy()
-											}}
-											className="cursor-pointer bg-background"
-										>
-											<Edit className="w-4 h-4 mr-2" /> Edit a copy
-										</DropdownMenuItem>
-										{isOwner && (
-											<DropdownMenuItem
-												onSelect={() => {
-													deletePost()
-												}}
-												className="cursor-pointer bg-background"
-											>
-												<Trash className="w-4 h-4 mr-2" />
-												Delete
-											</DropdownMenuItem>
-										)}
-										{post.parentId && (
-											<DropdownMenuItem
-												onSelect={() => {
-													viewParentClick()
-												}}
-											>
-												<ArrowUpCircle className="w-4 h-4 mr-2" />
-												View parent
-											</DropdownMenuItem>
-										)}
-									</DropdownMenuContent>
-								</DropdownMenu>
-							</span>
-						) : null}
 					</CardTitle>
 					{post.description && (
 						<CardDescription>
@@ -153,28 +102,17 @@ const ListItem = ({
 					)}
 				</CardHeader>
 				<CardContent>
-					<ul className={styles.files}>
-						{post?.files?.map(
-							(file: Pick<PostWithFiles, "files">["files"][0]) => {
-								return (
-									<li key={file.id} className="text-black">
-										<Link
-											colored
-											href={`/post/${post.id}#${file.title}`}
-											className="flex items-center gap-2 font-mono text-sm text-foreground"
-										>
-											{getIconFromFilename(file.title)}
-											{file.title || "Untitled file"}
-										</Link>
-									</li>
-								)
-							}
-						)}
-					</ul>
+					<DocumentTabs
+						isEditing={false}
+						staticPreview={post.files[0].html}
+						defaultTab={"preview"}
+					>
+						{post.files[0].content}
+					</DocumentTabs>
 				</CardContent>
 			</Card>
 		</FadeIn>
 	)
 }
 
-export default ListItem
+export default HomeListItem

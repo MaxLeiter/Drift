@@ -1,4 +1,4 @@
-.card header {
+/* .card header {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
@@ -18,7 +18,7 @@
 	border: 1px solid var(--lighter-gray);
 	border-top: none;
 	border-radius: 0px 0px 8px 8px;
-}
+} */
 
 .textarea {
 	height: 100%;

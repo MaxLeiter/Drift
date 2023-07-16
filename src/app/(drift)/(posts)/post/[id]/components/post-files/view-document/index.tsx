@@ -112,18 +112,39 @@ const Document = ({ skeleton, ...props }: Props) => {
 			}
 		}
 	}
+	/* .card header {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 16px;
+	background: var(--lighter-gray);
+	border-radius: 8px 8px 0px 0px;
+}
 
+.documentContainer {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	padding: var(--gap);
+	border: 1px solid var(--lighter-gray);
+	border-top: none;
+	border-radius: 0px 0px 8px 8px;
+} */
 	return (
 		<>
-			<div className={styles.card}>
-				<header id={file?.title}>
+			<div>
+				<header
+					id={file?.title}
+					className="flex h-10 items-center justify-between rounded-t bg-[var(--lighter-gray)] px-2"
+				>
 					<Link
 						href={`#${file?.title}`}
 						aria-label="File"
-						style={{
-							textDecoration: "none",
-							color: "var(--fg)"
-						}}
+						// show an # when hovered avia :after
+						className="text-gray-900 hover:after:ml-1 hover:after:content-[#] dark:text-gray-100"
 					>
 						{file?.title}
 					</Link>
@@ -138,7 +159,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 						}
 					/>
 				</header>
-				<div className={styles.documentContainer}>
+				<div className="flex flex-col h-full pt-2">
 					<DocumentTabs
 						defaultTab={props.initialTab}
 						staticPreview={file?.html}

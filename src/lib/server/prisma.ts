@@ -179,6 +179,7 @@ export async function getPostsByUser(
 			createdAt: true,
 			updatedAt: true,
 			authorId: true,
+			expiresAt: true,
 			visibility: true,
 			...(withFiles && {
 				files: {

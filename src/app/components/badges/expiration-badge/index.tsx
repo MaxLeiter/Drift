@@ -36,6 +36,7 @@ const ExpirationBadge = ({
 		}
 	}, [expirationDate])
 
+	console.log("expirationDate", expirationDate, timeUntilString)
 	if (!expirationDate) {
 		return null
 	}
