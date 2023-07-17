@@ -29,6 +29,11 @@ const nextConfig = {
 	},
 	typescript: {
 		ignoreBuildErrors: process.env.VERCEL_ENV !== "production"
+	},
+	modularizeImports: {
+		'react-feather': {
+			transform: "react-feather/dist/icons/{{kebabCase member}}",
+		}
 	}
 }
 
