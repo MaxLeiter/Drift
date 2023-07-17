@@ -6,7 +6,9 @@ import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
 import { Input } from "@components/input"
 import { Button } from "@components/button"
-import { GitHub, Key, User } from "react-feather"
+import { Key, User } from "react-feather"
+// @ts-expect-error - no types
+import GitHub from "react-feather/dist/icons/github"
 import { useToasts } from "@components/toasts"
 import { useRouter } from "next/navigation"
 import Note from "@components/note"
@@ -131,7 +133,7 @@ function Auth({
 						{authProviders?.length ? (
 							<>
 								<hr className="w-full" />
-								<p className="mt-2 p-0 text-center">
+								<p className="p-0 mt-2 text-center">
 									Or sign {signText.toLowerCase()} with one of the following
 								</p>
 								{authProviders?.map((provider) => {
@@ -185,10 +187,10 @@ export default Auth
 const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
-			return <GitHub className="mr-2 h-5 w-5" />
+			return <GitHub className="w-5 h-5 mr-2" />
 		case "keycloak":
-			return <Key className="mr-2 h-5 w-5" />
+			return <Key className="w-5 h-5 mr-2" />
 		default:
-			return <User className="mr-2 h-5 w-5" />
+			return <User className="w-5 h-5 mr-2" />
 	}
 }
