@@ -22,7 +22,9 @@ const nextConfig = {
 		domains: ["avatars.githubusercontent.com"]
 	},
 	env: {
-		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL || process.env.VERCEL_URL,
+		// NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL || process.env.VERCEL_URL,
+		// if doesnt start with https, add it
+		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL || `https://${process.env.VERCEL_URL}`,
 	},
 	eslint: {
 		ignoreDuringBuilds: process.env.VERCEL_ENV !== "production"
