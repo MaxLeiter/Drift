@@ -65,9 +65,6 @@ dependencies:
   lodash.debounce:
     specifier: ^4.0.8
     version: 4.0.8
-  lucide-react:
-    specifier: ^0.259.0
-    version: 0.259.0(react@18.2.0)
   next:
     specifier: ^13.4.10
     version: 13.4.10(@babel/core@7.21.0)(react-dom@18.2.0)(react@18.2.0)
@@ -5840,14 +5837,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-
-  /lucide-react@0.259.0(react@18.2.0):
-    resolution: {integrity: sha512-dFBLc6jRDfcpD9NQ7NyFVa+YR3RHX6+bs+f/UiotvNPho+kd4WyeXWMCCchUf7i/pq3BAaHkbmtkbx/GxxHVUw==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /madge@4.0.2:
     resolution: {integrity: sha512-l5bnA2dvyk0azLKDbOTCI+wDZ6nB007PhvPdmiYlPmqwVi49JPbhQrH/t4u8E6Akp3gwji1GZuA+v/F5q6yoWQ==}
