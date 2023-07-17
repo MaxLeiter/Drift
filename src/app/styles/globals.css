@@ -41,12 +41,14 @@
 		--bg: #000;
 		--fg: #fafbfc;
 		--gray: #666;
-		--light-gray: #444;
-		--lighter-gray: #222;
-		--lightest-gray: #1a1a1a;
-		--darker-gray: #b4b4b4;
-		--darkest-gray: #efefef;
+
+		--light-gray: #dedede;
+		--lighter-gray: #f2f2f2;
+		--lightest-gray: #fafafa;
+		--darker-gray: #555;
+		--darkest-gray: #222;
 		--article-color: #eaeaea;
+
 		--header-bg: rgba(19, 20, 21, 0.45);
 		--gray-alpha: rgba(19, 20, 21, 0.6);
 		--selection: rgba(255, 255, 255, 0.99);
@@ -117,6 +119,12 @@
 		--ring: 216 34% 17%;
 
 		--radius: 0.5rem;
+
+		--light-gray: #444;
+		--lighter-gray: #222;
+		--lightest-gray: #1a1a1a;
+		--darker-gray: #b4b4b4;
+		--darkest-gray: #efefef;
 	}
 }
 

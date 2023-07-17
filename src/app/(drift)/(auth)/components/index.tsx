@@ -53,7 +53,6 @@ function Auth({
 			setSubmitting(false)
 		} else {
 			router.push("/new")
-			router.refresh()
 		}
 	}
 

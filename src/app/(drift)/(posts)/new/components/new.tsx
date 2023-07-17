@@ -297,7 +297,8 @@ function Post({
 						)}
 						onClick={() => onSubmit("unlisted")}
 					>
-						{isSubmitting ? <Spinner /> : "Create Unlisted"}
+						{isSubmitting ? <Spinner className="mr-2" /> : null}
+						Create Unlisted
 					</span>
 					<span
 						className={clsx("w-full cursor-pointer")}

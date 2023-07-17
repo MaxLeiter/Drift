@@ -18,7 +18,10 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 		<Note type="error" style={{ width: "100%" }}>
 			<TypographyH3>Something went wrong:</TypographyH3>
 			<pre>{error.message}</pre>
-			<Link href="https://github.com/MaxLeiter/Drift/issues/new">
+			<Link
+				href="https://github.com/MaxLeiter/Drift/issues/new"
+				className="mr-2"
+			>
 				<Button>Report an issue</Button>
 			</Link>
 			<Button onClick={resetErrorBoundary}>Try again</Button>

@@ -10,7 +10,7 @@ import styles from "./document.module.css"
 import { getURLFriendlyTitle } from "src/app/lib/get-url-friendly-title"
 import { PostWithFiles, ServerPost } from "@lib/server/prisma"
 import { isAllowedVisibilityForWebpage } from "@lib/constants"
-
+import { Card, CardContent, CardHeader } from "@components/card"
 type SharedProps = {
 	initialTab: "edit" | "preview"
 	file?: PostWithFiles["files"][0]
@@ -45,8 +45,10 @@ const DownloadButtons = ({
 					<Button
 						aria-label="Download"
 						style={{ border: "none", background: "transparent" }}
+						size="sm"
 					>
 						<Download color="var(--fg)" className="h-4 w-4" />
+						<span className="sr-only">Download</span>
 					</Button>
 				</Link>
 			</Tooltip>
@@ -56,8 +58,10 @@ const DownloadButtons = ({
 						<Button
 							aria-label="Open raw file in new tab"
 							style={{ border: "none", background: "transparent" }}
+							size="sm"
 						>
 							<ExternalLink color="var(--fg)" className="h-4 w-4" />
+							<span className="sr-only">Open raw file in new tab</span>
 						</Button>
 					</Link>
 				</Tooltip>
@@ -68,8 +72,10 @@ const DownloadButtons = ({
 						<Button
 							aria-label="Open as webpage"
 							style={{ border: "none", background: "transparent" }}
+							size="sm"
 						>
 							<Globe color="var(--fg)" className="h-4 w-4" />
+							<span className="sr-only">Open as webpage</span>
 						</Button>
 					</Link>
 				</Tooltip>
@@ -135,10 +141,10 @@ const Document = ({ skeleton, ...props }: Props) => {
 } */
 	return (
 		<>
-			<div>
-				<header
+			<Card className="border-gray-200 dark:border-gray-900">
+				<CardHeader
 					id={file?.title}
-					className="flex h-10 items-center justify-between rounded-t bg-[var(--lighter-gray)] px-2"
+					className="flex flex-row items-center justify-between bg-gray-200 py-1 dark:bg-gray-900"
 				>
 					<Link
 						href={`#${file?.title}`}
@@ -158,8 +164,8 @@ const Document = ({ skeleton, ...props }: Props) => {
 								: undefined
 						}
 					/>
-				</header>
-				<div className="flex h-full flex-col pt-2">
+				</CardHeader>
+				<CardContent className="flex h-full flex-col pt-2">
 					<DocumentTabs
 						defaultTab={props.initialTab}
 						staticPreview={file?.html}
@@ -167,8 +173,8 @@ const Document = ({ skeleton, ...props }: Props) => {
 					>
 						{file?.content || ""}
 					</DocumentTabs>
-				</div>
-			</div>
+				</CardContent>
+			</Card>
 		</>
 	)
 }

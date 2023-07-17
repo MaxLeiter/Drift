@@ -4,136 +4,80 @@ import Link from "next/link"
 import { cn } from "@lib/cn"
 
 import { useSessionSWR } from "@lib/use-session-swr"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 import { useSelectedLayoutSegments } from "next/navigation"
 import Image from "next/image"
 import { useTheme } from "next-themes"
-
-// <NavButton
-// 				key="home"
-// 				name="Home"
-// 				icon={<Home />}
-// 				value="home"
-// 				href="/home"
-// 			/>
-// 			<NavButton
-// 				key="new"
-// 				name="New"
-// 				icon={<PlusCircle />}
-// 				value="new"
-// 				href="/new"
-// 			/>
-// 			<NavButton
-// 				key="yours"
-// 				name="Yours"
-// 				icon={<User />}
-// 				value="mine"
-// 				href="/mine"
-// 			/>
-// 			<NavButton
-// 				name="Settings"
-// 				icon={<Settings />}
-// 				value="settings"
-// 				href="/settings"
-// 				key="settings"
-// 			/>
-// 			<ThemeButton key="theme-button" />
-// 			{isAdmin && (
-// 				<FadeIn>
-// 					<NavButton
-// 						name="Admin"
-// 						key="admin"
-// 						icon={<Settings />}
-// 						value="admin"
-// 						href="/admin"
-// 					/>
-// 				</FadeIn>
-// 			)}
-// 			{isAuthenticated === true && (
-// 				<NavButton
-// 					name="Sign Out"
-// 					key="signout"
-// 					icon={<UserX />}
-// 					value="signout"
-// 					onClick={() => {
-// 						signOut({
-// 							callbackUrl: `/signedout${userId ? "?userId=" + userId : ""}`
-// 						})
-// 					}}
-// 					width={SIGN_IN_WIDTH}
-// 				/>
-// 			)}
-// 			{isAuthenticated === false && (
-// 				<NavButton
-// 					name="Sign In"
-// 					key="signin"
-// 					icon={<User />}
-// 					value="signin"
-// 					href="/signin"
-// 					width={SIGN_IN_WIDTH}
-// 				/>
-// 			)}
-// 			{isAuthenticated === undefined && (
-// 				<NavButton
-// 					name="Sign"
-// 					key="signin"
-// 					icon={<User />}
-// 					value="signin"
-// 					href="/signin"
-// 					width={SIGN_IN_WIDTH}
-// 				/>
+import { Moon, Sun } from "react-feather"
+import FadeIn from "@components/fade-in"
 
 export default function Header() {
 	const { isAdmin, isAuthenticated } = useSessionSWR()
 	const { resolvedTheme, setTheme } = useTheme()
+	const [isMounted, setIsMounted] = useState(false)
 	const toggleTheme = () => {
 		setTheme(resolvedTheme === "dark" ? "light" : "dark")
 	}
 
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
+
 	return (
-		<header className="mt-4 flex h-16 items-center">
-			<Link href="/" className="mr-4 flex items-center">
-				<Image
-					src={"/assets/logo.svg"}
-					width={32}
-					height={32}
-					alt=""
-					priority
-				/>
-				<span className="bg-transparent pl-4 text-lg font-bold">Drift</span>
-			</Link>
-			<nav className="flex space-x-4 lg:space-x-6">
-				<ul className="flex justify-center space-x-4">
-					<NavLink href="/home">Home</NavLink>
-					<NavLink href="/new" disabled={!isAuthenticated}>
-						New
-					</NavLink>
-					<NavLink href="/mine" disabled={!isAuthenticated}>
-						Yours
-					</NavLink>
-					<NavLink href="/settings" disabled={!isAuthenticated}>
-						Settings
-					</NavLink>
-					<span
+		<header className="mt-4 flex h-16 items-center justify-between">
+			<span className="flex items-center">
+				<Link href="/" className="mr-4 flex items-center">
+					<Image
+						src={"/assets/logo.svg"}
+						width={32}
+						height={32}
+						alt=""
+						priority
+					/>
+					<span className="bg-transparent pl-4 text-lg font-bold">Drift</span>
+				</Link>
+				<nav className="flex space-x-4 lg:space-x-6">
+					<ul className="flex justify-center space-x-4">
+						<NavLink href="/home">Home</NavLink>
+						<NavLink href="/new" disabled={!isAuthenticated}>
+							New
+						</NavLink>
+						<NavLink href="/mine" disabled={!isAuthenticated}>
+							Yours
+						</NavLink>
+						<NavLink href="/settings" disabled={!isAuthenticated}>
+							Settings
+						</NavLink>
+						{isAdmin && <NavLink href="/admin">Admin</NavLink>}
+						{isAuthenticated !== undefined && (
+							<>
+								{isAuthenticated === true && (
+									<NavLink href="/signout">Sign Out</NavLink>
+								)}
+								{isAuthenticated === false && (
+									<NavLink href="/signin">Sign In</NavLink>
+								)}
+							</>
+						)}
+					</ul>
+				</nav>
+			</span>
+			{isMounted && (
+				<FadeIn>
+					<button
 						aria-hidden
-						className="cursor-pointer text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+						className="flex cursor-pointer items-center justify-center font-medium text-muted-foreground transition-colors hover:text-primary"
 						onClick={toggleTheme}
+						title="Toggle theme"
 					>
-						Theme
-					</span>
-					{isAdmin && <NavLink href="/admin">Admin</NavLink>}
-					{isAuthenticated !== undefined && (
-						<>
-							{isAuthenticated === true && (
-								<NavLink href="/signout">Sign Out</NavLink>
-							)}
-							{isAuthenticated === false && (
-								<NavLink href="/signin">Sign In</NavLink>
-							)}
-						</>
-					)}
-				</ul>
-			</nav>
+						{resolvedTheme === "dark" ? (
+							<Sun className="h-[16px] w-[16px]" />
+						) : (
+							<Moon className="h-[16px] w-[16px]" />
+						)}
+					</button>
+				</FadeIn>
+			)}
 		</header>
 	)
 }
