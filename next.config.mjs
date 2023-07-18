@@ -22,9 +22,11 @@ const nextConfig = {
 		domains: ["avatars.githubusercontent.com"]
 	},
 	env: {
-		// NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL || process.env.VERCEL_URL,
-		// if doesnt start with https, add it
-		NEXT_PUBLIC_DRIFT_URL: process.env.DRIFT_URL || `https://${process.env.VERCEL_URL}`,
+		NEXT_PUBLIC_DRIFT_URL:
+			process.env.DRIFT_URL ||
+			(process.env.VERCEL_URL
+				? `https://${process.env.VERCEL_URL}`
+				: "http://localhost:3000")
 	},
 	eslint: {
 		ignoreDuringBuilds: process.env.VERCEL_ENV !== "production"
@@ -33,12 +35,12 @@ const nextConfig = {
 		ignoreBuildErrors: process.env.VERCEL_ENV !== "production"
 	},
 	modularizeImports: {
-		'react-feather': {
-			transform: "react-feather/dist/icons/{{kebabCase member}}",
+		"react-feather": {
+			transform: "react-feather/dist/icons/{{kebabCase member}}"
 		}
 	}
 }
 
-export default process.env.ANALYZE === "true"  ? bundleAnalyzer({ enabled: true })(
-	nextConfig
-) : nextConfig
+export default process.env.ANALYZE === "true"
+	? bundleAnalyzer({ enabled: true })(nextConfig)
+	: nextConfig
