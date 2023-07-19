@@ -19,6 +19,7 @@ import { useSessionSWR } from "@lib/use-session-swr"
 import { useTheme } from "next-themes"
 import styles from "./buttons.module.css"
 import { useEffect, useState } from "react"
+import { cn } from "@lib/cn"
 
 // constant width for sign in / sign out buttons to avoid CLS
 const SIGN_IN_WIDTH = 110
@@ -39,7 +40,7 @@ type Tab = {
 	  }
 )
 
-function NavButton(tab: Tab) {
+function NavButton({ className, ...tab }: Tab & { className?: string }) {
 	const segment = useSelectedLayoutSegments().slice(-1)[0]
 	const isActive = segment === tab.value.toLowerCase()
 	const activeStyle = isActive ? styles.active : undefined
@@ -47,21 +48,27 @@ function NavButton(tab: Tab) {
 		return (
 			<Button
 				key={tab.value}
-				iconLeft={tab.icon}
 				onClick={tab.onClick}
-				className={activeStyle}
+				className={cn(activeStyle, "w-full md:w-auto", className)}
 				aria-label={tab.name}
 				aria-current={isActive ? "page" : undefined}
 				data-tab={tab.value}
-				width={tab.width}
 			>
 				{tab.name ? tab.name : undefined}
 			</Button>
 		)
 	} else {
 		return (
-			<Link key={tab.value} href={tab.href} data-tab={tab.value}>
-				<Button className={activeStyle} iconLeft={tab.icon} width={tab.width}>
+			<Link
+				key={tab.value}
+				href={tab.href}
+				data-tab={tab.value}
+				className="w-full"
+			>
+				<Button
+					className={cn(activeStyle, "w-full md:w-auto", className)}
+					aria-label={tab.name}
+				>
 					{tab.name ? tab.name : undefined}
 				</Button>
 			</Link>
@@ -146,15 +153,14 @@ export function HeaderButtons(): JSX.Element {
 			/>
 			<ThemeButton key="theme-button" />
 			{isAdmin && (
-				<FadeIn>
-					<NavButton
-						name="Admin"
-						key="admin"
-						icon={<Settings />}
-						value="admin"
-						href="/admin"
-					/>
-				</FadeIn>
+				<NavButton
+					name="Admin"
+					key="admin"
+					icon={<Settings />}
+					value="admin"
+					href="/admin"
+					className="transition-opacity duration-500"
+				/>
 			)}
 			{isAuthenticated === true && (
 				<NavButton

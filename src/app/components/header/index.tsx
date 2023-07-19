@@ -10,6 +10,7 @@ import Image from "next/image"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "react-feather"
 import FadeIn from "@components/fade-in"
+import MobileHeader from "./mobile"
 
 export default function Header() {
 	const { isAdmin, isAuthenticated } = useSessionSWR()
@@ -24,9 +25,9 @@ export default function Header() {
 	}, [])
 
 	return (
-		<header className="mt-4 flex h-16 items-center justify-between">
-			<span className="flex items-center">
-				<Link href="/" className="mr-4 flex items-center">
+		<header className="flex items-center justify-start h-16 mt-4 md:justify-between">
+			<span className="items-center hidden md:flex">
+				<Link href="/" className="flex items-center mr-4">
 					<Image
 						src={"/assets/logo.svg"}
 						width={32}
@@ -34,7 +35,7 @@ export default function Header() {
 						alt=""
 						priority
 					/>
-					<span className="bg-transparent pl-4 text-lg font-bold">Drift</span>
+					<span className="pl-4 text-lg font-bold bg-transparent">Drift</span>
 				</Link>
 				<nav className="flex space-x-4 lg:space-x-6">
 					<ul className="flex justify-center space-x-4">
@@ -62,11 +63,14 @@ export default function Header() {
 					</ul>
 				</nav>
 			</span>
+			<span className="flex items-center justify-center md:hidden">
+				<MobileHeader />
+			</span>
 			{isMounted && (
 				<FadeIn>
 					<button
 						aria-hidden
-						className="flex cursor-pointer items-center justify-center font-medium text-muted-foreground transition-colors hover:text-primary"
+						className="flex items-center justify-center w-8 h-8 ml-4 font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary md:ml-0"
 						onClick={toggleTheme}
 						title="Toggle theme"
 					>

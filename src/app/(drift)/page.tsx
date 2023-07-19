@@ -71,9 +71,7 @@ async function PublicPostList() {
 			files: {
 				select: {
 					id: true,
-					title: true,
-					content: true,
-					html: true
+					title: true
 				}
 			},
 			authorId: true
@@ -92,5 +90,5 @@ async function PublicPostList() {
 
 	const clientPosts = posts.map((post) => serverPostToClientPost(post))
 
-	return <PostList isHome initialPosts={clientPosts} hideActions hideSearch />
+	return <PostList initialPosts={clientPosts} hideActions hideSearch />
 }

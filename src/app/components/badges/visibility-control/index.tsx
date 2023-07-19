@@ -88,12 +88,9 @@ function VisibilityControl({
 	}
 
 	return (
-		<FadeIn>
+		<FadeIn className="mt-8">
 			<ButtonGroup
-				style={{
-					maxWidth: 600,
-					margin: "var(--gap) auto"
-				}}
+				className="max-w-2xl mx-auto"
 			>
 				<Button
 					disabled={visibility === "private"}
