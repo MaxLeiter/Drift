@@ -1,6 +1,12 @@
 {
 	"extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
-	"ignorePatterns": ["node_modules/", "__tests__/"],
+	"ignorePatterns": [
+		"node_modules/",
+		"__tests__/",
+		"coverage/",
+		".next/",
+		"public"
+	],
 	"rules": {
 		"@typescript-eslint/no-unused-vars": "error",
 		"@typescript-eslint/no-explicit-any": "error"

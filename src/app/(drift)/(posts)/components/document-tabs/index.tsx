@@ -42,11 +42,9 @@ export default function DocumentTabs({
 		setActiveTab(newTab as "preview" | "edit")
 	}
 
-	const formattingIconsVisibilityClass =
-		activeTab === "preview" ? "hidden" : "block"
 	return (
 		<Tabs {...props} onValueChange={handleTabChange} defaultValue={defaultTab}>
-			<TabsList className="flex justify-between">
+			<TabsList className="flex flex-col items-start justify-start sm:flex-row sm:items-center sm:justify-between">
 				<div>
 					<TabsTrigger value="edit">{isEditing ? "Edit" : "Raw"}</TabsTrigger>
 					<TabsTrigger value="preview">
@@ -56,7 +54,9 @@ export default function DocumentTabs({
 				{isEditing && (
 					<FormattingIcons
 						textareaRef={codeEditorRef}
-						className={`ml-auto ${formattingIconsVisibilityClass}`}
+						className={`ml-auto ${
+							activeTab === "preview" ? "hidden" : "hidden sm:block"
+						}`}
 					/>
 				)}
 			</TabsList>
@@ -68,6 +68,14 @@ export default function DocumentTabs({
 						flexDirection: "column"
 					}}
 				>
+					<FormattingIcons
+						textareaRef={codeEditorRef}
+						className={`ml-auto ${
+							activeTab === "preview"
+								? "hidden"
+								: "block text-muted-foreground sm:hidden"
+						}`}
+					/>
 					<TextareaMarkdown.Wrapper ref={codeEditorRef}>
 						<Textarea
 							readOnly={!isEditing}

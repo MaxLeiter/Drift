@@ -15,7 +15,7 @@ export default function Layout({
 		<div className={clsx(styles.page, forSites && styles.forSites)}>
 			<div className="flex flex-col justify-between h-screen">
 				<div> {children}</div>
-				<footer className="h-16 py-4 text-sm text-center text-gray-500">
+				<footer className="mx-auto h-4 max-w-[var(--main-content)] text-center text-sm text-gray-500">
 					<p>
 						Drift is an open source project by{" "}
 						<Link colored href="https://twitter.com/Max_Leiter">
