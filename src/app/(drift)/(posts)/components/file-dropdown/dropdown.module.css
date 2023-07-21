@@ -23,36 +23,6 @@
 	margin: 0;
 }
 
-.content li {
-	transition: var(--transition);
-	border-radius: var(--radius);
-	margin: 0;
-	padding: 0 0;
-}
-
-.contenthover,
-.content li:focus {
-	background-color: var(--lighter-gray);
-}
-
-.content .listItem {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	color: var(--dark-gray);
-	text-decoration: none;
-	padding: var(--gap-quarter) 0;
-}
-
-.content li .fileIcon {
-	display: inline-block;
-	margin-right: var(--gap-half);
-}
-
-.content li .fileTitle {
-	font-size: calc(0.875 * 16px);
-}
-
 .content li::before {
 	content: "";
 	padding: 0;

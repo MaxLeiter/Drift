@@ -1,21 +1,8 @@
-.container {
-	padding: 2rem 2rem;
-	border-radius: var(--radius);
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
-.form {
-	display: grid;
-	place-items: center;
-}
-
 .formGroup {
 	display: flex;
 	flex-direction: column;
 	place-items: center;
 	gap: 10px;
-	max-width: 300px;
-	width: 100%;	
 }
 
 .formContentSpace {

@@ -1,12 +1,13 @@
+import { TypographyH1, TypographyH2 } from "@components/typography"
 import { PostTable, UserTable } from "./components/tables"
 
 export default function AdminLoading() {
 	return (
 		<div>
-			<h1>Admin</h1>
-			<h2>Users</h2>
+			<TypographyH1>Admin</TypographyH1>
+			<TypographyH2>Users</TypographyH2>
 			<UserTable />
-			<h2>Posts</h2>
+			<TypographyH2>Posts</TypographyH2>
 			<PostTable />
 		</div>
 	)

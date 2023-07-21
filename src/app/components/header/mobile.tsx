@@ -1,12 +1,10 @@
 "use client"
 
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
-import buttonStyles from "@components/button/button.module.css"
-import Button from "@components/button"
+import { Button, buttonVariants } from "@components/button"
 import { Menu } from "react-feather"
-import clsx from "clsx"
-import styles from "./mobile.module.css"
 import { HeaderButtons } from "./buttons"
+import * as DropdownMenu from "@components/dropdown-menu"
+import React from "react"
 
 export default function MobileHeader() {
 	// TODO: this is a hack to close the radix ui menu when a next link is clicked
@@ -15,28 +13,27 @@ export default function MobileHeader() {
 	}
 
 	return (
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger
-				className={clsx(buttonStyles.button, styles.mobileTrigger)}
+		<DropdownMenu.DropdownMenu>
+			<DropdownMenu.DropdownMenuTrigger
+				className={buttonVariants({ variant: "ghost" })}
 				asChild
 			>
-				<Button aria-label="Menu" height="auto">
+				<Button aria-label="Menu" variant={"ghost"}>
 					<Menu />
 				</Button>
-			</DropdownMenu.Trigger>
-			<DropdownMenu.Portal>
-				<DropdownMenu.Content>
+			</DropdownMenu.DropdownMenuTrigger>
+			<DropdownMenu.DropdownMenuPortal>
+				<DropdownMenu.DropdownMenuContent>
 					{HeaderButtons().props.children.map((button: JSX.Element) => (
-						<DropdownMenu.Item
+						<DropdownMenu.DropdownMenuItem
 							key={`mobile-${button?.key}`}
-							className={styles.dropdownItem}
 							onClick={onClick}
 						>
 							{button}
-						</DropdownMenu.Item>
+						</DropdownMenu.DropdownMenuItem>
 					))}
-				</DropdownMenu.Content>
-			</DropdownMenu.Portal>
-		</DropdownMenu.Root>
+				</DropdownMenu.DropdownMenuContent>
+			</DropdownMenu.DropdownMenuPortal>
+		</DropdownMenu.DropdownMenu>
 	)
 }

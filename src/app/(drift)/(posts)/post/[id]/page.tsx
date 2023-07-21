@@ -21,11 +21,13 @@ export default async function PostPage({
 	return (
 		<>
 			<PostFiles post={clientPost} />
-			<VisibilityControl
-				authorId={post.authorId}
-				postId={post.id}
-				visibility={post.visibility}
-			/>
+			<div className="mx-auto mb-4 mt-4">
+				<VisibilityControl
+					authorId={post.authorId}
+					postId={post.id}
+					visibility={post.visibility}
+				/>
+			</div>
 		</>
 	)
 }

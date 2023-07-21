@@ -4,7 +4,7 @@ import { useToasts } from "@components/toasts"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect } from "react"
 
-function _ErrorQueryParamsHandler() {
+function InnerErrorQueryParamsHandler() {
 	const queryParams = useSearchParams()
 	const { setToast } = useToasts()
 
@@ -24,7 +24,7 @@ export function ErrorQueryParamsHandler() {
 	/* Suspense boundary because useSearchParams causes static bailout */
 	return (
 		<Suspense fallback={null}>
-			<_ErrorQueryParamsHandler />
+			<InnerErrorQueryParamsHandler />
 		</Suspense>
 	)
 }

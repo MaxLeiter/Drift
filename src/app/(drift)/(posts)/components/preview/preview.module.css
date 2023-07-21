@@ -1,18 +1,61 @@
 .markdownPreview {
 	padding: var(--gap-quarter);
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.75;
+	color: hsl(var(--foreground));
 }
 
 .skeletonPreview {
 	padding: var(--gap-half);
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.75;
+}
+.markdownPreview {
+	padding: var(--gap-quarter);
+	color: hsl(var(--foreground));
+}
+
+.skeletonPreview {
+	padding: var(--gap-half);
+}
+
+.markdownPreview h1,
+.markdownPreview h2,
+.markdownPreview h3,
+.markdownPreview h4,
+.markdownPreview h5,
+.markdownPreview h6 {
+	font-weight: 600;
+}
+
+.markdownPreview h1 {
+	font-size: 1.775rem;
+}
+
+.markdownPreview h2 {
+	font-size: 1.5rem;
+}
+
+.markdownPreview h3 {
+	font-size: 1.25rem;
+}
+
+.markdownPreview h4 {
+	font-size: 1.125rem;
+}
+
+.markdownPreview h5 {
+	font-size: 1.1rem;
 }
 
 .markdownPreview p {
-	margin-top: var(--gap);
-	margin-bottom: var(--gap);
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+/* 	
+	&:not(:first-child) {
+		line-height: 1.75rem;
+		margin-top: 1.5rem;
+	} */
 }
 
 .markdownPreview pre {
@@ -24,31 +67,6 @@
 	padding: 10px;
 	white-space: pre-wrap;
 	word-wrap: break-word;
-}
-
-.markdownPreview h1,
-.markdownPreview h2,
-.markdownPreview h3,
-.markdownPreview h4,
-.markdownPreview h5,
-.markdownPreview h6 {
-	margin-top: var(--gap);
-	margin-bottom: var(--gap-half);
-}
-
-.markdownPreview h1 {
-	color: var(--fg);
-}
-
-.markdownPreview h2 {
-	color: var(--darkest-gray);
-}
-
-.markdownPreview h3,
-.markdownPreview h4,
-.markdownPreview h5,
-.markdownPreview h6 {
-	color: var(--darker-gray);
 }
 
 /* Auto-linked headers */
@@ -75,42 +93,47 @@
 	filter: opacity(0.5);
 }
 
-.markdownPreview h1 {
-	font-size: 2rem;
-}
-
-.markdownPreview h2 {
-	font-size: 1.5rem;
-}
-
-.markdownPreview h3 {
-	font-size: 1.25rem;
-}
-
-.markdownPreview h4 {
-	font-size: 1rem;
-}
-
-.markdownPreview h5 {
-	font-size: 1rem;
-}
-
-.markdownPreview h6 {
-	font-size: 0.875rem;
-}
-
 .markdownPreview ul {
-	list-style: inside;
+	margin-bottom: 1.5rem;
+	margin-left: 1.5rem;
+	list-style-type: disc;
+}
+
+.markdownPreview ol {
+	margin-bottom: 1.5rem;
+	margin-left: 1.5rem;
+	list-style-type: decimal;
 }
 
 .markdownPreview ul li::before {
 	content: "";
 }
 
-
 .markdownPreview code::before,
 .markdownPreview code::after {
 	content: "";
+}
+
+.markdownPreview blockquote {
+	padding-left: 1.5rem;
+	font-style: italic;
+	border-left-width: 2px;
+}
+
+.markdownPreview blockquote p {
+	margin-top: 0;
+}
+
+.markdownPreview table {
+	overflow-y: auto;
+	width: 100%;
+}
+
+.markdownPreview table th {
+	font-weight: 600;
+	padding: 0;
+	margin: 0;
+	border-top-width: 1px;
 }
 
 @media screen and (max-width: 800px) {

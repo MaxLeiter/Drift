@@ -4,7 +4,7 @@ import styles from "./post-list.module.css"
 import ListItem from "./list-item"
 import { ChangeEvent, useCallback, useState } from "react"
 import type { PostWithFiles } from "@lib/server/prisma"
-import Input from "@components/input"
+import { Input } from "@components/input"
 import { useToasts } from "@components/toasts"
 import { ListItemSkeleton } from "./list-item-skeleton"
 import Link from "@components/link"
@@ -83,7 +83,10 @@ const PostList = ({
 			})
 
 			if (!res?.ok) {
-				console.error(res)
+				setToast({
+					message: "Failed to delete post",
+					type: "error"
+				})
 				return
 			} else {
 				setPosts((posts) => posts?.filter((post) => post.id !== postId))
@@ -103,7 +106,7 @@ const PostList = ({
 					<Input
 						placeholder="Search..."
 						onChange={onSearchChange}
-						disabled={!posts}
+						disabled={!posts || posts.length === 0}
 						style={{ maxWidth: 300 }}
 						aria-label="Search"
 						value={searchValue}

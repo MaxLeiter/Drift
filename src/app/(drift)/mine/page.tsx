@@ -5,6 +5,8 @@ import { Suspense } from "react"
 import ErrorBoundary from "@components/error/fallback"
 import { getMetadata } from "src/app/lib/metadata"
 import { redirect } from "next/navigation"
+import { PageTitle } from "@components/page-title"
+import { PageWrapper } from "@components/page-wrapper"
 
 export default async function Mine() {
 	const userId = (await getCurrentUser())?.id
@@ -16,16 +18,21 @@ export default async function Mine() {
 
 	const posts = (await getPostsByUser(userId, true)).map(serverPostToClientPost)
 	return (
-		<ErrorBoundary>
-			<Suspense fallback={<PostList skeleton={true} initialPosts={[]} />}>
-				<PostList
-					userId={userId}
-					initialPosts={posts}
-					isOwner={true}
-					hideSearch={false}
-				/>
-			</Suspense>
-		</ErrorBoundary>
+		<>
+			<PageTitle>Your Posts</PageTitle>
+			<PageWrapper>
+				<ErrorBoundary>
+					<Suspense fallback={<PostList skeleton={true} initialPosts={[]} />}>
+						<PostList
+							userId={userId}
+							initialPosts={posts}
+							isOwner={true}
+							hideSearch={false}
+						/>
+					</Suspense>
+				</ErrorBoundary>
+			</PageWrapper>
+		</>
 	)
 }
 

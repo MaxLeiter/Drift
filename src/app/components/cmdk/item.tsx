@@ -1,4 +1,4 @@
-import { Command } from "cmdk"
+import { CommandItem } from "@components/cmdk/cmdk"
 
 export default function Item({
 	children,
@@ -12,7 +12,7 @@ export default function Item({
 	icon: React.ReactNode
 }): JSX.Element {
 	return (
-		<Command.Item onSelect={onSelect}>
+		<CommandItem onSelect={onSelect}>
 			{icon}
 			{children}
 			{shortcut ? (
@@ -22,6 +22,6 @@ export default function Item({
 					})}
 				</div>
 			) : null}
-		</Command.Item>
+		</CommandItem>
 	)
 }

@@ -1,7 +1,7 @@
 "use client"
 
-import Button from "@components/button"
-import Input from "@components/input"
+import { Button } from "@components/button"
+import { Input } from "@components/input"
 import Note from "@components/note"
 import { Spinner } from "@components/spinner"
 import { useToasts } from "@components/toasts"
@@ -13,6 +13,7 @@ import { copyToClipboard } from "src/app/lib/copy-to-clipboard"
 import { useState } from "react"
 import styles from "./api-keys.module.css"
 import { useSessionSWR } from "@lib/use-session-swr"
+import { TypographyH4 } from "@components/typography"
 
 // need to pass in the accessToken
 const APIKeys = ({
@@ -75,7 +76,7 @@ const APIKeys = ({
 			)}
 			{hasError && <Note type="error">{error?.message}</Note>}
 			<form className={styles.form}>
-				<h5>Create new</h5>
+				<TypographyH4>Create new</TypographyH4>
 				<fieldset className={styles.fieldset}>
 					<Input
 						type="text"
@@ -85,10 +86,9 @@ const APIKeys = ({
 						placeholder="Name"
 					/>
 					<Button
-						type="button"
 						onClick={onCreateTokenClick}
-						loading={submitting}
 						disabled={!newToken}
+						loading={submitting}
 					>
 						Submit
 					</Button>
@@ -121,7 +121,9 @@ const APIKeys = ({
 							</tbody>
 						</table>
 					) : (
-						<p>You have no API keys.</p>
+						<p className="p-4 text-center text-muted-foreground">
+							No API keys found.
+						</p>
 					)
 				) : (
 					<div style={{ marginTop: "var(--gap-quarter)" }}>

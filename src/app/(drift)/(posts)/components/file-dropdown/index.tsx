@@ -1,12 +1,11 @@
-import { Popover } from "@components/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@components/popover"
 import { codeFileExtensions } from "@lib/constants"
-import clsx from "clsx"
 import type { PostWithFiles } from "src/lib/server/prisma"
 import styles from "./dropdown.module.css"
-import buttonStyles from "@components/button/button.module.css"
 import { ChevronDown, Code, File as FileIcon } from "react-feather"
 import { Spinner } from "@components/spinner"
 import Link from "next/link"
+import { buttonVariants } from "@components/button"
 
 function FileDropdown({
 	files,
@@ -18,11 +17,15 @@ function FileDropdown({
 	if (loading) {
 		return (
 			<Popover>
-				<Popover.Trigger className={buttonStyles.button}>
+				<PopoverTrigger
+					className={buttonVariants({
+						variant: "link"
+					})}
+				>
 					<div style={{ minWidth: 125 }}>
 						<Spinner />
 					</div>
-				</Popover.Trigger>
+				</PopoverTrigger>
 			</Popover>
 		)
 	}
@@ -32,25 +35,26 @@ function FileDropdown({
 		if (codeFileExtensions.includes(extension || "")) {
 			return {
 				...file,
-				icon: <Code />
+				icon: <Code className="h-4 w-4" />
 			}
 		} else {
 			return {
 				...file,
-				icon: <FileIcon />
+				icon: <FileIcon className="h-4 w-4" />
 			}
 		}
 	})
 
 	const content = (
-		<ul className={styles.content}>
+		<ul className="text-sm">
 			{items.map((item) => (
-				<li key={item.id}>
-					<Link href={`#${item.title}`} className={styles.listItem}>
-						<span className={styles.fileIcon}>{item.icon}</span>
-						<span className={styles.fileTitle}>
-							{item.title ? item.title : "Untitled"}
-						</span>
+				<li key={item.id} className="flex">
+					<Link
+						href={`#${item.title}`}
+						className="flex w-full items-center gap-3 hover:underline"
+					>
+						{item.icon}
+						{item.title ? item.title : "Untitled"}
 					</Link>
 				</li>
 			))}
@@ -59,23 +63,19 @@ function FileDropdown({
 
 	return (
 		<Popover>
-			<Popover.Trigger
-				className={buttonStyles.button}
-				style={{ height: 40, padding: 10 }}
+			<PopoverTrigger
+				className={buttonVariants({
+					variant: "secondary"
+				})}
 			>
-				<div
-					className={clsx(buttonStyles.icon, styles.chevron)}
-					style={{ marginRight: 6 }}
-				>
+				<div className={styles.chevron} style={{ marginRight: 6 }}>
 					<ChevronDown />
 				</div>
 				<span>
 					Jump to {files.length} {files.length === 1 ? "file" : "files"}
 				</span>
-			</Popover.Trigger>
-			<Popover.Content className={styles.contentWrapper}>
-				{content}
-			</Popover.Content>
+			</PopoverTrigger>
+			<PopoverContent>{content}</PopoverContent>
 		</Popover>
 	)
 }

@@ -1,8 +1,3 @@
-.title {
-	display: flex;
-	justify-content: space-between;
-}
-
 .titleText {
 	display: flex;
 	gap: var(--gap-half);
@@ -13,11 +8,6 @@
 	display: flex;
 	gap: var(--gap-half);
 	flex-wrap: wrap;
-}
-
-.buttons {
-	display: flex;
-	gap: var(--gap-half);
 }
 
 .oneline {
@@ -50,15 +40,8 @@
 	li {
 		display: flex;
 		align-items: center;
-		gap: var(--gap);
+		gap: var(--gap-half);
 		padding: var(--gap-quarter);
-	}
-
-	li a {
-		display: flex;
-		align-items: center;
-		gap: var(--gap);
-		color: var(--darker-gray);
 	}
 
 	li a:hover {

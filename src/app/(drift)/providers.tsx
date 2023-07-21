@@ -10,7 +10,12 @@ export function Providers({ children }: PropsWithChildren<unknown>) {
 	return (
 		<SessionProvider>
 			<RadixTooltip.Provider delayDuration={200}>
-				<ThemeProvider enableSystem defaultTheme="dark">
+				<ThemeProvider
+					attribute="class"
+					enableColorScheme
+					enableSystem
+					defaultTheme="dark"
+				>
 					<SWRProvider>{children}</SWRProvider>
 				</ThemeProvider>
 			</RadixTooltip.Provider>

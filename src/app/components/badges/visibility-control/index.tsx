@@ -3,9 +3,8 @@
 import PasswordModal from "@components/password-modal"
 import { useCallback, useState } from "react"
 import ButtonGroup from "@components/button-group"
-import Button from "@components/button"
+import { Button } from "@components/button"
 import { useToasts } from "@components/toasts"
-import { Spinner } from "@components/spinner"
 import { useRouter } from "next/navigation"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
@@ -89,39 +88,40 @@ function VisibilityControl({
 	}
 
 	return (
-		<FadeIn>
-			<ButtonGroup
-				style={{
-					maxWidth: 600,
-					margin: "var(--gap) auto"
-				}}
-			>
+		<FadeIn className="mt-8">
+			<ButtonGroup>
 				<Button
 					disabled={visibility === "private"}
+					variant={"outline"}
 					onClick={() => onSubmit("private")}
+					loading={isSubmitting === "private"}
 				>
-					{isSubmitting === "private" ? <Spinner /> : "Make Private"}
+					Make Private
 				</Button>
 				<Button
 					disabled={visibility === "public"}
+					variant={"outline"}
 					onClick={() => onSubmit("public")}
+					loading={isSubmitting === "public"}
 				>
-					{isSubmitting === "public" ? <Spinner /> : "Make Public"}
+					Make Public
 				</Button>
 				<Button
 					disabled={visibility === "unlisted"}
+					variant={"outline"}
 					onClick={() => onSubmit("unlisted")}
+					loading={isSubmitting === "unlisted"}
 				>
-					{isSubmitting === "unlisted" ? <Spinner /> : "Make Unlisted"}
+					Make Unlisted
 				</Button>
-				<Button onClick={() => onSubmit("protected")}>
-					{isSubmitting === "protected" ? (
-						<Spinner />
-					) : visibility === "protected" ? (
-						"Change Password"
-					) : (
-						"Protect with Password"
-					)}
+				<Button
+					onClick={() => onSubmit("protected")}
+					variant={"outline"}
+					loading={isSubmitting === "protected"}
+				>
+					{visibility === "protected"
+						? "Change Password"
+						: "Protect with Password"}
 				</Button>
 			</ButtonGroup>
 			<PasswordModal

@@ -1,9 +1,10 @@
 import { ChangeEvent, ClipboardEvent, useCallback } from "react"
 import styles from "./document.module.css"
-import Button from "@components/button"
-import Input from "@components/input"
-import DocumentTabs from "src/app/(drift)/(posts)/components/tabs"
+import { Button } from "@components/button"
+import { Input } from "@components/input"
+import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 import { Trash } from "react-feather"
+import { Card, CardContent, CardHeader } from "@components/card"
 
 type Props = {
 	title?: string
@@ -49,8 +50,8 @@ function Document({
 	)
 
 	return (
-		<>
-			<div className={styles.card}>
+		<Card className="min-h-[512px]">
+			<CardHeader>
 				<div className={styles.fileNameContainer}>
 					<Input
 						placeholder="MyFile.md"
@@ -65,35 +66,31 @@ function Document({
 						}}
 					/>
 					{remove && (
+						// no left border
 						<Button
-							iconLeft={<Trash />}
-							height={"39px"}
-							width={"48px"}
-							padding={0}
-							margin={0}
 							onClick={() => removeFile(remove)}
-							style={{
-								borderTopLeftRadius: 0,
-								borderBottomLeftRadius: 0
-							}}
-						/>
+							variant="outline"
+							className="border-color-[var(--border)] rounded-l-none border-l-0"
+						>
+							<Trash height={18} />
+						</Button>
 					)}
 				</div>
-				<div className={styles.documentContainer}>
-					<DocumentTabs
-						isEditing={true}
-						defaultTab={defaultTab}
-						handleOnContentChange={handleOnContentChange}
-						// TODO: solve types
-						// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
-						onPaste={onPaste}
-						title={title}
-					>
-						{content}
-					</DocumentTabs>
-				</div>
-			</div>
-		</>
+			</CardHeader>
+			<CardContent>
+				<DocumentTabs
+					isEditing={true}
+					defaultTab={defaultTab}
+					handleOnContentChange={handleOnContentChange}
+					// TODO: solve types
+					// @ts-expect-error Type 'HTMLDivElement' is missing the following properties from type 'HTMLTextAreaElement': autocomplete, cols, defaultValue, dirName, and 26 more
+					onPaste={onPaste}
+					title={title}
+				>
+					{content}
+				</DocumentTabs>
+			</CardContent>
+		</Card>
 	)
 }
 

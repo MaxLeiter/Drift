@@ -3,26 +3,42 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useState, ClipboardEvent } from "react"
 import generateUUID from "@lib/generate-uuid"
-import styles from "./post.module.css"
 import EditDocumentList from "./edit-document-list"
 import { ChangeEvent } from "react"
 import getTitleForPostCopy from "src/app/lib/get-title-for-post-copy"
-import Description from "./description"
+// import Description from "./description"
 import { PostWithFiles } from "@lib/server/prisma"
 import PasswordModal from "../../../../components/password-modal"
 import Title from "./title"
 import FileDropzone from "./drag-and-drop"
-import Button from "@components/button"
-import Input from "@components/input"
-import ButtonDropdown from "@components/button-dropdown"
+import { Button, buttonVariants } from "@components/button"
 import { useToasts } from "@components/toasts"
 import { fetchWithUser } from "src/app/lib/fetch-with-user"
 import dynamic from "next/dynamic"
+import ButtonDropdown from "@components/button-dropdown"
+import clsx from "clsx"
+import { Spinner } from "@components/spinner"
+import { cn } from "@lib/cn"
+import { Calendar as CalendarIcon } from "react-feather"
 
-const DatePicker = dynamic(() => import("react-datepicker"), {
-	ssr: false,
-	loading: () => <Input label="Expires at" placeholder="Won't expire" width="100%" height="40px" />
-})
+const DatePicker = dynamic(
+	() => import("@components/date-picker").then((m) => m.DatePicker),
+	{
+		ssr: false,
+		loading: () => (
+			<Button
+				variant={"outline"}
+				className={cn(
+					"w-[280px] justify-start text-left font-normal",
+					"text-muted-foreground"
+				)}
+			>
+				<CalendarIcon className="mr-2 h-4 w-4" />
+				<span>Won&apos;t expire</span>
+			</Button>
+		)
+	}
+)
 
 const emptyDoc = {
 	title: "",
@@ -48,7 +64,9 @@ function Post({
 	const [title, setTitle] = useState(
 		getTitleForPostCopy(initialPost?.title) || ""
 	)
-	const [description, setDescription] = useState(initialPost?.description || "")
+	const [description /*, setDescription */] = useState(
+		initialPost?.description || ""
+	)
 	const [expiresAt, setExpiresAt] = useState<Date>()
 
 	const defaultDocs: Document[] = initialPost
@@ -131,7 +149,7 @@ function Post({
 
 			if (!docs.length) {
 				setToast({
-					message: "Please add at least one document",
+					message: "Please add at least one file",
 					type: "error"
 				})
 				hasErrored = true
@@ -170,13 +188,13 @@ function Post({
 		setTitle(e.target.value)
 	}, [])
 
-	const onChangeDescription = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
-			e.preventDefault()
-			setDescription(e.target.value)
-		},
-		[]
-	)
+	// const onChangeDescription = useCallback(
+	// 	(e: ChangeEvent<HTMLInputElement>) => {
+	// 		e.preventDefault()
+	// 		setDescription(e.target.value)
+	// 	},
+	// 	[]
+	// )
 
 	function onClosePasswordModal() {
 		setPasswordModalVisible(false)
@@ -185,10 +203,6 @@ function Post({
 
 	function submitPassword(password: string) {
 		return onSubmit("protected", password)
-	}
-
-	function onChangeExpiration(date: Date) {
-		return setExpiresAt(date)
 	}
 
 	function updateDocTitle(i: number) {
@@ -241,10 +255,9 @@ function Post({
 	}
 
 	return (
-		<div className={styles.root}>
-			<Title title={title} onChange={onChangeTitle} />
-			<Description description={description} onChange={onChangeDescription} />
-			<FileDropzone setDocs={uploadDocs} />
+		<div className="flex flex-1 flex-col gap-4">
+			<Title title={title} onChange={onChangeTitle} className="py-4" />
+			{/* <Description description={description} onChange={onChangeDescription} /> */}
 			<EditDocumentList
 				onPaste={onPaste}
 				docs={docs}
@@ -252,68 +265,60 @@ function Post({
 				updateDocContent={updateDocContent}
 				removeDoc={removeDoc}
 			/>
-			<div className={styles.buttons}>
-				<Button
-					onClick={() => {
-						setDocs([
-							...docs,
-							{
-								title: "",
-								content: "",
-								id: generateUUID()
-							}
-						])
-					}}
-					style={{
-						flex: 1,
-						minWidth: 120
-					}}
-				>
-					Add a File
-				</Button>
-				<div className={styles.rightButtons}>
-					<DatePicker
-						onChange={onChangeExpiration}
-						customInput={
-							<Input label="Expires at" width="100%" height="40px" />
-						}
-						placeholderText="Won't expire"
-						selected={expiresAt}
-						showTimeInput={true}
-						// @ts-expect-error fix time input type
-						customTimeInput={<CustomTimeInput />}
-						timeInputLabel="Time:"
-						dateFormat="MM/dd/yyyy h:mm aa"
-						className={styles.datePicker}
-						clearButtonTitle={"Clear"}
-						// TODO: investigate why this causes margin shift if true
-						enableTabLoop={false}
-						minDate={new Date()}
-					/>
-					<ButtonDropdown>
-						<Button
-							height={40}
-							width={251}
-							onClick={() => onSubmit("unlisted")}
-							loading={isSubmitting}
-						>
-							Create Unlisted
-						</Button>
-						<Button height={40} width={300} onClick={() => onSubmit("private")}>
-							Create Private
-						</Button>
-						<Button height={40} width={300} onClick={() => onSubmit("public")}>
-							Create Public
-						</Button>
-						<Button
-							height={40}
-							width={300}
-							onClick={() => onSubmit("protected")}
-						>
-							Create with Password
-						</Button>
-					</ButtonDropdown>
-				</div>
+			<FileDropzone setDocs={uploadDocs} />
+
+			<div className="mt-4 flex items-center justify-between">
+				<span className="flex flex-1 gap-2">
+					<Button
+						onClick={() => {
+							setDocs([
+								...docs,
+								{
+									title: "",
+									content: "",
+									id: generateUUID()
+								}
+							])
+						}}
+						className="min-w-[120px] max-w-[200px] flex-1"
+						variant={"secondary"}
+					>
+						Add a File
+					</Button>
+					<DatePicker setExpiresAt={setExpiresAt} expiresAt={expiresAt} />
+				</span>
+				<ButtonDropdown>
+					<span
+						className={clsx(
+							"w-full cursor-pointer rounded-br-none rounded-tr-none",
+							buttonVariants({
+								variant: "default"
+							})
+						)}
+						onClick={() => onSubmit("unlisted")}
+					>
+						{isSubmitting ? <Spinner className="mr-2" /> : null}
+						Create Unlisted
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("private")}
+					>
+						Create Private
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("public")}
+					>
+						Create Public
+					</span>
+					<span
+						className={clsx("w-full cursor-pointer")}
+						onClick={() => onSubmit("protected")}
+					>
+						Create with Password
+					</span>
+				</ButtonDropdown>
 			</div>
 			<PasswordModal
 				creating={true}
@@ -327,30 +332,30 @@ function Post({
 
 export default Post
 
-function CustomTimeInput({
-	date,
-	value,
-	onChange
-}: {
-	date: Date
-	value: string
-	onChange: (date: string) => void
-}) {
-	return (
-		<input
-			type="time"
-			value={value}
-			onChange={(e) => {
-				if (!isNaN(date.getTime())) {
-					onChange(e.target.value || date.toISOString().slice(11, 16))
-				}
-			}}
-			style={{
-				backgroundColor: "var(--bg)",
-				border: "1px solid var(--light-gray)",
-				borderRadius: "var(--radius)"
-			}}
-			required
-		/>
-	)
-}
+// function CustomTimeInput({
+// 	date,
+// 	value,
+// 	onChange
+// }: {
+// 	date: Date
+// 	value: string
+// 	onChange: (date: string) => void
+// }) {
+// 	return (
+// 		<input
+// 			type="time"
+// 			value={value}
+// 			onChange={(e) => {
+// 				if (!isNaN(date.getTime())) {
+// 					onChange(e.target.value || date.toISOString().slice(11, 16))
+// 				}
+// 			}}
+// 			style={{
+// 				backgroundColor: "var(--bg)",
+// 				border: "1px solid var(--light-gray)",
+// 				borderRadius: "var(--radius)"
+// 			}}
+// 			required
+// 		/>
+// 	)
+// }

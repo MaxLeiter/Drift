@@ -1,9 +1,8 @@
 "use client"
 
-import Button from "@components/button"
+import { Button } from "@components/button"
 import ButtonGroup from "@components/button-group"
 import FileDropdown from "src/app/(drift)/(posts)/components/file-dropdown"
-import { Edit, ArrowUpCircle, Archive } from "react-feather"
 import styles from "./post-buttons.module.css"
 import { useRouter } from "next/navigation"
 import { PostWithFiles } from "@lib/server/prisma"
@@ -48,15 +47,19 @@ export const PostButtons = ({
 	return (
 		<span className={styles.buttons}>
 			<ButtonGroup verticalIfMobile>
-				<Button iconLeft={<Edit />} onClick={editACopy}>
+				<Button variant={"secondary"} onClick={editACopy} className="border-r">
 					Edit a Copy
 				</Button>
 				{parentId && (
-					<Button iconLeft={<ArrowUpCircle />} onClick={viewParentClick}>
+					<Button variant={"secondary"} onClick={viewParentClick}>
 						View Parent
 					</Button>
 				)}
-				<Button onClick={downloadClick} iconLeft={<Archive />}>
+				<Button
+					variant={"secondary"}
+					onClick={downloadClick}
+					className="border-r"
+				>
 					Download as ZIP Archive
 				</Button>
 				<FileDropdown loading={loading} files={files || []} />

@@ -1,9 +1,11 @@
 "use client"
 
-import * as RadixTooltip from "@radix-ui/react-tooltip"
-import styles from "./tooltip.module.css"
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
-const Tooltip = ({
+import { cn } from "@lib/cn"
+
+const TooltipWrapper = ({
 	children,
 	content,
 	className,
@@ -12,18 +14,42 @@ const Tooltip = ({
 	children: React.ReactNode
 	content: React.ReactNode
 	className?: string
-} & RadixTooltip.TooltipProps) => {
+} & TooltipPrimitive.TooltipProps) => {
 	return (
-		<RadixTooltip.Root {...props}>
-			<RadixTooltip.Trigger asChild className={className}>
-				{children}
-			</RadixTooltip.Trigger>
+		<TooltipProvider>
+			<Tooltip {...props}>
+				<TooltipTrigger asChild className={className}>
+					{children}
+				</TooltipTrigger>
 
-			<RadixTooltip.Content>
-				<div className={styles.tooltip}>{content}</div>
-			</RadixTooltip.Content>
-		</RadixTooltip.Root>
+				<TooltipContent>{content}</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
 
-export default Tooltip
+// export TooltipWrapper as Tooltip
+export { TooltipWrapper as Tooltip }
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const Tooltip = TooltipPrimitive.Root
+
+const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipContent = React.forwardRef<
+	React.ElementRef<typeof TooltipPrimitive.Content>,
+	React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+	<TooltipPrimitive.Content
+		ref={ref}
+		sideOffset={sideOffset}
+		className={cn(
+			"z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-50 duration-75 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
+			className
+		)}
+		{...props}
+	/>
+))
+
+TooltipContent.displayName = TooltipPrimitive.Content.displayName

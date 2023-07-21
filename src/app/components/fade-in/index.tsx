@@ -1,4 +1,5 @@
 // https://www.joshwcomeau.com/snippets/react-components/fade-in/
+import React from "react"
 import styles from "./fade.module.css"
 
 function FadeIn({
@@ -11,8 +12,18 @@ function FadeIn({
 	duration?: number
 	delay?: number
 	children: React.ReactNode
-	as?: React.ElementType
+	as?: React.ElementType | JSX.Element
 } & React.HTMLAttributes<HTMLElement>) {
+	if (as !== null && typeof as === "object") {
+		return React.cloneElement(as, {
+			className: styles.fadeIn,
+			style: {
+				...(as.props.style || {}),
+				animationDuration: duration + "ms",
+				animationDelay: delay + "ms"
+			}
+		})
+	}
 	const Element = as || "div"
 	return (
 		<Element

@@ -1,7 +1,7 @@
 "use client"
 
-import Button from "@components/button"
-import Input from "@components/input"
+import { Button } from "@components/button"
+import { Input } from "@components/input"
 import Note from "@components/note"
 import { useToasts } from "@components/toasts"
 import { useSessionSWR } from "@lib/use-session-swr"
@@ -142,8 +142,7 @@ function Profile() {
                     </div>
                 </TooltipComponent>
             </div> */}
-
-				<Button type="submit" loading={submitting}>
+				<Button type="submit" disabled={!name} loading={submitting}>
 					Submit
 				</Button>
 			</form>

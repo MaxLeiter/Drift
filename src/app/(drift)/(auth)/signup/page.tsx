@@ -1,21 +1,24 @@
 import Auth from "../components"
-import { getRequiresPasscode } from "src/pages/api/auth/requires-passcode"
 import { getMetadata } from "src/app/lib/metadata"
 import { getAuthProviders, isCredentialEnabled } from "@lib/server/auth-props"
+import { getRequiresPasscode } from "src/app/api/auth/requires-passcode/route"
+import { PageWrapper } from "@components/page-wrapper"
 
 async function getPasscode() {
-	return await getRequiresPasscode()
+	return getRequiresPasscode()
 }
 
 export default async function SignUpPage() {
 	const requiresPasscode = await getPasscode()
 	return (
-		<Auth
-			page="signup"
-			requiresServerPassword={requiresPasscode}
-			credentialAuth={isCredentialEnabled()}
-			authProviders={getAuthProviders()}
-		/>
+		<PageWrapper>
+			<Auth
+				page="signup"
+				requiresServerPassword={requiresPasscode}
+				credentialAuth={isCredentialEnabled()}
+				authProviders={getAuthProviders()}
+			/>
+		</PageWrapper>
 	)
 }
 

@@ -1,7 +1,6 @@
 import { ChangeEvent, memo } from "react"
 
-import Input from "@components/input"
-import styles from "./title.module.css"
+import { Input } from "@components/input"
 
 const titlePlaceholders = [
 	"How to...",
@@ -18,20 +17,17 @@ const placeholder = titlePlaceholders[3]
 type props = {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
 	title?: string
+	className?: string
 }
 
-function Title({ onChange, title }: props) {
+function Title({ onChange, title, className }: props) {
 	return (
-		<div className={styles.title}>
-			<h1 style={{ margin: 0, padding: 0 }}>Drift</h1>
+		<div className={className}>
 			<Input
 				placeholder={placeholder}
 				value={title}
 				onChange={onChange}
 				label="Title"
-				className={styles.labelAndInput}
-				style={{ width: "100%" }}
-				labelClassName={styles.labelAndInput}
 			/>
 		</div>
 	)

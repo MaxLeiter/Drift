@@ -28,11 +28,7 @@ export default async function PostLayout({
 				{post.visibility !== "protected" && <PostButtons post={clientPost} />}
 				{post.visibility !== "protected" && <PostTitle post={clientPost} />}
 			</div>
-			{post.description && (
-				<div>
-					<p>{post.description}</p>
-				</div>
-			)}
+			{/* {post.description && <p className="pb-4 text-lg">{post.description}</p>} */}
 			<ScrollToTop />
 			{children}
 		</div>

@@ -1,7 +1,7 @@
 "use client"
 
-import Button from "@components/button"
-import Tooltip from "@components/tooltip"
+import { Button } from "@components/button"
+import { Tooltip } from "@components/tooltip"
 import { useEffect, useState } from "react"
 import { ChevronUp } from "react-feather"
 import styles from "./scroll.module.css"
@@ -39,8 +39,10 @@ const ScrollToTop = () => {
 				<Button
 					aria-label="Scroll to Top"
 					onClick={onClick}
-					iconLeft={<ChevronUp />}
-				/>
+					variant={"secondary"}
+				>
+					<ChevronUp />
+				</Button>
 			</Tooltip>
 		</div>
 	)

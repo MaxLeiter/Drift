@@ -1,4 +1,4 @@
-import Card from "@components/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@components/card"
 import styles from "./settings-group.module.css"
 
 type Props =
@@ -26,9 +26,13 @@ const SettingsGroup = ({ title, children, skeleton }: Props) => {
 
 	return (
 		<Card>
-			<h4>{title}</h4>
-			<hr />
-			<div className={styles.content}>{children}</div>
+			<CardHeader>
+				<CardTitle>{title}</CardTitle>
+			</CardHeader>
+			<hr className="pb-4" />
+			<CardContent>
+				<div className={styles.content}>{children}</div>
+			</CardContent>
 		</Card>
 	)
 }

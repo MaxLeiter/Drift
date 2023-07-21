@@ -4,9 +4,11 @@ import { useState } from "react"
 import styles from "./auth.module.css"
 import Link from "../../../components/link"
 import { signIn } from "next-auth/react"
-import Input from "@components/input"
-import Button from "@components/button"
-import { GitHub, Key, User } from "react-feather"
+import { Input } from "@components/input"
+import { Button } from "@components/button"
+import { Key, User } from "react-feather"
+// @ts-expect-error - no types
+import GitHub from "react-feather/dist/icons/github"
 import { useToasts } from "@components/toasts"
 import { useRouter } from "next/navigation"
 import Note from "@components/note"
@@ -52,7 +54,7 @@ function Auth({
 			})
 			setSubmitting(false)
 		} else {
-			router.push("/new")
+			router.refresh()
 		}
 	}
 
@@ -73,9 +75,9 @@ function Auth({
 	return (
 		<div className={styles.container}>
 			<ErrorQueryParamsHandler />
-			<div className={styles.form}>
+			<div className={"mx-auto w-[300px]"}>
 				<div className={styles.formContentSpace}>
-					<h1>Sign {signText}</h1>
+					<h1 className="text-3xl font-bold">Sign {signText}</h1>
 				</div>
 				<form onSubmit={handleSubmit}>
 					<div className={styles.formGroup}>
@@ -92,7 +94,6 @@ function Auth({
 									onChange={handleChangeServerPassword}
 									placeholder="Server Password"
 									required={true}
-									width="100%"
 									aria-label="Server Password"
 								/>
 								<hr style={{ width: "100%" }} />
@@ -123,7 +124,7 @@ function Auth({
 									width="100%"
 									aria-label="Password"
 								/>
-								<Button width={"100%"} type="submit" loading={submitting}>
+								<Button type="submit" loading={submitting}>
 									Sign {signText}
 								</Button>
 							</>
@@ -131,25 +132,27 @@ function Auth({
 
 						{authProviders?.length ? (
 							<>
+								<hr className="w-full" />
+								<p className="mt-2 p-0 text-center">
+									Or sign {signText.toLowerCase()} with one of the following
+								</p>
 								{authProviders?.map((provider) => {
 									return provider.enabled ? (
 										<Button
 											type="submit"
-											width="100%"
 											key={provider.id + "-button"}
-											style={{
-												color: "var(--fg)"
-											}}
-											iconLeft={getProviderIcon(provider.id)}
 											onClick={(e) => {
 												e.preventDefault()
 												signIn(provider.id, {
 													callbackUrl: "/",
 													registration_password: serverPassword
 												})
+												router.refresh()
 											}}
+											className="my-2 flex w-full max-w-[250px] items-center justify-center"
 										>
-											Sign {signText.toLowerCase()} with {provider.public_name}
+											{getProviderIcon(provider.id)} Sign{" "}
+											{signText.toLowerCase()} with {provider.public_name}
 										</Button>
 									) : null
 								})}
@@ -184,10 +187,10 @@ export default Auth
 const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
-			return <GitHub />
+			return <GitHub className="mr-2 h-5 w-5" />
 		case "keycloak":
-			return <Key />
+			return <Key className="mr-2 h-5 w-5" />
 		default:
-			return <User />
+			return <User className="mr-2 h-5 w-5" />
 	}
 }

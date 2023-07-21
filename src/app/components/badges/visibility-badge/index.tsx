@@ -1,11 +1,11 @@
-import Badge from "../badge"
+import { Badge } from "../badge"
 
 type Props = {
 	visibility: string
 }
 
 const VisibilityBadge = ({ visibility }: Props) => {
-	return <Badge type={"primary"}>{visibility}</Badge>
+	return <Badge variant={"outline"}>{visibility}</Badge>
 }
 
 export default VisibilityBadge

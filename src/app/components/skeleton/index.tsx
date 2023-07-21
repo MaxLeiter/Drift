@@ -1,4 +1,4 @@
-import styles from "./skeleton.module.css"
+import { cn } from "@lib/cn"
 
 export default function Skeleton({
 	width = 100,
@@ -13,8 +13,13 @@ export default function Skeleton({
 }) {
 	return (
 		<div
-			className={styles.skeleton}
-			style={{ width, height, borderRadius, ...style }}
+			className={cn("animate-pulse bg-gray-300 dark:bg-gray-800")}
+			style={{
+				width,
+				height,
+				borderRadius,
+				...style
+			}}
 		/>
 	)
 }

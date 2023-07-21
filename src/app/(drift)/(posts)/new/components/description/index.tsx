@@ -1,7 +1,8 @@
-import Input from "@components/input"
+import { Input } from "@components/input"
 import { ChangeEvent } from "react"
 
 import styles from "../post.module.css"
+import clsx from "clsx"
 
 type props = {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -10,7 +11,7 @@ type props = {
 
 function Description({ onChange, description }: props) {
 	return (
-		<div className={styles.description}>
+		<div className={clsx(styles.description, "pb-4")}>
 			<Input
 				value={description || ""}
 				onChange={onChange}

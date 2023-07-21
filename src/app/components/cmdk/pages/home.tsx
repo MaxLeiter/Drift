@@ -1,9 +1,9 @@
-import { Command } from "cmdk"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { FilePlus, Moon, Search, Settings, Sun } from "react-feather"
 import { CmdKPage } from ".."
 import Item from "../item"
+import { CommandGroup } from "@components/cmdk/cmdk"
 
 export default function HomePage({
 	setOpen,
@@ -16,7 +16,7 @@ export default function HomePage({
 	const { setTheme, resolvedTheme } = useTheme()
 	return (
 		<>
-			<Command.Group heading="Posts">
+			<CommandGroup heading="Posts">
 				<Item
 					shortcut="R P"
 					onSelect={() => {
@@ -36,8 +36,8 @@ export default function HomePage({
 				>
 					New Post
 				</Item>
-			</Command.Group>
-			<Command.Group heading="Settings">
+			</CommandGroup>
+			<CommandGroup heading="Settings">
 				<Item
 					shortcut="T"
 					onSelect={() => {
@@ -57,7 +57,7 @@ export default function HomePage({
 				>
 					Go to Settings
 				</Item>
-			</Command.Group>
+			</CommandGroup>
 		</>
 	)
 }

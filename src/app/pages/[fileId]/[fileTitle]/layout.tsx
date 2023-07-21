@@ -1,5 +1,4 @@
 import "@styles/globals.css"
-import "@styles/markdown.css"
 
 import Layout from "@components/layout"
 import { Inter } from "next/font/google"

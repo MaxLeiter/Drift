@@ -1,4 +1,5 @@
 import PostList from "@components/post-list"
+import { TypographyH1 } from "@components/typography"
 import {
 	getPostsByUser,
 	getUserById,
@@ -59,7 +60,9 @@ export default async function UserPage({
 					justifyContent: "space-between"
 				}}
 			>
-				<h1>Public posts by {user?.displayName || "Anonymous"}</h1>
+				<TypographyH1>
+					Public posts by {user?.displayName || "Anonymous"}
+				</TypographyH1>
 				<Avatar />
 			</div>
 			<Suspense fallback={<PostList hideSearch skeleton initialPosts={[]} />}>

@@ -1,8 +1,8 @@
-import Button from "@components/button"
+import { Button } from "@components/button"
 import ButtonGroup from "@components/button-group"
 import Skeleton from "@components/skeleton"
-import Tooltip from "@components/tooltip"
-import DocumentTabs from "src/app/(drift)/(posts)/components/tabs"
+import { Tooltip } from "@components/tooltip"
+import DocumentTabs from "src/app/(drift)/(posts)/components/document-tabs"
 import Link from "next/link"
 import { memo } from "react"
 import { Download, ExternalLink, Globe } from "react-feather"
@@ -10,7 +10,7 @@ import styles from "./document.module.css"
 import { getURLFriendlyTitle } from "src/app/lib/get-url-friendly-title"
 import { PostWithFiles, ServerPost } from "@lib/server/prisma"
 import { isAllowedVisibilityForWebpage } from "@lib/constants"
-
+import { Card, CardContent, CardHeader } from "@components/card"
 type SharedProps = {
 	initialTab: "edit" | "preview"
 	file?: PostWithFiles["files"][0]
@@ -36,38 +36,50 @@ const DownloadButtons = ({
 }) => {
 	return (
 		<ButtonGroup>
-			<Tooltip content="Download">
+			<Tooltip content="Download" delayDuration={200}>
 				<Link
 					href={`${rawLink}?download=true`}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					<Button
-						iconRight={<Download color="var(--fg)" />}
 						aria-label="Download"
-						style={{ border: "none", background: "transparent" }}
-					/>
+						size="sm"
+						className="bg-transparent border-none"
+						variant={"ghost"}
+					>
+						<Download className="w-4 h-4 " />
+						<span className="sr-only">Download</span>
+					</Button>
 				</Link>
 			</Tooltip>
 			{rawLink ? (
-				<Tooltip content="Open raw in new tab">
+				<Tooltip content="Open raw in new tab" delayDuration={200}>
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							iconLeft={<ExternalLink color="var(--fg)" />}
 							aria-label="Open raw file in new tab"
-							style={{ border: "none", background: "transparent" }}
-						/>
+							className="bg-transparent border-none"
+							size="sm"
+							variant={"ghost"}
+						>
+							<ExternalLink className="w-4 h-4" />
+							<span className="sr-only">Open raw file in new tab</span>
+						</Button>
 					</Link>
 				</Tooltip>
 			) : null}
 			{siteLink ? (
-				<Tooltip content="Open as webpage">
+				<Tooltip content="Open as webpage" delayDuration={200}>
 					<Link href={siteLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
-							iconLeft={<Globe color="var(--fg)" />}
 							aria-label="Open as webpage"
-							style={{ border: "none", background: "transparent" }}
-						/>
+							className="bg-transparent border-none"
+							size="sm"
+							variant={"ghost"}
+						>
+							<Globe className="w-4 h-4" />
+							<span className="sr-only">Open as webpage</span>
+						</Button>
 					</Link>
 				</Tooltip>
 			) : null}
@@ -109,18 +121,39 @@ const Document = ({ skeleton, ...props }: Props) => {
 			}
 		}
 	}
+	/* .card header {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 16px;
+	background: var(--lighter-gray);
+	border-radius: 8px 8px 0px 0px;
+}
 
+.documentContainer {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	padding: var(--gap);
+	border: 1px solid var(--lighter-gray);
+	border-top: none;
+	border-radius: 0px 0px 8px 8px;
+} */
 	return (
 		<>
-			<div className={styles.card}>
-				<header id={file?.title}>
+			<Card className="border-gray-200 dark:border-gray-900">
+				<CardHeader
+					id={file?.title}
+					className="flex flex-row items-center justify-between py-1 bg-gray-200 dark:bg-gray-900"
+				>
 					<Link
 						href={`#${file?.title}`}
 						aria-label="File"
-						style={{
-							textDecoration: "none",
-							color: "var(--fg)"
-						}}
+						// show an # when hovered avia :after
+						className="text-gray-900 hover:after:ml-1 hover:after:content-[#] dark:text-gray-100"
 					>
 						{file?.title}
 					</Link>
@@ -134,8 +167,8 @@ const Document = ({ skeleton, ...props }: Props) => {
 								: undefined
 						}
 					/>
-				</header>
-				<div className={styles.documentContainer}>
+				</CardHeader>
+				<CardContent className="flex flex-col h-full pt-2">
 					<DocumentTabs
 						defaultTab={props.initialTab}
 						staticPreview={file?.html}
@@ -143,8 +176,8 @@ const Document = ({ skeleton, ...props }: Props) => {
 					>
 						{file?.content || ""}
 					</DocumentTabs>
-				</div>
-			</div>
+				</CardContent>
+			</Card>
 		</>
 	)
 }

@@ -9,9 +9,10 @@ import {
 import { RefObject, useMemo } from "react"
 import styles from "./formatting-icons.module.css"
 import { TextareaMarkdownRef } from "textarea-markdown-editor"
-import Tooltip from "@components/tooltip"
-import Button from "@components/button"
+import { Tooltip } from "@components/tooltip"
+import { Button } from "@components/button"
 import clsx from "clsx"
+import React from "react"
 // TODO: clean up
 
 function FormattingIcons({
@@ -69,22 +70,18 @@ function FormattingIcons({
 				<Tooltip
 					content={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
 					key={name}
+					delayDuration={100}
 				>
 					<Button
-						height={32}
-						style={{
-							fontSize: 14,
-							borderRight: "none",
-							borderLeft: "none",
-							borderTop: "none",
-							borderBottom: "none"
-						}}
 						aria-label={name}
-						iconRight={icon}
 						onMouseDown={(e) => e.preventDefault()}
 						onClick={action}
-						buttonType="secondary"
-					/>
+						variant="ghost"
+					>
+						{React.cloneElement(icon, {
+							className: "h-4 w-4"
+						})}
+					</Button>
 				</Tooltip>
 			))}
 		</div>

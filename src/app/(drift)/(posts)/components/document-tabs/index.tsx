@@ -1,13 +1,19 @@
 "use client"
 
-import * as RadixTabs from "@radix-ui/react-tabs"
 import FormattingIcons from "src/app/(drift)/(posts)/new/components/edit-document-list/edit-document/formatting-icons"
-import { ChangeEvent, ClipboardEvent, useRef } from "react"
+import {
+	ChangeEvent,
+	ClipboardEvent,
+	ComponentProps,
+	useRef,
+	useState
+} from "react"
 import TextareaMarkdown, { TextareaMarkdownRef } from "textarea-markdown-editor"
 import Preview, { StaticPreview } from "../preview"
-import styles from "./tabs.module.css"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/tabs"
+import { Textarea } from "@components/textarea"
 
-type Props = RadixTabs.TabsProps & {
+type Props = ComponentProps<typeof Tabs> & {
 	isEditing: boolean
 	defaultTab: "preview" | "edit"
 	handleOnContentChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
@@ -28,37 +34,33 @@ export default function DocumentTabs({
 	...props
 }: Props) {
 	const codeEditorRef = useRef<TextareaMarkdownRef>(null)
-
+	const [activeTab, setActiveTab] = useState<"preview" | "edit">(defaultTab)
 	const handleTabChange = (newTab: string) => {
 		if (newTab === "preview") {
 			codeEditorRef.current?.focus()
 		}
+		setActiveTab(newTab as "preview" | "edit")
 	}
 
+	const formattingIconsVisibilityClass =
+		activeTab === "preview" ? "hidden" : "block"
 	return (
-		<RadixTabs.Root
-			{...props}
-			onValueChange={handleTabChange}
-			className={styles.root}
-			defaultValue={defaultTab}
-		>
-			<RadixTabs.List className={styles.listWrapper}>
-				<div className={styles.list}>
-					<RadixTabs.Trigger value="edit" className={styles.trigger}>
-						{isEditing ? "Edit" : "Raw"}
-					</RadixTabs.Trigger>
-					<RadixTabs.Trigger value="preview" className={styles.trigger}>
+		<Tabs {...props} onValueChange={handleTabChange} defaultValue={defaultTab}>
+			<TabsList className="flex justify-between">
+				<div>
+					<TabsTrigger value="edit">{isEditing ? "Edit" : "Raw"}</TabsTrigger>
+					<TabsTrigger value="preview">
 						{isEditing ? "Preview" : "Rendered"}
-					</RadixTabs.Trigger>
+					</TabsTrigger>
 				</div>
 				{isEditing && (
 					<FormattingIcons
-						className={styles.formattingIcons}
 						textareaRef={codeEditorRef}
+						className={`ml-auto ${formattingIconsVisibilityClass}`}
 					/>
 				)}
-			</RadixTabs.List>
-			<RadixTabs.Content value="edit">
+			</TabsList>
+			<TabsContent value="edit">
 				<div
 					style={{
 						marginTop: 6,
@@ -67,7 +69,7 @@ export default function DocumentTabs({
 					}}
 				>
 					<TextareaMarkdown.Wrapper ref={codeEditorRef}>
-						<textarea
+						<Textarea
 							readOnly={!isEditing}
 							onPaste={onPaste ? onPaste : undefined}
 							ref={codeEditorRef}
@@ -80,8 +82,8 @@ export default function DocumentTabs({
 						/>
 					</TextareaMarkdown.Wrapper>
 				</div>
-			</RadixTabs.Content>
-			<RadixTabs.Content value="preview">
+			</TabsContent>
+			<TabsContent value="preview">
 				{isEditing ? (
 					<Preview height={"100%"} title={title}>
 						{rawContent}
@@ -89,7 +91,7 @@ export default function DocumentTabs({
 				) : (
 					<StaticPreview height={"100%"}>{preview || ""}</StaticPreview>
 				)}
-			</RadixTabs.Content>
-		</RadixTabs.Root>
+			</TabsContent>
+		</Tabs>
 	)
 }

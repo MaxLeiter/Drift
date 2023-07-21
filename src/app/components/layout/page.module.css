@@ -1,5 +1,4 @@
 .page {
-	max-width: var(--main-content);
 	min-height: 100vh;
 	box-sizing: border-box;
 	position: relative;

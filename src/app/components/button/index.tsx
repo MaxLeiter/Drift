@@ -1,86 +1,65 @@
-import styles from "./button.module.css"
-import { forwardRef } from "react"
-import clsx from "clsx"
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@lib/cn"
 import { Spinner } from "@components/spinner"
 
-type Props = React.DetailedHTMLProps<
-	React.ButtonHTMLAttributes<HTMLButtonElement>,
-	HTMLButtonElement
-> & {
-	children?: React.ReactNode
-	buttonType?: "primary" | "secondary"
-	className?: string
-	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-	iconRight?: React.ReactNode
-	iconLeft?: React.ReactNode
-	height?: string | number
-	width?: string | number
-	padding?: string | number
-	margin?: string | number
+const buttonVariants = cva(
+	"inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-75 disabled:pointer-events-none ring-offset-background",
+	{
+		variants: {
+			variant: {
+				default: "bg-primary/80 text-primary-foreground/80 hover:bg-primary/70",
+				destructive:
+					"bg-destructive text-destructive-foreground hover:bg-destructive/90",
+				outline:
+					"border border-input hover:bg-accent hover:text-accent-foreground",
+				secondary:
+					"bg-secondary text-secondary-foreground hover:bg-secondary/80",
+				ghost: "hover:bg-accent hover:text-accent-foreground",
+				link: "underline-offset-4 hover:underline text-primary"
+			},
+			size: {
+				default: "h-10 py-2 px-4",
+				sm: "h-9 px-3 rounded-md",
+				lg: "h-11 px-8 rounded-md"
+			}
+		},
+		defaultVariants: {
+			variant: "default",
+			size: "default"
+		}
+	}
+)
+
+export interface ButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+		VariantProps<typeof buttonVariants> {
+	asChild?: boolean
 	loading?: boolean
 }
 
-// eslint-disable-next-line react/display-name
-const Button = forwardRef<HTMLButtonElement, Props>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(
-		{
-			children,
-			onClick,
-			className,
-			buttonType = "secondary",
-			disabled = false,
-			iconRight,
-			iconLeft,
-			height = 40,
-			width,
-			padding = 10,
-			margin,
-			loading,
-			style,
-			...props
-		},
+		{ className, variant, size, loading, children, asChild = false, ...props },
 		ref
 	) => {
+		const Comp = asChild ? Slot : "button"
+
 		return (
-			<button
+			<Comp
+				className={cn(buttonVariants({ variant, size, className }))}
 				ref={ref}
-				className={clsx(styles.button, className, {
-					[styles.primary]: buttonType === "primary",
-					[styles.secondary]: buttonType === "secondary"
-				})}
-				disabled={disabled || loading}
-				onClick={onClick}
-				style={{ height, width, margin, padding, ...style }}
 				{...props}
 			>
-				{children && iconLeft && (
-					<span className={clsx(styles.icon, styles.iconLeft)}>{iconLeft}</span>
-				)}
-				{!loading &&
-					(children ? (
-						children
-					) : (
-						<span className={styles.icon}>{iconLeft || iconRight}</span>
-					))}
-				{loading && (
-					<span
-						style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center"
-						}}
-					>
-						<Spinner />
-					</span>
-				)}
-				{children && iconRight && (
-					<span className={clsx(styles.icon, styles.iconRight)}>
-						{iconRight}
-					</span>
-				)}
-			</button>
+				{loading ? <Spinner className="mr-2" /> : null}
+				{children}
+			</Comp>
 		)
 	}
 )
 
-export default Button
+Button.displayName = "Button"
+
+export { Button, buttonVariants }

@@ -2,6 +2,7 @@
 
 import clsx from "clsx"
 import styles from "./page.module.css"
+import Link from "@components/link"
 
 export default function Layout({
 	children,
@@ -12,7 +13,22 @@ export default function Layout({
 }) {
 	return (
 		<div className={clsx(styles.page, forSites && styles.forSites)}>
-			{children}
+			<div className="flex flex-col justify-between h-screen">
+				<div> {children}</div>
+				<footer className="h-16 py-4 text-sm text-center text-gray-500">
+					<p>
+						Drift is an open source project by{" "}
+						<Link colored href="https://twitter.com/Max_Leiter">
+							Max Leiter
+						</Link>
+						. You can view the source code on{" "}
+						<Link colored href="https://github.com/MaxLeiter/Drift">
+							GitHub
+						</Link>
+						.
+					</p>
+				</footer>
+			</div>
 		</div>
 	)
 }

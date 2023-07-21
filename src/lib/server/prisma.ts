@@ -179,6 +179,7 @@ export async function getPostsByUser(
 			createdAt: true,
 			updatedAt: true,
 			authorId: true,
+			expiresAt: true,
 			visibility: true,
 			...(withFiles && {
 				files: {
@@ -252,10 +253,7 @@ export const createUser = async (
 }
 
 // all of prisma.post.findUnique
-type GetPostByIdOptions = Pick<
-	Prisma.PostFindUniqueArgs,
-	"include" | "rejectOnNotFound" | "select"
->
+type GetPostByIdOptions = Pick<Prisma.PostFindUniqueArgs, "include" | "select">
 
 export const getPostById = async (
 	postId: ServerPost["id"],
