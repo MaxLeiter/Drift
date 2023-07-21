@@ -58,16 +58,16 @@ article input[type="checkbox"] {
 	flex-shrink: 0;
 	height: 1rem;
 	width: 1rem;
-	background-color: var(--bg);
-	color: var(--fg);
-	border: 1px solid var(--fg);
-	border-radius: 3px;
+	background-color: var(--lighter-gray);
+	border: 1px solid var(--light-gray);
+	border-radius: var(--inline-radius);
+	color: var(--foreground);
 }
 
 article input[type="checkbox"]:checked {
 	background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
 	border-color: transparent;
-	background-color: currentColor;
+	background-color: var(--light-gray);
 	background-size: 100% 100%;
 	background-position: center;
 	background-repeat: no-repeat;
