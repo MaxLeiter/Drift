@@ -7,6 +7,7 @@ import { Inter } from "next/font/google"
 import { getMetadata } from "src/app/lib/metadata"
 import dynamic from "next/dynamic"
 import clsx from "clsx"
+import Link from "@components/link"
 const inter = Inter({ subsets: ["latin"], variable: "--inter-font" })
 
 const CmdK = dynamic(() => import("@components/cmdk"), { ssr: false })

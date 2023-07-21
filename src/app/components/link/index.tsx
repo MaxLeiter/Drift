@@ -7,7 +7,7 @@ type LinkProps = {
 } & React.ComponentProps<typeof NextLink>
 
 const Link = ({ colored, className, children, ...props }: LinkProps) => {
-	const classes = colored ? "text-blue-500 no-underline" : "no-underline"
+	const classes = colored ? "text-blue-500 dark:text-blue-400 hover:underline" : "hover:underline"
 	return (
 		<NextLink {...props} className={cn(classes, className)}>
 			{children}
