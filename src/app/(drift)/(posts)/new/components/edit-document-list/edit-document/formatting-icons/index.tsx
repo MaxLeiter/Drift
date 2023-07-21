@@ -70,12 +70,12 @@ function FormattingIcons({
 				<Tooltip
 					content={name[0].toUpperCase() + name.slice(1).replace("-", " ")}
 					key={name}
+					delayDuration={100}
 				>
 					<Button
 						aria-label={name}
 						onMouseDown={(e) => e.preventDefault()}
 						onClick={action}
-						// no border rounding
 						variant="ghost"
 					>
 						{React.cloneElement(icon, {

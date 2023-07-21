@@ -118,10 +118,10 @@ export function PostTable({
 	const { setToast } = useToasts()
 	const deletePost = async (id: string) => {
 		try {
-			const confirmed = confirm("Are you sure you want to delete this user?")
+			const confirmed = confirm("Are you sure you want to delete this post?")
 			if (!confirmed) {
 				setToast({
-					message: "User not deleted",
+					message: "Post not deleted",
 					type: "default"
 				})
 				return
@@ -138,7 +138,7 @@ export function PostTable({
 
 			if (res.status === 200) {
 				setToast({
-					message: "User deleted",
+					message: "Post deleted",
 					type: "success"
 				})
 				setPosts(posts?.filter((post) => post.id !== id))

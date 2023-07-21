@@ -89,9 +89,7 @@ function VisibilityControl({
 
 	return (
 		<FadeIn className="mt-8">
-			<ButtonGroup
-				className="max-w-2xl mx-auto"
-			>
+			<ButtonGroup>
 				<Button
 					disabled={visibility === "private"}
 					variant={"outline"}
