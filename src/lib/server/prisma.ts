@@ -253,10 +253,7 @@ export const createUser = async (
 }
 
 // all of prisma.post.findUnique
-type GetPostByIdOptions = Pick<
-	Prisma.PostFindUniqueArgs,
-	"include" | "select"
->
+type GetPostByIdOptions = Pick<Prisma.PostFindUniqueArgs, "include" | "select">
 
 export const getPostById = async (
 	postId: ServerPost["id"],

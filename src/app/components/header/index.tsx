@@ -25,9 +25,9 @@ export default function Header() {
 	}, [])
 
 	return (
-		<header className="flex items-center justify-start h-16 mt-4 md:justify-between">
-			<span className="items-center hidden md:flex">
-				<Link href="/" className="flex items-center mr-4">
+		<header className="mt-4 flex h-16 items-center justify-start md:justify-between">
+			<span className="hidden items-center md:flex">
+				<Link href="/" className="mr-4 flex items-center">
 					<Image
 						src={"/assets/logo.svg"}
 						width={32}
@@ -35,7 +35,7 @@ export default function Header() {
 						alt=""
 						priority
 					/>
-					<span className="pl-4 text-lg font-bold bg-transparent">Drift</span>
+					<span className="bg-transparent pl-4 text-lg font-bold">Drift</span>
 				</Link>
 				<nav className="flex space-x-4 lg:space-x-6">
 					<ul className="flex justify-center space-x-4">
@@ -70,7 +70,7 @@ export default function Header() {
 				<FadeIn>
 					<button
 						aria-hidden
-						className="flex items-center justify-center w-8 h-8 ml-4 font-medium transition-colors cursor-pointer text-muted-foreground hover:text-primary md:ml-0"
+						className="ml-4 flex h-8 w-8 cursor-pointer items-center justify-center font-medium text-muted-foreground transition-colors hover:text-primary md:ml-0"
 						onClick={toggleTheme}
 						title="Toggle theme"
 					>

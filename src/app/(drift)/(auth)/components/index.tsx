@@ -133,7 +133,7 @@ function Auth({
 						{authProviders?.length ? (
 							<>
 								<hr className="w-full" />
-								<p className="p-0 mt-2 text-center">
+								<p className="mt-2 p-0 text-center">
 									Or sign {signText.toLowerCase()} with one of the following
 								</p>
 								{authProviders?.map((provider) => {
@@ -187,10 +187,10 @@ export default Auth
 const getProviderIcon = (provider: string) => {
 	switch (provider) {
 		case "github":
-			return <GitHub className="w-5 h-5 mr-2" />
+			return <GitHub className="mr-2 h-5 w-5" />
 		case "keycloak":
-			return <Key className="w-5 h-5 mr-2" />
+			return <Key className="mr-2 h-5 w-5" />
 		default:
-			return <User className="w-5 h-5 mr-2" />
+			return <User className="mr-2 h-5 w-5" />
 	}
 }

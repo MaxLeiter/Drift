@@ -21,7 +21,7 @@ export default async function PostPage({
 	return (
 		<>
 			<PostFiles post={clientPost} />
-			<div className="mx-auto mt-4 mb-4">
+			<div className="mx-auto mb-4 mt-4">
 				<VisibilityControl
 					authorId={post.authorId}
 					postId={post.id}

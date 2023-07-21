@@ -29,7 +29,7 @@ const PostList = ({
 	hideActions,
 	isOwner,
 	skeleton,
-	userId,
+	userId
 }: Props) => {
 	const [searchValue, setSearchValue] = useState("")
 	const [searching, setSearching] = useState(false)

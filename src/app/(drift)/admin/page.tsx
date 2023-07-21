@@ -51,10 +51,10 @@ export default async function AdminPage() {
 		<>
 			<PageTitle>Admin</PageTitle>
 			<PageWrapper>
-				<h2 className="mt-4 mb-4 text-2xl font-bold">Users</h2>
+				<h2 className="mb-4 mt-4 text-2xl font-bold">Users</h2>
 				{/* @ts-expect-error Type 'unknown' is not assignable to type  */}
 				<UserTable users={serializedUsers as unknown} />
-				<h2 className="mt-4 mb-4 text-2xl font-bold">Posts</h2>
+				<h2 className="mb-4 mt-4 text-2xl font-bold">Posts</h2>
 				<PostTable posts={serializedPosts} />
 			</PageWrapper>
 		</>
