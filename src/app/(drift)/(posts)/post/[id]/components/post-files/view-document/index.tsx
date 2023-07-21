@@ -36,7 +36,7 @@ const DownloadButtons = ({
 }) => {
 	return (
 		<ButtonGroup>
-			<Tooltip content="Download">
+			<Tooltip content="Download" delayDuration={200}>
 				<Link
 					href={`${rawLink}?download=true`}
 					target="_blank"
@@ -44,37 +44,40 @@ const DownloadButtons = ({
 				>
 					<Button
 						aria-label="Download"
-						style={{ border: "none", background: "transparent" }}
 						size="sm"
+						className="bg-transparent border-none"
+						variant={"ghost"}
 					>
-						<Download color="var(--fg)" className="h-4 w-4" />
+						<Download className="w-4 h-4 " />
 						<span className="sr-only">Download</span>
 					</Button>
 				</Link>
 			</Tooltip>
 			{rawLink ? (
-				<Tooltip content="Open raw in new tab">
+				<Tooltip content="Open raw in new tab" delayDuration={200}>
 					<Link href={rawLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
 							aria-label="Open raw file in new tab"
-							style={{ border: "none", background: "transparent" }}
+							className="bg-transparent border-none"
 							size="sm"
+							variant={"ghost"}
 						>
-							<ExternalLink color="var(--fg)" className="h-4 w-4" />
+							<ExternalLink className="w-4 h-4" />
 							<span className="sr-only">Open raw file in new tab</span>
 						</Button>
 					</Link>
 				</Tooltip>
 			) : null}
 			{siteLink ? (
-				<Tooltip content="Open as webpage">
+				<Tooltip content="Open as webpage" delayDuration={200}>
 					<Link href={siteLink || ""} target="_blank" rel="noopener noreferrer">
 						<Button
 							aria-label="Open as webpage"
-							style={{ border: "none", background: "transparent" }}
+							className="bg-transparent border-none"
 							size="sm"
+							variant={"ghost"}
 						>
-							<Globe color="var(--fg)" className="h-4 w-4" />
+							<Globe className="w-4 h-4" />
 							<span className="sr-only">Open as webpage</span>
 						</Button>
 					</Link>
@@ -144,7 +147,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 			<Card className="border-gray-200 dark:border-gray-900">
 				<CardHeader
 					id={file?.title}
-					className="flex flex-row items-center justify-between bg-gray-200 py-1 dark:bg-gray-900"
+					className="flex flex-row items-center justify-between py-1 bg-gray-200 dark:bg-gray-900"
 				>
 					<Link
 						href={`#${file?.title}`}
@@ -165,7 +168,7 @@ const Document = ({ skeleton, ...props }: Props) => {
 						}
 					/>
 				</CardHeader>
-				<CardContent className="flex h-full flex-col pt-2">
+				<CardContent className="flex flex-col h-full pt-2">
 					<DocumentTabs
 						defaultTab={props.initialTab}
 						staticPreview={file?.html}

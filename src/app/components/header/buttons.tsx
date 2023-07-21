@@ -43,7 +43,7 @@ type Tab = {
 function NavButton({ className, ...tab }: Tab & { className?: string }) {
 	const segment = useSelectedLayoutSegments().slice(-1)[0]
 	const isActive = segment === tab.value.toLowerCase()
-	const activeStyle = isActive ? styles.active : undefined
+	const activeStyle = isActive ? "text-primary-500" : "text-gray-600"
 	if (tab.onClick) {
 		return (
 			<Button
@@ -53,6 +53,7 @@ function NavButton({ className, ...tab }: Tab & { className?: string }) {
 				aria-label={tab.name}
 				aria-current={isActive ? "page" : undefined}
 				data-tab={tab.value}
+				variant={"ghost"}
 			>
 				{tab.name ? tab.name : undefined}
 			</Button>
@@ -68,6 +69,7 @@ function NavButton({ className, ...tab }: Tab & { className?: string }) {
 				<Button
 					className={cn(activeStyle, "w-full md:w-auto", className)}
 					aria-label={tab.name}
+					variant={"ghost"}
 				>
 					{tab.name ? tab.name : undefined}
 				</Button>
