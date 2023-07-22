@@ -156,7 +156,6 @@ const ListItem = ({
 								return (
 									<li key={file.id} className="text-black">
 										<Link
-											colored
 											href={`/post/${post.id}#${file.title}`}
 											className="flex items-center gap-2 font-mono text-sm text-foreground"
 										>
