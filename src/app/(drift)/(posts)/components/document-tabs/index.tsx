@@ -51,14 +51,14 @@ export default function DocumentTabs({
 						{isEditing ? "Preview" : "Rendered"}
 					</TabsTrigger>
 				</div>
-				{isEditing && (
+				{isEditing ? (
 					<FormattingIcons
 						textareaRef={codeEditorRef}
 						className={`ml-auto ${
 							activeTab === "preview" ? "hidden" : "hidden sm:block"
 						}`}
 					/>
-				)}
+				) : null}
 			</TabsList>
 			<TabsContent value="edit">
 				<div
@@ -68,14 +68,16 @@ export default function DocumentTabs({
 						flexDirection: "column"
 					}}
 				>
-					<FormattingIcons
-						textareaRef={codeEditorRef}
-						className={`ml-auto ${
-							activeTab === "preview"
-								? "hidden"
-								: "block text-muted-foreground sm:hidden"
-						}`}
-					/>
+					{isEditing ? (
+						<FormattingIcons
+							textareaRef={codeEditorRef}
+							className={`ml-auto ${
+								activeTab === "preview"
+									? "hidden"
+									: "block text-muted-foreground sm:hidden"
+							}`}
+						/>
+					) : null}
 					<TextareaMarkdown.Wrapper ref={codeEditorRef}>
 						<Textarea
 							readOnly={!isEditing}

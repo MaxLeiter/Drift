@@ -14,6 +14,7 @@ import { useState } from "react"
 import styles from "./api-keys.module.css"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { TypographyH4 } from "@components/typography"
+import FadeIn from "@components/fade-in"
 
 // need to pass in the accessToken
 const APIKeys = ({
@@ -121,12 +122,12 @@ const APIKeys = ({
 							</tbody>
 						</table>
 					) : (
-						<p className="p-4 text-center text-muted-foreground">
+						<FadeIn className="mt-4 text-center text-muted-foreground">
 							No API keys found.
-						</p>
+						</FadeIn>
 					)
 				) : (
-					<div style={{ marginTop: "var(--gap-quarter)" }}>
+					<div className="mt-4 text-center">
 						<Spinner />
 					</div>
 				)}

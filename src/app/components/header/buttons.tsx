@@ -17,7 +17,6 @@ import { Button } from "@components/button"
 import Link from "@components/link"
 import { useSessionSWR } from "@lib/use-session-swr"
 import { useTheme } from "next-themes"
-import styles from "./buttons.module.css"
 import { useEffect, useState } from "react"
 import { cn } from "@lib/cn"
 
