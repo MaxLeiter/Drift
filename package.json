@@ -77,7 +77,7 @@
 		"eslint-config-next": "13.4.11-canary.1",
 		"jest-mock-extended": "^3.0.3",
 		"next-unused": "0.0.6",
-		"postcss": "^8.4.21",
+		"postcss": "^8.4.31",
 		"postcss-flexbugs-fixes": "^5.0.2",
 		"postcss-hover-media-feature": "^1.0.2",
 		"postcss-nested": "^6.0.1",
